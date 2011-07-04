@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views
+END
+custom_fields_list.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/custom_fields_list.php
+END
+settings.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/settings.php
+END
+import.finished.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/import.finished.php
+END
+newsletter_home.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/newsletter_home.php
+END
+import.fifthstep.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/import.fifthstep.php
+END
+newsletter_custom_fields_list.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/newsletter_custom_fields_list.php
+END
+import.fourthstep.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/import.fourthstep.php
+END
+importexport.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/importexport.php
+END
+import.thirdstep.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/import.thirdstep.php
+END
+newsletter_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/newsletter_form.php
+END
+import.secondstep.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/import.secondstep.php
+END
+queue_management.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/queue_management.php
+END
+delete_custom_fields.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/delete_custom_fields.php
+END
+custom_fields_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/custom_fields_form.php
+END
+background_procs.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/views/background_procs.php
+END

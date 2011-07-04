@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins
+END
+BandwidthMonitorPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/BandwidthMonitorPlugin.php
+END
+AntiFloodPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/AntiFloodPlugin.php
+END
+LoggerPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/LoggerPlugin.php
+END
+Logger.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Logger.php
+END
+Sleeper.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Sleeper.php
+END
+Timer.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Timer.php
+END
+DecoratorPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/DecoratorPlugin.php
+END
+ReporterPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/ReporterPlugin.php
+END
+Reporter.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Reporter.php
+END
+PopBeforeSmtpPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/PopBeforeSmtpPlugin.php
+END
+ThrottlerPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/ThrottlerPlugin.php
+END

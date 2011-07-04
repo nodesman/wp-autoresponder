@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates
+END
+confirmed_body.txt
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirmed_body.txt
+END
+confirmed_subject.txt
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirmed_subject.txt
+END
+confirm_subscription.html
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirm_subscription.html
+END
+confirm_body.txt
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirm_body.txt
+END
+confirmed.html
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirmed.html
+END
+confirm_subject.txt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirm_subject.txt
+END
+confirm.txt
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirm.txt
+END
+unsubscribed.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/unsubscribed.html
+END
+confirm_email_template.txt
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/templates/confirm_email_template.txt
+END

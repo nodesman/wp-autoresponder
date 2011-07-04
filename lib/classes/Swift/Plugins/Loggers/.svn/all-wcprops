@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Loggers
+END
+ArrayLogger.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Loggers/ArrayLogger.php
+END
+EchoLogger.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Loggers/EchoLogger.php
+END

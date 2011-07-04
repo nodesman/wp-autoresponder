@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Pop
+END
+Pop3Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Pop/Pop3Exception.php
+END
+Pop3Connection.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Plugins/Pop/Pop3Connection.php
+END

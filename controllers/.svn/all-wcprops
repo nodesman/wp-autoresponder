@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/350773/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers
+END
+new-broadcast.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/new-broadcast.php
+END
+importexport.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/importexport.php
+END
+newsletters.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/newsletters.php
+END
+custom_fields.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/custom_fields.php
+END
+queue_management.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/queue_management.php
+END
+settings.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/settings.php
+END
+background_procs.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/350773/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/controllers/background_procs.php
+END

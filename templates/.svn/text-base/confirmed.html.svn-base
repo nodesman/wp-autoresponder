@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Your E-Mail Has Been Confirmed</title>
+
+<style type="text/css">
+<!--
+.main {
+	width: 750px;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	background-color: #E8F0F4;
+	padding:20px;
+}
+.main h1 {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	text-align: center;
+	font-size: 18px;
+}
+.main p.body {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+.mainhead {
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 30px;
+	font-weight:bold;
+}
+-->
+</style>
+</head>
+
+<body>
+<div class="main">
+		<span class="mainhead">Subscription Confirmed</h1>
+  <h1>Thank you for taking the time to confirm your subscription</h1>
+  <p class="body">You will start receiving the information you requested shortly.</p>
+  <p class="body"></p>
+</div><?php wp_credits(); ?>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="10" bgcolor="#000000" style="color: #fff; font-size: 20px; font-family: Arial; padding: 5px; padding-left: 10px;" height="40">A Main Heading Can Go Here</td>
+  </tr>
+  <tr>
+    <td bgcolor="#a8a345"><table cellpadding="0" width="95%" align="center">
+        <tr>
+          <td colspan="2" bgcolor="#eee9a7" style="padding:10px;"><h1 style="font-family: Georgia, 'Times New Roman', Times, serif; font-weight:normal; font-size: 28px; font-style: italic; color: #000">How To Conquer The World With An Iron Fist</h1>
+            <table cellpadding="0" cellspacing="0" width="100%" align="center">
+              <tr>
+                <td style="background-color:#FFF; font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 25px; padding:10px; border: 1px solid #c0bb7c"><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                
+                
+                <h2 style="font-family: Arial, Helvetica, sans-serif; font-size:22px; ">Negotiating With The Aliens</h2>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                
+                  <p>&nbsp;</p>
+                  <table width="100%" style="min-height:50px;">
+                    <tr>
+                      <td style=" padding:5px;background-color: #1689c5; color: #fff;"><a href="#" style="font-family: Arial, Helvetica, sans-serif; font-size:11px; line-height:20px; color: #fff;" >Home</a></td>
+                    </tr>
+                  </table>
+                <td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+    <td></td>
+  </tr>
+</table>

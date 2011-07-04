@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport
+END
+SendmailTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/SendmailTransport.php
+END
+SimpleMailInvoker.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/SimpleMailInvoker.php
+END
+MailTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/MailTransport.php
+END
+MailInvoker.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/MailInvoker.php
+END
+IoBuffer.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/IoBuffer.php
+END
+SmtpAgent.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/SmtpAgent.php
+END
+AbstractSmtpTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/AbstractSmtpTransport.php
+END
+FailoverTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/FailoverTransport.php
+END
+EsmtpTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/EsmtpTransport.php
+END
+StreamBuffer.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/StreamBuffer.php
+END
+EsmtpHandler.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/EsmtpHandler.php
+END
+LoadBalancedTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Transport/LoadBalancedTransport.php
+END

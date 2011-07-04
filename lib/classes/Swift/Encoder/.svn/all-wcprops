@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Encoder
+END
+QpEncoder.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Encoder/QpEncoder.php
+END
+Rfc2231Encoder.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Encoder/Rfc2231Encoder.php
+END
+Base64Encoder.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/classes/Swift/Encoder/Base64Encoder.php
+END

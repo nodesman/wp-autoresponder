@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/350773/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib
+END
+mail_functions.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/396023/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/mail_functions.php
+END
+mime_types.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/mime_types.php
+END
+swift_required.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/swift_required.php
+END
+framework.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/framework.php
+END
+swift_init.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/swift_init.php
+END
+custom_fields.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/custom_fields.php
+END
+global.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/global.php
+END
+preferences.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/257398/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/preferences.php
+END
+admin_notifications.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/334657/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/admin_notifications.php
+END
+database_integrity_checker.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/334651/wp-responder-email-autoresponder-and-newsletter-plugin/trunk/lib/database_integrity_checker.php
+END

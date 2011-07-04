@@ -1,0 +1,6 @@
+Hi [!name!],
+
+Welcome to [!newslettername!] newsletter. You have verified your e-mail address and will soon start to receive information from us. If you subscribed to a e-course or post series it will be delivered to you automatically over the next few days.
+
+With Regards,
+[!sitename!]

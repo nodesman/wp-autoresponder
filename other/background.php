@@ -56,7 +56,7 @@ function _wpr_process_queue()
 	global $wpdb;
 
 	/*ENSURING THERE IS ONLY ONE INSTANCE THAT RUNS FOR A MAXIMUM OF ONE HOUR START HERE*/
-	
+ 	set_time_limit(3600);
 	$last_cron_status = get_option("_wpr_queue_delivery_status");
 
         /*
@@ -135,7 +135,7 @@ function _wpr_autoresponder_process($id=0)
         }
 
 
-
+	set_time_limit(3600);
 
 	$last_cron_status = get_option("_wpr_autoresponder_process_status");
 	/*
@@ -242,6 +242,7 @@ function _wpr_postseries_process()
 	$last_cron_status = get_option("_wpr_postseries_process_status");
         $currentTime = time();
         //return;
+	set_time_limit(3600);
 	/*
 	When the cron is running the _wpr_postseries_process_status
 	is set to the timestamp at which the cron processing was started.
@@ -349,6 +350,7 @@ function _wpr_process_blog_subscriptions()
 {
 	global $wpdb;
 	$prefix = $wpdb->prefix;
+	set_time_limit(3600);
 	//now process the people who subscribe to the blog
 	$lastPostDate = get_option("wpr_last_post_date");
 	$timeNow = date("Y-m-d H:i:s",time());
@@ -399,7 +401,7 @@ function _wpr_process_broadcasts()
 	$prefix = $wpdb->prefix;	
 	$last_cron_status = get_option("_wpr_newsletter_process_status");
 	
-	
+	set_time_limit(3600);
 	
 	
 	/*

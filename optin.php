@@ -9,7 +9,6 @@ if ($_GET['subscribed'] == "true")
 }
 
 function error($error)
-
 {
 
 	?>
@@ -230,14 +229,13 @@ if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email'
    			 $wpdb->get_results($query);
 		 }
 	}
-	$id = $subscriber->id;
+	$id = intval($subscriber->id);
 	
 	
 	//insert the subscriber's custom field values
 	foreach ($_POST as $field_name=>$value)
 	{
 		if (ereg('cus_.*',$field_name))
-
 		{
 
 			$name = base64_decode(str_replace("cus_","",$field_name));
@@ -256,7 +254,7 @@ if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email'
 
 			$wpdb->query($query);
 
-			$query = "insert into ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value)  values ('$nid','$id','$cid','$value');";
+			$query = "INSERT INTO ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value)  values ('$nid','$id','$cid','$value');";
 
 			$wpdb->query($query);
 
@@ -400,20 +398,7 @@ if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email'
 	}
 	
 	
-	
-	
-
-	
-	
-	if (empty($confirm_subject) && empty($confirm_body))
-
-	{
-
-		$confirm_subject = $newsletter->confirm_subject;
-
-		$confirm_body = $newsletter->confirm_body;
-
-	}	
+	do_action("_wpr_subscriber_added",$id);
 
 	$theqstring = $subscriber->id."%%".$subscriber->hash."%%".$fid;
 

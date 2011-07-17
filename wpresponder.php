@@ -18,6 +18,7 @@ if (!defined("WPR_DEFS"))
 	$plugindir = str_replace("\\","/",$plugindir);
 	$plugindir = rtrim($plugindir,"/");
     $controllerDir = "$plugindir/controllers";
+    $modelsDir = "$plugindir/models";
 
     define("WPR_VERSION","5.1.1");
 	define("WPR_PLUGIN_DIR","$plugindir");
@@ -59,6 +60,8 @@ if (!defined("WPR_DEFS"))
 	require_once "$controllerDir/settings.php";
 	require_once "$controllerDir/new-broadcast.php";
 	require_once "$controllerDir/queue_management.php";
+	require_once "$modelsDir/subscriber.php";
+        require_once "$modelsDir/newsletter.php";
 
     $GLOBALS['db_checker'] = new DatabaseChecker();
 	$GLOBALS['wpr_globals'] = array();

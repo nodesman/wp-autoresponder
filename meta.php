@@ -77,7 +77,7 @@ $database_structure["wpr_queue"] = array (
                                                               'textbody' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'headers' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'sent' => "INT NOT NULL",
-
+															  'date' => 'INT NOT NULL DEFAULT UNIX_TIMESTAMP()',
 															  'delivery_type' =>"tinyint(1) NOT NULL DEFAULT '0'",
 															  'email_type' => "enum('user_verify_email','user_confirmed_email','user_followup_autoresponder_email','user_followup_postseries_email','user_blogsubscription_email','user_blogcategorysubscription_email','user_unsubscribed_notification_email','critical_queue_limit_approaching_email','system_subscription_errors_email','system_analytics_email','misc') COLLATE utf8_bin NOT NULL DEFAULT 'misc'",
 															  'hash'=> 'VARCHAR(32)  NOT NULL',

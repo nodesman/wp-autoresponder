@@ -41,6 +41,7 @@ $currentTime = time();
 $followup_subscriptions_table = $wpdb->prefix."wpr_followup_subscriptions";
 $query = $wpdb->prepare("UPDATE $followup_subscriptions_table SET doc='%s', last_date='%s' WHERE sid=%d;",$currentTime,$currentTime,$id);
 $wpdb->query($query);
+do_action("_wpr_subscriber_confirmed",$id);
 sendConfirmedEmail($id);
 
 ?><script>

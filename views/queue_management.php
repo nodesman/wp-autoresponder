@@ -32,3 +32,36 @@
 
 <strong>Important: </strong> All sent emails in queue will be automatically deleted if queue size exceeds <?php echo ByteSize(WPR_MAX_QUEUE_TABLE_SIZE); ?> in size. 
 </div>
+
+<h2>Delivery Queue</h2>
+
+<table class="widefat">
+   <tr>
+      <thead>
+      <th> To </th>
+      <th> Subject </th>
+      <th></th>
+    </thead>
+   </tr>
+<?php
+if (is_array($emails_in_queue) && count($emails_in_queue) > 0) 
+{
+	foreach ($emails_in_queue as $email)
+	{
+		?>
+           <tr>
+               <td><?php echo $email->to ?></td>
+               <td><?php echo $email->subject ?></td>
+           </tr>
+           <?php
+	}
+}
+else {
+	?>
+    <tr>
+       <td colspan="5"><center>--No Emails In Queue--</td>
+    </tr>
+   <?php	
+}
+?>
+</table>

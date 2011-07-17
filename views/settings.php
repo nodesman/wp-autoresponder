@@ -1,6 +1,8 @@
 <div class="wrap">
   <h2>Global Newsletters Settings</h2>
-
+<script>
+var custom_validation_functions = new Array();
+</script>
 <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" name="settingsform" method="post">
 <?php wp_nonce_field("_wpr_settings"); ?>
   <table width="900">
@@ -18,6 +20,11 @@
          
          -->
         <a href="http://www.krusible.com"><img src="http://www.wpresponder.com/settingspage.png" width="300" height="270" /></a></td>
+    </tr>
+    <tr>
+       <td colspan="10">
+<?php do_action("_wpr_settings_form"); ?>
+      </td>
     </tr>
     <tr>
       <td colspan="2"><table width="100%">
@@ -133,6 +140,10 @@ If instead of using your server's mail server that has a hourly limit on the num
   </table>
 </form>
 <script>
+
+
+
+
 function trim(stringToTrim) {
 	return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
@@ -223,6 +234,21 @@ function validateSettingsForm()
 		}
 		
 	}
+	
+	
+	//run all the custom validation functions
+	if (custom_validation_functions.length > 0 )
+	{
+		var currentFunction;
+		for (iter=0;iter<custom_validation_functions.length;iter++)
+		{
+			currentFunction = custom_validation_functions[0]
+			if (false == currentFunction())
+				return false;
+		}
+	}
+	
+	return true;
 
 	
 }

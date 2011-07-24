@@ -172,26 +172,17 @@ function _wpr_newsletter_handler()
                 _wpr_newsletter_add();
                 break;
             case 'edit':
-
                 _wpr_newsletter_edit();
-
                     break;
-
             case 'delete':
-
                _wpr_newsletter_delete();
-
+			   break;
             case 'forms':
-
                _wpr_newsletter_forms();
-
+			   break;
              default:
-                
                  _wpr_newsletter_home();
 	}
-
-
-
 }
 
 
@@ -253,4 +244,36 @@ function _wpr_get_newsletters()
 		return $newsletters;
 	else
 		return false;
+}
+
+function _wpr_newsletter_delete()
+{
+	global $wpdb;
+	$prefix = $wpdb->prefix;
+	$nid = $_GET['nid'];
+	try {
+		$newsletter = new Newsletter($nid);
+	}
+	catch (Exception $excp)
+	{
+		 _wpr_set("_wpr_view","newsletter_delete_not_found");
+		 return;		
+	}	
+	
+	if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true')
+	{
+		$newsletter->delete();
+		$newsletter_home = Routing::newsletterHome();
+		wp_redirect($newsletter_home);
+	}
+		
+	$getEmailsPendingDeliveryQuery = sprintf("SELECT COUNT(*) number FROM %swpr_queue WHERE sid=(SELECT id FROM %swpr_subscribers WHERE nid=%d) AND sent=0;",$prefix,$prefix,$nid);
+	$emails_pending_count_result = $wpdb->get_results($getEmailsPendingDeliveryQuery);
+	$number_pending = $emails_pending_count_result[0]->number;
+	
+	_wpr_set("newsletter_name",$newsletter->getNewsletterName());
+	_wpr_set("subscriber_count",$newsletter->getNumberOfActiveSubscribers());
+	_wpr_set("_wpr_view","newsletter_delete");
+	_wpr_set("nid",$nid);
+	_wpr_set("emailsPendingDelivery",$number_pending);
 }

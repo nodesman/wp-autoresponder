@@ -35,7 +35,7 @@
 		   <input type="button" name="Edit" onclick="window.location='admin.php?page=_wpr/newsletter&act=edit&nid=<?php echo $list->id; ?>';" value="Edit" class="button" />
 		   <input type="button" name="Manage Leads" value="Manage Leads" class="button" onclick="window.location='admin.php?page=wpresponder/subscribers.php&action=nmanage&nid=<?php echo $list->id; ?>';" />
 		   <input type="button" name="E-mails" value="Custom Fields" onclick="window.location='admin.php?page=_wpr/custom_fields&cfact=manage&nid=<?php echo $list->id; ?>';" class="button"/>
-		   <input type="button" name="Delete" value="Delete" class="button" onclick="window.location='admin.php?page=wpresponder/subscribers.php&action=nmanage&nid=<?php echo $list->id; ?>';" />
+		   <input type="button" name="Delete" value="Delete" class="button" onclick="window.location='admin.php?page=_wpr/newsletter&act=delete&nid=<?php echo $list->id; ?>';" />
 		   <?php do_action("_wpr_newsletter_home_actions"); ?>
 		   </td>
 	

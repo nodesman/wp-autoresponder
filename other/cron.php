@@ -47,8 +47,6 @@ function _wpr_attach_cron_actions_to_functions()
 {	
 	add_action("_wpr_process_post_series","_wpr_postseries_process");
 	
-	add_action('wpr_cronjob','wpr_processEmails');
-	
 	add_action('_wpr_ensure_single_instances_of_crons','_wpr_ensure_single_cron_instances');
 	//the cron that delivers email. 		
 	//the tutorial series

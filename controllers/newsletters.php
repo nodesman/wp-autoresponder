@@ -157,19 +157,6 @@ function _wpr_newsletter_home()
      _wpr_set("_wpr_view","newsletter_home");
     $getNewslettersListQuery = "SELECT id, name, reply_to, fromname, fromemail FROM ".$wpdb->prefix."wpr_newsletters";
     $newsletterList = $wpdb->get_results($getNewslettersListQuery);
-
-/*    $actual_list = array();
-    foreach ($newsletterList as $newsletter)
-    {
-        $item = array();
-        $item['Id'] = $newsletter->id;
-        $item['Name'] = $newsletter->name;
-        $item['Reply-To'] = $newsletter->reply_to;
-        $item['From Name'] = $newsletter->fromname;
-        $item['From E-mail'] = $newsletter->fromemail;
-        array_push($actual_list,$item);
-    }*/ 
-
     $newsletterList = apply_filters("_wpr_newsletter_home_list",$newsletterList);
     _wpr_set("newsletterList",$newsletterList);
 

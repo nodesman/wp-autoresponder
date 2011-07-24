@@ -467,7 +467,7 @@ $GLOBALS['initial_wpr_options'] = $initial_wpr_options;
 
 /************QUEUE MANAGEMENT****************************/
 //maximum emails processed in the queue per minute
-define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100); 
+define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100);   //DO **NOT*** SET IT TO > 500 . E-mails WILL stop delivery completely.
 define("WPR_MAX_QUEUE_TABLE_SIZE",1073741824); // 1GB
 define("WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME",300); //the queue delivery burst can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME",300); //the autoresponder processor can run for a maximum of 5 minutes at a time.

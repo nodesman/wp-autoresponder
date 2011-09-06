@@ -3,32 +3,19 @@
 include "forms.lib.php";
 
 function wpr_subscriptionforms()
-
 {
-
 	if (_wpr_no_newsletters("To create subscription forms"))
 		return;
-
 	switch ($_GET['action'])
-
 	{
-
 		case 'create':
-
 		_wpr_subscriptionforms_create();
-
 		break;
-
 		case 'form':
-
 		$id = $_GET['fid'];
-
 		$form = _wpr_subscriptionform_get($id);
-
 		_wpr_subscriptionform_getcode($form,"'".$form->name."' Form HTML Code");
-
 		return;
-
 		break;
 		
 		
@@ -57,26 +44,14 @@ function wpr_subscriptionforms()
 		break;
 
 		case 'edit':
-
-                    
 		$id = (int) $_GET['fid'];
-
-
-
+		do_action("_wpr_subscriptionform_edit_form_controller",$id);
 		$form = _wpr_subscriptionform_get($id);
-
-
-
 		if (isset($_POST['fid']))
-
 		{
-
 			$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
-
 			$errors = array();
-
 			foreach ($checkList as $field=>$errorMessage)
-
 			{
 				$theValue = $_POST[$field];
 				$theValue = trim($theValue);
@@ -84,19 +59,13 @@ function wpr_subscriptionforms()
 				{
 					$errors[] = $checkList[$field];
 				}
-
 			}			
-
+			$errors = apply_filters("_wpr_subscriptionform_edit_handler_validate",$errors);
 			if (count($errors) == 0)
-
 			{		
-
-				$info['id'] = $_POST['fid'];
-
+				$info['id'] = $_GET['fid'];
 				$info['name'] = $_POST['name'];
-
 				$info['return_url'] = $_POST['return_url'];
-				
 				if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 				{
 					$followup = "autoresponder";
@@ -152,10 +121,9 @@ function wpr_subscriptionforms()
 
 				_wpr_subscriptionform_update($info);
 
+				do_action("_wpr_subscriptionform_edit_handler_save",$info['id']);
 				$form = _wpr_subscriptionform_get($info['id']);
-
 				_wpr_subscriptionform_getcode($form,"Form Saved");
-
 				return;
 
 			}
@@ -491,6 +459,7 @@ foreach ($choices as $choice)
 	}
 
 	?>
+    <?php do_action("_wpr_subscriptionform_code",$form->id); ?>
     <tr>
       <td colspan="2" align="center"><input type="submit" value="<?php echo (empty($form->submit_button))?"Subscribe":$form->submit_button; ?>" /></td>
     </tr>
@@ -518,7 +487,6 @@ function _wpr_subscriptionforms_create()
 	$fieldsToSelect = array(); //just initializing the custom fields to be selected when the form loads..	
 
 	if (isset($_POST['newsletter']))
-
 	{
 
 		
@@ -603,9 +571,10 @@ function _wpr_subscriptionforms_create()
 
 			$info['confirmed_body'] = $_POST['confirmed_body'];
 			
+			$errors = apply_filters("_wpr_subscriptionform_created_handler_validate",$errors);
 			
-
-
+			
+			
 		if (count($errors) == 0)
 
 		{
@@ -617,7 +586,7 @@ function _wpr_subscriptionforms_create()
 			$form = $wpdb->get_results($query);
 
 			$form = $form[0];
-
+			do_action("_wpr_subscriptionform_created_handler_save",$form->id);
 		     _wpr_subscriptionform_getcode($form,"Form Created");
 
 			return;
@@ -1300,6 +1269,11 @@ foreach ($newsletters as $newsletter)
       </td>
       <td><input type="text" size="60" name="submit_value" value="<?php echo ($parameters->submit_button)?$parameters->submit_button:"Subscribe"; ?>" ></td>
     </tr>
+	<?php 
+	if (!$parameters->id)	
+	  do_action("_wpr_subscriptionform_form_field","");
+	else
+	   do_action("_wpr_subscriptionform_form_field",$parameters->id); ?>
     <tr>
       <td colspan="2"><div class="wrap">
           <h3>More Form Fields</h3>

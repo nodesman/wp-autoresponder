@@ -53,6 +53,7 @@ function wpresponder_install()
 		//the cron variable.
 	if (!get_option("wpr_next_cron"))
 	 	add_option("wpr_next_cron",time()+300);
+		
 
 		
 	//initialize options

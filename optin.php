@@ -33,7 +33,9 @@ function error($error)
 
  */
 
-if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email']))
+$success = (boolean) (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email']));
+
+if ($success)
 {
 	$name = wpr_sanitize($_POST['name']);
 	$email = strtolower(wpr_sanitize($_POST['email']));
@@ -52,6 +54,9 @@ if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email'
 		//stupid spambot spamming my subscription forms. damn the bot!
 		exit;
 	}
+	
+	do_action("_wpr_subscriptionform_prevalidate");
+	
 	
 	$skiplist = array("name","email","followup","blogsubscription","cat","return_url","responder");
 	
@@ -87,6 +92,16 @@ if (isset($_POST['newsletter']) && isset($_POST['name']) && isset($_POST['email'
 		error('<center><div style="font-size: 20px;">Invalid Email Address</div></center> The e-mail address you mentioned is not a valid e-mail address. Please <a href="javascript:window.history.go(-1);">go back</a> and re-enter the e-mail in the correct format.');
 
 	}
+        
+        $errors = array();
+        
+        $errors = apply_filters("_wpr_subscriptionform_validate",$errors);
+        
+        if (count($errors) !=0)
+        {
+            $errorString = implode("<li>",$errors);
+            error("<ol>$errorString</ol>");
+        }
 
 
 	if (!empty($followup) && !empty($responder))

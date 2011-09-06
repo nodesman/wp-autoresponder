@@ -214,7 +214,8 @@ if (!defined("WPR_DEFS"))
 		{
 			_wpr_firstrun();	
 		}
-	
+		
+		do_action("_wpr_init");
                 
 		$admin_page_definitions = $GLOBALS['admin_pages_definitions'];
 		foreach ($admin_page_definitions as $item)

@@ -398,7 +398,6 @@ function _wpr_wpr_import_finish_post()
 				$customFieldIndex = $arrayIndexes[$fieldName];
 				$value = trim($subscriber[$customFieldIndex],'"');
 				$customFieldValueInsertQuery = "INSERT INTO ".$prefix."wpr_custom_fields_values (nid,sid,cid,value) values ('$nid','$sid','$fieldId','$value');";
-				echo $customFieldValueInsertQuery."<br>";
 				$wpdb->query($customFieldValueInsertQuery);
 			}
 			

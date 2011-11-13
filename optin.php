@@ -181,29 +181,8 @@ if ($success)
 
 	$nid = $newsletter->id;
 
-	//the hash...
 
-    //gnerate a small string
-	/*
-	
-	between 48 and 57
-	between 97 and 123 
-	and between 65 and 90
-	*/
-	for ($i=0;$i<6;$i++)
-	{
-		$a[] = rand(65,90);
-		$a[] = rand(97,123);
-		$a[] = rand(48,57);
-		
-		$whichone = rand(0,2);
-		$currentCharacter = chr($a[$whichone]);
-		
-		$hash .= $currentCharacter;
-		unset($a);
-		
-	}
-     $hash .= time();
+        $hash = _wpr_subscriber_hash_generate();
 	//insert into subscribers list
 
 

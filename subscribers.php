@@ -1,5 +1,6 @@
 <?php
 include("subscriber.lib.php");
+include("sub.rus.php");
 function wpr_subscribers()
 {
 	$action = $_GET['action'];
@@ -79,7 +80,7 @@ function _wpr_subscriber_profile($subscriber)
 		<script>window.location='admin.php?page=wpresponder/subscribers.php&action=profile&sid=<?php echo $subscriber->id ?>';</script>
         <?php
 		exit;
-	}
+	}        
 	
 	
 	if (isset($_POST['customfielddata']))
@@ -191,7 +192,7 @@ function _wpr_subscriber_profile($subscriber)
 	}
 	?>
 <div class="wrap"><h2>Profile</h2></div>
-<table>
+<table cellpadding="10">
   <tr>
     <td width="300">Name: </td>
     <td><?php 
@@ -209,7 +210,14 @@ function _wpr_subscriber_profile($subscriber)
                   </tr>
                   <tr>
                     <td>E-Mail Address: </td>
-                    <td><?php echo $subscriber->email ?>
+                    <td><form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
+                            <input type="hidden" name="change_email" value="1"/>
+                            <input type="hidden" name="old_email" value="<?php echo $subscriber->email ?>"/>
+                            <input type="hidden" name="wpr_form" value="sub_rename_email"/>
+                            <input type="text" name="email" size="50" value="<?php echo $subscriber->email ?>"/>
+                        <input type="submit" value="Save" class="button"/>
+                        
+                        </form></td>
                     </td>
                     </tr>
                     </table>
@@ -224,10 +232,20 @@ function _wpr_subscriber_profile($subscriber)
 
 <h3>Current Newsletter Subscriptions:</h3>
 <?php
+$getAllNewslettersQuery = sprintf("SELECT * FROM %swpr_newsletters",$wpdb->prefix);
+$newsletterList = $wpdb->get_results($getAllNewslettersQuery);
+
 $query = "select distinct a.id id, a.name name from ".$wpdb->prefix."wpr_newsletters a, ".$wpdb->prefix."wpr_subscribers b where a.id=b.nid and b.email='".$subscriber->email."' and b.active in(1,2)";
 
 $subscribedNewsletters = $wpdb->get_results($query);
+
+$subscribed_nid_list = array();
 foreach ($subscribedNewsletters as $newsletter)
+{
+    $subscribed_nid_list[] = $newsletter->id;
+}
+
+foreach ($newsletterList as $newsletter)
 {
 		  $nid = $newsletter->id;
 		  $email = $subscriber->email;
@@ -235,6 +253,10 @@ foreach ($subscribedNewsletters as $newsletter)
 		  $results = $wpdb->get_results($query);
 		  $theSubscriberObject = $results[0];
 		  $sid = $theSubscriberObject->id;
+        $nid = $newsletter->id;
+        
+        if (in_array($nid, $subscribed_nid_list))
+        {
 	?>
     <fieldset style="border: 1px solid #000; width:1000px; padding: 15px; margin-bottom: 10px;"><legend><span style="font-family: Arial;font-size: 15px; margin: 10px; font-weight:bold"><?php echo $newsletter->name ?></span></legend>
     <table width="300" style="margin: 10px;">
@@ -416,6 +438,26 @@ else
     
     </fieldset>
     <?php
+        }
+        else
+        {
+            ?>
+<fieldset style="border: 1px solid #000; width:1000px; padding: 15px; margin-bottom: 10px;"><legend><span style="font-family: Arial;font-size: 15px; margin: 10px; font-weight:bold"><?php echo $newsletter->name ?></span></legend>
+    
+<strong>Subscription Status: </strong> Not Subscribed<br />
+<form action="admin.php?page=wpresponder/subscribers.php&action=profile&sid=<?php echo $sid ?>" method="post">
+<input type="hidden" name="sid" value="<?php echo $subscriber->id ?>" />
+<input type="hidden" name="nid" value="<?php echo $nid; ?>"/>
+<input type="hidden" name="email" value="<?php echo $subscriber->email; ?>"/>
+<?php wp_nonce_field('_wpr_sub_subscribe_newsletter'); ?>
+<input type="hidden" name="wpr_form" value="sub_subscribe_newsletter_form" /><br/><br/>
+<input type="submit" name="submit"  value="<?php echo __("Subscribe to this newsletter"); ?>" class="button-primary" /> 
+</form>
+
+    
+    </fieldset>
+<?php
+        }
 
 	
 }

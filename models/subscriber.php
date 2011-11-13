@@ -89,6 +89,12 @@ class Subscriber
 		return ($this->nid);
 	}
 	
+	public static function replaceCustomFieldValues($string, $sid)
+	{
+		throw new Exception("To be implemented: replaceCustomFieldValues");
+		return $string;	
+	}
+	
 	public function getCustomFieldValuesByLabels()
 	{
 		global $wpdb;

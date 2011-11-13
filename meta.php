@@ -193,7 +193,8 @@ $database_structure["wpr_blog_subscription"] = array ( 'columns'=> array(
                                                                            'id' => "INT NOT NULL",
                                                                            'sid' => "INT NOT NULL",
                                                                            'type' => "enum('all','cat') NOT NULL",
-                                                                           'catid' => "INT NOT NULL"
+                                                                           'catid' => "INT NOT NULL",
+																		   'last_processed_date'=>'INT NOT NULL'
                                                                           ),
                                                        'primary_key' => "id",
                                                        'auto_increment'=>'id',
@@ -388,7 +389,7 @@ $GLOBALS['wpr_cron_schedules'] = array(
 												  ),
 											array(
 												  	'action'=> '_wpr_autoresponder_process',
-													'schedule'=> 'every_ten_minutes',
+													'schedule'=> 'hourly',
 													'arguments' => array()
 												  ),
 											array(
@@ -470,6 +471,9 @@ $GLOBALS['initial_wpr_options'] = $initial_wpr_options;
 define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100);   //DO **NOT*** SET IT TO > 500 . E-mails WILL stop delivery completely.
 define("WPR_MAX_QUEUE_TABLE_SIZE",1073741824); // 1GB
 define("WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME",300); //the queue delivery burst can run for a maximum of 5 minutes at a time.
+//autoresponder
 define("WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME",300); //the autoresponder processor can run for a maximum of 5 minutes at a time.
+define("WPR_AUTORESPONDER_BATCH_SIZE",1000); //the autoresponder processor can run for a maximum of 5 minutes at a time.
+
 define("WPR_MAX_POSTSERIES_PROCESS_EXECUTION_TIME",300); //the postseries processor can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_NEWSLETTER_PROCESS_EXECUTION_TIME",1800); //the newsletter broadcast processor can run for a maximum of half an hour at a time.

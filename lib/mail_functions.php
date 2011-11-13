@@ -1,5 +1,26 @@
 <?php
 
+function _wpr_subscriber_hash_generate() {
+
+	$hash = "";
+	for ($i=0;$i<6;$i++)
+	{
+		$a[] = rand(65,90);
+		$a[] = rand(97,123);
+		$a[] = rand(48,57);
+		
+		$whichone = rand(0,2);
+		$currentCharacter = chr($a[$whichone]);
+		
+		$hash .= $currentCharacter;
+		unset($a);
+		
+	}
+     $hash .= time();
+	//insert into subscribers list
+	return $hash;
+}
+
 function _wpr_increment_hourly_email_sent_count()
 {
 	$email_sent_this_hour = get_option("_wpr_dq_emails_sent_this_hour");

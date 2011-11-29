@@ -1,4 +1,4 @@
-<?php
+<?php
 
 include "mail.lib.php";
 
@@ -91,11 +91,7 @@ function wpr_newmail ()
 
 			$wpdb->query($query);
 
-			//schedule the cron to run right now.
-			wp_schedule_single_event( time(), "wpr_cronjob");			
-			//make the cron start.
-			spawn_cron(); 
-			
+				
 			_wpr_mail_sending();
 			return;
 

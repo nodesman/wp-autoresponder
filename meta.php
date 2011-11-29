@@ -413,18 +413,12 @@ $GLOBALS['wpr_cron_schedules'] = array(
 													'arguments' => array()
 												  ),
 
-											 array(
-												      'action' => 'wpr_cronjob',
-													  'schedule'=> 'every_five_minutes',
-													  'arguments' => array()
-												  )
 																		   
 										);
 
 $GLOBALS['_wpr_crons'] = array(
 							   			'_wpr_process_autoresponders',
 										'_wpr_process_post_series',
-										'wpr_cronjob',
 										'_wpr_queue_management_cron',
 										'wpr_tutorial_cron',
 										"_wpr_ensure_single_instances_of_crons",

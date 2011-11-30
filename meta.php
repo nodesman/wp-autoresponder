@@ -372,16 +372,6 @@ $GLOBALS['wpr_defaults'] = array(
 
 
 $GLOBALS['wpr_cron_schedules'] = array(
-									       array(
-												  	'action'=> '_wpr_process_post_series',
-													'schedule'=> 'every_half_hour',
-													'arguments' => array()
-												  ),
-											array(
-												  	'action'=> '_wpr_ensure_single_instances_of_crons',
-													'schedule'=> 'every_half_hour',
-													'arguments' => array()
-												  ),
 											array(
 												  	'action'=> '_wpr_queue_management_cron',
 													'schedule'=> 'every_ten_minutes',
@@ -417,11 +407,13 @@ $GLOBALS['wpr_cron_schedules'] = array(
 										);
 
 $GLOBALS['_wpr_crons'] = array(
-							   			'_wpr_process_autoresponders',
-										'_wpr_process_post_series',
+							   			'_wpr_autoresponder_process',
+										'_wpr_postseries_process',
+                                                                                '_wpr_process_broadcasts',
+                                                                                '_wpr_process_blog_subscriptions',
 										'_wpr_queue_management_cron',
+                                                                                '_wpr_process_queue',
 										'wpr_tutorial_cron',
-										"_wpr_ensure_single_instances_of_crons",
 										'wpr_updates_cron',
 										'wpr_send_errors'
 							  );
@@ -454,7 +446,10 @@ $initial_wpr_options = array(
 					 		'_wpr_admin_notices' => base64_encode(serialize(array())),
 							'wpr_hourlylimit'=> '100',
 							'wpr_sent_posts' => 'off',
-							'wpr_address' => ''
+							'wpr_address' => '',
+                                                        '_wpr_options'=> array(
+                                                                '_wpr_ensure_single_instances_of_crons_last_run' => 0
+                                                            )
 					 );
 
 $GLOBALS['initial_wpr_options'] = $initial_wpr_options;
@@ -471,3 +466,4 @@ define("WPR_AUTORESPONDER_BATCH_SIZE",1000); //the autoresponder processor can r
 
 define("WPR_MAX_POSTSERIES_PROCESS_EXECUTION_TIME",300); //the postseries processor can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_NEWSLETTER_PROCESS_EXECUTION_TIME",1800); //the newsletter broadcast processor can run for a maximum of half an hour at a time.
+define("WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY",86400); //the period between runs of the _wpr_ensure_single_instances_of_crons cron.

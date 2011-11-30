@@ -45,8 +45,6 @@ function _wpr_unschedule_crons()
 
 function _wpr_attach_cron_actions_to_functions()
 {	
-	add_action("_wpr_process_post_series","_wpr_postseries_process");
-	
 	add_action('_wpr_ensure_single_instances_of_crons','_wpr_ensure_single_cron_instances');
 	//the cron that delivers email. 		
 	//the tutorial series
@@ -100,9 +98,9 @@ function _wpr_ensure_single_cron_instances()
 	foreach ($cron_sched as $cron)
 	{
 		$action = $cron['action'];
-		$serialized = serialize($cron['args']);
+		$serialized = serialize($cron['arguments']);
 		$encoded = base64_encode($serialized);
-		$key_name = $action."-----".$encoded;
+		$key_name = $action."------".$encoded;
 		$must_exist_crons[$key_name] = $cron;
 	}
 	$scheduled_crons = array_keys($scheduled_cron_list);
@@ -122,9 +120,9 @@ function _wpr_ensure_single_cron_instances()
 		//schedule them
 		foreach ($missing_crons as $missing_cron)
 		{
-			$action = $must_exist_cron['action'];
-			$schedule = $must_exist_cron['schedule'];
-			$arguments = $must_exist_cron['arguments'];
+			$action = $missing_cron['action'];
+			$schedule = $missing_cron['schedule'];
+			$arguments = $missing_cron['arguments'];
 			if (count($arguments) >0)
 				wp_schedule_event(time(),$schedule,$action,$arguments);
 			else

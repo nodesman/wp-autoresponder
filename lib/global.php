@@ -6,6 +6,23 @@ function validateEmail($email)
     return eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4})$',$email);
 }
 
+function _wpr_option_get($name)
+{
+    if (!$GLOBALS['_wpr_options'] )
+    {
+        $GLOBALS['_wpr_options'] = get_option("_wpr_options");
+    }
+    $options = $GLOBALS['_wpr_options'];
+    return $options[$name];
+}
+
+function _wpr_option_set($name,$value)
+{
+    $options = get_option("_wpr_options");
+    $options[$name] = $value;
+    update_option("_wpr_options",$options);
+}
+
 function wpr_sanitize($string,$html=true)
 {
 	if ($html)

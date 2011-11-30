@@ -35,7 +35,6 @@ if (!defined("WPR_DEFS"))
 	include_once "wpr_deactivate.php";
 	include_once "all_mailouts.php";
 	include_once "actions.php";
-	include_once "runcronnow.php";	
 	include_once "blogseries.lib.php";
 	include_once "lib.php";
 	require_once "$plugindir/meta.php";
@@ -170,13 +169,14 @@ if (!defined("WPR_DEFS"))
 		}
 
 	}	
-	 
+        
 	
 	function wpresponder_init_method() 
 	{
 		//load the scripts only for the administrator.
 		global $current_user;
 		global $db_checker;
+                
 		
 		if (isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 1)
 		{
@@ -242,10 +242,7 @@ if (!defined("WPR_DEFS"))
 			_wpr_handle_post();
 	 		_wpr_run_controller();
 		}
-
-		
 		//a visitor is trying to subscribe.
-		        
 		$directory = str_replace(basename(__FILE__),"",__FILE__);
 		$containingdirectory = basename($directory);
 		$url = get_bloginfo("url");
@@ -253,6 +250,24 @@ if (!defined("WPR_DEFS"))
 		wp_register_script( "wpresponder-tabber", "$url/?wpr-file=tabber.js");
 		wp_register_script( "wpresponder-ckeditor", "/".PLUGINDIR."/".$containingdirectory."/ckeditor/ckeditor.js");
 		wp_register_script( "wpresponder-addedit", "/".PLUGINDIR."/".$containingdirectory."/script.js");
+                
+                
+                /*
+                 * The following code ensures that the WP Responder's crons are always scheduled no matter what
+                 * Sometimes the crons go missing from cron's registry. Only the great zeus knows why that happens. 
+                 * The following code ensures that the crons are always scheduled immediately after they go missing. 
+                 * It also unenqueues duplicate crons that get enqueued when the plugin is deactivated and then reactivated.
+                 */
+                
+                //run the single instances every day once:
+                $last_run_esic = intval(_wpr_option_get("_wpr_ensure_single_instances_of_crons_last_run"));
+                $timeSinceLast = time() - $last_run_esic;
+                if ($timeSinceLast > WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY)
+                {
+                    do_action("_wpr_ensure_single_instances_of_crons");
+                    $currentTime= time();
+                    _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime );
+                }
 		
 		if (isset($_GET['wpr-confirm']) && $_GET['wpr-confirm']==2)
 		{
@@ -292,7 +307,7 @@ if (!defined("WPR_DEFS"))
 				
 				break;
 				
-             }
+                        }
 		}
 		
 		if (isset($_GET['wpr-template']))
@@ -345,4 +360,3 @@ if (!defined("WPR_DEFS"))
 	
 	
 }
-

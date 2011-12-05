@@ -292,7 +292,7 @@ function validateAndReturnFormData(&$error)
     {
         $fromemail = get_bloginfo("admin_email");
     }
-    $subject = $_POST['subject'];
+    $subject = stripslashes($_POST['subject']);
     $textbody = $_POST['textbody'];
 
 

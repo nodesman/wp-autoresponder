@@ -206,6 +206,7 @@ function _wpr_import_fourth_step()
 
 function _wpr_import_upload()
 {
+	ini_set('auto_detect_line_endings', true);
     session_start();
     if ($_FILES['csv']['error']==UPLOAD_ERR_OK)
     {

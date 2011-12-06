@@ -2,7 +2,7 @@
 include "wp-load.php";
 
 global $wpdb;
-if (!current_user_can('level_8') )
+if (!current_user_can("manage_newsletters") )
 {
 	header("HTTP/1.0 404 Not Found");
 	exit;

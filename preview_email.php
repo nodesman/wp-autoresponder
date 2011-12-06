@@ -1,7 +1,7 @@
 <?php
 include "wp-load.php";
 
-if (!current_user_can('level_8'))
+if (!current_user_can("manage_newsletters"))
 {
 	exit;
 }
@@ -25,7 +25,7 @@ global $wpdb;
 
 
 //die if this is not a adminstrator's session
-if (! current_user_can('level_8') )
+if (! current_user_can("manage_newsletters") )
 {
     echo "You are not authorized to view this page.";
     exit;
@@ -292,7 +292,7 @@ function validateAndReturnFormData(&$error)
     {
         $fromemail = get_bloginfo("admin_email");
     }
-    $subject = $_POST['subject'];
+    $subject = stripslashes($_POST['subject']);
     $textbody = $_POST['textbody'];
 
 

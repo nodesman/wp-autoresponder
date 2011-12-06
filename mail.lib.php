@@ -513,9 +513,9 @@ function setActualTime()
 	
 	var theMinute = document.getElementById('minute').options[document.getElementById('minute').selectedIndex].value;
 	
-	themonth = themonth.replace("0","");
-	thedate = thedate.replace("0","");
-	theHour = theHour.replace("0","");
+	themonth = themonth.replace(/^0/,'');
+	thedate = thedate.replace(/^0/,'');
+	theHour = theHour.replace(/^0/,'');
 	
 	month= parseInt(themonth);
 	thedate = parseInt(thedate);
@@ -557,7 +557,7 @@ function validateTheForm()
 	if (document.getElementById('sendattime').checked==true)
 	{
 		currentTime = getCurrentUTCTime();
-		scheduledTime = document.getElementById('actualTime').value;		
+		scheduledTime = parseInt(document.getElementById('actualTime').value);
 		if (currentTime > scheduledTime)
 		{
 			alert('You cannot schedule a mailout to go out in the past. Please select a time in the future.');

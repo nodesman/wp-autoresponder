@@ -251,7 +251,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'New Broadcast',
                             'menu_title'=>'New Broadcast',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/newmail.php',
                             'callback'=>'wpr_newmail'
@@ -259,7 +259,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'All Broadcasts',
                             'menu_title'=>'All Broadcasts',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/allmailouts.php',
                             'callback'=>'wpr_all_mailouts'
@@ -267,7 +267,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                          array(
                             'page_title'=> 'Newsletters',
                             'menu_title'=>'Newsletters',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/newsletter',
                             'callback'=>'_wpr_render_view'
@@ -275,7 +275,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Autoresponders',
                             'menu_title'=>'Autoresponders',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/autoresponder.php',
                             'callback'=>'wpr_autoresponder'
@@ -283,7 +283,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                           array(
                             'page_title'=> 'Post Series',
                             'menu_title'=>'Post Series',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/blogseries.php',
                             'callback'=>'wpr_blogseries'
@@ -291,7 +291,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Custom Fields',
                             'menu_title'=>'Custom Fields',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/custom_fields',
                             'callback'=>'_wpr_render_view'
@@ -299,7 +299,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Subscription Forms',
                             'menu_title'=>'Subscription Forms',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/subscriptionforms.php',
                             'callback'=>'wpr_subscriptionforms'
@@ -309,7 +309,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                        array(
                             'page_title'=> 'Subscribers',
                             'menu_title'=>'Subscribers',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                            'legacy'   => 1,
                             'menu_slug'=> "wpresponder/subscribers.php",
                             'callback'=>'wpr_subscribers'
@@ -317,7 +317,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Actions',
                             'menu_title'=>'Actions',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=> "wpresponder/actions.php",
                             'callback'=>'wpr_actions'
@@ -325,7 +325,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Settings',
                             'menu_title'=>'Settings',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
 							'legacy'=>0,
                             'menu_slug'=> "_wpr/settings",
                             'callback'=>'_wpr_render_view'
@@ -333,7 +333,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Import/Export Subscribers',
                             'menu_title'=>'Import/Export',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/importexport',
                             'callback'=>'_wpr_render_view'
@@ -341,7 +341,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Background Procs',
                             'menu_title'=>'Background Procs',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/background_procs',
                             'callback'=>'_wpr_render_view'
@@ -349,7 +349,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Queue Management',
                             'menu_title'=>'Queue Management',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/queue_management',
                             'callback'=>'_wpr_render_view'

@@ -4,7 +4,7 @@ function wpr_subscribers()
 {
 	$action = $_GET['action'];
 
-        if (current_user_can('level_8'))
+        if (current_user_can("manage_newsletters"))
         {
 	switch ($action)
 	{

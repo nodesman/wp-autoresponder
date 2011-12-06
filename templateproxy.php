@@ -3,7 +3,7 @@ include ("wp-load.php");
 
 global $current_user;
 
-if (current_user_can('level_8'))
+if (current_user_can("manage_newsletters"))
 {
 
     if (isset($_GET['wpr-template']))

@@ -5,6 +5,10 @@ function wpresponder_install()
     global $db_checker;
     $WPR_PLUGIN_DIR = $GLOBALS['WPR_PLUGIN_DIR'];
     
+    //add new capacity
+	$role = get_role( 'administrator' );
+	$role->add_cap( 'manage_newsletters' );
+
     //1. set up the necessary database tables
     $db_checker->perform_check(); 
 

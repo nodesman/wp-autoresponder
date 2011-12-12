@@ -10,7 +10,6 @@ Author URI: http://www.krusible.com/
 
 //protect from multiple copies of the plugin. this can happen sometimes.
 
-
 if (!defined("WPR_DEFS"))
 {
     define("WPR_DEFS",1);
@@ -70,7 +69,7 @@ if (!defined("WPR_DEFS"))
 	function _wpr_nag()
 	{
 		$address = get_option("wpr_address");		
-		if (!$address && is_admin() && current_user_can('level_8'))  
+		if (!$address && current_user_can("manage_newsletters"))  
 		{
 			add_action("admin_notices","no_address_error");	
 		}
@@ -146,7 +145,7 @@ if (!defined("WPR_DEFS"))
 		$directory = str_replace("wpresponder.php","",__FILE__);
 		$containingdirectory = basename($directory);
 		$home_url = get_bloginfo("url");
-		if (is_admin() && current_user_can('install_plugins') && isset($_GET['page']) && ereg("_wpr/.*",$_GET['page']))
+		if (current_user_can('manage_newsletters') && isset($_GET['page']) && ereg("_wpr/.*",$_GET['page']))
 		{
 			wp_enqueue_script('post');
 
@@ -336,8 +335,8 @@ if (!defined("WPR_DEFS"))
 	
 	function wpr_admin_menu()
 	{
-		add_menu_page('Newsletters','Newsletters','install_plugins',__FILE__);
-		add_submenu_page(__FILE__,'Dashboard','Dashboard','install_plugins',__FILE__,"wpr_dashboard");
+		add_menu_page('Newsletters','Newsletters','manage_newsletters',__FILE__);
+		add_submenu_page(__FILE__,'Dashboard','Dashboard','manage_newsletters',__FILE__,"wpr_dashboard");
 		$admin_pages_definitions = $GLOBALS['admin_pages_definitions'];
 		$admin_pages_definitions = apply_filters("_wpr_menu_definition",$admin_pages_definitions);
 		foreach ($admin_pages_definitions as $definition)

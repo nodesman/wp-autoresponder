@@ -52,8 +52,8 @@ function wpr_newmail ()
 			else
 			{
 				$sections = explode("/",$date);
-				$timeToSend =mktime($hour,$min,0,$sections[0],$sections[1],$sections[2]); 
-				$timeToSend = $timeToSend+$timezoneOffset;
+				$timeToSend = mktime($hour,$min,0,$sections[0],$sections[1],$sections[2]); 
+				$timeToSend = $timeToSend-$timezoneOffset;
 			}
 
 		}

@@ -1,6 +1,6 @@
 <?php
 global $wpdb;
-if (current_user_can('activate_plugins'))
+if (current_user_can('manage_newsletters'))
 {
 	$id = intval($_GET['wpr-vb']);
 	if ($id == 0)

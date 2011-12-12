@@ -34,7 +34,7 @@ function _wpr_subscriber_add_rule_post()
 {
 	
 	global $wpdb;
-	if (current_user_can("level_8"))
+	if (current_user_can("manage_newsletters"))
 	{						 
 		$source = $_POST['source'];
 		$dest = $_POST['destination'];

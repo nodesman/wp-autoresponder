@@ -2,7 +2,7 @@
 include "wp-load.php";
 
 
-if (!current_user_can('level_8'))
+if (!current_user_can("manage_newsletters"))
 {
 	exit;
 }

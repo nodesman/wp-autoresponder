@@ -112,6 +112,7 @@ function _wpr_edit_mailout()
 function _wpr_pending_mailouts()
 {
 	global $wpdb;
+	$offset = get_option('gmt_offset');
 	$query = "SELECT * FROM ".$wpdb->prefix."wpr_newsletter_mailouts where status=0;";
 	$mailouts = $wpdb->get_results($query);
 	?>
@@ -160,7 +161,7 @@ function _wpr_pending_mailouts()
            <td><?php $newsletter = _wpr_newsletter_get($mailout->nid);
 		   echo $newsletter->name ?></td>
            <td><?php 
-		   echo date("g:ia \o\\n dS F Y",$mailout->time); ?> GMT
+		   echo date("g:ia \o\\n dS F Y",$mailout->time + ($offset * 3600)); ?>
 </td>
            <td><?php $recipients = implode("<br>",explode("%set%",$mailout->recipients));
 		   echo ($recipients)?$recipients:"All Subscribers";?></td>
@@ -178,6 +179,7 @@ function _wpr_finished_mailouts()
 	global $wpdb;
 	$query = "SELECT * FROM ".$wpdb->prefix."wpr_newsletter_mailouts where status=1;";
 	$mailouts = $wpdb->get_results($query);
+	$offset = get_option('gmt_offset');
 	?>
     <div class="wrap"><h2>Sent Broadcasts</h2></div>
     <table class="widefat">
@@ -198,7 +200,7 @@ function _wpr_finished_mailouts()
            <td><?php echo $mailout->subject ?></td>
            <td><?php $newsletter = _wpr_newsletter_get($mailout->nid);
 		   echo $newsletter->name ?></td>
-           <td><?php echo date("g:ia d F Y",$mailout->time); ?></td>
+           <td><?php echo date("g:ia d F Y",$mailout->time + ($offset * 3600)); ?></td>
            <td><?php $recipients = implode("<br>",explode("%set%",$mailout->recipients));
 		   echo ($recipients)?$recipients:"All Subscribers";
 		   ?></td>

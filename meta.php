@@ -39,7 +39,7 @@ $database_structure["wpr_subscriber_transfer"] = array('columns' => array(
                                                         )
                                         );
 $database_structure["wpr_subscription_form"] = array (
-													  
+
                                                       'columns' => array(
                                                                           'id' => "INT NOT NULL",
                                                                           'name' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
@@ -71,17 +71,17 @@ $database_structure["wpr_queue"] = array (
                                                               'from' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL",
                                                               'fromname' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin  NOT NULL",
                                                               'to' => "VARCHAR(100) NOT NULL",
-															  'reply_to'=> 'VARCHAR(100)  CHARACTER SET utf8 COLLATE utf8_bin NOT NULL',
+  							      'reply_to'=> 'VARCHAR(100)  CHARACTER SET utf8 COLLATE utf8_bin NOT NULL',
                                                               'subject' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'htmlbody' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'textbody' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'headers' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'sent' => "INT NOT NULL",
-															  'date' => 'INT NOT NULL DEFAULT UNIX_TIMESTAMP()',
-															  'delivery_type' =>"tinyint(1) NOT NULL DEFAULT '0'",
-															  'email_type' => "enum('user_verify_email','user_confirmed_email','user_followup_autoresponder_email','user_followup_postseries_email','user_blogsubscription_email','user_blogcategorysubscription_email','user_unsubscribed_notification_email','critical_queue_limit_approaching_email','system_subscription_errors_email','system_analytics_email','misc') COLLATE utf8_bin NOT NULL DEFAULT 'misc'",
-															  'hash'=> 'VARCHAR(32)  NOT NULL',
-															  'meta_key'=> 'VARCHAR(30)  NOT NULL',
+							      'date' => 'INT NOT NULL',
+							      'delivery_type' =>"tinyint(1) NOT NULL DEFAULT '0'",
+						              'email_type' => "enum('user_verify_email','user_confirmed_email','user_followup_autoresponder_email','user_followup_postseries_email','user_blogsubscription_email','user_blogcategorysubscription_email','user_unsubscribed_notification_email','critical_queue_limit_approaching_email','system_subscription_errors_email','system_analytics_email','misc') COLLATE utf8_bin NOT NULL DEFAULT 'misc'",
+  							      'hash'=> 'VARCHAR(32)  NOT NULL',
+							      'meta_key'=> 'VARCHAR(30)  NOT NULL',
                                                               'htmlenabled' => "TINYINT NOT NULL",
                                                               'attachimages' => "TINYINT NOT NULL"
                                                      ),
@@ -139,7 +139,7 @@ $database_structure["wpr_newsletters"] = array ( 'columns'=> array(
                                                   );
 
 $database_structure["wpr_followup_subscriptions"] = array ( 'columns'=> array(
-																   
+
                                                                     'id' => "INT NOT NULL ",
                                                                           'sid' => "INT NOT NULL",
                                                                           'type' => "enum('autoresponder','postseries') NOT NULL",
@@ -173,7 +173,7 @@ $database_structure["wpr_custom_fields_values"] = array ( 'columns'=> array(
 
 
 $database_structure["wpr_custom_fields"] = array ( 'columns'=> array(
-																	 
+
                                                                       'id' => "INT NOT NULL",
                                                                       'nid' => "INT NOT NULL",
                                                                       'type' => "enum('enum','text','hidden') NOT NULL",
@@ -188,7 +188,7 @@ $database_structure["wpr_custom_fields"] = array ( 'columns'=> array(
                                                                     )
                                                     );
 
-																			
+
 $database_structure["wpr_blog_subscription"] = array ( 'columns'=> array(
                                                                            'id' => "INT NOT NULL",
                                                                            'sid' => "INT NOT NULL",
@@ -251,7 +251,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'New Broadcast',
                             'menu_title'=>'New Broadcast',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/newmail.php',
                             'callback'=>'wpr_newmail'
@@ -259,7 +259,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'All Broadcasts',
                             'menu_title'=>'All Broadcasts',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/allmailouts.php',
                             'callback'=>'wpr_all_mailouts'
@@ -267,7 +267,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                          array(
                             'page_title'=> 'Newsletters',
                             'menu_title'=>'Newsletters',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/newsletter',
                             'callback'=>'_wpr_render_view'
@@ -275,7 +275,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Autoresponders',
                             'menu_title'=>'Autoresponders',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/autoresponder.php',
                             'callback'=>'wpr_autoresponder'
@@ -283,7 +283,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                           array(
                             'page_title'=> 'Post Series',
                             'menu_title'=>'Post Series',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/blogseries.php',
                             'callback'=>'wpr_blogseries'
@@ -291,7 +291,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Custom Fields',
                             'menu_title'=>'Custom Fields',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/custom_fields',
                             'callback'=>'_wpr_render_view'
@@ -299,7 +299,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Subscription Forms',
                             'menu_title'=>'Subscription Forms',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=>'wpresponder/subscriptionforms.php',
                             'callback'=>'wpr_subscriptionforms'
@@ -309,7 +309,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                        array(
                             'page_title'=> 'Subscribers',
                             'menu_title'=>'Subscribers',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                            'legacy'   => 1,
                             'menu_slug'=> "wpresponder/subscribers.php",
                             'callback'=>'wpr_subscribers'
@@ -317,7 +317,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Actions',
                             'menu_title'=>'Actions',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 1,
                             'menu_slug'=> "wpresponder/actions.php",
                             'callback'=>'wpr_actions'
@@ -325,7 +325,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Settings',
                             'menu_title'=>'Settings',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
 							'legacy'=>0,
                             'menu_slug'=> "_wpr/settings",
                             'callback'=>'_wpr_render_view'
@@ -333,7 +333,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Import/Export Subscribers',
                             'menu_title'=>'Import/Export',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/importexport',
                             'callback'=>'_wpr_render_view'
@@ -341,7 +341,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Background Procs',
                             'menu_title'=>'Background Procs',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/background_procs',
                             'callback'=>'_wpr_render_view'
@@ -349,7 +349,7 @@ $GLOBALS['admin_pages_definitions'] = array(
                         array(
                             'page_title'=> 'Queue Management',
                             'menu_title'=>'Queue Management',
-                            'capability'=> 'activate_plugins',
+                            'capability'=> 'manage_newsletters',
                             'legacy'   => 0,
                             'menu_slug'=>'_wpr/queue_management',
                             'callback'=>'_wpr_render_view'
@@ -403,7 +403,7 @@ $GLOBALS['wpr_cron_schedules'] = array(
 													'arguments' => array()
 												  ),
 
-																		   
+
 										);
 
 $GLOBALS['_wpr_crons'] = array(
@@ -467,3 +467,4 @@ define("WPR_AUTORESPONDER_BATCH_SIZE",1000); //the autoresponder processor can r
 define("WPR_MAX_POSTSERIES_PROCESS_EXECUTION_TIME",300); //the postseries processor can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_NEWSLETTER_PROCESS_EXECUTION_TIME",1800); //the newsletter broadcast processor can run for a maximum of half an hour at a time.
 define("WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY",86400); //the period between runs of the _wpr_ensure_single_instances_of_crons cron.
+

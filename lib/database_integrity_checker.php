@@ -23,6 +23,7 @@ class DatabaseChecker
                 else
                     $this->modify_table_to_structure($table_name);
             }
+
 	}
 	
 	function add_prefix(&$table_name)

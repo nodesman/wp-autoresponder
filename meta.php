@@ -420,7 +420,13 @@ $GLOBALS['wpr_cron_schedules'] = array(
 																		   
 										);
 
-$GLOBALS['_wpr_crons'] = array(
+
+foreach ($GLOBALS['wpr_cron_schedules'] as $cron) {
+	$GLOBALS['_wpr_crons'][] = $cron['action'];
+}
+
+//this seems inaccurate and liable to fail
+/*$GLOBALS['_wpr_crons'] = array(
 							   			'_wpr_process_autoresponders',
 										'_wpr_process_post_series',
 										'wpr_cronjob',
@@ -431,6 +437,7 @@ $GLOBALS['_wpr_crons'] = array(
 										'wpr_send_errors'
 							  );
 
+*/
 $schedules = array();
 $schedules['every_five_minutes'] = array(
 		 'interval'=> 300,

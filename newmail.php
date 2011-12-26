@@ -1,4 +1,4 @@
-<?php
+<?php
 
 include "mail.lib.php";
 

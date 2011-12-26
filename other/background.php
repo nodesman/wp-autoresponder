@@ -1,5 +1,4 @@
 <?php
-
 function getNumberOfEmailsToDeliver()
 {
 	$currentTime = time();	
@@ -82,35 +81,50 @@ function _wpr_process_queue()
 	update_option("_wpr_queue_delivery_status",$timeOfStart);
 	
 	$numberOfEmailsToDeliver = getNumberOfEmailsToDeliver();
-	$limitClause = " LIMIT $numberOfEmailsToDeliver";
-	$query = "SELECT * FROM ".$wpdb->prefix."wpr_queue where sent=0 $limitClause ";
-	$results = $wpdb->get_results($query);
-	foreach ($results as $mail)  
-	{
-		$mail = (array) $mail;	
-		
-		
-		try {
-			dispatchEmail($mail);
-		}
-		catch (Swift_RfcComplianceException $exception) //invalidly formatted email.
-		{
-			//disable all subscribers with that email.
-			$email = $mail['to'];			
-			$query = "UPDATE ".$wpdb->prefix."wpr_subscribers set active=3, confirmed=0 where email='$email'";
-			$wpdb->query($query);
-		}
-		$query = "UPDATE ".$wpdb->prefix."wpr_queue set sent=1 where id=".$mail['id'];
-		$wpdb->query($query);
-
-                $timeThisInstant = time();
-
-                $timeSinceStart = $timeThisInstant-$timeOfStart;
-                if ($timeSinceStart > WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME)
-                    return;
-
-	}
+	$queueBatchSize = WPR_MAX_QUEUE_EMAILS_SENT_PER_ITERATION;
 	
+	$numberOfIterations = ceil($numberOfEmailsToDeliver/$queueBatchSize);
+	
+	//queue batch size of number of emails to deliver whichever is lesser should be fetched from db.
+	if ($numberOfEmailsToDeliver < $queueBatchSize)
+	  $queueBatchSize = $numberOfEmailsToDeliver;
+	
+	for ($iter=0;$iter<$numberOfIterations;$iter++)
+	{
+		$limitClause = sprintf(" LIMIT %d",$queueBatchSize);
+		$query = sprintf("SELECT * FROM `%swpr_queue` WHERE `sent`=0 %s ",$wpdb->prefix,$limitClause);
+		$results = $wpdb->get_results($query);
+		foreach ($results as $mail)  
+		{
+			$mail = (array) $mail;	
+			try {
+				dispatchEmail($mail);
+			}
+			catch (Swift_RfcComplianceException $exception) //invalidly formatted email.
+			{
+				//disable all subscribers with that email.
+				//TODO: Move this to a separate function.
+				$email = $mail['to'];
+				$setTheEmailAsFailedQuery = $wpdb->prepare("UPDATE `{$wpdb->prefix}wpr_subscribers` SET `active`=3, `confirmed`=0 WHERE `email`=%s",$email);
+				$wpdb->query($setTheEmailAsFailedQuery);
+				
+				//set aall other emails in queue which have this email to 3.
+				//TODO: #DevDoc sent=3 means invalid email.
+				$markAllEmailsOfThisEmailUnprocessable = $wpdb->prepare("UPDATE `{$wpdb->prefix}wpr_queue` SET `sent`=3 WHERE `sent`=0 AND `email`=%s",$email);
+				$wpdb->query($markAllEmailsOfThisEmailUnprocessable);
+			}
+			$setEmailAsSentQuery = sprintf("UPDATE `%swpr_queue` SET `sent`=1 WHERE `id`=%d",$wpdb->prefix,$mail['id']);
+			$wpdb->query($setEmailAsSentQuery);
+		        $timeThisInstant = time();
+		        $timeSinceStart = $timeThisInstant-$timeOfStart;
+		        if ($timeSinceStart > WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME)
+		        {
+		            update_option("_wpr_queue_delivery_status","stopped");
+		            return;
+		        }
+
+		}
+	}
 	//WE JUST FINISHED
 	update_option("_wpr_queue_delivery_status","stopped");
 }
@@ -293,6 +307,11 @@ function _wpr_autoresponder_process($id=0)
 	do_action('_wpr_autoresponder_process_end');
 	update_option("_wpr_autoresponder_process_status","stopped");
 }
+
+
+
+
+
 function _wpr_postseries_process()
 {
 	global $wpdb;
@@ -343,7 +362,7 @@ function _wpr_postseries_process()
                 //get the post series as an object
 		$postseries = _wpr_postseries_get($psubscription->eid);
                 //get the posts in the post series
-        $posts = get_postseries_posts($postseries->catid,$nid);
+                $posts = get_postseries_posts($postseries->catid,$nid);
 		$numberOfPosts = count($posts);
 		if ($numberOfPosts == 0)
 		{
@@ -404,12 +423,135 @@ function wpr_get_mailouts()
 	return $mailouts;
 }
 
+//cache of variables that will be used in _wpr_blog_subscription_get_post_to_deliver()
+$GLOBALS['_wpr_blog_subscription_process_vars'] = array();
+
+function _wpr_blog_subscription_get_post_to_deliver($subscription)
+{
+    global $wpdb;
+    $cache = &$GLOBALS['_wpr_blog_subscription_get_post_to_deliver'];
+    if ($subscription->last_published_postid == 0)
+    {
+        //get the latest post
+        $latestPost = false;
+        if (isset($cache['latest_post']))
+        {
+            $latestPost = $cache['latest_post'];
+            $args = array(
+                'numberposts'     => 1,
+                'offset'          => 0,
+                'orderby'         => 'post_date',
+                'order'           => 'DESC',
+                'post_type'       => 'post',
+                'post_status'     => 'publish' );
+            $posts = get_posts($args);
+            if (0 == count($posts))
+                $latestPost = false;
+            //latest post
+            $cache['latest_post'] = $posts[0];
+        }
+        
+        if ($latestPost === false)
+            return false;
+        $post_id = $latestPost->ID;
+        
+        $sentPosts = get_option("wpr_sent_posts");
+        $sentPostsList = explode(",",$sentPosts);
+        
+        foreach ($sentPostsList as $index=>$postid)
+        {
+            $thePostId = intval($postid);
+            if ($thePostId == $post_id) //this post has already been delivered.
+                return false;
+        }
+        return $latestPost;
+    }
+    else //this subscription has been ported to the new format. now find a newer post to deliver.
+    {
+        $timeOfLastPost = $subscription->last_published_post_date;
+        $timeStampOfLastPost = date("Y-m-d H:i:s",$timeOfLastPost);
+        $timeStampForNow  = date("Y-m-d H:i:s");
+        $getPostsSinceThisDateQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` > '%s' AND `post_date_gmt` < '%s' ORDER BY `post_date_gmt` ASC LIMIT 1;",$wpdb->prefix,$timeStampOfLastPost, $timeStampForNow);
+	$posts = $wpdb->get_results($getPostsSinceThisDateQuery);
+        if (0 == count($posts))
+            return false;
+        else
+            return $posts[0];
+    }
+}
+
 function _wpr_process_blog_subscriptions()
 {
 	global $wpdb;
 	$prefix = $wpdb->prefix;
 	set_time_limit(3600);
+        
+        //ENSURE THAT ANOTHER INSTANCE OF THIS PROCESS DOESN'T START
+        $whetherRunning = get_option("_wpr_blog_post_delivery_processor_state");
+        $timeNow = time();
+        $timeStamp = intval($whetherRunning);
+        $timeSinceStart = $timeNow-$timeStamp;
+        //whether the earlier blog processor has died off abruptly?
+        if ($timeStamp != 0 && $timeSinceStart > 3600)
+        {
+            //update the state variable to timestamp now. 
+            update_option("_wpr_blog_post_delivery_processor_state",$timeStamp);
+        }
+        
+        if ($timeSinceStart < 3600 && $whetherRunning != "off")
+            return;
+        //END ENSURING THAT ANOTHER INSTANCE DOESN'T START
 	//now process the people who subscribe to the blog
+        
+        $getNumberOfSubscriptions = sprintf("SELECT COUNT(*) number FROM %swpr_blog_subscription b,
+                                            %swpr_subscribers s
+                                            WHERE b.type='all' AND 
+                                            %d-b.last_processed_date > 86400 AND
+                                            s.id=b.sid AND
+                                            s.active=1 AND
+                                            s.confirmed=1;",
+                                            $wpdb->prefix,
+                                            $wpdb->prefix,
+                                            $timeNow
+                                            );
+        $getCountRes = $wpdb->get_results($getNumberOfSubscriptions);
+        $number = $getCountRes[0]->number;
+        
+        $perIteration = intval(WPR_MAX_BLOG_SUBSCRIPTION_PROCESSED_PER_ITERATION);
+        $perIteration = (0 == $perIteration)?100:$perIteration;
+        
+        $numberOfIterations = ceil($number/$perIteration);
+        for ($iter=0;$iter<$numberOfIterations;$iter++)
+        {
+            $getSubscriptionsQuery = sprintf("SELECT b.* FROM %swpr_blog_subscription b,
+                                            %swpr_subscribers s
+                                            WHERE b.type='all' AND 
+                                            %d-b.last_processed_date > 86400 AND
+                                            s.id=b.sid AND
+                                            s.active=1 AND
+                                            s.confirmed=1;",
+                                            $wpdb->prefix,
+                                            $wpdb->prefix,
+                                            $timeNow
+                                            );
+            $blogSubscriptionsToProcess = $wpdb->get_results($getSubscriptionsQuery);
+            foreach ($blogSubscriptionsToProcess as $subscription)
+            {
+                $post = _wpr_blog_subscription_get_post_to_deliver($subscription);
+                if ($post == false)
+                    continue;
+                $footerMessage = sprintf(__("You are receiving this email because you are subscribed to articles published at <a href=\"%s\">%s</a>"),$blogURL,$blogName);
+                $postId = (int) $post->ID;
+                if ($postId == 0)
+                    continue;
+                deliverBlogPost($subscription->sid,$postId,$footerMessage);
+            }            
+        }
+        
+        /*
+        The following block of code will forever haunt me for having been written. 
+         * 
+         * 
 	$lastPostDate = get_option("wpr_last_post_date");
 	$timeNow = date("Y-m-d H:i:s",time());
 	$query = "SELECT * FROM ".$prefix."posts where post_type='post' and  post_status='publish' and post_date_gmt > '$lastPostDate' and post_date_gmt < '$timeNow';";
@@ -435,7 +577,7 @@ function _wpr_process_blog_subscriptions()
 				$footerMessage = "You are receiving this email because you are subscribed to the latest articles on <a href=\"$blogURL\">$blogName</a>";
 				foreach ($subscribers as $subscriber)
 				{
-							deliverBlogPost($subscriber->id,$post->ID,$footerMessage);
+                                        deliverBlogPost($subscriber->id,$post->ID,$footerMessage);
 				}
 			}
 
@@ -449,7 +591,7 @@ function _wpr_process_blog_subscriptions()
 			delete_option('wpr_sent_posts');
 			add_option("wpr_sent_posts",$sentPosts);	
 		}
-	}
+	}*/
 	
 }
 

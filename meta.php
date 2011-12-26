@@ -61,8 +61,8 @@ $database_structure["wpr_subscription_form"] = array (
                                                             'primary_key'=> "id",
                                                             'auto_increment' => 'id',
                                                             'unique'=> array(
-                                                                                                    "unique_subscription_form_names"=>array('name')
-                                                                                             )
+                                                                                "unique_subscription_form_names"=>array('name')
+                                                                            )
                                                     );
 
 $database_structure["wpr_queue"] = array (
@@ -88,19 +88,11 @@ $database_structure["wpr_queue"] = array (
                                             'auto_increment'=> 'id',
                                             'primary_key'=> "id",
                                             'unique'=>array(
-															"hash_is_unique" => array('hash'),
-															"meta_key_is_unique" => array('meta_key')
-														)
+                                                            "hash_is_unique" => array('hash'),
+                                                            "meta_key_is_unique" => array('meta_key')
+                                                )
                               );
 
-
-/*	$queries[] = "ALTER TABLE `".$prefix."wpr_queue` ADD `sid` INT NOT NULL;";
-	$queries[] = "ALTER TABLE `".$prefix."wpr_queue` ADD `hash` VARCHAR(32)  NOT NULL";
-	$queries[] = "ALTER TABLE `".$prefix."wpr_queue` ADD UNIQUE KEY `hash_1` (`hash`);";
-	$queries[] = "ALTER TABLE `".$prefix."wpr_queue` ADD `meta_key` VARCHAR(30) NOT NULL";
-	$queries[] = "ALTER TABLE `".$prefix."wpr_queue` ADD UNIQUE KEY `meta_key_1` (`meta_key`);";
-	
-*/
 
 $database_structure["wpr_newsletter_mailouts"] = array ( 'columns'=> array(
                                                                               'id' => "INT NOT NULL",
@@ -138,20 +130,36 @@ $database_structure["wpr_newsletters"] = array ( 'columns'=> array(
                                                             )
                                                   );
 
-$database_structure["wpr_followup_subscriptions"] = array ( 'columns'=> array(
+$database_structure["wpr_newsletters"] = array ( 'columns'=> array(
+                                                                    'id' => "INT NOT NULL",
+                                                                          'name' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'reply_to' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'description' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'confirm_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'confirm_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'confirmed_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'confirmed_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'fromname' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                          'fromemail' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"
+                                                                        ),
+                                                  'primary_key' => "id",
+                                                  'auto_increment'=>'id',
+                                                  "unique" => array(
+                                                                    "unique_name_for_newsletters" => array("name")
+                                                            )
+                                                  );
 
+$database_structure["wpr_delivery_record"] = array ( 'columns'=> array(
                                                                     'id' => "INT NOT NULL ",
-                                                                          'sid' => "INT NOT NULL",
-                                                                          'type' => "enum('autoresponder','postseries') NOT NULL",
-                                                                          'eid' => "INT NOT NULL",
-                                                                          'sequence' => "SMALLINT NOT NULL",
-                                                                          'last_date' => "INT NOT NULL",
-                                                                          'doc' => "VARCHAR(20) NOT NULL"
-                                                                          ),
+                                                                    'sid' => "INT NOT NULL",
+                                                                    'type' => "VARCHAR(30) NOT NULL",
+                                                                    'eid' => "INT NOT NULL",
+                                                                    'timestamp' => "BIGINT NOT NULL"
+                                                                ),
                                                     'primary_key' => "id",
                                                     'auto_increment' => 'id',
                                                     'unique' => array(
-                                                                      "unique_subscriptions_for_subscribers" => array("sid","type","eid")
+                                                                      "unique_records" => array("sid","type","eid")
                                                               )
                                                     );
 
@@ -194,7 +202,9 @@ $database_structure["wpr_blog_subscription"] = array ( 'columns'=> array(
                                                                            'sid' => "INT NOT NULL",
                                                                            'type' => "enum('all','cat') NOT NULL",
                                                                            'catid' => "INT NOT NULL",
-																		   'last_processed_date'=>'INT NOT NULL'
+                                                                           'last_processed_date'=>'INT NOT NULL',
+                                                                           'last_published_postid'=>'INT NOT NULL',
+                                                                           'last_published_post_date'=>'BIGINT NOT NULL DEFAULT 0'
                                                                           ),
                                                        'primary_key' => "id",
                                                        'auto_increment'=>'id',
@@ -457,14 +467,17 @@ $GLOBALS['initial_wpr_options'] = $initial_wpr_options;
 
 /************QUEUE MANAGEMENT****************************/
 //maximum emails processed in the queue per minute
-define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100);   //DO **NOT*** SET IT TO > 500 . E-mails WILL stop delivery completely.
-define("WPR_MAX_QUEUE_TABLE_SIZE",1073741824); // 1GB
-define("WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME",300); //the queue delivery burst can run for a maximum of 5 minutes at a time.
-//autoresponder
-define("WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME",300); //the autoresponder processor can run for a maximum of 5 minutes at a time.
-define("WPR_AUTORESPONDER_BATCH_SIZE",1000); //the autoresponder processor can run for a maximum of 5 minutes at a time.
+define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100);   
+define("WPR_MAX_QUEUE_TABLE_SIZE",1073741824); // maximum size of the table before it is truncated
+define("WPR_MAX_QUEUE_EMAILS_SENT_PER_ITERATION",100); //maximum number of emails that will be loaded to memory per iteration
+define("WPR_MAX_BLOG_SUBSCRIPTION_PROCESSED_PER_ITERATION",100); //maximum number of blog post subscriptions that will be loaded to memory per iteration
 
+define("WPR_AUTORESPONDER_BATCH_SIZE",1000); //the autoresponder processor can run for a maximum of 5 minutes at a time.
+define("WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME",300); //the queue delivery burst can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_POSTSERIES_PROCESS_EXECUTION_TIME",300); //the postseries processor can run for a maximum of 5 minutes at a time.
 define("WPR_MAX_NEWSLETTER_PROCESS_EXECUTION_TIME",1800); //the newsletter broadcast processor can run for a maximum of half an hour at a time.
+define("WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME",300); //the autoresponder processor can run for a maximum of 5 minutes at a time.
+
+
 define("WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY",86400); //the period between runs of the _wpr_ensure_single_instances_of_crons cron.
 

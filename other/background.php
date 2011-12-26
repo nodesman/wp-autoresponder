@@ -309,9 +309,6 @@ function _wpr_autoresponder_process($id=0)
 }
 
 
-
-
-
 function _wpr_postseries_process()
 {
 	global $wpdb;
@@ -888,7 +885,7 @@ function getBlogContentInDefaultLayout($post_id)
   $content .= $post->post_title;
   $content .= "</a></h1>";
     $content .= '<p style="font-family: Arial; font-size: 10px;">Dated: '.date("d F,Y",strtotime($post->post_date));
-	$post->content = apply_filters("the_content",$post->post_content);
+    $post->content = apply_filters("the_content",$post->post_content);
     $content .= "</p><p><span style=\"font-family: Arial, Verdana; font-size: 12px\">".wptexturize(wpautop(nl2br($post->post_content)))."</span>";
 
     $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\"><a href=\"".get_permalink($post_id)."\">Click here</a> to read this post at <a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a></div>.";
@@ -1045,7 +1042,7 @@ function substitutePostRelatedShortcodes($text,$post_id)
     $time = date("g:iA d F Y ",time());
     $time .= date_default_timezone_get();
     $text = str_replace("[!delivery_date!]",$time,$text);
-	
+    $text = do_shortcode($text);
     //post publishing date
     $post = get_post($post_id);
     $postDate = $post->post_date;

@@ -2,8 +2,8 @@
 /*
 Plugin Name: WP Autoresponder
 Plugin URI: http://www.wpresponder.com
-Description: Create unlimited newsletters and follow-up autoresponders. Schedule HTML/Text e-mail broadcast to subscribers. Provide e-mail subscription to your blog posts and blog categories. Use blog categories as follow-up autoresponders and much more.
-Version: 5.1.1
+Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
+Version: 5.2
 Author: Raj Sekharan
 Author URI: http://www.krusible.com/
 */
@@ -13,55 +13,57 @@ Author URI: http://www.krusible.com/
 if (!defined("WPR_DEFS"))
 {
     define("WPR_DEFS",1);
-	$plugindir =  str_replace(basename(__FILE__),"",__FILE__);
-	$plugindir = str_replace("\\","/",$plugindir);
-	$plugindir = rtrim($plugindir,"/");
+    $plugindir =  str_replace(basename(__FILE__),"",__FILE__);
+    $plugindir = str_replace("\\","/",$plugindir);
+    $plugindir = rtrim($plugindir,"/");
     $controllerDir = "$plugindir/controllers";
     $modelsDir = "$plugindir/models";
-	$helpersDir = "$plugindir/helpers";
+    $helpersDir = "$plugindir/helpers";
 
     define("WPR_VERSION","5.1.1");
-	define("WPR_PLUGIN_DIR","$plugindir");
+    define("WPR_PLUGIN_DIR","$plugindir");
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
-	include_once "home.php" ;	
-	include_once "autoresponder.php";
-	include_once "blog_series.php";
-	include_once "forms.php";
-	include_once "newmail.php";
-	include_once "customizeblogemail.php";
-	include_once "subscribers.php";
-	include_once "wpr_deactivate.php";
-	include_once "all_mailouts.php";
-	include_once "actions.php";
-	include_once "blogseries.lib.php";
-	include_once "lib.php";
-	require_once "$plugindir/meta.php";
-	require_once "$plugindir/lib/swift_required.php";
-	require_once "$plugindir/lib/admin_notifications.php";
-	require_once "$plugindir/lib/global.php";
-	require_once "$plugindir/lib/custom_fields.php";
-	require_once "$plugindir/lib/database_integrity_checker.php";
-	require_once "$plugindir/lib/framework.php";
-	require_once "$plugindir/lib/database_integrity_checker.php";    
-	require_once "$plugindir/lib/mail_functions.php";
-	require_once "$plugindir/other/cron.php";
-	require_once "$plugindir/other/firstrun.php";
-	require_once "$plugindir/other/queue_management.php";
-	require_once "$plugindir/other/notifications_and_tutorials.php";
-	require_once "$plugindir/other/background.php";
-	require_once "$plugindir/other/install.php";
-	include_once "widget.php";
-	require_once "$controllerDir/newsletters.php";
-	require_once "$controllerDir/custom_fields.php";
-	require_once "$controllerDir/importexport.php";
-	require_once "$controllerDir/background_procs.php";
-	require_once "$controllerDir/settings.php";
-	require_once "$controllerDir/new-broadcast.php";
-	require_once "$controllerDir/queue_management.php";
-	require_once "$modelsDir/subscriber.php";
+    include_once "home.php" ;	
+    include_once "autoresponder.php";
+    include_once "blog_series.php";
+    include_once "forms.php";
+    include_once "newmail.php";
+    include_once "customizeblogemail.php";
+    include_once "subscribers.php";
+    include_once "wpr_deactivate.php";
+    include_once "all_mailouts.php";
+    include_once "actions.php";
+    include_once "blogseries.lib.php";
+    include_once "lib.php";
+    require_once "$plugindir/meta.php";
+    require_once "$plugindir/lib/swift_required.php";
+    require_once "$plugindir/lib/admin_notifications.php";
+    require_once "$plugindir/lib/global.php";
+    require_once "$plugindir/lib/custom_fields.php";
+    require_once "$plugindir/lib/database_integrity_checker.php";
+    require_once "$plugindir/lib/framework.php";
+    require_once "$plugindir/lib/database_integrity_checker.php";    
+    require_once "$plugindir/lib/mail_functions.php";
+    require_once "$plugindir/other/cron.php";
+    require_once "$plugindir/other/firstrun.php";
+    require_once "$plugindir/other/queue_management.php";
+    require_once "$plugindir/other/notifications_and_tutorials.php";
+    require_once "$plugindir/other/background.php";
+    require_once "$plugindir/other/install.php";
+    require_once "$plugindir/other/maintain.php";
+    require_once "$plugindir/other/blog_crons.php";
+    include_once "widget.php";
+    require_once "$controllerDir/newsletters.php";
+    require_once "$controllerDir/custom_fields.php";
+    require_once "$controllerDir/importexport.php";
+    require_once "$controllerDir/background_procs.php";
+    require_once "$controllerDir/settings.php";
+    require_once "$controllerDir/new-broadcast.php";
+    require_once "$controllerDir/queue_management.php";
+    require_once "$modelsDir/subscriber.php";
     require_once "$modelsDir/newsletter.php";
-	require_once "$helpersDir/routing.php";
+    require_once "$helpersDir/routing.php";
 
     $GLOBALS['db_checker'] = new DatabaseChecker();
 	$GLOBALS['wpr_globals'] = array();

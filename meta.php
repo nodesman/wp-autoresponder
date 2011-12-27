@@ -78,6 +78,7 @@ $database_structure["wpr_queue"] = array (
                                                               'headers' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                               'sent' => "INT NOT NULL",
 							      'date' => 'INT NOT NULL',
+                                                              'sid'  => 'INT NOT NULL',
 							      'delivery_type' =>"tinyint(1) NOT NULL DEFAULT '0'",
 						              'email_type' => "enum('user_verify_email','user_confirmed_email','user_followup_autoresponder_email','user_followup_postseries_email','user_blogsubscription_email','user_blogcategorysubscription_email','user_unsubscribed_notification_email','critical_queue_limit_approaching_email','system_subscription_errors_email','system_analytics_email','misc') COLLATE utf8_bin NOT NULL DEFAULT 'misc'",
   							      'hash'=> 'VARCHAR(32)  NOT NULL',
@@ -412,6 +413,11 @@ $GLOBALS['wpr_cron_schedules'] = array(
 													'schedule'=> 'every_ten_minutes',
 													'arguments' => array()
 												  ),
+											array(
+												  	'action'=> '_wpr_maintenance',
+													'schedule'=> 'daily',
+													'arguments' => array()
+												  ),
 
 
 										);
@@ -423,6 +429,7 @@ $GLOBALS['_wpr_crons'] = array(
                                                                                 '_wpr_process_blog_subscriptions',
 										'_wpr_queue_management_cron',
                                                                                 '_wpr_process_queue',
+                                                                                '_wpr_maintenance',
 										'wpr_tutorial_cron',
 										'wpr_updates_cron',
 										'wpr_send_errors'
@@ -469,6 +476,7 @@ $GLOBALS['initial_wpr_options'] = $initial_wpr_options;
 //maximum emails processed in the queue per minute
 define("WPR_MAX_QUEUE_EMAILS_SENT_PER_MINUTE",100);   
 define("WPR_MAX_QUEUE_TABLE_SIZE",1073741824); // maximum size of the table before it is truncated
+define("WPR_MAX_DELIVERY_RECORD_TABLE_SIZE",1073741824); // maximum size of the table before it is truncated
 define("WPR_MAX_QUEUE_EMAILS_SENT_PER_ITERATION",100); //maximum number of emails that will be loaded to memory per iteration
 define("WPR_MAX_BLOG_SUBSCRIPTION_PROCESSED_PER_ITERATION",100); //maximum number of blog post subscriptions that will be loaded to memory per iteration
 

@@ -178,7 +178,22 @@ if (!defined("WPR_DEFS"))
 		global $current_user;
 		global $db_checker;
                 
-		
+                $activationDate = get_option("_wpr_NEWAGE_activation");
+                if (empty($activationDate) || !$activationDate)
+                {
+                    $timeNow = time();
+                    update_option("_wpr_NEWAGE_activation",$timeNow);
+                    /*
+                     * Because of the lack of tracking that was done in previous versions
+                     * of the blog category subscriptions, this version will deliver
+                     * blog posts to blog category subscribers ONLY after this date 
+                     * This was done to prevent triggering a full delivery of all 
+                     * blog posts in all categories to the respective category subscribers
+                     * on upgrade to this version.
+                     * I came up with the lousy name. Was a good idea at the time. 
+                     */
+                }
+
 		if (isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 1)
 		{
 			require "optin.php";			
@@ -190,6 +205,8 @@ if (!defined("WPR_DEFS"))
 			require "verify.php";	
 			exit;
 		}
+                
+                
 		
 		//a subscriber is trying to confirm their subscription. 
 		if (isset($_GET['wpr-confirm']) && $_GET['wpr-confirm']!=2)

@@ -414,6 +414,11 @@ $GLOBALS['wpr_cron_schedules'] = array(
 													'arguments' => array()
 												  ),
 											array(
+												  	'action'=> '_wpr_process_blog_category_subscriptions',
+													'schedule'=> 'every_ten_minutes',
+													'arguments' => array()
+												  ),
+											array(
 												  	'action'=> '_wpr_maintenance',
 													'schedule'=> 'daily',
 													'arguments' => array()
@@ -427,6 +432,7 @@ $GLOBALS['_wpr_crons'] = array(
 										'_wpr_postseries_process',
                                                                                 '_wpr_process_broadcasts',
                                                                                 '_wpr_process_blog_subscriptions',
+                                                                                '_wpr_process_blog_category_subscriptions',
 										'_wpr_queue_management_cron',
                                                                                 '_wpr_process_queue',
                                                                                 '_wpr_maintenance',

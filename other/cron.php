@@ -59,6 +59,9 @@ function _wpr_attach_cron_actions_to_functions()
 	add_action("_wpr_process_blog_subscriptions","_wpr_process_blog_subscriptions");
 	add_action("_wpr_process_broadcasts","_wpr_process_broadcasts");
 	add_action("_wpr_process_queue","_wpr_process_queue");
+        add_action("_wpr_process_blog_category_subscriptions","_wpr_process_blog_category_subscriptions");
+        
+        
 }
 
 function is_wpr_cron($action)

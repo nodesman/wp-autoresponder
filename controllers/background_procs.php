@@ -48,6 +48,13 @@ function _wpr_background_procs_manual_run()
 					wp_redirect($background_procs_url);
 				}
 			break;
+				case 'blogcat_processor':
+				if (check_admin_referer("_wpr_blogcat_processor_run"))
+				{
+					do_action("_wpr_process_blog_category_subscriptions");
+					wp_redirect($background_procs_url);
+				}
+			break;
 			
 				case 'delivery_queue':
 				if (check_admin_referer("_wpr_delivery_queue_run"))

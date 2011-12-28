@@ -343,23 +343,12 @@ if ($success)
 
 	//if blog subscription is mentioned in the form
 	if (!empty($bsubscription))
-	{
-		$suffix = ($bsubscription == "cat")?" and a.catid='$bcategory'":"";
-
-		$query = "SELECT * FROM ".$wpdb->prefix."wpr_blog_subscription a,".$wpdb->prefix."wpr_subscribers b where a.sid=b.id and b.id=$id and a.type='$bsubscription' $suffix ;";
-
-		$blogSubscriptions = $wpdb->get_results($query);
-
-		//subscribe to blog or blog category only if they are not already subscribed.
-		if (count($blogSubscriptions) == 0)
-		{	
-
-			$query = "INSERT INTO ".$wpdb->prefix."wpr_blog_subscription (sid,type,catid) values ('$id','$bsubscription','$bcategory');";
-
-			$wpdb->query($query);
-
-		}
-
+	{	
+                $deleteExistingSubscriptionQuery = sprintf("DELETE FROM %swpr_blog_subscripition WHERE sid=%d, type='%s',catid=%d",$wpdb->prefix,$id,$bsubscription,$bcategory);
+                $wpdb->query($deleteExistingSubscriptionQuery);
+                $timeNow = time();
+                $query = "INSERT INTO ".$wpdb->prefix."wpr_blog_subscription (sid,type,catid, last_published_post_date) values ('$id','$bsubscription','$bcategory','$timeNow');";
+                $wpdb->query($query);
 	}
 
 	

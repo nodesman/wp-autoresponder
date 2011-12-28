@@ -30,6 +30,10 @@ Below are a list of background processes of WP Responder. You can use the Run No
         <td> <form action="admin.php?page=_wpr/background_procs&run=blogpost_processor" method="post"><?php wp_nonce_field("_wpr_blogpost_processor_run"); ?><input type="submit" class="button-primary" onclick="return window.confirm('The page will take much time to load. Do NOT press escape, click on the stop button or press refresh. Do you want to continue?');" name="submit" value="Run Now"/></form></td>
      </tr>
       <tr>
+         <td>Blog Category Subscription E-mail Delivery Processor</td>
+        <td> <form action="admin.php?page=_wpr/background_procs&run=blogcat_processor" method="post"><?php wp_nonce_field("_wpr_blogcat_processor_run"); ?><input type="submit" class="button-primary" onclick="return window.confirm('The page will take much time to load. Do NOT press escape, click on the stop button or press refresh. Do you want to continue?');" name="submit" value="Run Now"/></form></td>
+     </tr>
+      <tr>
          <td>Delivery Queue Processor<br/>
          <small>Delivers maximum of 100 e-mails from the queue</small></td>
         <td> <form action="admin.php?page=_wpr/background_procs&run=delivery_queue" method="post"><?php wp_nonce_field("_wpr_delivery_queue_run"); ?><input type="submit" class="button-primary" onclick="return window.confirm('The page will take much time to load. Do NOT press escape, click on the stop button or press refresh. Do you want to continue?');" name="submit" value="Run Now"/></form></td>

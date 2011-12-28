@@ -355,6 +355,8 @@ function _wpr_wpr_import_finish_post()
 		foreach ($subscribers as $subscriber)
 		{
 			$currentSid=$subscriber[$indexOfId];
+                        $deleteExistingSubscriptionQuery = sprintf("DELETE FROM %swpr_blog_subscripition WHERE sid=%d, type='%s',catid=%d",$wpdb->prefix,$currentSid,$subtype,$cat);
+                        $wpdb->query($deleteExistingSubscriptionQuery);
 			$subscriptionQuery = "INSERT INTO ".$prefix."wpr_blog_subscription (sid, type, catid) values ('$currentSid','$subtype','$cat');";
 			$wpdb->query($subscriptionQuery);
 		}

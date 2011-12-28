@@ -92,7 +92,7 @@ function _wpr_process_queue()
 	for ($iter=0;$iter<$numberOfIterations;$iter++)
 	{
 		$limitClause = sprintf(" LIMIT %d",$queueBatchSize);
-		$query = sprintf("SELECT * FROM `%swpr_queue` WHERE `sent`=0 %s ",$wpdb->prefix,$limitClause);
+		$query = sprintf("SELECT * FROM `%swpr_queue` q, %swpr_subscribers s WHERE s.id=q.sid AND q.`sent`=0 AND s.confirmed=1 AND s.active=1 %s ",$wpdb->prefix,$limitClause);
 		$results = $wpdb->get_results($query);
 		foreach ($results as $mail)  
 		{

@@ -51,9 +51,7 @@ function _wpr_blog_subscription_post_updated($post_id,$post_before,$post_after)
 //handle deletion of blog post
 add_action("trash_post","_wpr_blog_subscription_post_deleted",10,1);
 add_action("trash_post","_wpr_blog_category_subscription_post_deleted",10,1);
-//TODO: The blog subscriptions that were processed and updated with this blog post should be set to the blog post before this blog post for integrity.
-//select the post ids uniquely, select the one that is before this blog post and update all to that blog post's info. this should be done in the bg.
-//bleep me. this sucks so bad.
+
 function _wpr_blog_subscription_post_deleted($post_id)
 {
     global $wpdb;

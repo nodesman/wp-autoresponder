@@ -56,75 +56,111 @@ function _wpr_import_finished()
 	_wpr_set("newsletter",$newsletter);
 	_wpr_set("_wpr_view","import.finished");
 }
-function export_csv($nid)
-{
-        global $wpdb;
-        $prefix = $wpdb->prefix;
-        //is there a
+	function export_csv($nid)
+	{
+		global $wpdb;
+		$prefix = $wpdb->prefix;
 
-        if ($nid == 0)
-                return;
-        //does the newsletter exist?
-        $query = "SELECT COUNT(*) FROM ".$prefix."wpr_newsletters where id=$nid";
-        $results = $wpdb->get_results($query);
-        if (count($results) == 0)
-        {
-                return;
-        }
-        //if none of these error conditions occur, then start exporting:
+		
+		set_time_limit(0);
+		
+		$nid = intval($nid);
+		if ($nid == 0)
+			return;
+		//does the newsletter exist?
+		$query = "SELECT COUNT(*) FROM ".$prefix."wpr_newsletters where id=$nid";
+		$results = $wpdb->get_results($query);
+		if (count($results) == 0)
+		{
 
+			exit;
+		}
+		//if none of these error conditions occur, then start exporting:
+		
+		//fetch all custom fields associates with this newsletter
+		$query = "select * from ".$prefix."wpr_custom_fields where nid=$nid";
+		$results = $wpdb->get_results($query);
+		$fieldHeaders = array();
+		if (count ($results))
+		{
+			$customfields= array();
+			foreach ($results as $field)
+			{
+				$customfields[] = $field->name;
 
-        //fetch all custom fields associates with this newsletter
-        $query = "select * from ".$prefix."wpr_custom_fields where nid=$nid";
-        $results = $wpdb->get_results($query);
-        $fieldHeaders = array();
-        if (count ($results))
-        {
-                $customfields= array();
-                foreach ($results as $field)
-                {
-                        $customfields[] = $field->name;
+			}
+		}
+		//get all the custom fields of this newsletter:
+		
+		$getCustomFieldsQuery = sprintf("SELECT * FROM %swpr_custom_fields WHERE nid=%d ORDER by id",$wpdb->prefix,$nid);
+		//get all the custom field values for the first 1000 subscribers. 
+		$customFields= $wpdb->get_results($getCustomFieldsQuery);
+		
+		//form the array for the custom field row names
+		
+		$fields = array();
+		
+		foreach ($customFields as $field) {
+			$fields[$field->id] = $field->label;
+		}
 
-                }
-        }
-        //add the name and email address fields to the beginning of the field list
-        if (count($customfields))
-        {
-                $SqlQueryColumnList = ",".implode(",",$customfields); //this will be appended to the column list in the  fetchAllSubscriberDataQuery sql query
-        }
+		//number of susbcribers
+		$getNumberOfSubscribersQuery = sprintf("SELECT COUNT(*) num FROM %swpr_subscribers WHERE nid=%d",$wpdb->prefix,$nid);
+		$numberOfSubscribersRes = $wpdb->get_results($getNumberOfSubscribersQuery);
+		$number = $numberOfSubscribersRes[0]->num;
+		
+		$perIterationSize=100;
+		//process 100 subscribers at a time
+		$numberOfIterations = ceil($number/$perIterationSize);
+		$index = 0;
+		header ("Content-disposition: attachment; filename=export_$nid.csv");
+			
+		//output the header
+		$fieldNamesArray = $fields;
+		//array_walk($fieldNamesArray, "_wpr_export_escape_field_value");
+		//process 100 at a time
+		
+		
+        $fp = fopen("php://output","w");
+		array_unshift($fieldNamesArray,"E-mail");
+		array_unshift($fieldNamesArray,"Name"); 
+                fputcsv($fp,$fieldNamesArray);
+		for ($iter=0;$iter<$numberOfIterations;$iter++)
+		{
 
-        //the query that returns all the custom fields
+			$start = $perIterationSize*$iter;
+			
+			$runtimeTableQuery = sprintf("SELECT * FROM %swpr_subscribers WHERE nid=%d ORDER BY id LIMIT %d, %d",$wpdb->prefix,$nid,$start, $perIterationSize);
 
-        //these two lines create a temporary table that has all the fields of the subscriber table
-        //joined with the values of the custom fields for each of the subscribers in that table.
-        //the custom fields' values for each subscriber are created as a column in the wpr_subscriber_$nid table.
-        wpr_create_temporary_tables($nid);
-        wpr_make_subscriber_temptable($nid);
-
-
-        //fetch the subscriber data for all subscribers
-        $fetchAllSubscriberDataQuery = "SELECT name,email $SqlQueryColumnList FROM ".$prefix."wpr_subscribers_$nid";
-        $listOfSubscribersAndTheirInfo = $wpdb->get_results($fetchAllSubscriberDataQuery);
-        //the field headings are first attached
-        $fieldname = "";
-
-        //now the data for each row is written
-        foreach ($listOfSubscribersAndTheirInfo as $subscriber)
-        {
-                $subsarray = (array) $subscriber;
-                //array walk doesnt work for some reason.
-                foreach ($subsarray as $name=>$value )
-                {
-                        $subsarray[$name] = trim($subsarray[$name]);
-                }
-                $row = implode(",",$subsarray);
-                $output .= $row."\n";
-        }
-        header ("Content-disposition: attachment; filename=export_$nid.csv");
-        echo $output;
-        exit;
-}
-
+			$subscribers = $wpdb->get_results($runtimeTableQuery);
+			
+			foreach ($subscribers as $subscriber) {
+				
+				$getCustomFieldValuesQuery = sprintf("SELECT * FROM %swpr_custom_fields_values WHERE sid=%d ORDER BY cid",$wpdb->prefix, $subscriber->id);
+				
+				$customFieldValues= $wpdb->get_results($getCustomFieldValuesQuery);
+				
+				$current = array();
+				foreach ($customFieldValues as $id=>$value) {
+					$current[$value->cid]=$value->value;
+				}
+				
+				//array_walk($current,"_wpr_export_escape_field_value");
+				//form the array of id value pairs
+				$valueSet = array();
+				$valueSet[] = $subscriber->name;
+				$valueSet[] = $subscriber->email;
+				
+				foreach ($fields as $cid=>$name) 
+				{
+					$valueSet[]= $current[$cid];
+				}
+				fputcsv($fp,$valueSet);
+			}
+		}
+		exit;
+	
+	}
 function _wpr_import_second_step()
 {
 

@@ -369,14 +369,6 @@ $GLOBALS['admin_pages_definitions'] = array(
             );
 
 
-
-
-
-
-
-
-
-
 $GLOBALS['wpr_defaults'] = array(
 );
 

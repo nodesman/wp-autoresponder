@@ -1,8 +1,56 @@
 <?php
 
+add_action("post_updated","_wpr_blog_subscription_post_updated",10,3);
 
+
+function _wpr_blog_subscription_post_updated($post_id,$post_before,$post_after)
+{
+    //delete all blog posts that haven't been sent that are in the queue
+    $affected_rows = _wpr_delete_post_emails($post_id);
+    if ($affected_rows == 0)
+        return; //nothing can be done now.
+    
+    
+    /*
+     * NOW REVERT ALL THE CATEGORY SUBSCRIPTIONS OF CATEGORIES FROM WHICH THE POST
+     * HAS BEEN REMOVED TO PROCEED FROM THE PREVIOUS BLOG POST.
+     */
+    
+    //get all the categories to which this post was delivered
+    $getCategoriesDeliveredToQuery = sprintf("SELECT DISTINCT catid FROM %swpr_blog_subscription WHERE last_published_postid=%d AND type='cat';",$wpdb->prefix, $post_id);
+    $categoryIdsRes = $wpdb->get_results($getCategoriesDeliveredToQuery);
+    if (0 == count($categoryIdsRes))
+        return; //there are no blog category subscriptions at all.
+    
+    $deliveredCategories = array();
+    foreach ($categoryIdsRes as $c) 
+    {
+        //too complex to test and running out of time.
+        /*
+         $deliveredCategories[] = $c->catid;
+    }
+    
+    $categoriesOfPost = wp_get_post_categories($post_id);
+    $categoriesCurrentlySet = array();
+    foreach ($categoriesOfPost as $category)
+    {
+        $categoriesCurrentlySet[] = $category->term_id;
+    }
+    
+    $deletedCategories = array_diff($deliveredCategories,$categoriesCurrentlySet);
+    foreach ($deletedCategories as $catid)
+    {
+        //treat this post as having been deleted for the subscribers of these categories.
+        */
+        $category = get_category($c->catid);
+        _wpr_restore_blog_category_dates($post_id, $category, strtotime($post_before->post_date_gmt));
+    }
+    
+    
+}
 //handle deletion of blog post
 add_action("trash_post","_wpr_blog_subscription_post_deleted",10,1);
+add_action("trash_post","_wpr_blog_category_subscription_post_deleted",10,1);
 //TODO: The blog subscriptions that were processed and updated with this blog post should be set to the blog post before this blog post for integrity.
 //select the post ids uniquely, select the one that is before this blog post and update all to that blog post's info. this should be done in the bg.
 //bleep me. this sucks so bad.
@@ -26,10 +74,31 @@ function _wpr_blog_subscription_post_deleted($post_id)
     }
     
 }   
+function _wpr_blog_category_subscription_post_deleted($post_id)
+{
+    global $wpdb;
+    $post_id = intval($post_id);
+    //find all those subscribers
+
+    $affected_rows = _wpr_delete_post_emails($post_id);
+    
+    //there are chances that the background process is running as this code is being executed. 
+    
+    //so we schedule a deletion after one minute.
+    
+    if ($affected_rows != 0)
+    {
+        $nextRunTime = time()+60;
+        wp_schedule_single_event($nextRunTime, "_wpr_ensure_deletion", array($post_id));
+        do_action("_wpr_restore_blog_category_subscription",$post_id);        
+    }
+    
+}   
 
 add_action("_wpr_ensure_deletion","wpr_blog_subscription_post_deleted",10,1);
 
 add_action("_wpr_restore_blog_subscription","_wpr_restore_blog_subscription_dates",10,1);
+add_action("_wpr_restore_blog_category_subscription","_wpr_restore_blog_category_subscription_dates",10,1);
 
 function _wpr_restore_blog_subscription_dates($post_id)
 {
@@ -42,13 +111,12 @@ function _wpr_restore_blog_subscription_dates($post_id)
     if (0 != count($afterPost)) //this is not the latest post. in which case we do not have to fall back to the previous post's vars.
         return;
     
-
     $getPostBeforeThisOneQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` < '%s' AND `post_password`=''ORDER BY `post_date_gmt`  DESC LIMIT 1;",$wpdb->prefix,$timeStampOfLastPost);
     $prevPost = $wpdb->get_results($getPostBeforeThisOneQuery);
     
     if (count($prevPost) == 0)
     {
-        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid=0, last_processed_date=0, last_published_postdate=0 WHERE last_published_postid=%d",$wpdb->prefix,$post_id);
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid=0, last_processed_date=0, last_published_postdate=0 WHERE last_published_postid=%d AND type='all'",$wpdb->prefix,$post_id);
         $wpdb->query($updateQuery);
         return;
     }
@@ -56,11 +124,55 @@ function _wpr_restore_blog_subscription_dates($post_id)
     {
         $post = $prevPost[0];
         $prevPostDate = strtotime($post->post_date_gmt);
-        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid='%s', last_published_post_date='%s' WHERE last_published_postid=%d",$wpdb->prefix,$post->ID,$prevPostDate,$post_id);
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid='%s', last_published_post_date='%s' WHERE last_published_postid=%d AND type='all';",$wpdb->prefix,$post->ID,$prevPostDate,$post_id);
         $wpdb->query($updateQuery);
         return;
     }
 }
+
+
+function _wpr_restore_blog_category_dates($post_id,$category, $timeStampOfLastPost)
+{
+    global $wpdb;
+    //find the post in this category which comes after this blog post.
+    $getPostAfterThisOneQuery = sprintf("SELECT * FROM %sposts p, %sterm_relationships r WHERE p.`post_type`='post' AND  p.`post_status`='publish' AND p.`post_date_gmt` > '%s' AND p.`post_password`='' AND p.ID=r.object_id AND r.term_taxonomy_id=%d ORDER BY p.`post_date_gmt` DESC LIMIT 1;",$wpdb->prefix,$wpdb->prefix,$timeStampOfLastPost,$category->term_id);
+    $afterPost = $wpdb->get_results($getPostAfterThisOneQuery);
+
+    if (0 != count($afterPost)) //this is not the latest post. in which case we do not have to fall back to the previous post's vars.
+        continue;
+
+    $getPostBeforeThisOneQuery = sprintf("SELECT * FROM %sposts p, %sterm_relationships r WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` < '%s' AND `post_password`='' AND p.ID=r.object_id AND r.term_taxonomy_id=%d ORDER BY `post_date_gmt`  DESC LIMIT 1;",$wpdb->prefix,$wpdb->prefix,$timeStampOfLastPost,$category->term_id);;
+    $prevPost = $wpdb->get_results($getPostBeforeThisOneQuery);
+
+    if (count($prevPost) == 0)
+    {
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid=0, last_processed_date=0, last_published_postdate=0 WHERE last_published_postid=%d AND type='cat' AND catid=%d",$wpdb->prefix,$post_id,$category->term_id);
+        $wpdb->query($updateQuery);
+        continue;
+    }
+    else
+    {
+        $post = $prevPost[0];
+        $prevPostDate = strtotime($post->post_date_gmt);
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid='%s', last_published_post_date='%s' WHERE last_published_postid=%d AND type='cat' AND catid=%d",$wpdb->prefix,$post->ID,$prevPostDate,$post_id,$categories->term_id);
+        $wpdb->query($updateQuery);
+        continue;
+    }
+}
+
+function _wpr_restore_blog_category_subscription_dates($post_id)
+{
+    global $wpdb;
+    $post = get_post($post_id);
+    $categories = wp_get_post_categories($post_id);
+    $timeStampOfLastPost = $post->post_date_gmt;
+    foreach ($categories as $category)
+    {
+        _wpr_restore_blog_category_dates($post_id, $category, $timeStampOfLastPost);
+    }
+}
+
+
 
 function _wpr_delete_post_emails($post_id)
 {

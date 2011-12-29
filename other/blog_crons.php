@@ -5,6 +5,7 @@ add_action("post_updated","_wpr_blog_subscription_post_updated",10,3);
 
 function _wpr_blog_subscription_post_updated($post_id,$post_before,$post_after)
 {
+    global $wpdb;
     //delete all blog posts that haven't been sent that are in the queue
     $affected_rows = _wpr_delete_post_emails($post_id);
     if ($affected_rows == 0)

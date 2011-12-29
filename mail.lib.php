@@ -387,7 +387,7 @@ if (isset($_GET['nid']))
 	  ?>
       <tr>
         <td>Send At: </td>
-        <td bgcolor="#FF0000"><?php if (empty($parameters->time)) { ?>
+        <td><?php if (empty($parameters->time)) { ?>
           <input name="whentosend" <?php if ($parameters->whentosend == "now") { echo "checked=\"checked\""; } ?> type="radio" id="sendnow" value="now" checked="checked" />
           <label for="sendnow"> Immediately </label>
           (Now)<br />
@@ -935,7 +935,6 @@ function rtrim(stringToTrim) {
     </table>
   </form>
 </blockquote>
-</div>
 <?php
 
 }

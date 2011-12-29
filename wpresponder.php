@@ -20,7 +20,7 @@ if (!defined("WPR_DEFS"))
     $modelsDir = "$plugindir/models";
     $helpersDir = "$plugindir/helpers";
 
-    define("WPR_VERSION","5.1.1");
+    define("WPR_VERSION","5.2");
     define("WPR_PLUGIN_DIR","$plugindir");
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;

@@ -33,6 +33,8 @@
 <strong>Important: </strong> All sent emails in queue will be automatically deleted if queue size exceeds <?php echo ByteSize(WPR_MAX_QUEUE_TABLE_SIZE); ?> in size. 
 </div>
 
+<?php
+/*
 <h2>Delivery Queue</h2>
 
 <table class="widefat">
@@ -65,3 +67,6 @@ else {
 }
 ?>
 </table>
+<?php
+*/
+?>

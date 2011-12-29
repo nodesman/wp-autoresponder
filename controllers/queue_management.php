@@ -36,8 +36,8 @@ function _wpr_queue_management_handler()
 	$start = intval($_GET['start']);
 	$start = ($start != 0)?$start:1;
 	
-	$getEmailsFromQueue = sprintf("SELECT * FROM {$prefix}_wpr_queue ORDER BY id desc LIMIT $start,$numberOfEmailsPerPage;");
-	$emailsInQueue = $wpdb->query($getEmailsFromQueue);
+	/*$getEmailsFromQueue = sprintf("SELECT * FROM {$prefix}_wpr_queue ORDER BY id desc LIMIT $start,$numberOfEmailsPerPage;");
+	$emailsInQueue = $wpdb->query($getEmailsFromQueue);*/
 	
 	_wpr_set("number_of_pending",$number_of_pending);
 	_wpr_set("emails_in_queue",$emailsInQueue);

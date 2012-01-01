@@ -3,7 +3,9 @@
 
 //handle deletion of blog post
 add_action("trash_post","_wpr_blog_subscription_post_deleted",10,1);
-
+//TODO: The blog subscriptions that were processed and updated with this blog post should be set to the blog post before this blog post for integrity.
+//select the post ids uniquely, select the one that is before this blog post and update all to that blog post's info. this should be done in the bg.
+//bleep me. this sucks so bad.
 function _wpr_blog_subscription_post_deleted($post_id)
 {
     global $wpdb;
@@ -15,14 +17,50 @@ function _wpr_blog_subscription_post_deleted($post_id)
     //there are chances that the background process is running as this code is being executed. 
     
     //so we schedule a deletion after one minute.
+    
     if ($affected_rows != 0)
     {
         $nextRunTime = time()+60;
         wp_schedule_single_event($nextRunTime, "_wpr_ensure_deletion", array($post_id));
+        do_action("_wpr_restore_blog_subscription",$post_id);        
     }
-}
+    
+}   
 
 add_action("_wpr_ensure_deletion","wpr_blog_subscription_post_deleted",10,1);
+
+add_action("_wpr_restore_blog_subscription","_wpr_restore_blog_subscription_dates",10,1);
+
+function _wpr_restore_blog_subscription_dates($post_id)
+{
+    global $wpdb;
+    $post = get_post($post_id);
+    $timeStampOfLastPost = $post->post_date_gmt;
+    $getPostAfterThisOneQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` > '%s' AND `post_password`=''ORDER BY `post_date_gmt` DESC LIMIT 1;",$wpdb->prefix,$timeStampOfLastPost);
+    $afterPost = $wpdb->get_results($getPostAfterThisOneQuery);
+    
+    if (0 != count($afterPost)) //this is not the latest post. in which case we do not have to fall back to the previous post's vars.
+        return;
+    
+
+    $getPostBeforeThisOneQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` < '%s' AND `post_password`=''ORDER BY `post_date_gmt`  DESC LIMIT 1;",$wpdb->prefix,$timeStampOfLastPost);
+    $prevPost = $wpdb->get_results($getPostBeforeThisOneQuery);
+    
+    if (count($prevPost) == 0)
+    {
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid=0, last_processed_date=0, last_published_postdate=0 WHERE last_published_postid=%d",$wpdb->prefix,$post_id);
+        $wpdb->query($updateQuery);
+        return;
+    }
+    else
+    {
+        $post = $prevPost[0];
+        $prevPostDate = strtotime($post->post_date_gmt);
+        $updateQuery = sprintf("UPDATE %swpr_blog_subscription SET last_published_postid='%s', last_published_post_date='%s' WHERE last_published_postid=%d",$wpdb->prefix,$post->ID,$prevPostDate,$post_id);
+        $wpdb->query($updateQuery);
+        return;
+    }
+}
 
 function _wpr_delete_post_emails($post_id)
 {

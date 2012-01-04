@@ -3,7 +3,7 @@
 Plugin Name: WP Autoresponder
 Plugin URI: http://www.wpresponder.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
-Version: 5.2.4
+Version: 5.2.5
 Author: Raj Sekharan
 Author URI: http://www.krusible.com/
 */
@@ -20,7 +20,7 @@ if (!defined("WPR_DEFS"))
     $modelsDir = "$plugindir/models";
     $helpersDir = "$plugindir/helpers";
 
-    define("WPR_VERSION","5.2.4");
+    define("WPR_VERSION","5.2.5");
     define("WPR_PLUGIN_DIR","$plugindir");
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
@@ -227,10 +227,10 @@ if (!defined("WPR_DEFS"))
 		require WPR_PLUGIN_DIR."/proxy.php";
 		
 		//first run?
-		$first_run = get_option("_wpr_firstrun");
+		$first_run = get_option("_wpr_firstrunv525");
 		if ($first_run != "done")
 		{
-			_wpr_firstrun();	
+			_wpr_firstrunv525();
 		}
 		
 		do_action("_wpr_init");

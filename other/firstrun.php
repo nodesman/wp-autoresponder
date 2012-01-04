@@ -7,3 +7,12 @@ function _wpr_firstrun()
 	add_option("_wpr_firstrun","done");
 	
 }
+
+
+function _wpr_firstrunv525()
+{
+	$role = get_role( 'administrator' );
+	$role->add_cap( 'manage_newsletters' );
+	add_option("_wpr_firstrun","done");
+	
+}

@@ -187,7 +187,7 @@ function _wpr_autoresponder_process($id=0)
 		$last_cron_status = intval($last_cron_status);
 		if ($last_cron_status !=0 && ($last_cron_status > $timeMaximumExecutionTimeAgo))
 		{
-			//return;
+			return;
 		}
 	}	
 	set_time_limit($maximumExecutionTime);

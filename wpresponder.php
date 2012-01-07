@@ -82,6 +82,7 @@ if (!defined("WPR_DEFS"))
 	}
 	
 	add_action("plugins_loaded","_wpr_nag");
+        add_action("admin_init","_wpr_admin_init");
 	
 	function no_address_error()
 	{
@@ -171,6 +172,20 @@ if (!defined("WPR_DEFS"))
 
 	}	
         
+        
+        
+        function _wpr_admin_init()
+        {
+            
+            //first run?
+            $first_run = get_option("_wpr_firstrunv526");
+            if ($first_run != "done")
+            {
+                    _wpr_firstrunv526();
+                    add_option("_wpr_firstrun526","done");
+            }
+        }
+        
 	
 	function wpresponder_init_method() 
 	{
@@ -226,12 +241,7 @@ if (!defined("WPR_DEFS"))
 		
 		require WPR_PLUGIN_DIR."/proxy.php";
 		
-		//first run?
-		$first_run = get_option("_wpr_firstrunv525");
-		if ($first_run != "done")
-		{
-			_wpr_firstrunv525();
-		}
+
 		
 		do_action("_wpr_init");
                 

@@ -130,26 +130,6 @@ $database_structure["wpr_newsletters"] = array ( 'columns'=> array(
                                                                     "unique_name_for_newsletters" => array("name")
                                                             )
                                                   );
-
-$database_structure["wpr_newsletters"] = array ( 'columns'=> array(
-                                                                    'id' => "INT NOT NULL",
-                                                                          'name' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'reply_to' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'description' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirm_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirm_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirmed_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirmed_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'fromname' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'fromemail' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"
-                                                                        ),
-                                                  'primary_key' => "id",
-                                                  'auto_increment'=>'id',
-                                                  "unique" => array(
-                                                                    "unique_name_for_newsletters" => array("name")
-                                                            )
-                                                  );
-
 $database_structure["wpr_delivery_record"] = array ( 'columns'=> array(
                                                                     'id' => "INT NOT NULL ",
                                                                     'sid' => "INT NOT NULL",
@@ -254,6 +234,22 @@ $database_structure["wpr_autoresponders"] = array ( 'columns'=> array(
                                                                         'unique_autoresponder_names_in_newsletter' => array('nid','name')
                                                                      )
                                                    );
+$database_structure["wpr_followup_subscriptions"] = array ( 'columns'=> array(		   
+										    'id' => "INT NOT NULL ",
+											  'sid' => "INT NOT NULL",
+											  'type' => "enum('autoresponder','postseries') NOT NULL",
+											  'eid' => "INT NOT NULL",
+											  'sequence' => "SMALLINT NOT NULL",
+											  'last_date' => "INT NOT NULL",
+											  'doc' => "VARCHAR(20) NOT NULL"
+											  ),
+											'primary_key' => "id",
+											'auto_increment' => 'id',
+											'unique' => array(
+												      "unique_subscriptions_for_subscribers" => array("sid","type","eid")
+									      )
+									);
+
 $GLOBALS['data_structure'] = $database_structure;
 
 

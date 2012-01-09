@@ -75,7 +75,7 @@ function _wpr_admin_path($path,$arguments=array())
 function _wpr_admin_url($path,$arguments=array())
 {
     $path = _wpr_admin_path($path,$arguments);
-    $url = get_bloginfo("url");
+    $url = get_bloginfo("wpurl");
     $url .= '/wp-admin/admin.php?page=';
     $url .= $path;
     return $url;

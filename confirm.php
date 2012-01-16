@@ -1,9 +1,4 @@
 <?php
-ob_end_clean();
-header("Connection: close\r\n");
-header("Content-Encoding: none\r\n");
-ignore_user_abort(true);
-ob_start();
 global $wpdb;
 
 $string = $_GET['wpr-confirm'];
@@ -47,12 +42,6 @@ sendConfirmedEmail($id);
 ?><script>
 window.location='<?php echo $redirectionUrl ?>';
 </script><?php
-
 $size = ob_get_length();
-header("Content-Length: $size");
-ob_end_flush();     
-flush();            
-ob_end_clean();
-
 do_action("_wpr_autoresponder_process",$id);
 

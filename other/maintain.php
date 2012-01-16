@@ -4,6 +4,7 @@ add_action("_wpr_maintenance","_wpr_maintenance");
 
 function _wpr_maintenance()
 {
+    global $wpdb;
     //delete delivery records older than 30 days.
     $tableStatus = _wpr_delivery_record_size();
     if ($tableStatus > WPR_MAX_DELIVERY_RECORD_TABLE_SIZE)

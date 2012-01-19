@@ -11,7 +11,7 @@ $database_structure["wpr_subscribers"] = array ('columns' => array(
                                                                     'nid'=> "INT NOT NULL",
                                                                     'id'=> "INT NOT NULL",
                                                                     'name'=> "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                    'email'=> "VARCHAR(258) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+                                                                    'email'=> "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                                     'date'=> "VARCHAR(12) NOT NULL",
                                                                     'active'=> "TINYINT(1) NOT NULL DEFAULT '0'",
                                                                     'confirmed'=> "TINYINT(1) NOT NULL DEFAULT '0'",

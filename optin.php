@@ -344,7 +344,7 @@ if ($success)
 	//if blog subscription is mentioned in the form
 	if (!empty($bsubscription))
 	{	
-                $deleteExistingSubscriptionQuery = sprintf("DELETE FROM %swpr_blog_subscripition WHERE sid=%d, type='%s',catid=%d",$wpdb->prefix,$id,$bsubscription,$bcategory);
+                $deleteExistingSubscriptionQuery = sprintf("DELETE FROM %swpr_blog_subscripition WHERE sid=%d AND type='%s' AND catid=%d",$wpdb->prefix,$id,$bsubscription,$bcategory);
                 $wpdb->query($deleteExistingSubscriptionQuery);
                 $timeNow = time();
                 $query = "INSERT INTO ".$wpdb->prefix."wpr_blog_subscription (sid,type,catid, last_published_post_date) values ('$id','$bsubscription','$bcategory','$timeNow');";

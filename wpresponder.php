@@ -182,7 +182,7 @@ if (!defined("WPR_DEFS"))
             if ($first_run != "done")
             {
                     _wpr_firstrunv526();
-                    add_option("_wpr_firstrun526","done");
+                    add_option("_wpr_firstrunv526","done");
             }
         }
         

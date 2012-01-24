@@ -18,7 +18,7 @@ $database_structure["wpr_subscribers"] = array ('columns' => array(
                                                                     'fid'=> "TINYINT(1) NOT NULL DEFAULT '1'",
                                                                     'hash'=> "VARCHAR(50) NOT NULL"
                                                             ),
-                                                'primary_key'=>array('id'),
+                                                'primary_key'=>'id',
                                                 'auto_increment'=>'id',
                                                 'unique' => array(                                                                     
                                                                      "unique_email_for_newsletter"    => array("nid","email")

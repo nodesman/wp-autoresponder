@@ -296,7 +296,6 @@ function selectAllFormsCheckBox(state)
 function _wpr_subscriptionform_getcode($form,$title)
 
 {
-
 		?>
 <div class="wrap">
   <h2><?php echo $title ?></h2>
@@ -581,13 +580,12 @@ function _wpr_subscriptionforms_create()
 
 			_wpr_subscriptionform_create($info);
 
-			$query = "SELECT * FROM ".$wpdb->prefix."wpr_subscription_form where name='".$info['name']."';";
-
+			$query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}wpr_subscription_form WHERE name=%s;",$info['name']);
 			$form = $wpdb->get_results($query);
-
 			$form = $form[0];
 			do_action("_wpr_subscriptionform_created_handler_save",$form->id);
 		     _wpr_subscriptionform_getcode($form,"Form Created");
+
 
 			return;
 

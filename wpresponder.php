@@ -14,7 +14,7 @@ if (!defined("WPR_DEFS"))
 {
     define("WPR_DEFS",1);
     $plugindir =  str_replace(basename(__FILE__),"",__FILE__);
-    $plugindir = str_replace("\\","/",$plugindir);
+    $plugindir = str_replace('\\','/',$plugindir);
     $plugindir = rtrim($plugindir,"/");
     $controllerDir = "$plugindir/controllers";
     $modelsDir = "$plugindir/models";

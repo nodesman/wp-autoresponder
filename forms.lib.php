@@ -23,14 +23,14 @@ function _wpr_subscriptionform_update($info)
 {
 	global $wpdb;
 	$info = (object) $info;
-	$query = "UPDATE  ".$wpdb->prefix."wpr_subscription_form SET name='$info->name', nid='$info->nid',return_url='$info->return_url', followup_type='$info->followup_type',followup_id='$info->followup_id',blogsubscription_type='$info->blogsubscription_type',blogsubscription_id='$info->blogsubscription_id',custom_fields='$info->custom_fields', confirm_subject='$info->confirm_subject', confirm_body='$info->confirm_body',confirmed_subject='$info->confirmed_subject',confirmed_body='$info->confirmed_body', submit_button='$info->submit_button' where id='$info->id';";	
-	$result = $wpdb->query($query);
+	$updateSubscriptionFormQuery = $wpdb->prepare("UPDATE  {$wpdb->prefix}wpr_subscription_form SET name=%s, nid={$info->nid},return_url=%s, followup_type='{$info->followup_type}',followup_id={$info->followup_id},blogsubscription_type='{$info->blogsubscription_type}',blogsubscription_id='{$info->blogsubscription_id}',custom_fields='{$info->custom_fields}', confirm_subject=%s, confirm_body=%s,confirmed_subject=%s,confirmed_body=%s, submit_button=%s where id='$info->id';",$info->name,$info->return_url,$info->confirm_subject,$info->confirm_body,$info->confirmed_subject,$info->confirmed_body,$info->submit_button);	
+	$result = $wpdb->query($updateSubscriptionFormQuery);
 }
 
 function _wpr_subscriptionform_create($info)
 {
 	global $wpdb;
 	$info = (object) $info;
-	$query = "INSERT INTO ".$wpdb->prefix."wpr_subscription_form (nid,name,return_url,followup_type,followup_id,blogsubscription_type,blogsubscription_id,custom_fields, confirm_subject,confirm_body,confirmed_subject,confirmed_body,submit_button) values ('$info->nid','$info->name','$info->return_url','$info->followup_type','$info->followup_id','$info->blogsubscription_type','$info->blogsubscription_id','$info->custom_fields','$info->confirm_subject','$info->confirm_body','$info->confirmed_subject','$info->confirmed_body','$info->submit_button');";
-	$wpdb->query($query);
+	$createSubscriptionFormQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_subscription_form (nid,name,return_url,followup_type,followup_id,blogsubscription_type,blogsubscription_id,custom_fields, confirm_subject,confirm_body,confirmed_subject,confirmed_body,submit_button) values (%d,%s,%s,'{$info->followup_type}',%d,'{$info->blogsubscription_type}',%d,'{$info->custom_fields}',%s,%s,%s,%s,%s);",$info->nid,$info->name,$info->return_url,$info->followup_id,$info->blogsubscription_id,$info->confirm_subject,$info->confirm_body,$info->confirmed_subject,$info->confirmed_body,$info->submit_button);
+	$wpdb->query($createSubscriptionFormQuery);
 }

@@ -384,15 +384,8 @@ function _wpr_process_blog_category_subscriptions()
         //categories
         $args = array(
 	'type'                     => 'post',
-	'child_of'                 => 0,
-	'parent'                   => '',
-	'orderby'                  => 'name',
-	'order'                    => 'ASC',
 	'hide_empty'               => 1,
 	'hierarchical'             => 0,
-	'exclude'                  => '',
-	'include'                  => '',
-	'number'                   => '',
 	'taxonomy'                 => 'category',
 	'pad_counts'               => true );
         $categories = get_categories($args);

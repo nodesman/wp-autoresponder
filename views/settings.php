@@ -14,14 +14,6 @@ var custom_validation_functions = new Array();
       <td colspan="2"><textarea name="address" rows="6" cols="60"><?php echo $canspam_address ?></textarea></td>
     </tr>
     <tr>
-      <td><!--
-         
-         Please don't remove this code. This advertisement is the reason this plugin is free!
-         
-         -->
-        <a href="http://www.krusible.com"><img src="http://www.wpresponder.com/settingspage.png" width="300" height="270" /></a></td>
-    </tr>
-    <tr>
        <td colspan="10">
 <?php do_action("_wpr_settings_form"); ?>
       </td>

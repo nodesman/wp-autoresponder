@@ -1226,38 +1226,88 @@ foreach ($newsletters as $newsletter)
     <tr>
       <td><strong>Follow Up Subscription:</strong>
         <p> <small>Select what content should follow-up a successful subscription.</small></p></td>
+      <?php
+      //construction of options for the followup subscriptions field.
+      
+      $types['Autoresponders'] = array();
+      $types['Selected'] = null;      
+      $getAutorespondersQuery = sprintf("SELECT * FROM %swpr_autoresponders ",$wpdb->prefix);
+      $autorespondersList = $wpdb->get_results($getAutorespondersQuery);
+       
+      foreach ($autorespondersList as $autoresponder)
+      {
+          $item = array("name"=>$autoresponder->name, "id"=>"autoresponder_".$autoresponder->id);
+	  $item['selected'] = false;
+	  $types['Autoresponders'][] = $item;
+	  if ($parameters->followup_type == "autoresponder" && $parameters->followup_id == $autoresponder->id)
+          {
+		
+		//find the index of this item
+		$indexOfThisItem = count($types['Autoresponders'])-1;
+		$types['Autoresponders'][$indexOfThisItem]['selected'] = true;
+		$types['Selected'] = &$types['Autoresponders'][$indexOfThisItem];
+	  }
+          
+      }
+
+      //repeat the same with post series
+      $getPostSeriesList = sprintf("SELECT * FROM %swpr_blog_series",$wpdb->prefix);
+      $listOfPostSeries = $wpdb->get_results($getPostSeriesList);
+      $types['Post Series'] = array();
+      foreach ($listOfPostSeries as $post_series)
+      {
+	$item = array("name"=> $post_series->name,
+	              "id"=>"postseries_".$post_series->id);
+	$types['Post Series'][] = $item;
+        if ($parameters->followup_type = "postseries" && $parameters->followup_id == $post_series->id)
+	{
+		$indexOfThisItem = count($types['Post Series'])-1;
+		$types['Post Series'][$indexOfThisItem]['selected'] = true;
+		$types['Selected'] = & $types['Post Series'][$indexOfThisItem];
+	}
+      }
+       $types = apply_filters("_wpr_subscription_form_followup_options",$types);
+       $whetherInvalidFollowupSeries = false;
+
+       
+      if ($parameters->followup_id != 0 && $types['Selected'] == null)
+      {
+          $whetherInvalidFollowupSeries = true;
+      }
+      ?>
       <td><select name="followup" id="followup_field">
-          <option value="none" <?php
+      <?php
+      //if the selected option is a null then set the none option as the selected item
+      ?>
+      <option value="0" <?php if ($types['Selected'] == null) { ?> selected="selected" <?php } ?>>None</option>
+      <?php
+      foreach ($types as $group=>$options)
+      {
+		if ($group == "Selected")
+		    continue;
+	      ?>
+	      <optgroup label="<?php echo $group ?>">
+	      <?php
+	      if (count($options))
+	      {
+		      foreach ($options as $option)
+		      {
+		      ?><option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
+		      <?php
+		      }
+		}
+		else
+		{
+		?>
+		<option disabled="disabled">None defined</option><?php
+		}
 
-		  if ($parameters->followup_type == 'none' || empty($parameters->followup_type))
+	      ?>
+	      </optgroup>
+	      <?php
+      }
 
-		  {
-
-			  echo 'checked="checked"';
-
-		   }  ?> >None</option>
-          <optgroup id="autoresponders_list" label="Autoresponders:"> </optgroup>
-          <?php
-            $query = "SELECT * FROM ".$wpdb->prefix."wpr_blog_series";
-            $blogseries = $wpdb->get_results($query);
-
-            if (count($blogseries))
-            {
-                ?>
-          <optgroup label="Post Series:">
-          <?php
-                foreach ($blogseries as $bseries)
-                {
-                ?>
-          <option value="postseries_<?php echo $bseries->id ?>" <?php if ($parameters->followup_type == "postseries" && $parameters->followup_id == $bs->id) echo 'selected="selected"'; ?>><?php echo $bseries->name ?></option>
-          <?php
-
-                }
-                ?>
-          </optgroup>
-          <?php
-            }
-?>
+      ?>
         </select></td>
     </tr>
     <tr>

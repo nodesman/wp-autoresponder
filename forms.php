@@ -85,6 +85,14 @@ function wpr_subscriptionforms()
 				$info['followup_type'] = $followup;
 
 				$info['followup_id'] = $followupid;
+				//if it is a unknown follow-up type its probably an extended one. 
+				if (!preg_match("@postseries_[0-9]+@",$followupid) && !preg_match("@autoresponder_[0-9]+@",$followupid))
+				{
+				    $info['followup_id'] = 0
+				    $info['followup_type'] = "none"
+				}
+				
+
 				
 				switch ($_POST['blogsubscription'])
 				{
@@ -118,9 +126,7 @@ function wpr_subscriptionforms()
 				$info['confirmed_subject'] = $_POST['confirmed_subject'];
 
 				$info['confirmed_body'] = $_POST['confirmed_body'];
-
 				_wpr_subscriptionform_update($info);
-
 				do_action("_wpr_subscriptionform_edit_handler_save",$info['id']);
 				$form = _wpr_subscriptionform_get($info['id']);
 				_wpr_subscriptionform_getcode($form,"Form Saved");
@@ -512,81 +518,75 @@ function _wpr_subscriptionforms_create()
 
 		$info['name'] = $_POST['name'];
 
-			$info['return_url'] = $_POST['return_url'];
-			
-			
-			if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
-			{
-				$followup = "autoresponder";
-				$followupid = str_replace("autoresponder_","",$_POST['followup']);
-			}
-			else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
-			{
-				$followup = "postseries";
-				$followupid = str_replace("postseries_","",$_POST['followup']);
-			}
-			else
-			{
-				$followup = "none";
-				$followupid = 0;
-			}
+		$info['return_url'] = $_POST['return_url'];
+		
+		
+		if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+		{
+			$followup = "autoresponder";
+			$followupid = str_replace("autoresponder_","",$_POST['followup']);
+		}
+		else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
+		{
+			$followup = "postseries";
+			$followupid = str_replace("postseries_","",$_POST['followup']);
+		}
+		else
+		{
+			$followup = "none";
+			$followupid = 0;
+		}
 
-			$info['followup_type'] = $followup;
-			$info['followup_id'] = $followupid;
+		$info['followup_type'] = $followup;
+		$info['followup_id'] = $followupid;
+		
+		
+		switch ($_POST['blogsubscription'])
+		{
+			case 'none':
+			case 'all':
+				$blogSubscription = $_POST['blogsubscription'];
+				break;
+			default:				
+			    if (preg_match("@category_[0-9]+@",$_POST['blogsubscription']))
+				{
+					$blogSubscription = "cat";
+					$blogCategory = str_replace("category_","",$_POST['blogsubscription']);
+				}
 			
-			
-			switch ($_POST['blogsubscription'])
-			{
-				case 'none':
-				case 'all':
-					$blogSubscription = $_POST['blogsubscription'];
-					break;
-				default:				
-				    if (preg_match("@category_[0-9]+@",$_POST['blogsubscription']))
-					{
-						$blogSubscription = "cat";
-						$blogCategory = str_replace("category_","",$_POST['blogsubscription']);
-					}
-				
-			}
-			
-			$info['submit_button'] = $_POST['submit_value'];
-						   
-			
+		}
+		
+		$info['submit_button'] = $_POST['submit_value'];
+					   
+		
 
-			$info['blogsubscription_type'] = $blogSubscription;
+		$info['blogsubscription_type'] = $blogSubscription;
 
-			$info['blogsubscription_id'] = $blogCategory;
+		$info['blogsubscription_id'] = $blogCategory;
 
-			$info['custom_fields'] = (is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
+		$info['custom_fields'] = (is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
 
-			$info['confirm_subject'] = $_POST['confirm_subject'];
+		$info['confirm_subject'] = $_POST['confirm_subject'];
 
-			$info['confirm_body'] = $_POST['confirm_body'];
+		$info['confirm_body'] = $_POST['confirm_body'];
 
-			$info['nid'] = $_POST['newsletter'];
+		$info['nid'] = $_POST['newsletter'];
 
-			$info['confirmed_subject'] = $_POST['confirmed_subject'];
+		$info['confirmed_subject'] = $_POST['confirmed_subject'];
 
-			$info['confirmed_body'] = $_POST['confirmed_body'];
-			
-			$errors = apply_filters("_wpr_subscriptionform_created_handler_validate",$errors);
-			
-			
+		$info['confirmed_body'] = $_POST['confirmed_body'];
+		
+		$errors = apply_filters("_wpr_subscriptionform_created_handler_validate",$errors);
 			
 		if (count($errors) == 0)
-
 		{
-
 			_wpr_subscriptionform_create($info);
 
 			$query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}wpr_subscription_form WHERE name=%s;",$info['name']);
 			$form = $wpdb->get_results($query);
 			$form = $form[0];
 			do_action("_wpr_subscriptionform_created_handler_save",$form->id);
-		     _wpr_subscriptionform_getcode($form,"Form Created");
-
-
+		        _wpr_subscriptionform_getcode($form,"Form Created");
 			return;
 
 		}

@@ -47,6 +47,7 @@ function wpr_subscriptionforms()
 		$id = (int) $_GET['fid'];
 		do_action("_wpr_subscriptionform_edit_form_controller",$id);
 		$form = _wpr_subscriptionform_get($id);
+		
 		if (isset($_POST['fid']))
 		{
 			$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
@@ -66,33 +67,33 @@ function wpr_subscriptionforms()
 				$info['id'] = $_GET['fid'];
 				$info['name'] = $_POST['name'];
 				$info['return_url'] = $_POST['return_url'];
-				if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+				if (!preg_match("@postseries_[0-9]+@",$_POST['followup']) && !preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 				{
-					$followup = "autoresponder";
-					$followupid = str_replace("autoresponder_","",$_POST['followup']);
-				}
-				else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
-				{
-					$followup = "postseries";
-					$followupid = str_replace("postseries_","",$_POST['followup']);
+				    $info['followup_id'] = 0;
+				    $info['followup_type'] = "none";
 				}
 				else
 				{
-					$followup = "none";
-					$followupid = 0;
+					if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+					{
+						$followup = "autoresponder";
+						$followupid = str_replace("autoresponder_","",$_POST['followup']);
+					}
+					else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
+					{
+						$followup = "postseries";
+						$followupid = str_replace("postseries_","",$_POST['followup']);
+					}
+					else
+					{
+						$followup = "none";
+						$followupid = 0;
+					}
 				}
-
 				$info['followup_type'] = $followup;
 
 				$info['followup_id'] = $followupid;
 				//if it is a unknown follow-up type its probably an extended one. 
-				if (!preg_match("@postseries_[0-9]+@",$followupid) && !preg_match("@autoresponder_[0-9]+@",$followupid))
-				{
-				    $info['followup_id'] = 0
-				    $info['followup_type'] = "none"
-				}
-				
-
 				
 				switch ($_POST['blogsubscription'])
 				{
@@ -372,6 +373,7 @@ if (!empty($form->followup_type) && $form->followup_type != "none")
   <?php
 
 } ?>
+<?php do_action("_wpr_subscription_form_code_generate",$form); ?>
   <input type="hidden" name="newsletter" value="<?php echo $form->nid ?>" />
   <?php if (isset($form->id)) { ?>
     <input type="hidden" name="fid" value="<?php echo $form->id ?>" />
@@ -469,7 +471,9 @@ foreach ($choices as $choice)
       <td colspan="2" align="center"><input type="submit" value="<?php echo (empty($form->submit_button))?"Subscribe":$form->submit_button; ?>" /></td>
     </tr>
     <tr>
-      <td colspan="2" align="center"><?php if ($enableForm) { echo base64_decode("PGEgc3R5bGU9ImZvbnQtZmFtaWx5OlZlcmRhbmEsIEdlbmV2YSwgc2Fucy1zZXJpZjtmb250LXNpemU6IDlweDsiIGhyZWY9Imh0dHA6Ly93d3cud3ByZXNwb25kZXIuY29tIj5FbWFpbCBNYXJrZXRpbmcgYnkgV1AgQXV0b3Jlc3BvbmRlcjwvYT4="); } ?></td>
+      <td colspan="2" align="center"><?php if ($enableForm) { ?>
+      <a href="http://www.wpresponder.com">Email Marketing by WP Autoresponder</a>
+      <?php } ?></td>
     </tr>
   </table>
 </form>
@@ -590,9 +594,7 @@ function _wpr_subscriptionforms_create()
 			return;
 
 		}
-
 		$params = (object) $info;	
-
 	}
 
 	
@@ -1193,9 +1195,7 @@ foreach ($newsletters as $newsletter)
     <tr>
       <td><strong>Blog Subscription</strong>:
         <p> <small> Specify what kind of blog subscription will those who use this form will have:</small></p></td>
-        
       <td>
-      
       <select name="blogsubscription">
           <option value="none" <?php if ($parameters->blogsubscription_type=="none") { echo 'selected="selected"'; } ?>>None</option>
           <option value="all" <?php if ($parameters->blogsubscription_type=="all") { echo 'selected="selected"'; } ?>>Subscribe to all new posts on
@@ -1231,24 +1231,6 @@ foreach ($newsletters as $newsletter)
       
       $types['Autoresponders'] = array();
       $types['Selected'] = null;      
-      $getAutorespondersQuery = sprintf("SELECT * FROM %swpr_autoresponders ",$wpdb->prefix);
-      $autorespondersList = $wpdb->get_results($getAutorespondersQuery);
-       
-      foreach ($autorespondersList as $autoresponder)
-      {
-          $item = array("name"=>$autoresponder->name, "id"=>"autoresponder_".$autoresponder->id);
-	  $item['selected'] = false;
-	  $types['Autoresponders'][] = $item;
-	  if ($parameters->followup_type == "autoresponder" && $parameters->followup_id == $autoresponder->id)
-          {
-		
-		//find the index of this item
-		$indexOfThisItem = count($types['Autoresponders'])-1;
-		$types['Autoresponders'][$indexOfThisItem]['selected'] = true;
-		$types['Selected'] = &$types['Autoresponders'][$indexOfThisItem];
-	  }
-          
-      }
 
       //repeat the same with post series
       $getPostSeriesList = sprintf("SELECT * FROM %swpr_blog_series",$wpdb->prefix);
@@ -1263,13 +1245,13 @@ foreach ($newsletters as $newsletter)
 	{
 		$indexOfThisItem = count($types['Post Series'])-1;
 		$types['Post Series'][$indexOfThisItem]['selected'] = true;
-		$types['Selected'] = & $types['Post Series'][$indexOfThisItem];
+		$types['Selected'] = &$types['Post Series'][$indexOfThisItem];
 	}
       }
+      
        $types = apply_filters("_wpr_subscription_form_followup_options",$types);
        $whetherInvalidFollowupSeries = false;
 
-       
       if ($parameters->followup_id != 0 && $types['Selected'] == null)
       {
           $whetherInvalidFollowupSeries = true;
@@ -1280,10 +1262,12 @@ foreach ($newsletters as $newsletter)
       //if the selected option is a null then set the none option as the selected item
       ?>
       <option value="0" <?php if ($types['Selected'] == null) { ?> selected="selected" <?php } ?>>None</option>
+      <optgroup id="autoresponders_list" label="Autoresponders"></optgroup>
       <?php
+      
       foreach ($types as $group=>$options)
       {
-		if ($group == "Selected")
+		if ($group == "Selected" || $group == "Autoresponders")
 		    continue;
 	      ?>
 	      <optgroup label="<?php echo $group ?>">
@@ -1292,7 +1276,7 @@ foreach ($newsletters as $newsletter)
 	      {
 		      foreach ($options as $option)
 		      {
-		      ?><option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
+		      ?><option <?php if ($types['Selected'] == $option) { ?>selected="selected" <?php } ?> value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
 		      <?php
 		      }
 		}

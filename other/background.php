@@ -202,12 +202,11 @@ function _wpr_autoresponder_process($id=0)
 	
 	$currentTime = time();
 	$timeTodayAt12AM = mktime(0,0,0,date("n",$currentTime),date("j",$currentTime),date("Y",$currentTime));
-    $prefix = $wpdb->prefix;
+        $prefix = $wpdb->prefix;
 	do_action("_wpr_autoresponder_process_start");
 
-	$getNumberOfActiveFollowupSubscriptionsQuery = "SELECT COUNT(*) number
-											FROM `".$prefix."wpr_followup_subscriptions` a,
-											`".$prefix."wpr_subscribers` b
+	$getNumberOfActiveFollowupSubscriptionsQuery = "SELECT COUNT(*) number FROM `{$prefix}wpr_followup_subscriptions` a,
+											`{$prefix}wpr_subscribers` b
 											WHERE a.type='autoresponder' AND  
 											FLOOR(($timeTodayAt12AM - a.doc)/86400) > a.sequence OR
 											FLOOR(($timeTodayAt12AM - a.doc)/86400) = -1 AND
@@ -276,9 +275,11 @@ function _wpr_autoresponder_process($id=0)
 			catch (Exception $exp)
 			{
 				//just in case.
+				//TODO: Do something here.
+				continue;
 			}
 			
-			$updateSubscriptionStatusQuery = "UPDATE ".$prefix."wpr_followup_subscriptions set last_date='".time()."', sequence='$message->sequence' WHERE sid=$asubscription->sid";
+			$updateSubscriptionStatusQuery = sprintf("UPDATE `{$prefix}wpr_followup_subscriptions` SET `last_date`='%s', `sequence`=%d WHERE `sid`=%d",time(), $message->sequence, $asubscription->sid);
 			$wpdb->query($updateSubscriptionStatusQuery);
 			
 			//if another cron has started, then this cron should be terminated.

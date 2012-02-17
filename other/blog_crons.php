@@ -386,8 +386,7 @@ function _wpr_process_blog_category_subscriptions()
 	'type'                     => 'post',
 	'hide_empty'               => 1,
 	'hierarchical'             => 0,
-	'taxonomy'                 => 'category',
-	'pad_counts'               => true );
+	'taxonomy'                 => 'category');
         $categories = get_categories($args);
         
         

@@ -185,7 +185,8 @@ $database_structure["wpr_blog_subscription"] = array ( 'columns'=> array(
                                                                            'catid' => "INT NOT NULL",
                                                                            'last_processed_date'=>'INT NOT NULL',
                                                                            'last_published_postid'=>'INT NOT NULL',
-                                                                           'last_published_post_date'=>'BIGINT NOT NULL DEFAULT 0'
+                                                                           'last_published_post_date'=>'BIGINT NOT NULL DEFAULT 0',
+									   'pending_reprocess' => 'TINYINT NOT NULL DEFAULT 0'
                                                                           ),
                                                        'primary_key' => "id",
                                                        'auto_increment'=>'id',

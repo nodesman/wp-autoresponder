@@ -231,13 +231,16 @@ if (!defined("WPR_DEFS"))
 			exit;
 		}
 		
-		
-		$vb = intval($_GET['wpr-vb']);
-		if (isset($_GET['wpr-vb']) && $vb > 0)
-		{
-			require "broadcast_html_frame.php";
-			exit;
-		}
+		if (isset($_GET['wpr-vb']))
+ 		{
+		    $vb = intval($_GET['wpr-vb']);
+		    if (isset($_GET['wpr-vb']) && $vb > 0)
+		    {
+		       require "broadcast_html_frame.php";
+		       exit;
+		    }
+                }
+   		
         
 		
 		require WPR_PLUGIN_DIR."/proxy.php";

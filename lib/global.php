@@ -8,7 +8,7 @@ function validateEmail($email)
 
 function _wpr_option_get($name)
 {
-    if (!$GLOBALS['_wpr_options'] )
+    if (!isset($GLOBALS['_wpr_options']))
     {
         $GLOBALS['_wpr_options'] = get_option("_wpr_options");
     }

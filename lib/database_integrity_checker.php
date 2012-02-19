@@ -204,6 +204,9 @@ class DatabaseChecker
 
             $getTableColumnsQuery = "SHOW COLUMNS FROM $table_name;";
             $columnsExisting = $this->db->get_col($getTableColumnsQuery,0);
+            //get the full definitions
+	    $extraInTableDefinitionExisting = $this->db->get_col($getTableColumnsQuery,5);
+	    $whetherHasAutoIncrementColumn = in_array("auto_increment",$extraInTableDefinitionExisting);
 
             $non_existing_columns = array_diff($columns,$columnsExisting);
 
@@ -244,8 +247,9 @@ class DatabaseChecker
             }
             
             //adding primary key
-            if (isset($table['primary_key']))
+            if (isset($table['primary_key']) && false == $whetherHasAutoIncrementColumn)
             {
+	    
                 $primary_key = $table['primary_key'];
                 
                 if (is_string($primary_key))
@@ -274,7 +278,7 @@ class DatabaseChecker
                 }
 
 
-                if (count($primary_key_columns_to_be_added))
+                if (isset($primary_key_columns_to_be_added) && 0 != count($primary_key_columns_to_be_added))
                 foreach ($primary_key_columns_to_be_added as $new_column)
                 {
                     $column_def_clause = "ADD `$new_column` ".$table['columns'][$new_column];
@@ -295,6 +299,31 @@ class DatabaseChecker
                     $primaryKeyColumnDefinitions = "$primaryKeyColumnDefinitions , ";
                 $primarykeyAdditionQuery  = "ALTER TABLE `$table_name` $primaryKeyColumnDefinitions ADD PRIMARY KEY (`$primary_key_identifier`);";
                 $this->db->query($primarykeyAdditionQuery);
+            }
+
+            $unique_indexes = (array) $table['unique'];
+            $unique_indexes = array_keys($unique_indexes);
+            $existingIndexes = $this->db->get_results("SHOW INDEX FROM `$table_name`;");
+
+            $existingUniques = array();
+            
+            foreach ($existingIndexes as $index)
+            {
+                
+                if ($index->Non_unique == 1)
+                     continue;
+
+		if ($index->Key_name == "PRIMARY")
+		   continue;
+                
+                array_push($existingUniques,$index->Key_name);
+            }
+            $existingUniques = array_unique($existingUniques);
+            $uniquesToDrop = $existingUniques;
+            foreach ($uniquesToDrop as $index)
+            {
+                $dropIndexQuery = "DROP INDEX `$index` ON `$table_name`;";
+                $this->db->query($dropIndexQuery);
             }
 
             //unique key
@@ -320,30 +349,6 @@ class DatabaseChecker
 
             //drop other indexes.
 
-            $unique_indexes = (array) $table['unique'];
-            $unique_indexes = array_keys($unique_indexes);
-            $existingIndexes = $this->db->get_results("SHOW INDEX FROM `$table_name`;");
-
-            $existingUniques = array();
-            
-            foreach ($existingIndexes as $index)
-            {
-                
-                if ($index->Non_unique == 1)
-                     continue;
-                
-                array_push($existingUniques,$index->Key_name);
-            }
-            
-            $existingUniques = array_unique($existingUniques);
-
-            $uniquesToDrop = array_diff($existingUniques, $unique_indexes);
-
-            foreach ($uniquesToDrop as $index)
-            {
-                $dropIndexQuery = "DROP INDEX `$index` ON `$table_name`;";
-                $this->db->query($dropIndexQuery);
-            }
 
 	}
 	

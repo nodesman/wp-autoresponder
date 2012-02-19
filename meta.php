@@ -371,7 +371,9 @@ $GLOBALS['wpr_defaults'] = array(
 );
 
 
-
+/*
+Important Note: The same action CANNOT be scheduled in different schedules. Create a different action with a different name
+*/
 $GLOBALS['wpr_cron_schedules'] = array(
 											array(
 												  	'action'=> '_wpr_queue_management_cron',

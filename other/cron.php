@@ -12,13 +12,17 @@ function _wpr_schedule_crons_initial()
     $cron_schedules = $GLOBALS['wpr_cron_schedules'];
     foreach ($cron_schedules as $cron)
     {
-        if (count($cron['arguments']) >0 )
-        {
-            wp_schedule_event(time(),$cron['schedule'], $cron['action'], $cron['arguments']);
-        }
-        else
-        {
-            wp_schedule_event(time(), $cron['schedule'],$cron['action']);
+	if (false == wp_get_schedule($cron['action'],$cron['arguments']))
+	{
+            if (count($cron['arguments']) >0 )
+            {
+	        //check if the cron has already been scheduled
+                wp_schedule_event(time(),$cron['schedule'], $cron['action'], $cron['arguments']);
+	    }
+            else
+	    {
+                wp_schedule_event(time(), $cron['schedule'],$cron['action']);
+            }
         }
     }
 }

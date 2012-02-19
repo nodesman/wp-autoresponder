@@ -242,6 +242,7 @@ $database_structure["wpr_followup_subscriptions"] = array ( 'columns'=> array(
 											  'eid' => "INT NOT NULL",
 											  'sequence' => "SMALLINT NOT NULL",
 											  'last_date' => "INT NOT NULL",
+											  'last_processed' => "BIGINT NOT NULL DEFAULT 0",
 											  'doc' => "VARCHAR(20) NOT NULL"
 											  ),
 											'primary_key' => "id",

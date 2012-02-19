@@ -195,7 +195,7 @@ if ($success)
 		//new subscriber, add him to records
 		
 		$date = time();
-		$query = $wpdb->prefix("INSERT INTO `{$wpdb->prefix}wpr_subscribers` (`nid`,`name`,`email`,`date`,`active`,`fid`,`hash`) VALUES (%d,%s,%s,%s,1,%d,%s);",$nid,$name,$email,$date,$fid, $hash) ;
+		$query = $wpdb->prepare("INSERT INTO `{$wpdb->prefix}wpr_subscribers` (`nid`,`name`,`email`,`date`,`active`,`fid`,`hash`) VALUES (%d,%s,%s,%s,1,%d,%s);",$nid,$name,$email,$date,$fid, $hash) ;
 		$wpdb->query($query);
 		//now get the subscriber object 
 		$query = $wpdb->prepare("SELECT * FROM `{$wpdb->prefix}wpr_subscribers` WHERE `email`=%s AND `nid`=%d;",$email,$nid);

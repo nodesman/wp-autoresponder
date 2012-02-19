@@ -358,16 +358,6 @@ function _wpr_process_blog_subscriptions()
                 $wpdb->query($updateSubscriptionQuery);
                 
                 //add a delivery record
-                $insertDeliveryRecordQuery = sprintf("INSERT INTO `%swpr_delivery_record` (sid, type, eid, timestamp)
-                                            VALUES
-                                            (%d,'blog_post',%d,'%s')
-                                            ",
-                                             $wpdb->prefix,
-                                             $subscription->sid,
-                                             $postId,
-                                             time()
-                                            );
-                $wpdb->query($insertDeliveryRecordQuery);
             }
         }
         wp_schedule_single_event(time(), "_wpr_process_blog_subscriptions");
@@ -481,20 +471,7 @@ function _wpr_process_blog_category_subscriptions()
                                                         $publishTime,
                                                         $subscription->id
                             );
-
                     $wpdb->query($updateSubscriptionQuery);
-
-                    //add a delivery record
-                    $insertDeliveryRecordQuery = sprintf("INSERT INTO `%swpr_delivery_record` (sid, type, eid, timestamp)
-                                                VALUES
-                                                (%d,'blog_post',%d,'%s')
-                                                ",
-                                                 $wpdb->prefix,
-                                                 $subscription->sid,
-                                                 $postId,
-                                                 time()
-                                                );
-                    $wpdb->query($insertDeliveryRecordQuery);
                 }
             }
         }
@@ -655,6 +632,18 @@ function deliverBlogPost($sid,$post_id,$footerMessage="",$checkCondition=false,$
 	   
        wpr_place_tags($sid,$params);
        sendmail($sid,$params);
+
+       $insertDeliveryRecordQuery = sprintf("INSERT INTO `%swpr_delivery_record` (sid, type, eid, timestamp)
+                                            VALUES
+                                            (%d,'blog_post',%d,'%s')
+                                            ",
+                                             $wpdb->prefix,
+                                             $sid,
+                                             $post_id,
+                                             time()
+                                            );
+        $wpdb->query($insertDeliveryRecordQuery);
+
    }
 
 }

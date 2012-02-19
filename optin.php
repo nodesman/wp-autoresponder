@@ -60,9 +60,9 @@ if ($success)
 	
 	$skiplist = array("name","email","followup","blogsubscription","cat","return_url","responder");
 	
-	$query = "SELECT count(*) count FROM ".$wpdb->prefix."wpr_newsletters where id=$newsletter";	
+	$query = $wpdb->prepare("SELECT count(*) number_of FROM {$wpdb->prefix}wpr_newsletters where id=%d",$newsletter);	
 	$results = $wpdb->get_results($query);	
-	$count = $results[0]->count;	
+	$count = $results[0]->number_of;	
 	if ($count == 0)
 	{  
 	     error("The newsletter to which you are trying to subscribe doesn't exist in our records.");
@@ -135,7 +135,7 @@ if ($success)
 			break;
 
 			case 'autoresponder':
-			$query = "SELECT COUNT(*) count FROM ".$wpdb->prefix."wpr_autoresponders where id=".$responder;
+			$query = $wpdb->prepare("SELECT COUNT(*) count FROM {$wpdb->prefix}wpr_autoresponders where id=%d",$responder);
 			$items = $wpdb->get_results($query);
 			$count = $items[0]->count;
 			if ($count == 0)
@@ -183,7 +183,7 @@ if ($success)
 	
 	$hash = _wpr_subscriber_hash_generate();
 
-	$query = "SELECT * FROM ".$wpdb->prefix."wpr_subscribers where email='$email' and nid='$nid';";
+	$query = $wpdb->prepare("SELECT * FROM `{$wpdb->prefix}wpr_subscribers` WHERE `email`=%s AND `nid`=%d;",$email,$nid);
 	$subscribeList = $wpdb->get_results($query);
 	
 	
@@ -195,17 +195,17 @@ if ($success)
 		//new subscriber, add him to records
 		
 		$date = time();
-		$query = "INSERT INTO ".$wpdb->prefix."wpr_subscribers (nid,name,email,date,active,fid,hash) values ('$nid','$name','$email','$date',1,'$fid','$hash');";
+		$query = $wpdb->prefix("INSERT INTO `{$wpdb->prefix}wpr_subscribers` (`nid`,`name`,`email`,`date`,`active`,`fid`,`hash`) VALUES (%d,%s,%s,%s,1,%d,%s);",$nid,$name,$email,$date,$fid, $hash) ;
 		$wpdb->query($query);
 		//now get the subscriber object 
-		$query = "SELECT * FROM ".$wpdb->prefix."wpr_subscribers where email='$email' and nid='$nid';";
+		$query = $wpdb->prepare("SELECT * FROM `{$wpdb->prefix}wpr_subscribers` WHERE `email`=%s AND `nid`=%d;",$email,$nid);
 		$subscriber = $wpdb->get_results($query);
 		$subscriber = $subscriber[0];
 	}
 	else   //the subscriber already exists
 	{
 		 //find if the subscriber had already subscribed before and is still subscribed.
-		 $query = "select * from ".$wpdb->prefix."wpr_subscribers where active=1 and confirmed=1 and email='$email' and nid='$nid'; ";
+		 $query = $wpdb->prepare("select * from {$wpdb->prefix}wpr_subscribers where active=1 and confirmed=1 and email=%s and nid=%d; ",$email,$nid);
 		 $results = $wpdb->get_results($query);
 
 		 if (count($results) >0)
@@ -214,9 +214,9 @@ if ($success)
 		 }
 		 else
 		 {
-     		 $subscriber = $subscribeList[0];		 
+     			 $subscriber = $subscribeList[0];		 
 			 $date = time();
-			 $query = "update ".$wpdb->prefix."wpr_subscribers set active=1, confirmed=0, date='$date' where email='$email' and nid='$nid';";
+			 $query = $wpdb->prepare("update {$wpdb->prefix}wpr_subscribers set active=1, confirmed=0, date=%s where email=%s and nid=%d;",$date, $email, $nid) ;
    			 $wpdb->get_results($query);
 		 }
 	}
@@ -231,8 +231,7 @@ if ($success)
 
 			$name = base64_decode(str_replace("cus_","",$field_name));
 
-			$query = "select * from ".$wpdb->prefix."wpr_custom_fields where name='$name' and nid='$nid'";
-
+			$query = $wpdb->prepare("select * from {$wpdb->prefix}wpr_custom_fields where name=%s and nid=%d",$name, $nid);
 			$custom_fields = $wpdb->get_results($query);
 
 			$custom_fields = $custom_fields[0];
@@ -241,11 +240,11 @@ if ($success)
 
 			$value = $_POST[$field_name];
 
-			$query = "DELETE FROM ".$wpdb->prefix."wpr_custom_fields_values WHERE nid=$nid and sid=$id and cid=$cid";			
+			$query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}wpr_custom_fields_values WHERE nid=%d AND sid=%d AND cid=%d",$nid, $id, $cid) ;
 
 			$wpdb->query($query);
 
-			$query = "INSERT INTO ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value)  values ('$nid','$id','$cid','$value');";
+			$query = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_custom_fields_values (nid,sid,cid,value)  values (%d,%d,%d,%s);",$nid,$id,$cid,$value);
 
 			$wpdb->query($query);
 
@@ -261,7 +260,7 @@ if ($success)
 
 	//what custom fields already exist? so that we dont try to insert duplicate values for those
 
-	$query = "SELECT b.name name from ".$wpdb->prefix."wpr_custom_fields_values a, ".$wpdb->prefix."wpr_custom_fields b where a.sid=$id and b.id=a.cid;";
+	$query = $wpdb->prepare("SELECT b.name name from {$wpdb->prefix}wpr_custom_fields_values a, {$wpdb->prefix}wpr_custom_fields b where a.sid=%d and b.id=a.cid;",$id);
 
 	$fields = $wpdb->get_results($query);
 
@@ -283,6 +282,7 @@ if ($success)
 
 		$notin = implode("','",$existing);
 
+
 	else
 
 		$notin ="";
@@ -291,50 +291,28 @@ if ($success)
 
 	$notin = "IN('".$notin."')";
 
-	$query = "SELECT * FROM ".$wpdb->prefix."wpr_custom_fields WHERE `name` NOT $notin AND nid='$nid'";
-
-
-
+	$query = sprintf("SELECT * FROM {$wpdb->prefix}wpr_custom_fields WHERE `name` NOT %s AND nid=%d;",$notin,$nid);
 	$otherfields = $wpdb->get_results($query);
 
 	foreach ($otherfields as $field)
-
 	{
-
 		$cid  = $field->id;
-
-		$query = "INSERT INTO ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value) VALUES ('$nid','$id','$cid','');";
-
+		$query = sprintf("INSERT INTO {$wpdb->prefix}wpr_custom_fields_values (nid,sid,cid,value) VALUES (%d,%d,%d,'');",$nid,$id,$cid);
 		$wpdb->query($query);
-
 	}
 
-	
 
 	if ($followup)
-
 	{
-
 		$query = "SELECT a.* FROM ".$wpdb->prefix."wpr_followup_subscriptions a, ".$wpdb->prefix."wpr_subscribers b where a.sid=b.id and a.type='$type' and a.eid='$responder' and b.id='$id'";
-
 		$subscriptions = $wpdb->get_results($query);
-
 		//subscribe to autoresponder only if they aren't or ever haven't subscribed to this newsletter
-
 		if (count($subscriptions) == 0)
-
 		{
-
 			$date = time();
-
-			$query = "DELETE FROM ".$wpdb->prefix."wpr_followup_subscriptions where sid=$id and type='$followup' and eid='$responder';";
-
+			$query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}wpr_followup_subscriptions where sid=%d and type=%s and eid=%d;",$id,$followup,$responder);
 			$wpdb->query($query);
-
-			
-
-			$query = "INSERT INTO ".$wpdb->prefix."wpr_followup_subscriptions (sid,type,eid,sequence,doc) values ('$id','$followup','$responder',-1,$date);";
-
+			$query = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_followup_subscriptions (sid,type,eid,sequence,doc) values (%d,%s,%d,-1,%s);",$id,$followup,$responder,$date);
 			$wpdb->query($query);
 
 		}
@@ -347,7 +325,7 @@ if ($success)
                 $deleteExistingSubscriptionQuery = sprintf("DELETE FROM %swpr_blog_subscription WHERE sid=%d AND type='%s' AND catid=%d",$wpdb->prefix,$id,$bsubscription,$bcategory);
                 $wpdb->query($deleteExistingSubscriptionQuery);
                 $timeNow = time();
-                $query = "INSERT INTO ".$wpdb->prefix."wpr_blog_subscription (sid,type,catid, last_published_post_date) values ('$id','$bsubscription','$bcategory','$timeNow');";
+                $query = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_blog_subscription (sid,type,catid, last_published_post_date) values (%d,%s,%d,%s);",$id, $bsubscription,$bcategory,$timeNow);
                 $wpdb->query($query);
 	}
 
@@ -357,7 +335,7 @@ if ($success)
 
 	{
 
-		$query = "SELECT * from ".$wpdb->prefix."wpr_subscription_form where id='$fid'";
+		$query = $wpdb->prepare("SELECT * from {$wpdb->prefix}wpr_subscription_form where id=%d",$fid);
 
 		$theForm = $wpdb->get_results($query);
 
@@ -457,17 +435,7 @@ if ($success)
 									'fromname'=>$from_name,
 									'from'=>$from_email
 								);
-	//try {
-		//ob_start();
-    	@dispatchEmail($verificationEmail);
-//		ob_get_clean();
-	//}
-//	catch (Exception $exc)
-	{
-		//STFU!
-		
-	}
-	 
+    	@dispatchEmail($verificationEmail);	 
 	if (empty($return_url))
 	{
 		if (isset($theForm))
@@ -478,8 +446,8 @@ if ($success)
 	{ 
         ?>
 <script>
-		window.location='<?php echo $return_url; ?>';
-		</script>
+window.location='<?php echo $return_url; ?>';
+</script>
 <?php
 		exit;
 	}

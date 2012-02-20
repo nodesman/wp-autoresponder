@@ -21,7 +21,9 @@ class DatabaseChecker
                 if (!$this->table_exists($table_name))
                     $this->create_table($table_name);
                 else
+                {   
                     $this->modify_table_to_structure($table_name);
+                }
             }
 
 	}
@@ -277,7 +279,6 @@ class DatabaseChecker
                     $array_of_column_defs[] = $modification_clause;
                 }
 
-
                 if (isset($primary_key_columns_to_be_added) && 0 != count($primary_key_columns_to_be_added))
                 foreach ($primary_key_columns_to_be_added as $new_column)
                 {
@@ -331,6 +332,9 @@ class DatabaseChecker
             {
                 foreach ($table['unique'] as $unique_key_name=>$unique_key)
                 {
+                    $whetherSingleColumnUnique=false;
+                    if (is_string($unique_key) || 1 == count($unique_key))
+                        $whetherSingleColumnUnique=true;
                     if (is_array($unique_key))
                     {
                         $unique_identifier = implode("`,`",$unique_key);
@@ -338,9 +342,18 @@ class DatabaseChecker
                     else if (is_string($unique_key))
                     {
                         $unique_identifier = "`$unique_key`";
+                        
                     }
                     else
                         continue;
+
+		    //HACK ALERT!!
+		    if ($unique_key_name == "meta_key_is_unique")
+		    {
+		        $setMetaKeyColumnToMd5OfIdQuery=sprintf("UPDATE %swpr_queue SET meta_key=MD5(id) WHERE meta_key='';",$this->db->prefix);
+			$this->db->query($setMetaKeyColumnToMd5OfIdQuery);  
+		    }
+		    
 
                     $addUniqueKeyQuery = "ALTER TABLE `$table_name` ADD UNIQUE KEY `$unique_key_name` (`$unique_identifier`);";
                     $this->db->query($addUniqueKeyQuery);

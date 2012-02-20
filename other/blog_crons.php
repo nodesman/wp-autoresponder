@@ -3,13 +3,13 @@
 add_action("post_updated","_wpr_blog_subscription_post_updated",10,3);
 
 
-function _wpr_blog_subscription_post_updated($post_id,$post_before,$post_after)
+function _wpr_blog_subscription_post_updated($post_id,$post_after,$post_before)
 {
     global $wpdb;
     //delete all blog posts that haven't been sent that are in the queue
     $affected_rows = _wpr_delete_post_emails($post_id);
     if ($affected_rows == 0)
-        return; //nothing can be done now.
+        return; //nothing can be done now. They're all out or none were even delivered.
     
     
     /*
@@ -17,6 +17,7 @@ function _wpr_blog_subscription_post_updated($post_id,$post_before,$post_after)
      * HAS BEEN REMOVED TO PROCEED FROM THE PREVIOUS BLOG POST.
      */
     
+        
     //get all the categories to which this post was delivered
     $getCategoriesDeliveredToQuery = sprintf("SELECT DISTINCT catid FROM %swpr_blog_subscription WHERE last_published_postid=%d AND type='cat';",$wpdb->prefix, $post_id);
     $categoryIdsRes = $wpdb->get_results($getCategoriesDeliveredToQuery);

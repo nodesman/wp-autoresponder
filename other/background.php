@@ -391,7 +391,7 @@ function _wpr_postseries_process()
 		$meta_key = sprintf("PS-%s-%s-%s",$psubscription->eid,$psubscription->sid,$postToSend->ID);
 		$additionalParams = array('meta_key'=>$meta_key);
 		
-        deliverBlogPost($sid,$postToSend->ID,"You are receiving this blog post as a part of a post series at $name.",true,true,$additionalParams);
+                deliverBlogPost($sid,$postToSend->ID,"You are receiving this blog post as a part of a post series at $name.",true,true,$additionalParams);
 		
 		$query = "UPDATE ".$prefix."wpr_followup_subscriptions set sequence=$indexToDeliver , last_date='".time()."' where id='".$psubscription->id."';";
 		$wpdb->query($query);

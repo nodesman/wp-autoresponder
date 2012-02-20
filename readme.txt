@@ -3,8 +3,8 @@ Contributors: rajasekharan
 Donate link: http://wpresponder.com/donate/  
 Tags: email, newsletter, autoresponder, subscribers, mailing list, follow up email autoresponder, email marketing  
 Requires at least: 2.8.2  
-Tested up to: 3.3
-Stable tag: 5.2.6
+Tested up to: 3.3.1
+Stable tag: 5.2.7
 
 With WP Autoresponder you can create email newsletters, follow up autoresponders and provide subscription to blog via e-mail.  
 
@@ -146,3 +146,18 @@ converted to string in wp_dir/wp-content/plugins/wp-responder-email-autorespond
 er-and-newsletter-plugin/subscribers.php on line 157'. Fixed
 
 * Invalid e-mail addresses in the database prevent all broadcasts from being processed further. This resulted in the plugin not sending any e-mail when a broadcast is scheduled/dispatched.
+
+
+**WP Autoresponder v5.2.7 **
+
+Code Changes:
+
+* Centrailzed delivery record insertion for blog posts: The delivery record for blog post is now inserted at the function that delivers blog post as against in the processes that perform blog post deliveries
+* Properly escaped all queries in optin.php
+* Prevented SQL errors from occuring during initial installation
+* Prevented crons from being scheduled again when they are already scheduled
+* Modified autoresponder subscribers query to not return duplicate rows
+* Made the subscription form's follow-up selection interface extensible so that a custom follow-up type can be added by an external plugin
+* Removed ad placeholder from settings page. Some other time. In some other form. 
+* Fixed incorrect query arguments for fetching list of categories in blog category processing
+* Fixed administration area slowed down by the plugin

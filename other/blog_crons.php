@@ -139,7 +139,7 @@ function _wpr_restore_blog_category_dates($post_id,$category, $timeStampOfLastPo
     $afterPost = $wpdb->get_results($getPostAfterThisOneQuery);
 
     if (0 != count($afterPost)) //this is not the latest post. in which case we do not have to fall back to the previous post's vars.
-        continue;
+        return;
 
     $getPostBeforeThisOneQuery = sprintf("SELECT * FROM %sposts p, %sterm_relationships r WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` < '%s' AND `post_password`='' AND p.ID=r.object_id AND r.term_taxonomy_id=%d ORDER BY `post_date_gmt`  DESC LIMIT 1;",$wpdb->prefix,$wpdb->prefix,$timeStampOfLastPost,$category->term_id);;
     $prevPost = $wpdb->get_results($getPostBeforeThisOneQuery);

@@ -7,23 +7,32 @@ function _wpr_blog_subscription_post_updated($post_id,$post_after,$post_before)
 {
     global $wpdb;
     //delete all blog posts that haven't been sent that are in the queue
+    $updateAllBlogPostsForReprocess = sprintf("UPDATE {$wpdb->prefix}wpr_blog_subscription 
+                                                LEFT JOIN {$wpdb->prefix}wpr_queue
+                                                ON {$wpdb->prefix}wpr_queue.sid={$wpdb->prefix}wpr_blog_subscription.sid
+                                                SET {$wpdb->prefix}wpr_blog_subscription.pending_reprocess=1 
+                                                WHERE {$wpdb->prefix}wpr_queue.meta_key LIKE 'BP-%%%%-%d' AND {$wpdb->prefix}wpr_queue.sent=0;",$post_id);
+    $wpdb->query($updateAllBlogPostsForReprocess);
+
     $affected_rows = _wpr_delete_post_emails($post_id);
     if ($affected_rows == 0)
         return; //nothing can be done now. They're all out or none were even delivered.
-    
     
     /*
      * NOW REVERT ALL THE CATEGORY SUBSCRIPTIONS OF CATEGORIES FROM WHICH THE POST
      * HAS BEEN REMOVED TO PROCEED FROM THE PREVIOUS BLOG POST.
      */
     
-        
+    
+    //set the pending_reprocess to all subscriptions that last received that blog post
+    
+    
     //get all the categories to which this post was delivered
     $getCategoriesDeliveredToQuery = sprintf("SELECT DISTINCT catid FROM %swpr_blog_subscription WHERE last_published_postid=%d AND type='cat';",$wpdb->prefix, $post_id);
     $categoryIdsRes = $wpdb->get_results($getCategoriesDeliveredToQuery);
     if (0 == count($categoryIdsRes))
         return; //there are no blog category subscriptions at all.
-    
+    return;
     $deliveredCategories = array();
     foreach ($categoryIdsRes as $c) 
     {
@@ -180,8 +189,18 @@ function _wpr_delete_post_emails($post_id)
     $meta_key = sprintf("BP-%%%%-%d",$post_id);
     //delete relevant delivery records    
     //delete relevant pending emails from queue
+    
+    
+    $deleteDeliveryRecordsQuery = sprintf("DELETE FROM {$wpdb->prefix}wpr_delivery_record 
+                                           USING {$wpdb->prefix}wpr_queue, {$wpdb->prefix}wpr_delivery_record
+                                           WHERE {$wpdb->prefix}wpr_queue.sent=0 AND {$wpdb->prefix}wpr_queue.sid={$wpdb->prefix}wpr_delivery_record.sid
+                                           AND {$wpdb->prefix}wpr_queue.meta_key LIKE 'BP-%%%%-%d'
+                                         ",$post_id);
+    $wpdb->query($deleteDeliveryRecordsQuery);
+        
     $deleteEmailsPendingDeliveryQuery = sprintf("DELETE FROM %swpr_queue WHERE meta_key LIKE '%s' AND sent=0",
             $wpdb->prefix,$meta_key);
+
     $rowsAffected = $wpdb->query($deleteEmailsPendingDeliveryQuery);
     return $rowsAffected;
 }
@@ -236,26 +255,44 @@ function _wpr_blog_subscription_get_post_to_deliver($subscription)
     }
     else //this subscription has been ported to the new format. now find a newer post to deliver.
     {
-        $timeOfLastPost = $subscription->last_published_post_date;
-        $timeStampOfLastPost = date("Y-m-d H:i:s",$timeOfLastPost);
-        $timeStampForNow  = date("Y-m-d H:i:s");
-        $getPostsSinceThisDateQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` > '%s' AND `post_date_gmt` < '%s' AND `post_password`=''ORDER BY `post_date_gmt`  ASC;",$wpdb->prefix,$timeStampOfLastPost, $timeStampForNow);
-	$posts = $wpdb->get_results($getPostsSinceThisDateQuery);
-        $posttoreturn = false;
-        //sometimes this post may have been delivered by the blog category subscription
-        foreach ($posts as $p)
+        if ($subscription->pending_reprocess == 1)
         {
-            $checkWhetherInDelvieryRecordQuery = sprintf("SELECT COUNT(*) num FROM `%swpr_delivery_record` WHERE eid=%d AND type='blog_post' AND sid=%d",$wpdb->prefix,$p->ID,$subscription->sid);
-            $whetherDeliveredResults = $wpdb->query($checkWhetherInDelvieryRecordQuery);
-            $num = $whetherDeliveredResults[0]->num;
-            if ($num == 0)
-            {
-                $posttoreturn = $p;
-                break;
-                
-            }
+            $getLastPublishedPostQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND ID=%d AND `post_password`=''ORDER BY `post_date_gmt`  ASC;",$wpdb->prefix,$subscription->last_published_postid);
+            $posts = $wpdb->get_results($getLastPublishedPostQuery);
+            
+            if (0 == count($posts))
+                $posttoreturn=false;
+            else
+                $posttoreturn=$posts[0];
+            
+
+            $updateReprocessToZeroQuery = sprintf("UPDATE %swpr_blog_subscription SET pending_reprocess=0 WHERE id=%d",$wpdb->prefix,$subscription->id);
+            $wpdb->query($updateReprocessToZeroQuery);
         }
+        else
+        {
+            $timeOfLastPost = $subscription->last_published_post_date;
+            $timeStampOfLastPost = date("Y-m-d H:i:s",$timeOfLastPost);
+            $timeStampForNow  = date("Y-m-d H:i:s");
+            $getPostsSinceThisDateQuery = sprintf("SELECT * FROM %sposts WHERE `post_type`='post' AND  `post_status`='publish' AND `post_date_gmt` > '%s' AND `post_date_gmt` < '%s' AND `post_password`=''ORDER BY `post_date_gmt`  ASC;",$wpdb->prefix,$timeStampOfLastPost, $timeStampForNow);
+            $posts = $wpdb->get_results($getPostsSinceThisDateQuery);
+            $posttoreturn = false;
+            //sometimes this post may have been delivered by the blog category subscription
+            foreach ($posts as $p)
+            {
+                $checkWhetherInDelvieryRecordQuery = sprintf("SELECT COUNT(*) num FROM `%swpr_delivery_record` WHERE eid=%d AND type='blog_post' AND sid=%d",$wpdb->prefix,$p->ID,$subscription->sid);
+                $whetherDeliveredResults = $wpdb->query($checkWhetherInDelvieryRecordQuery);
+                $num = $whetherDeliveredResults[0]->num;
+                if ($num == 0)
+                {
+                    $posttoreturn = $p;
+                    break;
+
+                }
+            }
+
         
+         }
         if ($posttoreturn != false)
             return $posttoreturn;
         else
@@ -299,7 +336,8 @@ function _wpr_process_blog_subscriptions()
         $getNumberOfSubscriptions = sprintf("SELECT COUNT(*) number FROM %swpr_blog_subscription b,
                                             %swpr_subscribers s
                                             WHERE b.type='all' AND 
-                                            b.last_published_post_date< %d AND
+                                            (b.last_published_post_date< %d or
+                                            b.pending_reprocess=1) AND
                                             s.id=b.sid AND
                                             s.active=1 AND
                                             s.confirmed=1;",
@@ -319,7 +357,8 @@ function _wpr_process_blog_subscriptions()
             $getSubscriptionsQuery = sprintf("SELECT b.* number FROM %swpr_blog_subscription b,
                                             %swpr_subscribers s
                                             WHERE b.type='all' AND 
-                                            b.last_published_post_date< %d AND
+                                            (b.last_published_post_date< %d OR
+                                            b.pending_reprocess=1) AND
                                             s.id=b.sid AND
                                             s.active=1 AND
                                             s.confirmed=1 ORDER BY last_published_post_date ASC, last_processed_date ASC LIMIT %d;",

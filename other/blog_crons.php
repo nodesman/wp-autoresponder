@@ -783,5 +783,6 @@ function getBlogContentInDefaultLayout($post_id)
     $content .= "</p><p><span style=\"font-family: Arial, Verdana; font-size: 12px\">".wptexturize(wpautop(nl2br($post->post_content)))."</span>";
 
     $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\"><a href=\"".get_permalink($post_id)."\">Click here</a> to read this post at <a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a></div>.";
+    $content = apply_filters("_wpr_blog_delivery_email_default_layout",$content,$post_id);
     return $content;
 }

@@ -102,12 +102,23 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 <br>
 ";
 		}
-	   $htmlbody .= $htmlUnSubscribeMessage;
+                
+                if (strstr($htmlbody,"[!unsubscribe!]"))
+                {
+                    $htmlbody = str_replace("[!unsubscribe!]", $unsuburl, $htmlbody);
+                }
+                else
+                {
+                    $htmlbody .= $htmlUnSubscribeMessage;
+                }
 	}	
 
 	if ($footerMessage)
 		$params['textbody'] .= $footerMessage."\n\n";
-	$textbody .= $params['textbody'].$textUnSubMessage;	
+        if (strstr($params['textbody'],"[!unsubscribe!]"))
+                $textbody = str_replace("[!unsubscribe!]",$unsuburl,$params['textbody']);
+        else
+            $textbody .= $params['textbody'].$textUnSubMessage;	
 	$textbody = addslashes($textbody);
 	$htmlbody = addslashes($htmlbody);
 	$subject = addslashes($subject);

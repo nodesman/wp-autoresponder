@@ -78,7 +78,7 @@ function wpr_dashboard()
 			   ?></td>
                <td style="padding: 10px;"><?php
 			   $nid = $n->id;
-			   $query = "select count(*) num from ".$wpdb->prefix."wpr_subscribers where nid=$nid and active=0 and confirmed=0;";
+			   $query = sprintf("select count(*) num from {$wpdb->prefix}wpr_subscribers where nid=%d and active=0 and confirmed=1;",$nid);
 			   $num = $wpdb->get_results($query);
 			   $num = (int) $num[0]->num;
 			   echo $num;
@@ -92,7 +92,7 @@ function wpr_dashboard()
             </table>
             </div>
             <hr size="1" color="#CCCCCC"/>
-<div align="center"><div style="clear:both;display:block"><a href="http://www.krusible.com"><img src="http://www.wpresponder.com/dashboard.png" /></a></div></div>
+
 
 <hr size="1" color="#CCCCCC"/>
 <h2>Subscribe to the WP Responder Email Newsletter</h2>

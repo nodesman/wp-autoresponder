@@ -204,7 +204,7 @@ $database_structure["wpr_blog_series"] = array ( 'columns'=> array(
                                                  'primary_key' => "id",
                                                 'auto_increment'=>'id',
                                                  'unique' => array(
-                                                                    "unique_names_for_blog_series" => "name"
+                                                                    "unique_names_for_blog_series" => array("name")
                                                                )
                                                 );
 $database_structure["wpr_autoresponder_messages"] = array ( 'columns'=> array(

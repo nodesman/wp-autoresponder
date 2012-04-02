@@ -69,7 +69,7 @@ echo "<li>$error_text"; ?></ol></div>
 
     <tr>
       <td><label for="button"></label>
-          <input type="hidden" name="wpr_form" value="<?php echo $wpr_form ?>"
+          <input type="hidden" name="wpr_form" value="<?php echo $wpr_form ?>" >
         <input type="hidden" name="id" value="<?php echo $parameters->id ?>"  />
         <input class="button" type="submit" name="button" id="button" value="<?php echo $button_text ?>" />
         <input class="button" type="button" onclick="window.location='<?php echo _wpr_admin_url("newsletter") ?>'" name="button" id="button" value="Cancel" /></td>

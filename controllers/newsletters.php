@@ -89,9 +89,8 @@ function _wpr_newsletter_edit_form_post_handler()
 {
     $info = array();
     $errors = array();
-    
+   
     _wpr_newsletter_form_validate($info,$errors,false);
-    
     if (count($errors) ===0)
     {
         _wpr_newsletter_update($info);

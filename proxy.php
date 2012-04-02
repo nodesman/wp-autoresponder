@@ -14,11 +14,11 @@ if (isset($_GET['wpr-file']))
 		
 		$plugindir = str_replace(basename(__FILE__),"",__FILE__);
 		$plugindir = rtrim($plugindir,"/");
-		if (ereg(".*\.js",$parameters_to_files[$name]))
+		if (preg_match("@.*\.js@",$parameters_to_files[$name]))
 			header("Content-Type: text/javascript");
-		else if (ereg(".*\.css",$parameters_to_files[$name]))
+		else if (preg_match("@.*\.css@",$parameters_to_files[$name]))
 			header("Content-Type: text/css");					   
-		else if (ereg(".*\.png",$parameters_to_files[$name]))
+		else if (preg_match("@.*\.png@",$parameters_to_files[$name]))
 			header("Content-Type: image/png");					   
 
 		$file_path = $plugindir."/".$parameters_to_files[$name];

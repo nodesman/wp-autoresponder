@@ -226,7 +226,7 @@ if ($success)
 	//insert the subscriber's custom field values
 	foreach ($_POST as $field_name=>$value)
 	{
-		if (ereg('cus_.*',$field_name))
+		if (preg_match('@cus_.*@',$field_name))
 		{
 
 			$name = base64_decode(str_replace("cus_","",$field_name));

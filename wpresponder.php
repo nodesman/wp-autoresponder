@@ -149,7 +149,7 @@ if (!defined("WPR_DEFS"))
 		$directory = str_replace("wpresponder.php","",__FILE__);
 		$containingdirectory = basename($directory);
 		$home_url = get_bloginfo("url");
-		if (current_user_can('manage_newsletters') && isset($_GET['page']) && ereg("_wpr/.*",$_GET['page']))
+		if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@_wpr/.*@",$_GET['page']))
 		{
 			wp_enqueue_script('post');
 
@@ -269,7 +269,7 @@ if (!defined("WPR_DEFS"))
 		 * MVC format. 
 		 */
 
-		if (isset($_GET['page']) && ( ereg("^wpresponder/.*",$_GET['page']) || ereg("^_wpr/.*",$_GET['page'])))
+		if (isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page'])))
 		{
 			_wpr_handle_post();
 	 		_wpr_run_controller();

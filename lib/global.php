@@ -3,7 +3,7 @@ function validateEmail($email)
 
 {
     //test with regular expressions.
-    return eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4})$',$email);
+    return preg_match('@^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4})$@',$email);
 }
 
 function _wpr_option_get($name)

@@ -96,6 +96,18 @@ function _wpr_process_queue()
 		foreach ($results as $mail)  
 		{
 			$mail = (array) $mail;	
+			
+			
+			//
+			$checkWhetherUnsent = sprintf("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_queue WHERE `id`=%d AND `sent`=0",$mail['id']);
+			$whetherUnsentRes = $wpdb->get_results($checkWhetherUnsent);
+			$number = $whetherUnsentRes[0]->num;
+			if ($number == 0)
+			   continue;
+			
+			$setEmailAsSentQuery = sprintf("UPDATE `%swpr_queue` SET `sent`=1 WHERE `id`=%d",$wpdb->prefix,$mail['id']);
+			$wpdb->query($setEmailAsSentQuery);
+
 
 			try {
 				dispatchEmail($mail);
@@ -114,8 +126,6 @@ function _wpr_process_queue()
 				$markAllEmailsOfThisEmailUnprocessable = $wpdb->prepare("UPDATE `{$wpdb->prefix}wpr_queue` SET `sent`=3 WHERE `sent`=0 AND `email`=%s",$email);
 				$wpdb->query($markAllEmailsOfThisEmailUnprocessable);
 			}
-			$setEmailAsSentQuery = sprintf("UPDATE `%swpr_queue` SET `sent`=1 WHERE `id`=%d",$wpdb->prefix,$mail['id']);
-			$wpdb->query($setEmailAsSentQuery);
 		        $timeThisInstant = time();
 		        $timeSinceStart = $timeThisInstant-$timeOfStart;
 		        if ($timeSinceStart > WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME)

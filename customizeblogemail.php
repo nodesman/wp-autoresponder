@@ -256,10 +256,6 @@ function getNewsletterOptions($post_id=0)
 
         }
 
-   ?>
-</div>
-<?php
-
 
 
 }

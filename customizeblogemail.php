@@ -207,7 +207,7 @@ function getNewsletterOptions($post_id=0)
 
 ?>
 
-<span style="font-size: 12px; line-height: 25px;">Each of the tabs below allow you to customize the email that goes out to the blog subscribers, blog category subscribers and post series subscribers of that newsletter. The blog post will be delivered ONLY to subscribers who have subscribed to the blog or one of the blog categories under which this blog post will be published. Ordinary newsletter subscribers will not receive this blog post at all.
+<span style="font-size: 12px; line-height: 25px;">Each of the tabs below allow you to customize the email that goes out to the blog subscribers, blog category subscribers and post series subscribers of that newsletter. The blog post will be delivered ONLY to subscribers who have subscribed to receive all posts published in the blog or the posts filed under one of the blog categories in which this blog post will be published. Ordinary newsletter subscribers will not receive this blog post at all.
 
 </span>
 <input type="hidden" name="wpr-blogemailoptions-nonce" value="<?php echo wp_create_nonce('wpr-blogemailoptions-nonce') ?>" />

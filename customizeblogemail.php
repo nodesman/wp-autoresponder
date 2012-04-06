@@ -498,6 +498,7 @@ toggleCustomization(<?php echo $nid ?>,document.getElementById("disablecustomiza
   </div>
   </p></fieldset>
 </div>
+</div>
 <?php
 
 

@@ -166,12 +166,13 @@ function _wpr_import_second_step()
 
 	if (isset($_SESSION['wpr_import_newsletter']))
 	{
-        $nid = $_SESSION['wpr_import_newsletter'];
+                $nid = $_SESSION['wpr_import_newsletter'];
 		$autoresponders = _wpr_autoresponders_get($nid);
 		_wpr_set("autoresponderList",$autoresponders);
-        $postSeries = _wpr_postseries_get_all();
-        _wpr_set("postseriesList",$postSeries);
+                $postSeries = _wpr_postseries_get_all();
+                _wpr_set("postseriesList",$postSeries);
 		_wpr_set("_wpr_view","import.secondstep");
+
 
 	}
 	else
@@ -218,6 +219,7 @@ function _wpr_import_followup_post()
 {
     session_start();
     $_SESSION['wpr_import_followup'] = $_POST['followup'];
+    do_action("_wpr_import_post_first_step_handler");
     wp_redirect("admin.php?page=_wpr/importexport&subact=step2");
     exit;
 }
@@ -341,7 +343,9 @@ function _wpr_wpr_import_finish_post()
                 if (!validateEmail($email))
                     continue;		
 		$currentSid = _wpr_subsciber_add_confirmed(array('nid'=>$nid,'name'=>$name,'email'=>$email));
-		$subscribers[$index][$indexOfId]= $currentSid;		
+		$subscribers[$index][$indexOfId]= $currentSid;
+
+                do_action("_wpr_import_subscriber_added",$currentSid);
 		//add all of the subscriber's followup subscriptions														 
 	}
 	

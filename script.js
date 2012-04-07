@@ -62,7 +62,7 @@ function removeEditor(editorId)
 
 function toggleStatus(editorId,status)
 {
-    //document.getElementById("editorformitems-"+editorId).style.display=(!status)?"inline":"none";
+  document.getElementById("editorformitems-"+editorId).style.display=(!status)?"inline":"none";
 }
 
 function toggleCustomization(editorId,status)

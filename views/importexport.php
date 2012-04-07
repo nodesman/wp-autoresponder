@@ -52,6 +52,7 @@ foreach ($newslettersList as $newsletter)
 ?>
 </select>
 <p></p><p></p>
+<?php do_action("_wpr_import_form"); ?>
 <input type="hidden" name="wpr_form" value="wpr_import_first" />
 <input class="button-primary" type="submit" value="Next &raquo;" />
 </form>

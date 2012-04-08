@@ -10,7 +10,7 @@ function isReceivingFollowupPosts($sid)
 
 
 
-    $query = "SELECT * FROM ".$wpdb->prefix."wpr_followup_subscription where sid=$sid;";
+    $query = "SELECT * FROM ".$wpdb->prefix."wpr_followup_subscriptions where sid=$sid;";
 
     $results = $wpdb->get_results($query);
 
@@ -18,8 +18,7 @@ function isReceivingFollowupPosts($sid)
 
     if (count($results) ==0)
 
-        return;
-
+        return false;
 
 
     //for each post series or follow up series subscription, check if it is active
@@ -32,7 +31,6 @@ function isReceivingFollowupPosts($sid)
                 {
             return isPostSeriesSubscriptionActive($subscription);
         }
-
         else if ($subscription->type == 'autoresponder')
         {
             return isAutoresponderSeriesActive($subscription);
@@ -97,45 +95,18 @@ function isPostSeriesSubscriptionActive($subscription)
     //get the number of the last post that was delivered.
 
     //      get the sequence number - the number of the last post that was delivered
-
     //if equal return yes otherwise return false.
-
     return ($subscription->sequence+1 < $numberOfPosts);
-
-
-
 }
 
 
-
-
-
 function isAutoresponderSeriesActive($subscription)
-
 {
-
     global $wpdb;
-
     //get the number of emails in the follow up series
-
-    $aid = $subscription->eid;
-
-    $query = "SELECT count(*) num FROM ".$wpdb->prefix."wpr_autoresponder_messages where aid = $aid";
-
-    $results = $wpdb->get_results($query);
-
-    $numberOfEmailsInAutoresponder = $results[0]->num;
-
-
-
-    //get the number of the last email that was sent
-
-
-
-    $numberOfLastEmailSent = $subscription->sequence;
-
-    //if equal then return true else return false.
-
-    return $numberOfLastEmailSent == $numberOfEmailsInAutoresponder;
+    if (-2== intval($subscriptoin->eid))
+            return false;
+    else
+        return true;
 
 }

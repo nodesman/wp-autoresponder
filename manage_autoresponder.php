@@ -101,7 +101,7 @@ function _wpr_manage_responder_create()
 	}
 	$parameters->buttontext = "Create Message";
 
-	$parameters->formtitle = "Create Folllow Up Mail";
+	$parameters->formtitle = "Create Follow Up Mail";
   	wpr_mail_form($parameters,"autoresponder",$error);
 	
 	

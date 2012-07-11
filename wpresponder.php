@@ -3,9 +3,9 @@
 Plugin Name: WP Autoresponder
 Plugin URI: http://www.wpresponder.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
-Version: 5.2.8
+Version: 5.2.9
 Author: Raj Sekharan
-Author URI: http://www.krusible.com/
+Author URI: http://www.nodesman.com/
 */
 
 
@@ -14,21 +14,27 @@ Author URI: http://www.krusible.com/
 if (!defined("WPR_DEFS"))
 {
     define("WPR_DEFS",1);
-    $plugindir =  str_replace(basename(__FILE__),"",__FILE__);
-    $plugindir = str_replace('\\','/',$plugindir);
-    $plugindir = rtrim($plugindir,"/");
-    $controllerDir = "$plugindir/controllers";
+	
+	$dir_name= basename(dirname(__FILE__));
+
+	$plugindir = ABSPATH. '/' . PLUGINDIR .'/' . $dir_name;
+	
+	define("WPR_DIR",$plugindir);
+	
+	$controllerDir = WPR_DIR. "/controllers";
     $modelsDir = "$plugindir/models";
     $helpersDir = "$plugindir/helpers";
 
     define("WPR_VERSION","5.2.8");
     define("WPR_PLUGIN_DIR","$plugindir");
+	
+	
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
-    include_once "home.php" ;	
-    include_once "autoresponder.php";
-    include_once "blog_series.php";
-    include_once "forms.php";
+    require_once WPR_DIR. "/home.php" ;	
+    include_once WPR_DIR. "/autoresponder.php";
+    include_once WPR_DIR ."/blog_series.php";
+    include_once WPR_DIR ."/forms.php";
     include_once "newmail.php";
     include_once "customizeblogemail.php";
     include_once "subscribers.php";
@@ -380,7 +386,9 @@ if (!defined("WPR_DEFS"))
 	
 	function wp_credits()
 	{
-		echo base64_decode("PGJyIC8+DQo8YnIgLz4NCjxkaXYgc3R5bGU9ImJvcmRlcjogMXB4IHNvbGlkICMwMDAwMDA7IHRleHQtYWxpZ246Y2VudGVyOyBiYWNrZ3JvdW5kLWNvbG9yOiNGQUU2QjQ7IHBhZGRpbmc6IDEwcHg7IG1hcmdpbi1sZWZ0OmF1dG87IG1hcmdpbi1yaWdodDphdXRvOyB3aWR0aDo1MDBweDsiPlBvd2VyZWQgYnkgPGEgaHJlZj0iaHR0cDovL3d3dy53cHJlc3BvbmRlci5jb20vIj5XUCBSZXNwb25kZXI8L2E+PC9kaXY+");	
+		?>
+        
+        <?php	
 	}
 
 	function wpr_widgets_init()

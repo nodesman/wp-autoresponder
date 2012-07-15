@@ -117,10 +117,6 @@ $database_structure["wpr_newsletters"] = array ( 'columns'=> array(
                                                                           'name' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                                           'reply_to' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                                           'description' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirm_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirm_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirmed_subject' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-                                                                          'confirmed_body' => "text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                                           'fromname' => "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
                                                                           'fromemail' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"
                                                                         ),

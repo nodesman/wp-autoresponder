@@ -3,9 +3,6 @@
 include "../../../../wp-load.php";
 include "creator.php";
 
-
-
-
 echo "Testing whether test script has privileges to change the time...\r\n";
 $time = date("mdhiY");
 

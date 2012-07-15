@@ -3,7 +3,8 @@
 
 function createTestBaseData()
 {
-
+     global $wpdb;
+	 
 
 
 }

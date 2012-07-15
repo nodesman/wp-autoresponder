@@ -2,9 +2,10 @@
 //assuming that this file is in wp-content/plugins/wp-responder-..../tests
 include "../../../../wp-load.php";
 include "creator.php";
+require "cronrunner.php";
 
 echo "Testing whether test script has privileges to change the time...\r\n";
-$time = date("mdhiY");
+$time = date("mdHiY",time()+19800);
 
 @exec("date $time", $output, $returnVal);
 if (0 != $returnVal)
@@ -32,6 +33,7 @@ if (!$foundPlugin)
 
 echo "Creating sample newsletters, autoresponders and autoresponder messages...\r\n";
 
-createTestBaseData();
-
+$nid = createTestBaseData();
+$startDate = time();
+runCronJobs($nid,$startDate);
 

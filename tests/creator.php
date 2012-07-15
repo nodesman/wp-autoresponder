@@ -55,7 +55,6 @@ function createTestBaseData()
 		}
 	}
 	
-	
-	
+	return $newsletter_id;
 	
 }

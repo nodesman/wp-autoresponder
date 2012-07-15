@@ -199,7 +199,7 @@ function _wpr_autoresponder_process($id=0)
 		$last_cron_status = intval($last_cron_status);
 		if ($last_cron_status !=0 && ($last_cron_status > $timeMaximumExecutionTimeAgo))
 		{
-			return;
+			//return;
 		}
 	}	
 	set_time_limit($maximumExecutionTime);
@@ -220,12 +220,12 @@ function _wpr_autoresponder_process($id=0)
 	$getNumberOfActiveFollowupSubscriptionsQuery = "SELECT COUNT(*) number FROM `{$prefix}wpr_followup_subscriptions` a,
 											`{$prefix}wpr_subscribers` b
 											WHERE a.type='autoresponder' AND  
-											FLOOR(($timeTodayAt12AM-a.last_processed)/86400) > 0 AND 
-											(FLOOR(($timeTodayAt12AM - a.doc)/86400) > a.sequence OR
-											FLOOR(($timeTodayAt12AM - a.doc)/86400) = -1) AND
+											FLOOR(($currentTime-a.last_processed)/86400) > 0 AND 
+											(FLOOR(($currentTime - a.doc)/86400) > a.sequence OR
+											FLOOR(($currentTime - a.doc)/86400) = -1) AND
 											a.sid=b.id $subscriberClause AND
 											b.active=1 AND b.confirmed=1;";
-					
+	
 	$numberOfActivesResult = $wpdb->get_results($getNumberOfActiveFollowupSubscriptionsQuery);
 	$number = $numberOfActivesResult[0]->number;
 	$numberOfIterations = ceil($number/1000);
@@ -235,12 +235,11 @@ function _wpr_autoresponder_process($id=0)
 		$getActiveFollowupSubscriptionsQuery = "SELECT a.*, FLOOR(($timeTodayAt12AM - a.doc)/86400) `daysSinceSubscribing`  FROM `".$prefix."wpr_followup_subscriptions` a,
 												`".$prefix."wpr_subscribers` b
 												WHERE a.type='autoresponder' AND
-												FLOOR(($timeTodayAt12AM-a.last_processed)/86400) > 0 AND 
-												(FLOOR(($timeTodayAt12AM - a.doc)/86400) > a.sequence OR
-												FLOOR(($timeTodayAt12AM - a.doc)/86400) = -1) AND
+												FLOOR(($currentTime-a.last_processed)/86400) > 0 AND 
+												(FLOOR(($currentTime - a.doc)/86400) > a.sequence OR
+												FLOOR(($currentTime - a.doc)/86400) = -1) AND
 												a.sid=b.id $subscriberClause AND
 												b.active=1 AND b.confirmed=1 LIMIT $start,".WPR_AUTORESPONDER_BATCH_SIZE.";";
-												
 												
 
 		$autoresponderSubscriptions = $wpdb->get_results($getActiveFollowupSubscriptionsQuery);
@@ -259,7 +258,7 @@ function _wpr_autoresponder_process($id=0)
 			$wpdb->query($updateLastProcessedTimeQuery);
 			
 			
-			$query = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`>=%d LIMIT 1;",$aid,$daysSinceSubscribing);
+			$query = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`>=%d ORDER BY `sequence` LIMIT 1;",$aid,$daysSinceSubscribing);
 			$listOfMessages = $wpdb->get_results($query);
 			if (0 == count($listOfMessages))
 			{

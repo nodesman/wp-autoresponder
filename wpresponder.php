@@ -32,7 +32,6 @@ if (!defined("WPR_DEFS"))
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
     require_once WPR_DIR. "/home.php" ;	
-    include_once WPR_DIR. "/autoresponder.php";
     include_once WPR_DIR ."/blog_series.php";
     include_once WPR_DIR ."/forms.php";
     include_once "newmail.php";

@@ -166,6 +166,14 @@ class Newsletter
 	{
 		//TODO: Implement this
 	}
+	/*
+	 * 
+	 */
+	public static function whetherNewsletterExists($options) {
+		
+		
+		
+	}
 	
 	
 	

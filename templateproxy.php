@@ -1,5 +1,4 @@
 <?php
-include ("wp-load.php");
 
 global $current_user;
 

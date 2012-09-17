@@ -18,8 +18,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (`id`, `name`, `reply_to`, `fromname`, `fromemail`) VALUES ({$this->newsletterId}, 'Test Newsletter', 'test@automated.com', 'Test', 'test@automatedfrom.com');");
         $wpdb->query($createNewsletterQuery);
         $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
-        $wpdb->query($truncateAutorespondersTable);        
-        $this->autoresponder = new Autoresponder();
+        $wpdb->query($truncateAutorespondersTable);
     }
     
     public function tearDown() {
@@ -29,22 +28,6 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$wpdb->query($truncateAutorespondersTable);
     	$truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters;");
     	$wpdb->query($truncateAutorespondersTable);
-    }
-    
-    public function createAutoresponders($count) {
-    	$autoresponders = array();
-    	global $wpdb;
-    	for ($iter = 0; $iter < $count; $iter++)
-    	{
-    		$current =  array(
-    				"nid" => $this->newsletterId,
-    				"name" => "Autoresponder_{$iter}"  
-    				);
-    		$autoresponders[] = $current;
-    		$insertAutoresponderQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponders (`nid`, `name`) VALUES (%d, '%s');",$current['nid'], $current['name']);
-    		$wpdb->query($insertAutoresponderQuery);
-    	}
-    	return $autoresponders;
     }
     
     
@@ -61,31 +44,48 @@ class AutoresponderTest extends WP_UnitTestCase {
     
     public function testGetAllAutoresponders() {
     	
-    	$autoresponders = $this->autoresponder->getAllAutoresponders();
-    	$numberOfAutoresponders = count($autoresponders);
-    	$this->assertEquals($numberOfAutoresponders,0);
+    	
+    	$autoresponderDefinitions = array(
+    			     array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			     array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    				 array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    				 array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime()))
+    			);
+    	
+    	foreach ($autoresponderDefinitions as $currentAutoresponder) {
+    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    	}
+    	
+    	$autoresponders = Autoresponder::getAllAutoresponders();
+    	
+    	$this->assertEquals(count($autoresponderDefinitions), count($autoresponders));
     	
     	
-		$this->createAutoresponders(10);
-		$autoresponders = Autoresponder::getAllAutoresponders();
-
-		$numberOfAutoresponders = count($autoresponders);
-		$this->assertEquals($numberOfAutoresponders, 10);
+    	
+    	
+    }
+    /**
+     * @expectedException NonExistentAutoresponderException
+     */
+    public function testNonExistentAutoresponderInitializationException() {
+    	new Autoresponder(1);
     }
     
     public function testGetAutoresponderById() {
 	
-    	$autoresponderElement = $this->autoresponder->getAutoresponderById(1);
-    	$this->assertNull($autoresponderElement, "Attempting to retrieve a non existent autoresponder does not result in a null");
-    	
     	$autoresponder = array('nid'=> $this->newsletterId,
     						   'name'=> "Autoresponder_1" 
     			);
-    	$autoresponder = $this->addAutoresponder($autoresponder['nid'], $autoresponder['name']);
-    	$autoresponderResultant = Autoresponder::getAutoresponderById($autoresponder->id);
     	
-    	// TODO: $this->assertEquals($autoresponder->nid, $autoresponderResultant->nid);
-    	// TODO: $this->assertEquals($autoresponder->name, $autoresponderResultant->name);
+    	$autoresponder = $this->addAutoresponder($autoresponder['nid'], $autoresponder['name']);
+    	$autoresponderResultant = Autoresponder::getAutoresponderById(intval($autoresponder->id));
+    	
+    	$this->assertEquals($autoresponder->nid, $autoresponderResultant->getNewsletterId(), "Newsletter ID is the same as input");
+    	$this->assertEquals($autoresponder->name, $autoresponderResultant->getName(),"Name is same as input");
+    	
     }
     
     public function testValidateAutoresponders() {
@@ -95,29 +95,44 @@ class AutoresponderTest extends WP_UnitTestCase {
     	
     	//no empty names;
     	$autoresponder = array("name"=> "");
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder));
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a empty autoresponder name is validated as invalid");
 
     	$autoresponder = array("name"=> "      ");
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder));
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder), "Test to see if just white space is validated as invalid");
     	
     	
     	$autoresponder = array("name"=> '"\'');
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder));
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if autoresponder name containing a slash is marked invalid");
     	
+    	
+    	//TODO: The autoresponder field should have a nid field if not, the below must become an exception
     	$autoresponder = array("name"=>'Sample Autoresponder 1234 ');
-    	$this->assertTrue(Autoresponder::whetherValidAutoresponder($autoresponder));
+    	$this->assertTrue(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a valid autoresponder is marked as valid");
     }
     
     /**
      * @expectedException InvalidAutoresponderTypeArgumentException
      */
     public function testWhetherInvalidDataTypeResultsInException() {
-    	Autoresponder::whetherValidAutoresponder("");
-    	Autoresponder::whetherValidAutoresponder(1);
     	Autoresponder::whetherValidAutoresponder(null);
+    }
+    /**
+     * @expectedException InvalidAutoresponderTypeArgumentException
+     */
+    public function testWhetherLackOfArgumentForWhetherValidAutoresponderResultsInException() {
+    	Autoresponder::whetherValidAutoresponder("");
     }
     
     //TODO: Add autoresponder
+    
+    /**
+     * @expectedException InvalidAutoresponderTypeArgumentException
+     */
+    public function testAddingNewsletterToNonExistentNewsletterCausesFailure() {
+    	$autoresponder = array("nid"=> 9801, "name"=>"Bottle of Water");
+    	Autoresponder::addAutoresponder($autoresponder);	
+    }
+    
     //     - Test the case where the user tries to add a autoresponder to a non existent newsletter
     //     - Test the case where you use invalid names and other inputs for autoresponder
     

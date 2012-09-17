@@ -2,19 +2,61 @@
 class Autoresponder
 {
 	
+	private $id;
+	private $name;
+	
+	function __construct($id) {
+		global $wpdb;
+		
+		if ("integer" !== gettype($id))
+			throw new InvalidArgumentException("Autoresponder has invalid argument type of '".gettype($id). "' where 'integer' expected");
+		
+		$getAutoresponderInformationQuery = sprintf("SELECT AR.* FROM {$wpdb->prefix}wpr_autoresponders AR, {$wpdb->prefix}wpr_newsletters NS WHERE NS.id=AR.nid AND AR.id=%d", $id);
+		$results = $wpdb->get_results($getAutoresponderInformationQuery);
+		if (0 == count($results))
+			throw new NonExistentAutoresponderException();		
+		$autoresponder = $results[0];
+		$this->id = $autoresponder->id;
+		$this->nid = $autoresponder->nid;
+		$this->name = $autoresponder->name;
+	}
+	
+	
+	public function getNewsletterId() {
+		return $this->nid;
+	}
+	
+	public function getName() {
+		return $this->name;
+	}
+	
+	
+	
+	
+	
+	
+	public static function getAutorespondersOfNewsletter($nid) {
+		
+	}
+	
+	public static function deleteAutorespondersOfNewsletter($nid) {
+		
+	}
+	
+	
+	/*
+	 * 1. Get all autoresponders
+	 * 2. Get only autoresponders that have a newsletter associated with them
+	 */
 	public static function getAllAutoresponders() {
 		global $wpdb;
-		$getAllAutorespondersQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponders");
+		$getAllAutorespondersQuery = sprintf("SELECT autores.* FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id;");
 		return $wpdb->get_results($getAllAutorespondersQuery);
 	}
 	
 	public static function getAutoresponderById($autoresponder_id) {
-		global $wpdb;
-		$getAutoresponderQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_subscribers WHERE id=%d",$autoresponder_id);
-		$autoresponder = $wpdb->get_results($getAutoresponderQuery);
-		if (count($autoresponder) == 0)
-			return null;
-		return $autoresponder;
+		$resultObj = new Autoresponder($autoresponder_id);
+		return $resultObj;
 	}
 	
 	
@@ -39,7 +81,11 @@ class Autoresponder
 		}
 		
 		return true;
-		
+	}
+	
+	public static function addAutoresponder($nid, $name) 
+	{
+		Newsletter::whetherNewsletterExists(array("nid"=> $nid));
 	}
 	
 	
@@ -49,4 +95,8 @@ class Autoresponder
 
 class InvalidAutoresponderTypeArgumentException extends Exception {
 
+}
+
+class NonExistentAutoresponderException extends Exception {
+	
 }

@@ -1,6 +1,5 @@
 <?php
 
-include "htmltemplates.lib.php";
 
 function wpr_mail_form($parameters=array(),$mode="new",$error)
 {
@@ -183,30 +182,11 @@ function wpr_CheckWhetherImagesShouldBeAttached()
 
 
 function showPreviewForm()
-
 {
-
     var nid = wpr_GetNewsletter();
-
-    if (window.open('<?php echo bloginfo("home") ?>/?wpr-admin-action=preview_email&nid='+nid,'previewWindow','width=500,height=500'))
-
-    {
-
-        
-
-    }
-
-    else
-
-    {
-
+    if (!window.open('<?php echo get_bloginfo("wpurl") ?>/?wpr-admin-action=preview_email&nid='+nid,'previewWindow','width=500,height=500'))
        alert("Please disable your pop up blocker to see the preview email form.");
-
-    }
-
 }
-
-
 
 function previewEmail()
 {

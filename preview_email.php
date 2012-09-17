@@ -1,5 +1,4 @@
 <?php
-include "wp-load.php";
 
 if (!current_user_can("manage_newsletters"))
 {

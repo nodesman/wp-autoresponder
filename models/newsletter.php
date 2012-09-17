@@ -169,10 +169,15 @@ class Newsletter
 	/*
 	 * 
 	 */
-	public static function whetherNewsletterExists($options) {
+	public static function whetherNewsletterIDExists($newsletter_id) {
+		global $wpdb;
+		$checkWhetherNewsletterIDExistsQuery = sprintf("SELECT COUNT(*) result_count FROM `{$wpdb->prefix}wpr_newsletters` WHERE `id`=%d",$newsletter_id);
+		$newslettersCountRes = $wpdb->get_results($checkWhetherNewsletterIDExistsQuery);
+		$count = $newslettersCountRes[0]->result_count;
 		
-		
-		
+		if (0 == $count)
+			return false;
+		return true;
 	}
 	
 	

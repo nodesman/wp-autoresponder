@@ -85,10 +85,32 @@ class Autoresponder
 	
 	public static function addAutoresponder($nid, $name) 
 	{
-		Newsletter::whetherNewsletterExists(array("nid"=> $nid));
+		global $wpdb;
+		
+		if (!Newsletter::whetherNewsletterIDExists($nid))
+			throw new NonExistentNewsletterAutoresponderAdditionException();
+		
+		if (!Autoresponder::whetherValidAutoresponder(array("nid"=>$nid, "name"=>$name))) {
+			throw new InvalidArgumentException("Invalid autoresponder arguments");
+		}
+		
+		$createAutoresponderQuery = sprintf("INSERT INTO `{$wpdb->prefix}wpr_autoresponders` (`nid`, `name`) VALUES (%d, '%s');",$nid, $name);
+		$wpdb->query($createAutoresponderQuery);
+		
+		$autoresponder_id = $wpdb->insert_id;
+		
+		return new Autoresponder($autoresponder_id);
+		
+		
 	}
 	
 	
+}
+
+class NonExistentNewsletterAutoresponderAdditionException extends Exception {
+	/*
+	 * When the user tries to create a autoresponder in a non existent newsletter
+	 */
 }
 
 

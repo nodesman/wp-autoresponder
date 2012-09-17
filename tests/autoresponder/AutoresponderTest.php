@@ -126,14 +126,30 @@ class AutoresponderTest extends WP_UnitTestCase {
     //TODO: Add autoresponder
     
     /**
-     * @expectedException InvalidAutoresponderTypeArgumentException
+     * @expectedException NonExistentNewsletterAutoresponderAdditionException
      */
     public function testAddingNewsletterToNonExistentNewsletterCausesFailure() {
     	$autoresponder = array("nid"=> 9801, "name"=>"Bottle of Water");
-    	Autoresponder::addAutoresponder($autoresponder);	
+    	Autoresponder::addAutoresponder($autoresponder["nid"],$autoresponder['name']);	
     }
     
-    //     - Test the case where the user tries to add a autoresponder to a non existent newsletter
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddingAutoresponderWithInvalidArguments() {
+    	Autoresponder::addAutoresponder($this->newsletterId, "");
+    }
+    
+    
+    public function testAddingAValidAutoresponderProducesAValidObject() {
+    	
+    	$autoresponderDef = array("nid"=> $this->newsletterId, "name"=>"Bottle of Water");
+    	$autoresponder = Autoresponder::addAutoresponder($autoresponderDef["nid"],$autoresponderDef['name']);
+    	
+    	$this->assertEquals($autoresponder->getNewsletterId(), $autoresponderDef['nid']);
+    	$this->assertEquals($autoresponder->getName(), $autoresponderDef['name']);
+    }
+    
     //     - Test the case where you use invalid names and other inputs for autoresponder
     
     //TODO: Delete autoresponder

@@ -50,8 +50,14 @@ class Autoresponder
 	 */
 	public static function getAllAutoresponders() {
 		global $wpdb;
-		$getAllAutorespondersQuery = sprintf("SELECT autores.* FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id;");
-		return $wpdb->get_results($getAllAutorespondersQuery);
+		$getAllAutorespondersQuery = sprintf("SELECT autores.id FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id;");
+		$respondersRes = $wpdb->get_results($getAllAutorespondersQuery);
+		
+		$autoresponders = array();
+		foreach ($respondersRes as $responder) {
+			$autoresponders[] = new Autoresponder(intval($responder->id));
+		}
+		return $autoresponders;
 	}
 	
 	public static function getAutoresponderById($autoresponder_id) {
@@ -63,11 +69,11 @@ class Autoresponder
 	public static function whetherValidAutoresponder($autoresponderInfo) {
 		
 		if ("array" != gettype($autoresponderInfo)) {
-			throw new InvalidAutoresponderTypeArgumentException();
+			throw new InvalidArgumentException("Invalid type sent as argument for autoresponder validation");
 		}
 		
 		if (!isset($autoresponderInfo['name'])) {
-			return false;
+			throw new InvalidArgumentException("Expected autoresponder to have a name");
 		}
 		
 		$name = trim($autoresponderInfo['name']);
@@ -114,10 +120,6 @@ class NonExistentNewsletterAutoresponderAdditionException extends Exception {
 }
 
 
-
-class InvalidAutoresponderTypeArgumentException extends Exception {
-
-}
 
 class NonExistentAutoresponderException extends Exception {
 	

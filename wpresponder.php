@@ -374,6 +374,7 @@ if (!defined("WPR_DEFS"))
 	function wpr_admin_menu()
 	{
 		add_menu_page('Newsletters','Newsletters','manage_newsletters',__FILE__);
+		//TODO: Refactor to use the new standard template rendering function for all pages.
 		add_submenu_page(__FILE__,'Dashboard','Dashboard','manage_newsletters',__FILE__,"wpr_dashboard");
 		$admin_pages_definitions = $GLOBALS['admin_pages_definitions'];
 		$admin_pages_definitions = apply_filters("_wpr_menu_definition",$admin_pages_definitions);
@@ -382,14 +383,6 @@ if (!defined("WPR_DEFS"))
 			add_submenu_page(__FILE__,$definition['page_title'],$definition['menu_title'],$definition['capability'],$definition['menu_slug'],$definition['callback']);
 		}
 	}
-	
-	function wp_credits()
-	{
-		?>
-        
-        <?php	
-	}
-
 	function wpr_widgets_init()
 	{
 		return register_widget("WP_Subscription_Form_Widget");

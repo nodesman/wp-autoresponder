@@ -63,7 +63,18 @@ class AutoresponderTest extends WP_UnitTestCase {
     	
     	$this->assertEquals(count($autoresponderDefinitions), count($autoresponders));
     	
+    	$responderNames = array();
+    	foreach ($autoresponders as $res) {
+    		$responderNames[] = $res->getName();
+    	}
     	
+    	$defNames = array();
+    	foreach ($autoresponderDefinitions as $def) {
+    		$defNames[] = $def['name'];
+    	}
+    	
+    	$difference = array_diff($responderNames, $defNames);
+    	$this->assertEquals(count($difference),0);
     	
     	
     }
@@ -90,9 +101,6 @@ class AutoresponderTest extends WP_UnitTestCase {
     
     public function testValidateAutoresponders() {
     	
-    	$autoresponder = array();
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder), "Test to see if the argument array has the keys that this method expects to validate autoresponder results in failure when it isn't");
-    	
     	//no empty names;
     	$autoresponder = array("name"=> "");
     	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a empty autoresponder name is validated as invalid");
@@ -111,13 +119,21 @@ class AutoresponderTest extends WP_UnitTestCase {
     }
     
     /**
-     * @expectedException InvalidAutoresponderTypeArgumentException
+     * @expectedException InvalidArgumentException
+     */
+    public function testWhetherMissingFieldsResultInException() {
+    	$autoresponder = array();
+    	Autoresponder::whetherValidAutoresponder($autoresponder); 
+    }
+    
+    /**
+     * @expectedException InvalidArgumentException
      */
     public function testWhetherInvalidDataTypeResultsInException() {
     	Autoresponder::whetherValidAutoresponder(null);
     }
     /**
-     * @expectedException InvalidAutoresponderTypeArgumentException
+     * @expectedException InvalidArgumentException
      */
     public function testWhetherLackOfArgumentForWhetherValidAutoresponderResultsInException() {
     	Autoresponder::whetherValidAutoresponder("");

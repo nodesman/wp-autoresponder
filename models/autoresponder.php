@@ -31,18 +31,20 @@ class Autoresponder
 	}
 	
 	
-	
-	
-	
-	
 	public static function getAutorespondersOfNewsletter($nid) {
+		if (!Newsletter::whetherNewsletterIDExists($nid))
+			throw new NonExistentNewsletterException();
 		
-	}
-	
-	public static function deleteAutorespondersOfNewsletter($nid) {
+		$autoresponders = Autoresponder::getAllAutoresponders();
+		$resultList = array();
 		
+		foreach ($autoresponders as $responder) {
+			if ($nid == $responder->getNewsletterId())
+				$resultList[] = $responder;
+		}
+		
+		return $resultList;
 	}
-	
 	
 	/*
 	 * 1. Get all autoresponders
@@ -102,13 +104,11 @@ class Autoresponder
 		
 		$createAutoresponderQuery = sprintf("INSERT INTO `{$wpdb->prefix}wpr_autoresponders` (`nid`, `name`) VALUES (%d, '%s');",$nid, $name);
 		$wpdb->query($createAutoresponderQuery);
-		
 		$autoresponder_id = $wpdb->insert_id;
-		
 		return new Autoresponder($autoresponder_id);
-		
-		
 	}
+	
+	
 	
 	
 }
@@ -119,6 +119,9 @@ class NonExistentNewsletterAutoresponderAdditionException extends Exception {
 	 */
 }
 
+class NonExistentNewsletterException extends Exception {
+	
+}
 
 
 class NonExistentAutoresponderException extends Exception {

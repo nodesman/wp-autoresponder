@@ -94,3 +94,9 @@ function _wpr_isset($variable_name)
     else
         return true;
 }
+
+
+class Dispatcher {
+	
+	
+}

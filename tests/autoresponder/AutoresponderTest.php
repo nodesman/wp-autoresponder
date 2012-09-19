@@ -118,6 +118,7 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$this->assertTrue(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a valid autoresponder is marked as valid");
     }
     
+    
     /**
      * @expectedException InvalidArgumentException
      */
@@ -168,10 +169,75 @@ class AutoresponderTest extends WP_UnitTestCase {
     
     //     - Test the case where you use invalid names and other inputs for autoresponder
     
-    //TODO: Delete autoresponder
+    /**
+     * @expectedException NonExistentNewsletterException
+     */
+    public function testGettingAutorespondersOfNonExistentNewsletter() {
+    	Autoresponder::getAutorespondersOfNewsletter(9801);
+    }
+    
+    private function addNewsletter($params) {
+    	global $wpdb;
+    	$addNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name, fromname, fromemail, reply_to) VALUES ('%s', '%s', '%s', '%s'); ",$params['name'], $params['fromname'], $params['fromemail'], $params['reply_to']);
+    	$wpdb->query($addNewsletterQuery);
+    	return $wpdb->insert_id;
+    }
     
     
-    //TODO: Get autoresponder by id
+    public function testGettingAutorespondersOfNewsletter() {
+    	
+    	$autoresponderDefinitions = array(
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$this->newsletterId,"name"=>"Autoresponder_".md5(microtime()))
+    	);
+    	
+    	$newNewsletter = $this->addNewsletter(array("name"=> "Autoresponder Second",
+    			"fromname"=> "Someone",
+    			"fromemail"=>"Someemail@somedomain.com",
+    			"reply_to"=>"somereply@replysome.com"));
+    	
+    	$autoresponderDefinitionsOfSecondNewsleter = array(
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime())),
+    			array("nid"=>$newNewsletter,"name"=>"Autoresponder_".md5(microtime()))
+    	);
+    	 
+    	foreach ($autoresponderDefinitions as $currentAutoresponder) {
+    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    	}
+    	
+    	foreach ($autoresponderDefinitionsOfSecondNewsleter as $currentAutoresponder) {
+    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    	}
+    	 
+    	$autoresponders = Autoresponder::getAutorespondersOfNewsletter($this->newsletterId);
+    	 
+    	$this->assertEquals(count($autoresponderDefinitions), count($autoresponders));
+    	 
+    	$responderNames = array();
+    	foreach ($autoresponders as $res) {
+    		$responderNames[] = $res->getName();
+    	}
+    	 
+    	$defNames = array();
+    	foreach ($autoresponderDefinitions as $def) {
+    		$defNames[] = $def['name'];
+    	}
+    	 
+    	$difference = array_diff($responderNames, $defNames);
+    	$this->assertEquals(count($difference),0);
+    }
     
+    
+    //TODO: Delete autoresponder    
 }
 

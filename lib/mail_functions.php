@@ -87,7 +87,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 	//append the address and the unsub link to the email
 	$address = "<br>
 <br>
-".get_option("wpr_address")."<br>
+".nl2br(get_option("wpr_address"))."<br>
 <br>
 ";
 	$htmlUnSubscribeMessage = "<br><br>".$address."<br><br>".__("To unsubscribe or change subscriber options visit:")."<br />
@@ -529,7 +529,7 @@ function sendConfirmedEmail($id)
 	$sid = $sub->id; //the susbcriber id
 	$unsubscriptionURL = wpr_get_unsubscription_url($sid);
 
-	$unsubscriptionInformation = "\n\nTo manage your email subscriptions or to unsubscribe click on the URL below:\n$unsubscriptionURL\n\nIf the above URL is not a clickable link simply copy it and paste it in your web browser.";
+	$unsubscriptionInformation = "\n\n" . sprintf(__("To manage your email subscriptions or to unsubscribe click on the URL below:\n%s\n\nIf the above URL is not a clickable link simply copy it and paste it in your web browser."),$unsubscriptionURL);
 
 
 	$fid = $args[2];

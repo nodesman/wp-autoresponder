@@ -1,0 +1,1790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="All PHP CodeSniffer Rules">
+  <rule ref="Generic.CodeAnalysis.EmptyStatement.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop.CanSimplify">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.JumbledIncrementer.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier.Found">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.CodeAnalysis.UselessOverridingMethod.Found">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Commenting.Todo.TaskFound">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.Files.LineEndings.InvalidEOLChar">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Files.LineEndings">
+    <properties>
+      <property name="eolChar" value="\n" />
+    </properties>
+  </rule>
+  <rule ref="Generic.Files.LineLength.MaxExceeded">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Files.LineLength">
+    <properties>
+      <property name="absoluteLineLimit" value="120" />
+    </properties>
+  </rule>
+  <rule ref="Generic.Formatting.DisallowMultipleStatements.SameLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Formatting.MultipleStatementAlignment.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Formatting.MultipleStatementAlignment">
+    <properties>
+      <property name="maxPadding" value="1000" />
+      <property name="ignoreMultiLine" value="false" />
+    </properties>
+  </rule>
+  <rule ref="Generic.Formatting.NoSpaceAfterCast.SpaceFound">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Formatting.SpaceAfterCast.NoSpace">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Formatting.SpaceAfterCast.TooMuchSpace">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.CallTimePassByReference.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceBeforeEquals">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterEquals">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceSpacing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceBeforeBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceBeforeBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Metrics.CyclomaticComplexity.MaxExceeded">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Metrics.CyclomaticComplexity">
+    <properties>
+      <property name="absoluteComplexity" value="20" />
+    </properties>
+  </rule>
+  <rule ref="Generic.Metrics.NestingLevel.MaxExceeded">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Metrics.NestingLevel">
+    <properties>
+      <property name="absoluteNestingLevel" value="10" />
+    </properties>
+  </rule>
+  <rule ref="Generic.NamingConventions.ConstructorName.OldStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.NamingConventions.ConstructorName.OldStyleCall">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.NamingConventions.UpperCaseConstantName.ClassConstantNotUpperCase">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.DisallowShortOpenTag.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.ForbiddenFunctions.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.LowerCaseConstant.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.NoSilencedErrors.Forbidden">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.PHP.UpperCaseConstant.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.Strings.UnnecessaryStringConcat.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.VersionControl.SubversionProperties.Unexpected">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.VersionControl.SubversionProperties.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.VersionControl.SubversionProperties.NoMatch">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.VersionControl.SubversionProperties.">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Generic.WhiteSpace.DisallowTabIndent.TabsUsed">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="4" />
+      <property name="exact" value="false" />
+    </properties>
+  </rule>
+  <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="4" />
+      <property name="exact" value="false" />
+    </properties>
+  </rule>
+  <rule ref="MySource.Channels.ChannelException.WrongExceptionType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Channels.DisallowSelfActions.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Channels.IncludeSystem.NotIncludedCall">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Channels.IncludeSystem.NotIncludedExtends">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Channels.IncludeSystem.NotIncludedCall">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Channels.UnusedSystem.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.ApiNotFirst">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.ApiSpacing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.ApiTagSpacing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.TagNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.ApiNotLast">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Commenting.FunctionComment.ApiTagIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.CSS.BrowserSpecificStyles.ForbiddenStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Debug.DebugCode.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Debug.FirebugConsole.ConflictFound">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.AssignThis.NotSelf">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.CreateWidgetTypeCallback.FirstArgNotCallback">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.CreateWidgetTypeCallback.ReturnValue">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.CreateWidgetTypeCallback.FirstArgNotSelf">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.CreateWidgetTypeCallback.NoReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.CreateWidgetTypeCallback.CallbackNotCalled">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Objects.DisallowNewWidget.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.PHP.EvalObjectFactory.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.PHP.GetRequestData.WithVar">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.PHP.ReturnFunctionValue.NotAssigned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="MySource.Strings.JoinStrings.ArrayNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration.MissingBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceWrongLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNotAlone">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration.SpaceBeforeBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Classes.ClassDeclaration">
+    <properties>
+      <property name="indent" value="4" />
+    </properties>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.SpacingAfterShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.EmptyVersion">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.ClassComment.InvalidVersion">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.DescriptionSpacing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.MissingVersion">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.MissingTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.DuplicateTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.TagsNotGrouped">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.WrongTagOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.TagIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidCategory">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyCategory">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidPackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyPackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidSubpackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptySubpackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidAuthors">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyAuthors">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.CopyrightHyphen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidCopyright">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyCopyright">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyCopyright">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyLicense">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.EmptyVersion">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FileComment.InvalidVersion">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.EmptyThrows">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.MissingReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.EmptyReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterParams">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingBeforeParams">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingBeforeParamType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.ParameterNamesNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.ParameterCommentsNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.cod">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.ExtraParamComment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.MissingParamName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.MissingParamType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.MissingParamComment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterLongType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterLongName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.FunctionComment.MissingParamTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Commenting.InlineComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.ControlStructures.MultiLineCondition.CloseBracketNewLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.ControlStructures.MultiLineCondition.Alignment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.ControlStructures.MultiLineCondition.StartWithBoolean">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.ControlStructures.MultiLineCondition.SpaceBeforeOpenBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.ControlStructures.MultiLineCondition.NoSpaceBeforeOpenBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Files.IncludingFile.BracketsNotRequired">
+    <severity>6</severity>
+  </rule>
+  <rule ref="PEAR.Files.IncludingFile.UseIncludeOnce">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Files.IncludingFile.UseInclude">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Files.IncludingFile.UseRequireOnce">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Files.IncludingFile.UseRequire">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Formatting.MultiLineAssignment.EqualSignLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Formatting.MultiLineAssignment.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeOpenBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionDeclaration.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionDeclaration.cod">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionDeclaration.NoSpaceBeforeOpenBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.FunctionDeclaration.CloseBracketLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.Functions.ValidDefaultValue.NotAtEnd">
+    <severity>10</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidClassName.StartWithCaptial">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidClassName.Invalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidClassName.Invalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.MethodDoubleUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.PublicUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.FunctionUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.FunctionNoCaptial">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.FunctionInvalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidFunctionName.FunctionNameInvalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.NamingConventions.ValidVariableName.PublicUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent.StartOfLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.Line">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.BreakIdent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="PEAR.WhiteSpace.ScopeIndent.">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayBracketSpacing.SpaceBeforeBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayBracketSpacing.SpaceAfterBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NotLowerCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceAfterKeyword">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceInEmptyArray">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoSpaceBeforeDoubleArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceBeforeDoubleArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoSpaceAfterDoubleArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceAfterDoubleArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoSpaceAfterComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceAfterComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceBeforeComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoKeySpecified">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceBeforeComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.KeySpecified">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.MulitLineNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.FirstValueNoNewline">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.FirstIndexNoNewline">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.NoComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Arrays.ArrayDeclaration.SpaceBeforeComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.MultipleClasses">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceBeforeKeyword">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpacesBeforeKeyword">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.MissingBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.NewLineBeforeCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceBeforeCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.EndFileAfterCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.NoNewlineAfterCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.NewlinesAfterCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.CloseBraceSameLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceAfterKeyword">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceAfterName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.NoSpaceBeforeName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceBeforeName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassDeclaration.SpaceBeforeComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.DuplicateProperty.Found">
+    <severity>9</severity>
+  </rule>
+  <rule ref="Squiz.Classes.LowercaseClassKeywords.FoundUppercase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.SelfMemberReference.IncorrectCase">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Squiz.Classes.SelfMemberReference.NotUsed">
+    <severity>7</severity>
+  </rule>
+  <rule ref="Squiz.Classes.SelfMemberReference.SpaceBefore">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Squiz.Classes.SelfMemberReference.SpaceAfter">
+    <severity>6</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ValidClassName.MissingBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.SingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.NoNewLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.HasEmptyLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.FirstLineIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.NoCaptial">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.LineIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.LastLineIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.HasEmptyLineBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.NoEmptyLineBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.BlockComment.NoEmptyLineAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.MissingShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.LongNotCaptial">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.ShortSingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.ShortNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.ShortFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.TagNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClassComment.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClosingDeclarationComment.Abstract">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClosingDeclarationComment.MissingBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.ClosingDeclarationComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.DocCommentAlignment.NoSpaceBeforeTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.DocCommentAlignment.SpaceBeforeTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.DocCommentAlignment.SpaceBeforeAsterisk">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.EmptyCatchComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingAfterComment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.ContentAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.LongNotCaptial">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.ShortSingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.ShortNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.ShortFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.TagNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.DuplicateTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.TagOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.TagIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingPackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectPackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingSubpackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectSubpackage">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingAuthor">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectAuthor">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingCopyright">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectCopyright">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingLicense">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingLinceseURL">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectLicenseURL">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.MissingLinceseName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FileComment.IncorrectLicenseName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ContentAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.LongNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ShortSingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ShortNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ShortFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SeeOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.EmptySee">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SeeIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.DuplicateReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ReturnOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingReturnType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidReturnVoid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidNoReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidReturnNotVoid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ReturnIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingReturn">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ReturnNotRequired">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidThrows">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.EmptyThrows">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ThrowsNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ThrowsNoFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ThrowsOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParams">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingBeforeParams">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingBeforeParamType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ParameterNamesNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ParameterCommentsNotAligned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.IncorrectParamVarName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.TypeHintMissing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.IncorrectTypeHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.InvalidTypeHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.cod">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ExtraParamComment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingParamName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingParamType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingParamComment">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ParamCommentNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.ParamCommentFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterLongType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterLongName">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionComment.TagNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionCommentThrowTag.FailedParse">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionCommentThrowTag.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.FunctionCommentThrowTag.WrongType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.DocBlock">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.WrongStyle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.NoSpaceBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.NotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.InvalidEndChar">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.InlineComment.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.LongConditionClosingComment.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.LongConditionClosingComment.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.LongConditionClosingComment.Invalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.PostStatementComment.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.ContentAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.MissingShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.SpacingBeforeShort">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.LongNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.ShortSingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.ShortNotCapital">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.ShortFullStop">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.SpacingBeforeTags">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.TagNotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.DuplicateVar">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.VarOrder">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.MissingVarType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.IncorrectVarType">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.VarIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.MissingVar">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.EmptySees">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Commenting.VariableComment.SeesIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceBeforeArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingBeforeArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceAfterArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingAfterArrow">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceBeforeAs">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingBeforeAs">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceAfterAs">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingAfterAs">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.NoOpenBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeFirst">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterFirst">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterFirst">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeSecond">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterSecond">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterSecond">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.NoBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.SpacingBeforeThen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.SpacingAfterThen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.SpacingBeforeElse">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration.SpacingAfterElse">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.LowercaseDeclaration.FoundUppercase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.CaseIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpaceBeforeColon">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.BreakIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.EmptyCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingBeforeBreak">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterBreak">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.DefaultNotLower">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingBeforeDefaultColon">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.DefaultIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.BreakIndent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterDefaultBreak">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.DefaultNoBreak">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.EmptyDefault">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterDefault">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.MissingDefault">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.CloseBraceAlign">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.ControlStructures.SwitchDeclaration.MissingCase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionClosingBraceSpace.SpacingAfterClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionClosingBraceSpace.SpacingBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionNameSpacing.BlankLinesFound">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace.NoneBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace.Before">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColonSpacing.Before">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColonSpacing.NoneAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColonSpacing.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColonSpacing.AfterNewline">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColourDefinition.NotUpper">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.ColourDefinition.Shorthand">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.DisallowMultipleStyleDefinitions.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.DuplicateClassDefinition.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.DuplicateStyleDefinition.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.EmptyClassDefinition.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.EmptyStyleDefinition.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Indentation.BlankLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Indentation.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.LowercaseStyleDefinition.FoundUpper">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.MissingColon.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Opacity.Invalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Opacity.SpacingAfterPoint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Opacity.PointNotRequired">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Opacity.StartWithPoint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.Opacity.Invalid">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.SemicolonSpacing.NotAtEnd">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.CSS.SemicolonSpacing.SpaceFound">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Files.FileExtension.ClassFound">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Files.FileExtension.NoClass">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Formatting.OperatorBracket.SpacingAfterMinus">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Formatting.OperatorBracket.MissingBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Formatting.OperatorBracket.MissingBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Formatting.OperatorBracket.MissingBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Formatting.OperatorBracket.MissingBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceBeforeEquals">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceAfterDefault">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceBeforeComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.NoSapceBeforeHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeArg">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.NoSpaceBeforeArg">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpenHint">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.FunctionDuplicateArgument.Found">
+    <severity>10</severity>
+  </rule>
+  <rule ref="Squiz.Functions.GlobalFunction.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.LowercaseFunctionKeywords.FoundUppercase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.FirstParamSpacing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.OneParamPerLine">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterComma">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ConstantCase.">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidFunctionName.DoubleUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidFunctionName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.PublicHasUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName.StringNotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Objects.DisallowObjectStringIndex.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Objects.ObjectInstantiation.NotAssigned">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Objects.ObjectMemberComma.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.ComparisonOperatorUsage.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.IncrementDecrementUsage.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.IncrementDecrementUsage.NoBrackets">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.IncrementDecrementUsage.">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Operators.ValidLogicalOperators.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.CommentedOutCode.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.DisallowComparisonAssignment.AssignedBool">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.DisallowMultipleAssignments.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops.Found">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.ContentAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.ContentAfterEnd">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.Empty">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.SpacingAfterOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.NoSemicolon">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.MultipleStatements">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.NoSpaceBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.NoSpaceBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.EmbeddedPhp.SpacingBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.Eval.Discouraged">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.GlobalKeyword.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.Heredoc.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.InnerFunctions.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.LowercasePHPFunctions.KeywordUppercase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.PHP.LowercasePHPFunctions.CallUppercase">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Scope.MemberVarScope.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Scope.MethodScope.Missing">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Scope.StaticThisUsage.Found">
+    <severity>10</severity>
+  </rule>
+  <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.Strings.EchoedStrings.HasBracket">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.CastSpacing.ContainsWhiteSpace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeOpen">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBetween">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace.ContentBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace.SpacingAfterNested">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace.ContentBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionSpacing.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.FunctionSpacing.Before">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing.IncorrectSingle">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing.NoSpaceBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing.TooMuchSpaceBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing.NoSpaceAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing.TooMuchSpaceAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.MemberVarSpacing.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing.Before">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceBeforeAmp">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.SpacingBeforeAmp">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfterAmp">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.SpacingAfterAmp">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.SpacingBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.OperatorSpacing.SpacingAfter">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing.Before">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing.After">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.Indent">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SemicolonSpacing.Incorrect">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.Files.ClosingTag.NotAllowed">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.NotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.PublicHasUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.MemberVarNotCamelCaps">
+    <severity>8</severity>
+  </rule>
+  <rule ref="Zend.NamingConventions.ValidVariableName.StringVarNotCamelCaps">
+    <severity>8</severity>
+  </rule>
+</ruleset>
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metrics ahh="0.39705882352941" andc="0.34126984126984" calls="2593" ccn="2683" classes="123" cloc="7975" clsa="5" clsc="118" fanout="294" files="201" functions="242" interfs="44" leafs="96" lloc="8752" loc="30682" locExecutable="18062" maxdit="4" ncloc="22707" nom="993" nop="11" roots="16">
+<metrics ahh="0.39130434782609" andc="0.33076923076923" calls="2619" ccn="2697" classes="127" cloc="7998" clsa="5" clsc="122" fanout="296" files="203" functions="246" interfs="44" leafs="100" lloc="8798" loc="30824" locExecutable="18141" maxdit="4" ncloc="22826" nom="999" nop="11" roots="16">
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/helpers/routing.php" classes="1" cloc="0" functions="0" lloc="8" loc="26" locExecutable="21" ncloc="26">
     <class name="Routing" ca="1" cbo="0" ce="0" cis="2" cloc="0" cr="0.15" csz="2" dit="0" impl="0" lloc="6" loc="21" locExecutable="14" ncloc="21" noam="0" nocc="0" nom="2" noom="0" npm="2" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="4" wmci="4" wmcnp="4">
       <method name="url" ccn="3" cloc="0" lloc="5" loc="12" locExecutable="11" ncloc="12" npath="3"/>
@@ -17,7 +17,7 @@
       <method name="modify_table_to_structure" ccn="31" cloc="9" lloc="88" loc="183" locExecutable="130" ncloc="174" npath="1756800"/>
       <method name="table_exists" ccn="3" cloc="0" lloc="6" loc="12" locExecutable="10" ncloc="12" npath="10"/>
     </class>
-    <class name="UndefinedTableException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="UndefinedTableException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/framework.php" classes="1" cloc="0" functions="9" lloc="55" loc="103" locExecutable="86" ncloc="103">
     <class name="Dispatcher" ca="0" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="0" impl="0" lloc="0" loc="4" locExecutable="0" ncloc="4" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
@@ -42,14 +42,14 @@
       <method name="whetherValidAutoresponder" ccn="5" cloc="0" lloc="10" loc="22" locExecutable="16" ncloc="22" npath="16"/>
       <method name="addAutoresponder" ccn="3" cloc="0" lloc="9" loc="16" locExecutable="12" ncloc="16" npath="4"/>
     </class>
-    <class name="NonExistentNewsletterAutoresponderAdditionException" ca="1" cbo="0" ce="0" cis="0" cloc="3" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="5" locExecutable="0" ncloc="2" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
-    <class name="NonExistentNewsletterException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
-    <class name="NonExistentAutoresponderException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="NonExistentNewsletterAutoresponderAdditionException" ca="1" cbo="0" ce="0" cis="0" cloc="3" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="5" locExecutable="0" ncloc="2" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="NonExistentNewsletterException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="NonExistentAutoresponderException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/models/newsletter.php" classes="4" cloc="4" functions="0" lloc="100" loc="194" locExecutable="156" ncloc="190">
-    <class name="NewsletterNotFoundException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
-    <class name="InvalidNewsletterIDException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
-    <class name="DeletedNewsletterAccessException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="NewsletterNotFoundException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="InvalidNewsletterIDException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="DeletedNewsletterAccessException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
     <class name="Newsletter" ca="5" cbo="3" ce="3" cis="18" cloc="4" cr="0.15" csz="29" dit="0" impl="0" lloc="71" loc="187" locExecutable="121" ncloc="183" noam="0" nocc="0" nom="18" noom="0" npm="18" rcr="0.15" vars="11" varsi="11" varsnp="0" wmc="23" wmci="23" wmcnp="23">
       <method name="Newsletter" ccn="3" cloc="0" lloc="20" loc="28" locExecutable="22" ncloc="28" npath="4"/>
       <method name="getNewsletterName" ccn="1" cloc="0" lloc="2" loc="5" locExecutable="4" ncloc="5" npath="1"/>
@@ -72,8 +72,8 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/models/subscriber.php" classes="3" cloc="0" functions="0" lloc="58" loc="124" locExecutable="98" ncloc="124">
-    <class name="SubscriberNotFoundException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
-    <class name="InvalidSubscriberIDException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="SubscriberNotFoundException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="InvalidSubscriberIDException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
     <class name="Subscriber" ca="0" cbo="4" ce="4" cis="15" cloc="0" cr="0.15" csz="15" dit="0" impl="0" lloc="43" loc="117" locExecutable="77" ncloc="117" noam="0" nocc="0" nom="15" noom="0" npm="15" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="22" wmci="22" wmcnp="22">
       <method name="getHash" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
       <method name="Subscriber" ccn="3" cloc="0" lloc="19" loc="23" locExecutable="21" ncloc="23" npath="4"/>
@@ -92,24 +92,44 @@
       <method name="getNewsletter" ccn="1" cloc="0" lloc="2" loc="5" locExecutable="4" ncloc="5" npath="1"/>
     </class>
   </file>
+  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/router.php" classes="1" cloc="1" functions="0" lloc="16" loc="38" locExecutable="24" ncloc="37">
+    <class name="Router" ca="0" cbo="0" ce="0" cis="2" cloc="1" cr="0.15" csz="2" dit="0" impl="0" lloc="13" loc="34" locExecutable="20" ncloc="33" noam="0" nocc="0" nom="2" noom="0" npm="2" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="6" wmci="6" wmcnp="6">
+      <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
+      <method name="init" ccn="5" cloc="1" lloc="12" loc="23" locExecutable="17" ncloc="22" npath="40"/>
+    </class>
+  </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/FrameworkTest.php" classes="1" cloc="0" functions="0" lloc="3" loc="15" locExecutable="8" ncloc="15">
-    <class name="DispatcherTest" ca="0" cbo="0" ce="0" cis="2" cloc="0" cr="0.15" csz="2" dit="2" impl="0" lloc="0" loc="12" locExecutable="4" ncloc="12" noam="2" nocc="0" nom="2" noom="0" npm="2" rcr="0.181875" vars="0" varsi="0" varsnp="0" wmc="2" wmci="2" wmcnp="2">
+    <class name="DispatcherTest" ca="0" cbo="0" ce="0" cis="2" cloc="0" cr="0.15" csz="2" dit="2" impl="0" lloc="0" loc="12" locExecutable="4" ncloc="12" noam="2" nocc="0" nom="2" noom="0" npm="2" rcr="0.1755" vars="0" varsi="0" varsnp="0" wmc="2" wmci="2" wmcnp="2">
       <method name="setUp" ccn="1" cloc="0" lloc="0" loc="3" locExecutable="2" ncloc="3" npath="1"/>
       <method name="tearDown" ccn="1" cloc="0" lloc="0" loc="3" locExecutable="2" ncloc="3" npath="1"/>
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/NewslettersModelTest.php" classes="1" cloc="1" functions="0" lloc="12" loc="34" locExecutable="18" ncloc="33">
-    <class name="NewsletterTest" ca="0" cbo="1" ce="1" cis="3" cloc="1" cr="0.15" csz="3" dit="2" impl="0" lloc="8" loc="30" locExecutable="14" ncloc="29" noam="3" nocc="0" nom="3" noom="0" npm="3" rcr="0.181875" vars="0" varsi="0" varsnp="0" wmc="3" wmci="3" wmcnp="3">
+    <class name="NewsletterTest" ca="0" cbo="1" ce="1" cis="3" cloc="1" cr="0.15" csz="3" dit="2" impl="0" lloc="8" loc="30" locExecutable="14" ncloc="29" noam="3" nocc="0" nom="3" noom="0" npm="3" rcr="0.1755" vars="0" varsi="0" varsnp="0" wmc="3" wmci="3" wmcnp="3">
       <method name="setUp" ccn="1" cloc="0" lloc="3" loc="5" locExecutable="5" ncloc="5" npath="1"/>
       <method name="tearDown" ccn="1" cloc="0" lloc="3" loc="5" locExecutable="5" ncloc="5" npath="1"/>
       <method name="testWhetherNewsletterExists" ccn="1" cloc="1" lloc="2" loc="11" locExecutable="4" ncloc="10" npath="1"/>
     </class>
   </file>
-  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/SubscriberTest.php" classes="1" cloc="0" functions="0" lloc="1" loc="6" locExecutable="4" ncloc="6">
-    <class name="SubscriberTest" ca="0" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.181875" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/RoutesTest.php" classes="3" cloc="13" functions="3" lloc="22" loc="80" locExecutable="42" ncloc="67">
+    <class name="DefaultActionCalledException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="SpecificRouteItemCalledException" ca="1" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+    <class name="RoutesTest" ca="0" cbo="0" ce="0" cis="5" cloc="7" cr="0.15" csz="5" dit="2" impl="0" lloc="16" loc="61" locExecutable="34" ncloc="54" noam="5" nocc="0" nom="5" noom="0" npm="5" rcr="0.1755" vars="0" varsi="0" varsnp="0" wmc="5" wmci="5" wmcnp="5">
+      <method name="setUp" ccn="1" cloc="1" lloc="2" loc="13" locExecutable="9" ncloc="12" npath="1"/>
+      <method name="testWhetherDefaultActionGetsCalled" ccn="1" cloc="0" lloc="4" loc="9" locExecutable="7" ncloc="9" npath="1"/>
+      <method name="testWhetherSpecificActionGetsCalled" ccn="1" cloc="0" lloc="5" loc="10" locExecutable="8" ncloc="10" npath="1"/>
+      <method name="testWhetherOtherURLsDontGetRouted" ccn="1" cloc="0" lloc="5" loc="10" locExecutable="8" ncloc="10" npath="1"/>
+      <method name="tearDown" ccn="1" cloc="0" lloc="0" loc="3" locExecutable="2" ncloc="3" npath="1"/>
+    </class>
+    <function name="_wpr_autoresponders_home" ccn="1" cloc="0" lloc="1" loc="3" locExecutable="3" ncloc="3" npath="1"/>
+    <function name="_wpr_autoresponders_add" ccn="1" cloc="0" lloc="1" loc="3" locExecutable="3" ncloc="3" npath="1"/>
+    <function name="_wpr_callback_test" ccn="1" cloc="0" lloc="1" loc="3" locExecutable="3" ncloc="3" npath="1"/>
   </file>
-  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" classes="1" cloc="27" functions="0" lloc="102" loc="249" locExecutable="158" ncloc="222">
-    <class name="AutoresponderTest" ca="0" cbo="2" ce="2" cis="17" cloc="27" cr="0.15" csz="20" dit="2" impl="0" lloc="81" loc="244" locExecutable="151" ncloc="217" noam="17" nocc="0" nom="17" noom="0" npm="16" rcr="0.181875" vars="3" varsi="3" varsnp="1" wmc="24" wmci="24" wmcnp="23">
+  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/SubscriberTest.php" classes="1" cloc="0" functions="0" lloc="1" loc="6" locExecutable="4" ncloc="6">
+    <class name="SubscriberTest" ca="0" cbo="0" ce="0" cis="0" cloc="0" cr="0.15" csz="0" dit="2" impl="0" lloc="0" loc="3" locExecutable="0" ncloc="3" noam="0" nocc="0" nom="0" noom="0" npm="0" rcr="0.1755" vars="0" varsi="0" varsnp="0" wmc="0" wmci="0" wmcnp="0"/>
+  </file>
+  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" classes="1" cloc="27" functions="0" lloc="100" loc="244" locExecutable="155" ncloc="217">
+    <class name="AutoresponderTest" ca="0" cbo="1" ce="1" cis="16" cloc="27" cr="0.15" csz="19" dit="2" impl="0" lloc="80" loc="239" locExecutable="148" ncloc="212" noam="16" nocc="0" nom="16" noom="0" npm="15" rcr="0.1755" vars="3" varsi="3" varsnp="1" wmc="23" wmci="23" wmcnp="22">
       <method name="setUp" ccn="1" cloc="1" lloc="8" loc="12" locExecutable="10" ncloc="11" npath="1"/>
       <method name="tearDown" ccn="1" cloc="0" lloc="6" loc="8" locExecutable="8" ncloc="8" npath="1"/>
       <method name="addAutoresponder" ccn="1" cloc="0" lloc="6" loc="9" locExecutable="8" ncloc="9" npath="1"/>
@@ -123,7 +143,6 @@
       <method name="testAddingNewsletterToNonExistentNewsletterCausesFailure" ccn="1" cloc="0" lloc="2" loc="4" locExecutable="4" ncloc="4" npath="1"/>
       <method name="testAddingAutoresponderWithInvalidArguments" ccn="1" cloc="0" lloc="1" loc="3" locExecutable="3" ncloc="3" npath="1"/>
       <method name="testAddingAValidAutoresponderProducesAValidObject" ccn="1" cloc="0" lloc="4" loc="8" locExecutable="6" ncloc="8" npath="1"/>
-      <method name="testAddingAAutoresponderResultsInRelevantActionsBeingTriggered" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
       <method name="testGettingAutorespondersOfNonExistentNewsletter" ccn="1" cloc="0" lloc="1" loc="3" locExecutable="3" ncloc="3" npath="1"/>
       <method name="addNewsletter" ccn="1" cloc="0" lloc="4" loc="6" locExecutable="6" ncloc="6" npath="1"/>
       <method name="testGettingAutorespondersOfNewsletter" ccn="5" cloc="0" lloc="17" loc="52" locExecutable="42" ncloc="52" npath="16"/>
@@ -138,7 +157,7 @@
     </class>
   </file>
   <file name="" classes="3" functions="0">
-    <class name="WP_UnitTestCase" ca="0" cbo="0" ce="0" cloc="0" cr="0.66" dit="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" noom="0" rcr="0.15"/>
+    <class name="WP_UnitTestCase" ca="0" cbo="0" ce="0" cloc="0" cr="0.7875" dit="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" noom="0" rcr="0.15"/>
     <class name="WP_Widget" ca="0" cbo="0" ce="0" cloc="0" cr="0.2775" dit="0" lloc="0" loc="1" locExecutable="0" ncloc="1" noam="0" nocc="0" noom="0" rcr="0.15"/>
     <class name="Swift_Plugin_Reporter" ca="1" cbo="0" ce="0" cloc="0" lloc="0" loc="1" locExecutable="0" ncloc="1"/>
   </file>
@@ -347,7 +366,7 @@
     <function name="isValidOptionsArray" ccn="2" cloc="0" lloc="3" loc="9" locExecutable="8" ncloc="9" npath="2"/>
     <function name="deliver_category_subscription" ccn="2" cloc="0" lloc="11" loc="19" locExecutable="16" ncloc="19" npath="2"/>
   </file>
-  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/other/blog_crons.php" classes="0" cloc="104" functions="15" lloc="338" loc="789" locExecutable="570" ncloc="685">
+  <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/other/blog_crons.php" classes="0" cloc="113" functions="16" lloc="348" loc="818" locExecutable="586" ncloc="705">
     <function name="_wpr_blog_subscription_post_updated" ccn="4" cloc="26" lloc="15" loc="56" locExecutable="23" ncloc="30" npath="8"/>
     <function name="_wpr_blog_subscription_post_deleted" ccn="2" cloc="3" lloc="7" loc="20" locExecutable="11" ncloc="17" npath="2"/>
     <function name="_wpr_blog_category_subscription_post_deleted" ccn="2" cloc="3" lloc="7" loc="20" locExecutable="11" ncloc="17" npath="2"/>
@@ -359,10 +378,11 @@
     <function name="_wpr_process_blog_subscriptions" ccn="9" cloc="8" lloc="42" loc="103" locExecutable="81" ncloc="95" npath="180"/>
     <function name="_wpr_process_blog_category_subscriptions" ccn="10" cloc="8" lloc="44" loc="114" locExecutable="93" ncloc="106" npath="183"/>
     <function name="_wpr_blog_subscription_get_category_post_to_deliver" ccn="6" cloc="1" lloc="29" loc="51" locExecutable="42" ncloc="50" npath="8"/>
-    <function name="deliverBlogPost" ccn="21" cloc="22" lloc="47" loc="135" locExecutable="96" ncloc="113" npath="21216"/>
+    <function name="deliverBlogPost" ccn="21" cloc="22" lloc="48" loc="136" locExecutable="97" ncloc="114" npath="21216"/>
     <function name="substitutePostRelatedShortcodes" ccn="1" cloc="4" lloc="12" loc="25" locExecutable="14" ncloc="21" npath="1"/>
     <function name="whetherToSkipThisPost" ccn="3" cloc="1" lloc="7" loc="14" locExecutable="12" ncloc="13" npath="4"/>
-    <function name="getBlogContentInDefaultLayout" ccn="1" cloc="0" lloc="12" loc="17" locExecutable="14" ncloc="17" npath="1"/>
+    <function name="getBlogContentInDefaultLayout" ccn="1" cloc="0" lloc="11" loc="19" locExecutable="16" ncloc="19" npath="1"/>
+    <function name="getBlogContentInDefaultTextLayout" ccn="1" cloc="0" lloc="9" loc="15" locExecutable="12" ncloc="15" npath="1"/>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/other/cron.php" classes="0" cloc="9" functions="6" lloc="78" loc="160" locExecutable="131" ncloc="151">
     <function name="wpr_cronschedules" ccn="1" cloc="0" lloc="2" loc="5" locExecutable="4" ncloc="5" npath="1"/>
@@ -499,7 +519,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/DependencyException.php" classes="1" cloc="16" functions="0" lloc="2" loc="30" locExecutable="8" ncloc="14">
-    <class name="Swift_DependencyException" ca="1" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.1961125" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_DependencyException" ca="1" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.19551041666667" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>
@@ -517,7 +537,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/IoException.php" classes="1" cloc="16" functions="0" lloc="2" loc="30" locExecutable="8" ncloc="14">
-    <class name="Swift_IoException" ca="7" cbo="0" ce="0" cis="1" cloc="4" cr="0.405" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="2" nom="1" noom="1" npm="1" rcr="0.1961125" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_IoException" ca="7" cbo="0" ce="0" cis="1" cloc="4" cr="0.405" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="2" nom="1" noom="1" npm="1" rcr="0.19551041666667" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>
@@ -557,7 +577,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/RfcComplianceException.php" classes="1" cloc="16" functions="0" lloc="2" loc="30" locExecutable="8" ncloc="14">
-    <class name="Swift_RfcComplianceException" ca="12" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.1961125" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_RfcComplianceException" ca="12" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="3" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.19551041666667" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>
@@ -587,7 +607,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/SwiftException.php" classes="1" cloc="16" functions="0" lloc="2" loc="29" locExecutable="8" ncloc="13">
-    <class name="Swift_SwiftException" ca="2" cbo="0" ce="0" cis="1" cloc="4" cr="0.74925" csz="1" dit="2" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="1" nocc="3" nom="1" noom="0" npm="1" rcr="0.16275" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_SwiftException" ca="2" cbo="0" ce="0" cis="1" cloc="4" cr="0.74925" csz="1" dit="2" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="1" nocc="3" nom="1" noom="0" npm="1" rcr="0.160625" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>
@@ -1456,7 +1476,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/Plugins/Pop/Pop3Exception.php" classes="1" cloc="20" functions="0" lloc="2" loc="34" locExecutable="8" ncloc="14">
-    <class name="Swift_Plugins_Pop_Pop3Exception" ca="2" cbo="0" ce="0" cis="1" cloc="5" cr="0.15" csz="1" dit="4" impl="0" lloc="1" loc="14" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.2333478125" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_Plugins_Pop_Pop3Exception" ca="2" cbo="0" ce="0" cis="1" cloc="5" cr="0.15" csz="1" dit="4" impl="0" lloc="1" loc="14" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.23309192708333" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>
@@ -1645,7 +1665,7 @@
     </class>
   </file>
   <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/classes/Swift/TransportException.php" classes="1" cloc="17" functions="0" lloc="2" loc="31" locExecutable="8" ncloc="14">
-    <class name="Swift_TransportException" ca="15" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="4" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.2333478125" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
+    <class name="Swift_TransportException" ca="15" cbo="0" ce="0" cis="1" cloc="4" cr="0.15" csz="1" dit="4" impl="0" lloc="1" loc="13" locExecutable="3" ncloc="9" noam="0" nocc="0" nom="1" noom="1" npm="1" rcr="0.23309192708333" vars="0" varsi="0" varsnp="0" wmc="1" wmci="1" wmcnp="1">
       <method name="__construct" ccn="1" cloc="0" lloc="1" loc="4" locExecutable="3" ncloc="4" npath="1"/>
     </class>
   </file>

@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="WP Autoresponder Test Suite" tests="14" assertions="20" failures="0" errors="1" time="3.887572">
+  <testsuite name="WP Autoresponder Test Suite" tests="16" assertions="22" failures="0" errors="0" time="3.788801">
     <testsuite name="DispatcherTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/FrameworkTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
-    <testsuite name="NewsletterTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/NewslettersModelTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.127652">
-      <testcase name="testWhetherNewsletterExists" class="NewsletterTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/NewslettersModelTest.php" line="20" assertions="1" time="0.127652"/>
+    <testsuite name="NewsletterTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/NewslettersModelTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.126400">
+      <testcase name="testWhetherNewsletterExists" class="NewsletterTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/NewslettersModelTest.php" line="20" assertions="1" time="0.126400"/>
+    </testsuite>
+    <testsuite name="RoutesTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/RoutesTest.php" tests="3" assertions="2" failures="0" errors="0" time="0.348407">
+      <testcase name="testWhetherDefaultActionGetsCalled" class="RoutesTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/RoutesTest.php" line="40" assertions="1" time="0.119027"/>
+      <testcase name="testWhetherSpecificActionGetsCalled" class="RoutesTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/RoutesTest.php" line="53" assertions="1" time="0.115394"/>
+      <testcase name="testWhetherOtherURLsDontGetRouted" class="RoutesTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/RoutesTest.php" line="65" assertions="0" time="0.113986"/>
     </testsuite>
     <testsuite name="SubscriberTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/SubscriberTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
-    <testsuite name="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" tests="13" assertions="19" failures="0" errors="1" time="3.759920">
-      <testcase name="testGetAllAutoresponders" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="45" assertions="2" time="0.305209"/>
-      <testcase name="testNonExistentAutoresponderInitializationException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="84" assertions="1" time="0.265714"/>
-      <testcase name="testGetAutoresponderById" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="88" assertions="2" time="0.368007"/>
-      <testcase name="testValidateAutoresponders" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="102" assertions="4" time="0.253831"/>
-      <testcase name="testWhetherMissingFieldsResultInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="125" assertions="1" time="0.243361"/>
-      <testcase name="testWhetherInvalidDataTypeResultsInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="133" assertions="1" time="0.241534"/>
-      <testcase name="testWhetherLackOfArgumentForWhetherValidAutoresponderResultsInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="139" assertions="1" time="0.244190"/>
-      <testcase name="testAddingNewsletterToNonExistentNewsletterCausesFailure" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="148" assertions="1" time="0.240577"/>
-      <testcase name="testAddingAutoresponderWithInvalidArguments" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="156" assertions="1" time="0.253831"/>
-      <testcase name="testAddingAValidAutoresponderProducesAValidObject" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="161" assertions="2" time="0.332320"/>
-      <testcase name="testAddingAAutoresponderResultsInRelevantActionsBeingTriggered" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="170" assertions="0" time="0.320291">
-        <error type="BadFunctionCallException">AutoresponderTest::testAddingAAutoresponderResultsInRelevantActionsBeingTriggered
-BadFunctionCallException: 
-
-/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php:172
-/usr/bin/phpunit:46
-</error>
-      </testcase>
-      <testcase name="testGettingAutorespondersOfNonExistentNewsletter" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="180" assertions="1" time="0.314339"/>
-      <testcase name="testGettingAutorespondersOfNewsletter" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="192" assertions="2" time="0.376716"/>
+    <testsuite name="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" tests="12" assertions="19" failures="0" errors="0" time="3.313994">
+      <testcase name="testGetAllAutoresponders" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="45" assertions="2" time="0.406493"/>
+      <testcase name="testNonExistentAutoresponderInitializationException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="84" assertions="1" time="0.249951"/>
+      <testcase name="testGetAutoresponderById" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="88" assertions="2" time="0.286716"/>
+      <testcase name="testValidateAutoresponders" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="102" assertions="4" time="0.253126"/>
+      <testcase name="testWhetherMissingFieldsResultInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="125" assertions="1" time="0.265985"/>
+      <testcase name="testWhetherInvalidDataTypeResultsInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="133" assertions="1" time="0.275728"/>
+      <testcase name="testWhetherLackOfArgumentForWhetherValidAutoresponderResultsInException" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="139" assertions="1" time="0.240574"/>
+      <testcase name="testAddingNewsletterToNonExistentNewsletterCausesFailure" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="148" assertions="1" time="0.242706"/>
+      <testcase name="testAddingAutoresponderWithInvalidArguments" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="156" assertions="1" time="0.232171"/>
+      <testcase name="testAddingAValidAutoresponderProducesAValidObject" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="161" assertions="2" time="0.287018"/>
+      <testcase name="testGettingAutorespondersOfNonExistentNewsletter" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="175" assertions="1" time="0.230666"/>
+      <testcase name="testGettingAutorespondersOfNewsletter" class="AutoresponderTest" file="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/autoresponder/AutoresponderTest.php" line="187" assertions="2" time="0.342860"/>
     </testsuite>
   </testsuite>
 </testsuites>

@@ -68,7 +68,7 @@ class WP_Subscription_Form_Widget extends WP_Widget
             'height'=>500
         );
         
-        $this->WP_Widget('widget_wpr_forms',__("Newsletter Subscription Form (WPR)"),$widget_options,$control_options);
+        $this->WP_Widget('widget_wpr_forms',__("Newsletter Subscription Form (WPR)",'wpr_autoresponder'),$widget_options,$control_options);
     }
 
     function form($instance)

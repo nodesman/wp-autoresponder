@@ -3,6 +3,7 @@
 function _wpr_settings_handler()
 {
 
+	_wpr_set("corp_logo",get_option("wpr_corp_logo")); 
 	_wpr_set("canspam_address",get_option("wpr_address")); 
 	$notification_custom_email_is_admin_email = (get_option('wpr_notification_custom_email')=="admin_email");
 	_wpr_set("notification_custom_email_is_admin_email",$notification_custom_email_is_admin_email);
@@ -64,6 +65,7 @@ function _wpr_settings_post_handler()
 	{	
 	
 		update_option("wpr_address",$_POST['address']);
+		update_option("wpr_corp_logo",$_POST['corp_logo']);
 		update_option("wpr_hourlylimit",$_POST['hourly']);
 		delete_option("wpr_smtpenabled");
 		add_option("wpr_smtpenabled",(isset($_POST['enablesmtp']))?1:0);

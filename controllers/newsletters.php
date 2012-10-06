@@ -6,12 +6,12 @@ function _wpr_newsletter_form_validate(&$info,&$errors,$whetherToValidateNameUni
     $errors = array();
     if (empty($_POST['name']))
     {
-        $errors[] = __("The newsletter name field was left empty. Please fill it in to continue.");
+        $errors[] = __("The newsletter name field was left empty. Please fill it in to continue.",'wpr_autoresponder');
         $info['name'] = '';
     }
     else if ($whetherToValidateNameUniqueness===true && checkIfNewsletterNameExists($_POST['name']))
     {
-        $errors[] = __("A newsletter with that name already exists. ");
+        $errors[] = __("A newsletter with that name already exists. ",'wpr_autoresponder');
         $info['name'] = '';
     }
     else
@@ -20,7 +20,7 @@ function _wpr_newsletter_form_validate(&$info,&$errors,$whetherToValidateNameUni
     }
     if (empty($_POST['fromname']))
     {
-        $errors[] = __("The 'From Name' field was left empty. Please fill it in to continue. ");
+        $errors[] = __("The 'From Name' field was left empty. Please fill it in to continue. ",'wpr_autoresponder');
         $info['fromname'] = '';
     }
     else
@@ -30,12 +30,12 @@ function _wpr_newsletter_form_validate(&$info,&$errors,$whetherToValidateNameUni
 
      if (empty($_POST['fromemail']))
      {
-        $errors[] = __("The 'From Email' field was left empty. Please fill it in to continue. ");
+        $errors[] = __("The 'From Email' field was left empty. Please fill it in to continue. ",'wpr_autoresponder');
         $info['fromemail'] = '';
      }
      else if (!validateEmail($_POST['fromemail']))
      {
-         $errors[] = __("The email address provided for 'From Email' is not a valid e-mail address. Please enter a valid email address.");
+         $errors[] = __("The email address provided for 'From Email' is not a valid e-mail address. Please enter a valid email address.",'wpr_autoresponder');
          $info['fromemail'] = '';
      }
      else
@@ -79,9 +79,9 @@ function _wpr_newsletter_edit()
         $newsletter = _wpr_newsletter_get($id);
         _wpr_set("parameters",$newsletter);
     }    
-    _wpr_set("heading",__("Edit Newsletter"));
+    _wpr_set("heading",__("Edit Newsletter",'wpr_autoresponder'));
     _wpr_set("edit",true);
-    _wpr_set("button_text",__("Save Changes"));
+    _wpr_set("button_text",__("Save Changes",'wpr_autoresponder'));
     _wpr_set("wpr_form","newsletter_edit_form");
 }
 
@@ -144,9 +144,9 @@ function _wpr_newsletter_add()
         $newsletter = _wpr_newsletter_get($id);
         _wpr_set("parameters",$newsletter);
     }
-    _wpr_set("heading",__("Create Newsletter"));
+    _wpr_set("heading",__("Create Newsletter",'wpr_autoresponder'));
     _wpr_set("edit",false);
-    _wpr_set("button_text",__("Create Newsletter"));
+    _wpr_set("button_text",__("Create Newsletter",'wpr_autoresponder'));
     _wpr_set("wpr_form","newsletter_create_form");
 }
 

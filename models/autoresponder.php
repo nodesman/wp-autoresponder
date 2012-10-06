@@ -32,6 +32,7 @@ class Autoresponder
 	
 	
 	public static function getAutorespondersOfNewsletter($nid) {
+		
 		if (!Newsletter::whetherNewsletterIDExists($nid))
 			throw new NonExistentNewsletterException();
 		

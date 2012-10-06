@@ -281,9 +281,9 @@ $GLOBALS['admin_pages_definitions'] = array(
                             'page_title'=> 'Autoresponders',
                             'menu_title'=>'Autoresponders',
                             'capability'=> 'manage_newsletters',
-                            'legacy'   => 1,
-                            'menu_slug'=>'wpresponder/autoresponder.php',
-                            'callback'=>'wpr_autoresponder'
+                            'legacy'   => 0,
+                            'menu_slug'=>'_wpr/autoresponders',
+                            'callback'=>'_wpr_render_view'
                         ),
                           array(
                             'page_title'=> 'Post Series',

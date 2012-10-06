@@ -382,7 +382,10 @@ if (!defined("WPR_DEFS"))
 		{
 			add_submenu_page(__FILE__,$definition['page_title'],$definition['menu_title'],$definition['capability'],$definition['menu_slug'],$definition['callback']);
 		}
+		
+		
 	}
+	
 	function wpr_widgets_init()
 	{
 		return register_widget("WP_Subscription_Form_Widget");

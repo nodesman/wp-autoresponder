@@ -1,0 +1,113 @@
+
+
+#wpr-chrome {
+    background-color: #f4f4f4;
+    border: 1px solid #9c9c9c;
+    border-radius: 5px;
+    padding: 15px;
+    min-width: 1024px;
+}
+
+#breadcrumb ul {
+    padding: 0;
+    margin: 0;
+    list-style:  none;
+    margin: -15px;
+    margin-bottom: 0;
+    background-color: #767676;
+}
+
+
+#breadcrumb li a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 30px;
+}
+
+
+#breadcrumb li a:hover {
+    color: #ffd800
+}
+
+.wpr-action-button {
+    background-color: #686868 !important;
+    color: #fff !important;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #a99c9c;
+}
+
+
+.wpr-list-wrapper {
+    border-radius: 5px;
+    background-color: #484646;
+    padding-top: 30px;
+    padding-bottom: 10px;;
+    border: 1px solid #949494;
+}
+
+.wpr-list-content {
+    background-color: #fff;
+}
+
+.wpr-autoresponder-list-item {
+    background-color: #f9f9f9;
+    border-bottom: #9c9c9c;
+    padding: 10px;
+    position:  relative;
+}
+
+.autoresponder-messages-list {
+    background-color: #f6efc2;
+    border: 1px solid #9c9c9c;
+    padding: 5px;
+    width: 500px;
+    margin: 10px;
+    float: right;
+    text-align: center;
+}
+
+.autoresponder-messages-list:after {
+    content: '';
+    display: block;
+    clear:both;
+}
+.autoresponder-messages-list h2 {
+    font-size: 14px;
+    text-align: left;
+    margin: 0;
+    padding: 0;;
+}
+
+.autoresponder-messages-list select {
+    height: 200px !important;
+    width: 270px;
+    display:block;
+}
+
+.autoresponder-message-actions input {
+   width: 200px;
+    margin-top: 20px;;
+}
+
+.wpr-autoresponder-list-item:after {
+    content: '';
+    display: block;
+clear:both;;
+}
+
+.wpr-autoresponder-list-item h3 {
+    font-size: 12px;
+    font-weight: normal;
+    color: #909090;
+}
+
+.autoresponder-message-actions {
+    width: 220px;
+    float:right;
+}
+
+#autoresponder-manage-header {
+    padding: 10px 10px;
+}

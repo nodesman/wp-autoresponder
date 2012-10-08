@@ -20,15 +20,15 @@ function _wpr_subscriber_get($id)
 function _wpr_subscription_status($active, $confirmed)
 {
     if ($active == 1 && $confirmed== 1)
-        return __("Subscribed");
+        return __("Subscribed",'wpr_autoresponder');
     if ($active == 1 && $confirmed== 0)
-        return __("Subscribed and Unconfirmed");
+        return __("Subscribed and Unconfirmed",'wpr_autoresponder');
     if ($active == 0 && $confirmed== 1)
-        return __("Unsubscribed");
+        return __("Unsubscribed",'wpr_autoresponder');
     if ($active == 2 && $confirmed==1)
-        return __("Transfered");
+        return __("Transfered",'wpr_autoresponder');
     if ($active == 3)
-        return __("Disabled Due To Delivery Problems");
+        return __("Disabled Due To Delivery Problems",'wpr_autoresponder');
 }
 
 

@@ -14,6 +14,10 @@ var custom_validation_functions = new Array();
       <td colspan="2"><textarea name="address" rows="6" cols="60"><?php echo $canspam_address ?></textarea></td>
     </tr>
     <tr>
+      <td colspan="2"><b><?php _e('Corporate Logo (URL)','wpr_autoresponder');?></b>: <br/>
+      <input name="corp_logo" type="text" value="<?php echo $corp_logo; ?>" size="50"></td>
+    </tr>
+    <tr>
        <td colspan="10">
 <?php do_action("_wpr_settings_form"); ?>
       </td>

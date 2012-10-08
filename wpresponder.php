@@ -169,12 +169,14 @@ if (!defined("WPR_DEFS"))
 			wp_enqueue_script('jquery');
 			wp_enqueue_script('jqueryui-full');			
 		}
-		$url = $_GET['page'];
-		if (preg_match("@newmail\.php@",$url) || preg_match("@autoresponder\.php@",$url)|| preg_match("@allmailouts\.php\&action=edit@",$url))
-		{
-			wp_enqueue_script("wpresponder-ckeditor");
-			wp_enqueue_script("jquery");
-		}
+                if(isset($_GET['page'])) {
+                        $url = $_GET['page'];
+        		if (preg_match("@newmail\.php@",$url) || preg_match("@autoresponder\.php@",$url)|| preg_match("@allmailouts\.php\&action=edit@",$url))
+                	{
+                        	wp_enqueue_script("wpresponder-ckeditor");
+                                wp_enqueue_script("jquery");
+        		}
+                }
 
 	}	
         
@@ -192,12 +194,22 @@ if (!defined("WPR_DEFS"))
             }
         }
         
+        function _wpr_load_plugin_textdomain() 
+        {
+            $domain = 'wpr_autoresponder';
+            $locale = apply_filters('plugin_locale', get_locale(), $domain);
+            $plugindir = dirname(plugin_basename(__FILE__));
+            load_textdomain($domain, WP_LANG_DIR.'/'.$plugindir.'/'.$domain.'-'.$locale.'.mo');
+            load_plugin_textdomain($domain, FALSE, $plugindir.'/languages/');
+        }
 	
 	function wpresponder_init_method() 
 	{
 		//load the scripts only for the administrator.
 		global $current_user;
 		global $db_checker;
+                
+                _wpr_load_plugin_textdomain();
                 
                 $activationDate = get_option("_wpr_NEWAGE_activation");
                 if (empty($activationDate) || !$activationDate)

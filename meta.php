@@ -432,22 +432,22 @@ $GLOBALS['_wpr_crons'] = array(
 $schedules = array();
 $schedules['every_five_minutes'] = array(
 		 'interval'=> 300,
-		 'display'=>  __('Every 5 Minutes')
+		 'display'=>  __('Every 5 Minutes','wpr_autoresponder')
 		  );
 
 $schedules['every_ten_minutes'] = array(
 		 'interval'=> 600,
-		 'display'=>  __('Every 10 Minutes')
+		 'display'=>  __('Every 10 Minutes','wpr_autoresponder')
 		  );
 
 $schedules['every_minute'] = array(
 	 'interval'=> 60,
-	 'display'=>  __('Every Minute')
+	 'display'=>  __('Every Minute','wpr_autoresponder')
 	  );
 
 $schedules ['every_half_hour'] = array(
 									   'interval'=>1800,
-									   'display'=>__('Every Half an Hour')
+									   'display'=>__('Every Half an Hour','wpr_autoresponder')
 									   );
 
 $GLOBALS['schedules'] = $schedules;
@@ -458,6 +458,7 @@ $initial_wpr_options = array(
 							'wpr_hourlylimit'=> '100',
 							'wpr_sent_posts' => 'off',
 							'wpr_address' => '',
+                                                        'wpr_corp_logo' => '',
                                                         '_wpr_options'=> array(
                                                                 '_wpr_ensure_single_instances_of_crons_last_run' => 0
                                                             )

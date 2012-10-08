@@ -81,7 +81,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 
 	$to = $email;
 	$address = get_option("wpr_address");
-	$textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit").":\r\n\r\n$unsuburl";
+	$textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit",'wpr_autoresponder').":\r\n\r\n$unsuburl";
 	$reply_to = $newsletter->reply_to;
 	$htmlbody = trim($params['htmlbody']);
 	//append the address and the unsub link to the email
@@ -90,7 +90,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 ".nl2br(get_option("wpr_address"))."<br>
 <br>
 ";
-	$htmlUnSubscribeMessage = "<br><br>".$address."<br><br>".__("To unsubscribe or change subscriber options visit:")."<br />
+	$htmlUnSubscribeMessage = "<br><br>".$address."<br><br>".__("To unsubscribe or change subscriber options visit:",'wpr_autoresponder')."<br />
 \r\n <a href=\"$unsuburl\">$unsuburl</a>";
 	$htmlenabled = ($params['htmlenabled'])?1:0;
 	if (!empty($htmlbody))
@@ -307,7 +307,7 @@ function dispatchEmail($mail)
 		{
 			$message->setBody($mail['textbody'],'text/plain');
 		}
-		$mailer->batchSend($message);
+		$mailer->send($message);
 		_wpr_increment_hourly_email_sent_count();
 	}
 	catch (Exception $exp)
@@ -422,11 +422,21 @@ function email($to,$subject,$body)
 
 	$message->setFrom(array(get_option("admin_email")=>get_option("blogname")));
 
-	$message->setTo($to);
-
 	$message->setBody($body);
 
-	$message->batchSend();
+	if(!is_array($to) || (count($to)<2)) {
+            $message->setTo($to);
+            $message->send();
+        } else {
+            foreach($to as $address => $name) {
+                if(is_int($address)) {
+                    $message->setTo($name);
+                } else {
+                    $message->setTo(array($address => $name));
+                }
+                $message->send();
+            }
+        }
 }
 
 
@@ -500,7 +510,7 @@ function getMailTransport()
 
 function wpr_get_unsubscription_url($sid)
 {
-	$baseURL = get_bloginfo("home");
+	$baseURL = get_bloginfo("url");
 	$subscriber = _wpr_subscriber_get($sid);
 	$newsletter = _wpr_newsletter_get($subscriber->nid);
 	$nid = $newsletter->id;
@@ -529,7 +539,7 @@ function sendConfirmedEmail($id)
 	$sid = $sub->id; //the susbcriber id
 	$unsubscriptionURL = wpr_get_unsubscription_url($sid);
 
-	$unsubscriptionInformation = "\n\n" . sprintf(__("To manage your email subscriptions or to unsubscribe click on the URL below:\n%s\n\nIf the above URL is not a clickable link simply copy it and paste it in your web browser."),$unsubscriptionURL);
+	$unsubscriptionInformation = "\n\n" . sprintf(__("To manage your email subscriptions or to unsubscribe click on the URL below:\n%s\n\nIf the above URL is not a clickable link simply copy it and paste it in your web browser.",'wpr_autoresponder'),$unsubscriptionURL);
 
 
 	$fid = $args[2];

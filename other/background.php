@@ -161,8 +161,11 @@ function _wpr_autoresponder_process($id=0)
 	global $wpdb;
 	
 	$id = intval($id);
-	if ($id ==0)
+	if ($id ==0) 
+        {
 		$send_immediately=false;
+                $subscriberClause = "";
+        }
 	else
 	{
 		$send_immediately = true;
@@ -425,7 +428,7 @@ function _wpr_expire_followup($id)
 function wpr_get_mailouts()
 {
  	global $wpdb;
-	$prefix = $wpdb->prefx;
+	$prefix = $wpdb->prefix;
 	$timeStamp = time();
 	$query = "SELECT * FROM `".$wpdb->prefix."wpr_newsletter_mailouts` WHERE `status` = 0 AND `time` <= $timeStamp;";
 	$mailouts = $wpdb->get_results($query);
@@ -696,7 +699,7 @@ function deliver_category_subscription($catid,$post)
 	$theCategory = get_category($catid);
 	$categoryName = $categoryname->name;
 	$blogName = get_bloginfo("name");
-	$blogURL = get_bloginfo("siteurl");
+	$blogURL = home_url();
 	$footerMessage = "You are receiving this e-mail because you have subscribed to the $categoryName category of $blogName
 
 $blogUrl";

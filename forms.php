@@ -350,7 +350,7 @@ function preview()
 
 function _wpr_subscriptionform_code($form,$enableForm=false)
 {
-	$url = get_bloginfo('home');			
+	$url = home_url();			
 	ob_start();
 		?>
 <form action="<?php echo $url?>/?wpr-optin=1" method="post">
@@ -381,12 +381,12 @@ if (!empty($form->followup_type) && $form->followup_type != "none")
   </span>
   <table>
     <tr>
-      <td><span class="wprsfl wprsfl-name">Name:</span></td>
+      <td><span class="wprsfl wprsfl-name"><?php _e('Name','wpr_autoresponder'); ?>:</span></td>
       <td><span class="wprsftf wpr-subform-textfield-name">
         <input type="text" name="name" /></td>
     </tr>
     <tr>
-      <td><span class="wprsfl wprsfl-email">E-Mail Address:</span></td>
+      <td><span class="wprsfl wprsfl-email"><?php _e('E-Mail Address','wpr_autoresponder'); ?>:</span></td>
       <td><span class="wprsftf wpsftf-email">
         <input type="text" name="email" />
         </span>
@@ -468,11 +468,11 @@ foreach ($choices as $choice)
 	?>
     <?php do_action("_wpr_subscriptionform_code",$form->id); ?>
     <tr>
-      <td colspan="2" align="center"><input type="submit" value="<?php echo (empty($form->submit_button))?"Subscribe":$form->submit_button; ?>" /></td>
+      <td colspan="2" align="center"><input type="submit" value="<?php echo (empty($form->submit_button))?__("Subscribe",'wpr_autoresponder'):$form->submit_button; ?>" /></td>
     </tr>
     <tr>
       <td colspan="2" align="center"><?php if ($enableForm) { ?>
-      <a href="http://www.wpresponder.com">Email Marketing by WP Autoresponder</a>
+      <a href="http://www.wpresponder.com"><?php _e('Email Marketing by WP Autoresponder','wpr_autoresponder'); ?></a>
       <?php } ?></td>
     </tr>
   </table>

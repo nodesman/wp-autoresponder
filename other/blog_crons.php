@@ -775,7 +775,7 @@ function getBlogContentInDefaultLayout($post_id)
     $post = get_post($post_id);
     $content = '<div style="background-color:  #dfdfdf;padding: 5px;"><span style="font-size: 9px; font-family: Arial; text-align:center;\">'.
                sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
-                       "<a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a>").
+                       "<a href=\"".home_url()."\">".get_bloginfo("name")."</a>").
                "</span></div>";
 
     $content .= "<h1>";
@@ -790,7 +790,7 @@ function getBlogContentInDefaultLayout($post_id)
     $post->content = apply_filters("the_content",$post->post_content);
     $content .= "</p><p><span style=\"font-family: Arial, Verdana; font-size: 12px\">".wptexturize(wpautop(nl2br($post->post_content)))."</span>";
 
-    $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\">" . sprintf(__("<a href=\"%s\">Click here</a> to read this post at %s",'wpr_autoresponder'),get_permalink($post_id),"<a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a>") . "</div>.";
+    $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\">" . sprintf(__("<a href=\"%s\">Click here</a> to read this post at %s",'wpr_autoresponder'),get_permalink($post_id),"<a href=\"".home_url()."\">".get_bloginfo("name")."</a>") . "</div>.";
     $content = apply_filters("_wpr_blog_delivery_email_default_layout",$content,$post_id);
     return $content;
 }
@@ -809,7 +809,7 @@ function getBlogContentInDefaultTextLayout($post_id)
 {
     $post = get_post($post_id);
     $content = sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
-                       get_bloginfo("name"). ": ". get_bloginfo("home"));
+                       get_bloginfo("name"). ": ". home_url());
 
     $content .= "\n\n" . $post->post_title;
     $content .= "\n\n" . __("Dated: ",'wpr_autoresponder') . date(__("d F,Y",'wpr_autoresponder'),strtotime($post->post_date));

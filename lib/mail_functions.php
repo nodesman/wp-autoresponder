@@ -307,7 +307,7 @@ function dispatchEmail($mail)
 		{
 			$message->setBody($mail['textbody'],'text/plain');
 		}
-		$mailer->batchSend($message);
+		$mailer->send($message);
 		_wpr_increment_hourly_email_sent_count();
 	}
 	catch (Exception $exp)
@@ -422,11 +422,21 @@ function email($to,$subject,$body)
 
 	$message->setFrom(array(get_option("admin_email")=>get_option("blogname")));
 
-	$message->setTo($to);
-
 	$message->setBody($body);
 
-	$message->batchSend();
+	if(!is_array($to) || (count($to)<2)) {
+            $message->setTo($to);
+            $message->send();
+        } else {
+            foreach($to as $address => $name) {
+                if(is_int($address)) {
+                    $message->setTo($name);
+                } else {
+                    $message->setTo(array($address => $name));
+                }
+                $message->send();
+            }
+        }
 }
 
 
@@ -500,7 +510,7 @@ function getMailTransport()
 
 function wpr_get_unsubscription_url($sid)
 {
-	$baseURL = get_bloginfo("home");
+	$baseURL = get_bloginfo("url");
 	$subscriber = _wpr_subscriber_get($sid);
 	$newsletter = _wpr_newsletter_get($subscriber->nid);
 	$nid = $newsletter->id;

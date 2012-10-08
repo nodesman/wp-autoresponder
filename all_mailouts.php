@@ -117,7 +117,7 @@ function _wpr_pending_mailouts()
 	$mailouts = $wpdb->get_results($query);
 	?>
     <script>
-	var delurl = '<?php bloginfo("siteurl") ?>/?wpr-admin-action=delete_mailout';
+	var delurl = '<?php bloginfo("url") ?>/?wpr-admin-action=delete_mailout';
 
 	var currentDeletion;
 	function deleteMailout(id)

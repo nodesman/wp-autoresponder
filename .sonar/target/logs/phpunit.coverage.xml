@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1349297872">
-  <project timestamp="1349297872">
+<coverage generated="1349628902">
+  <project timestamp="1349628902">
     <file name="/usr/lib/wordpress-tests/lib/functions.php">
       <line num="8" type="stmt" count="0"/>
       <line num="9" type="stmt" count="0"/>
@@ -37,71 +37,9 @@
       <line num="31" type="stmt" count="0"/>
       <metrics loc="38" ncloc="38" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="14" coveredelements="0"/>
     </file>
-    <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/lib/framework.php">
-      <class name="Dispatcher" namespace="global">
-        <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-      </class>
-      <line num="4" type="stmt" count="0"/>
-      <line num="5" type="stmt" count="0"/>
-      <line num="6" type="stmt" count="0"/>
-      <line num="8" type="stmt" count="0"/>
-      <line num="13" type="stmt" count="0"/>
-      <line num="14" type="stmt" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <line num="19" type="stmt" count="0"/>
-      <line num="20" type="stmt" count="0"/>
-      <line num="21" type="stmt" count="0"/>
-      <line num="22" type="stmt" count="0"/>
-      <line num="23" type="stmt" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="25" type="stmt" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="32" type="stmt" count="0"/>
-      <line num="33" type="stmt" count="0"/>
-      <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="36" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
-      <line num="39" type="stmt" count="0"/>
-      <line num="44" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="47" type="stmt" count="0"/>
-      <line num="48" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
-      <line num="51" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="53" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
-      <line num="55" type="stmt" count="0"/>
-      <line num="57" type="stmt" count="0"/>
-      <line num="58" type="stmt" count="0"/>
-      <line num="59" type="stmt" count="0"/>
-      <line num="64" type="stmt" count="0"/>
-      <line num="65" type="stmt" count="0"/>
-      <line num="66" type="stmt" count="0"/>
-      <line num="68" type="stmt" count="0"/>
-      <line num="69" type="stmt" count="0"/>
-      <line num="70" type="stmt" count="0"/>
-      <line num="71" type="stmt" count="0"/>
-      <line num="72" type="stmt" count="0"/>
-      <line num="77" type="stmt" count="0"/>
-      <line num="78" type="stmt" count="0"/>
-      <line num="79" type="stmt" count="0"/>
-      <line num="80" type="stmt" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="86" type="stmt" count="0"/>
-      <line num="87" type="stmt" count="0"/>
-      <line num="91" type="stmt" count="0"/>
-      <line num="92" type="stmt" count="0"/>
-      <line num="93" type="stmt" count="0"/>
-      <line num="95" type="stmt" count="0"/>
-      <metrics loc="102" ncloc="102" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="56" coveredstatements="0" elements="56" coveredelements="0"/>
-    </file>
     <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/models/autoresponder.php">
       <class name="Autoresponder" namespace="global">
-        <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="52" elements="60" coveredelements="60"/>
+        <metrics methods="11" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="59" coveredstatements="57" elements="70" coveredelements="67"/>
       </class>
       <class name="NonExistentNewsletterAutoresponderAdditionException" namespace="global">
         <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -112,67 +50,77 @@
       <class name="NonExistentAutoresponderException" namespace="global">
         <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </class>
-      <line num="8" type="method" name="__construct" crap="3" count="5"/>
-      <line num="9" type="stmt" count="5"/>
-      <line num="11" type="stmt" count="5"/>
-      <line num="12" type="stmt" count="5"/>
-      <line num="14" type="stmt" count="5"/>
-      <line num="15" type="stmt" count="5"/>
-      <line num="16" type="stmt" count="5"/>
-      <line num="17" type="stmt" count="5"/>
-      <line num="18" type="stmt" count="4"/>
-      <line num="19" type="stmt" count="4"/>
-      <line num="20" type="stmt" count="4"/>
-      <line num="21" type="stmt" count="4"/>
-      <line num="22" type="stmt" count="4"/>
-      <line num="25" type="method" name="getNewsletterId" crap="1" count="3"/>
-      <line num="26" type="stmt" count="3"/>
-      <line num="29" type="method" name="getName" crap="1" count="4"/>
-      <line num="30" type="stmt" count="4"/>
-      <line num="34" type="method" name="getAutorespondersOfNewsletter" crap="4" count="2"/>
-      <line num="36" type="stmt" count="2"/>
-      <line num="37" type="stmt" count="2"/>
-      <line num="39" type="stmt" count="1"/>
-      <line num="40" type="stmt" count="1"/>
-      <line num="42" type="stmt" count="1"/>
-      <line num="43" type="stmt" count="1"/>
-      <line num="44" type="stmt" count="1"/>
-      <line num="45" type="stmt" count="1"/>
-      <line num="47" type="stmt" count="1"/>
-      <line num="54" type="method" name="getAllAutoresponders" crap="2" count="2"/>
+      <line num="8" type="method" name="__construct" crap="3" count="7"/>
+      <line num="10" type="stmt" count="7"/>
+      <line num="12" type="stmt" count="7"/>
+      <line num="13" type="stmt" count="7"/>
+      <line num="15" type="stmt" count="7"/>
+      <line num="16" type="stmt" count="7"/>
+      <line num="17" type="stmt" count="7"/>
+      <line num="18" type="stmt" count="7"/>
+      <line num="19" type="stmt" count="6"/>
+      <line num="20" type="stmt" count="6"/>
+      <line num="21" type="stmt" count="6"/>
+      <line num="22" type="stmt" count="6"/>
+      <line num="23" type="stmt" count="6"/>
+      <line num="26" type="method" name="getId" crap="1" count="1"/>
+      <line num="28" type="stmt" count="1"/>
+      <line num="32" type="method" name="getNewsletterId" crap="1" count="3"/>
+      <line num="34" type="stmt" count="3"/>
+      <line num="39" type="method" name="getNewsletter" crap="2" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="45" type="method" name="getName" crap="1" count="4"/>
+      <line num="47" type="stmt" count="4"/>
+      <line num="51" type="method" name="getAutorespondersOfNewsletter" crap="4" count="2"/>
+      <line num="54" type="stmt" count="2"/>
       <line num="55" type="stmt" count="2"/>
-      <line num="56" type="stmt" count="2"/>
-      <line num="57" type="stmt" count="2"/>
-      <line num="59" type="stmt" count="2"/>
-      <line num="60" type="stmt" count="2"/>
-      <line num="61" type="stmt" count="2"/>
-      <line num="62" type="stmt" count="2"/>
-      <line num="63" type="stmt" count="2"/>
-      <line num="66" type="method" name="getAutoresponderById" crap="1" count="1"/>
-      <line num="67" type="stmt" count="1"/>
-      <line num="68" type="stmt" count="1"/>
-      <line num="72" type="method" name="whetherValidAutoresponder" crap="5" count="6"/>
-      <line num="74" type="stmt" count="6"/>
+      <line num="57" type="stmt" count="1"/>
+      <line num="58" type="stmt" count="1"/>
+      <line num="60" type="stmt" count="1"/>
+      <line num="61" type="stmt" count="1"/>
+      <line num="62" type="stmt" count="1"/>
+      <line num="63" type="stmt" count="1"/>
+      <line num="65" type="stmt" count="1"/>
+      <line num="73" type="method" name="getAllAutoresponders" crap="2" count="2"/>
       <line num="75" type="stmt" count="2"/>
-      <line num="78" type="stmt" count="4"/>
-      <line num="79" type="stmt" count="1"/>
-      <line num="82" type="stmt" count="3"/>
-      <line num="84" type="stmt" count="3"/>
-      <line num="85" type="stmt" count="1"/>
-      <line num="88" type="stmt" count="3"/>
-      <line num="89" type="stmt" count="2"/>
-      <line num="92" type="stmt" count="2"/>
-      <line num="95" type="method" name="addAutoresponder" crap="3" count="3"/>
-      <line num="97" type="stmt" count="3"/>
-      <line num="99" type="stmt" count="3"/>
-      <line num="100" type="stmt" count="3"/>
-      <line num="102" type="stmt" count="2"/>
-      <line num="103" type="stmt" count="1"/>
-      <line num="106" type="stmt" count="1"/>
-      <line num="107" type="stmt" count="1"/>
+      <line num="76" type="stmt" count="2"/>
+      <line num="77" type="stmt" count="2"/>
+      <line num="79" type="stmt" count="2"/>
+      <line num="80" type="stmt" count="2"/>
+      <line num="81" type="stmt" count="2"/>
+      <line num="82" type="stmt" count="2"/>
+      <line num="83" type="stmt" count="2"/>
+      <line num="87" type="method" name="getAutoresponderById" crap="1" count="1"/>
+      <line num="89" type="stmt" count="1"/>
+      <line num="90" type="stmt" count="1"/>
+      <line num="94" type="method" name="whetherValidAutoresponderName" crap="5" count="6"/>
+      <line num="97" type="stmt" count="6"/>
+      <line num="98" type="stmt" count="2"/>
+      <line num="101" type="stmt" count="4"/>
+      <line num="102" type="stmt" count="1"/>
+      <line num="105" type="stmt" count="3"/>
+      <line num="107" type="stmt" count="3"/>
       <line num="108" type="stmt" count="1"/>
-      <line num="109" type="stmt" count="1"/>
-      <metrics loc="129" ncloc="122" classes="4" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="52" elements="60" coveredelements="60"/>
+      <line num="111" type="stmt" count="3"/>
+      <line num="112" type="stmt" count="2"/>
+      <line num="115" type="stmt" count="2"/>
+      <line num="119" type="method" name="addAutoresponder" crap="3" count="3"/>
+      <line num="121" type="stmt" count="3"/>
+      <line num="123" type="stmt" count="3"/>
+      <line num="124" type="stmt" count="3"/>
+      <line num="126" type="stmt" count="2"/>
+      <line num="127" type="stmt" count="1"/>
+      <line num="130" type="stmt" count="1"/>
+      <line num="131" type="stmt" count="1"/>
+      <line num="132" type="stmt" count="1"/>
+      <line num="133" type="stmt" count="1"/>
+      <line num="138" type="method" name="getMessages" crap="1" count="1"/>
+      <line num="140" type="stmt" count="1"/>
+      <line num="141" type="stmt" count="1"/>
+      <line num="142" type="stmt" count="1"/>
+      <line num="143" type="stmt" count="1"/>
+      <metrics loc="164" ncloc="155" classes="4" methods="11" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="59" coveredstatements="57" elements="70" coveredelements="67"/>
     </file>
     <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/models/newsletter.php">
       <class name="NewsletterNotFoundException" namespace="global">
@@ -185,7 +133,7 @@
         <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </class>
       <class name="Newsletter" namespace="global">
-        <metrics methods="18" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="87" coveredstatements="7" elements="105" coveredelements="8"/>
+        <metrics methods="18" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="83" coveredstatements="7" elements="101" coveredelements="8"/>
       </class>
       <line num="24" type="method" name="Newsletter" crap="12" count="0"/>
       <line num="26" type="stmt" count="0"/>
@@ -193,106 +141,102 @@
       <line num="29" type="stmt" count="0"/>
       <line num="30" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
       <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
       <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
       <line num="42" type="stmt" count="0"/>
       <line num="43" type="stmt" count="0"/>
-      <line num="44" type="stmt" count="0"/>
       <line num="45" type="stmt" count="0"/>
       <line num="46" type="stmt" count="0"/>
       <line num="47" type="stmt" count="0"/>
-      <line num="48" type="stmt" count="0"/>
-      <line num="49" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
+      <line num="49" type="method" name="getNewsletterName" crap="2" count="0"/>
       <line num="51" type="stmt" count="0"/>
-      <line num="53" type="method" name="getNewsletterName" crap="2" count="0"/>
-      <line num="55" type="stmt" count="0"/>
+      <line num="52" type="stmt" count="0"/>
+      <line num="54" type="method" name="getNewsletterId" crap="2" count="0"/>
       <line num="56" type="stmt" count="0"/>
-      <line num="58" type="method" name="getNewsletterId" crap="2" count="0"/>
-      <line num="60" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="59" type="method" name="getConfirmSubject" crap="2" count="0"/>
       <line num="61" type="stmt" count="0"/>
-      <line num="63" type="method" name="getConfirmSubject" crap="2" count="0"/>
-      <line num="65" type="stmt" count="0"/>
-      <line num="66" type="stmt" count="0"/>
-      <line num="69" type="method" name="getConfirmedSubject" crap="2" count="0"/>
-      <line num="71" type="stmt" count="0"/>
-      <line num="72" type="stmt" count="0"/>
-      <line num="75" type="method" name="getConfirmBody" crap="2" count="0"/>
-      <line num="77" type="stmt" count="0"/>
-      <line num="78" type="stmt" count="0"/>
-      <line num="81" type="method" name="getConfirmedBody" crap="2" count="0"/>
-      <line num="83" type="stmt" count="0"/>
-      <line num="84" type="stmt" count="0"/>
-      <line num="87" type="method" name="getDescription" crap="2" count="0"/>
-      <line num="89" type="stmt" count="0"/>
-      <line num="90" type="stmt" count="0"/>
-      <line num="93" type="method" name="getNewsletterReplyToEmailAddress" crap="2" count="0"/>
-      <line num="95" type="stmt" count="0"/>
-      <line num="96" type="stmt" count="0"/>
-      <line num="99" type="method" name="getFromName" crap="2" count="0"/>
-      <line num="101" type="stmt" count="0"/>
-      <line num="102" type="stmt" count="0"/>
-      <line num="105" type="method" name="ensureNotDeleted" crap="6" count="0"/>
-      <line num="107" type="stmt" count="0"/>
-      <line num="108" type="stmt" count="0"/>
+      <line num="62" type="stmt" count="0"/>
+      <line num="65" type="method" name="getConfirmedSubject" crap="2" count="0"/>
+      <line num="67" type="stmt" count="0"/>
+      <line num="68" type="stmt" count="0"/>
+      <line num="71" type="method" name="getConfirmBody" crap="2" count="0"/>
+      <line num="73" type="stmt" count="0"/>
+      <line num="74" type="stmt" count="0"/>
+      <line num="77" type="method" name="getConfirmedBody" crap="2" count="0"/>
+      <line num="79" type="stmt" count="0"/>
+      <line num="80" type="stmt" count="0"/>
+      <line num="83" type="method" name="getDescription" crap="2" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="89" type="method" name="getNewsletterReplyToEmailAddress" crap="2" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <line num="95" type="method" name="getFromName" crap="2" count="0"/>
+      <line num="97" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="101" type="method" name="ensureNotDeleted" crap="6" count="0"/>
+      <line num="103" type="stmt" count="0"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="107" type="method" name="getFromEmail" crap="2" count="0"/>
       <line num="109" type="stmt" count="0"/>
-      <line num="111" type="method" name="getFromEmail" crap="2" count="0"/>
-      <line num="113" type="stmt" count="0"/>
-      <line num="114" type="stmt" count="0"/>
-      <line num="118" type="method" name="delete" crap="6" count="0"/>
+      <line num="110" type="stmt" count="0"/>
+      <line num="114" type="method" name="delete" crap="6" count="0"/>
+      <line num="116" type="stmt" count="0"/>
+      <line num="117" type="stmt" count="0"/>
+      <line num="118" type="stmt" count="0"/>
       <line num="120" type="stmt" count="0"/>
       <line num="121" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
       <line num="124" type="stmt" count="0"/>
       <line num="125" type="stmt" count="0"/>
       <line num="126" type="stmt" count="0"/>
+      <line num="127" type="stmt" count="0"/>
       <line num="128" type="stmt" count="0"/>
-      <line num="129" type="stmt" count="0"/>
-      <line num="130" type="stmt" count="0"/>
       <line num="131" type="stmt" count="0"/>
       <line num="132" type="stmt" count="0"/>
+      <line num="133" type="stmt" count="0"/>
+      <line num="134" type="stmt" count="0"/>
       <line num="135" type="stmt" count="0"/>
-      <line num="136" type="stmt" count="0"/>
       <line num="137" type="stmt" count="0"/>
       <line num="138" type="stmt" count="0"/>
       <line num="139" type="stmt" count="0"/>
-      <line num="141" type="stmt" count="0"/>
-      <line num="142" type="stmt" count="0"/>
-      <line num="143" type="stmt" count="0"/>
+      <line num="140" type="stmt" count="0"/>
+      <line num="142" type="method" name="getNumberOfSubscribers" crap="2" count="0"/>
       <line num="144" type="stmt" count="0"/>
-      <line num="146" type="method" name="getNumberOfSubscribers" crap="2" count="0"/>
+      <line num="145" type="stmt" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="147" type="stmt" count="0"/>
       <line num="148" type="stmt" count="0"/>
-      <line num="149" type="stmt" count="0"/>
-      <line num="150" type="stmt" count="0"/>
-      <line num="151" type="stmt" count="0"/>
-      <line num="152" type="stmt" count="0"/>
-      <line num="155" type="method" name="getNumberOfUnsubscribed" crap="2" count="0"/>
+      <line num="151" type="method" name="getNumberOfUnsubscribed" crap="2" count="0"/>
+      <line num="153" type="stmt" count="0"/>
+      <line num="154" type="stmt" count="0"/>
+      <line num="155" type="stmt" count="0"/>
+      <line num="156" type="stmt" count="0"/>
       <line num="157" type="stmt" count="0"/>
-      <line num="158" type="stmt" count="0"/>
-      <line num="159" type="stmt" count="0"/>
-      <line num="160" type="stmt" count="0"/>
-      <line num="161" type="stmt" count="0"/>
-      <line num="165" type="method" name="getNumberOfUnconfirmed" crap="2" count="0"/>
-      <line num="168" type="stmt" count="0"/>
-      <line num="172" type="method" name="whetherNewsletterIDExists" crap="2" count="6"/>
-      <line num="173" type="stmt" count="6"/>
-      <line num="174" type="stmt" count="6"/>
-      <line num="175" type="stmt" count="6"/>
-      <line num="176" type="stmt" count="6"/>
-      <line num="178" type="stmt" count="6"/>
-      <line num="179" type="stmt" count="6"/>
-      <line num="180" type="stmt" count="3"/>
-      <line num="185" type="method" name="getNumberOfActiveSubscribers" crap="2" count="0"/>
+      <line num="161" type="method" name="getNumberOfUnconfirmed" crap="2" count="0"/>
+      <line num="164" type="stmt" count="0"/>
+      <line num="168" type="method" name="whetherNewsletterIDExists" crap="2" count="7"/>
+      <line num="169" type="stmt" count="7"/>
+      <line num="170" type="stmt" count="7"/>
+      <line num="171" type="stmt" count="7"/>
+      <line num="172" type="stmt" count="7"/>
+      <line num="174" type="stmt" count="7"/>
+      <line num="175" type="stmt" count="7"/>
+      <line num="177" type="stmt" count="3"/>
+      <line num="182" type="method" name="getNumberOfActiveSubscribers" crap="2" count="0"/>
+      <line num="184" type="stmt" count="0"/>
+      <line num="185" type="stmt" count="0"/>
+      <line num="186" type="stmt" count="0"/>
       <line num="187" type="stmt" count="0"/>
       <line num="188" type="stmt" count="0"/>
-      <line num="189" type="stmt" count="0"/>
-      <line num="190" type="stmt" count="0"/>
-      <line num="191" type="stmt" count="0"/>
-      <metrics loc="193" ncloc="188" classes="4" methods="18" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="87" coveredstatements="7" elements="105" coveredelements="8"/>
+      <metrics loc="190" ncloc="185" classes="4" methods="18" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="83" coveredstatements="7" elements="101" coveredelements="8"/>
     </file>
     <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/models/subscriber.php">
       <class name="SubscriberNotFoundException" namespace="global">
@@ -302,24 +246,20 @@
         <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </class>
       <class name="Subscriber" namespace="global">
-        <metrics methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="0" elements="61" coveredelements="0"/>
+        <metrics methods="16" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="48" coveredstatements="2" elements="64" coveredelements="3"/>
       </class>
-      <line num="11" type="method" name="getHash" crap="2" count="0"/>
-      <line num="13" type="stmt" count="0"/>
-      <line num="17" type="method" name="Subscriber" crap="12" count="0"/>
-      <line num="19" type="stmt" count="0"/>
-      <line num="20" type="stmt" count="0"/>
-      <line num="21" type="stmt" count="0"/>
-      <line num="22" type="stmt" count="0"/>
+      <line num="15" type="method" name="getHash" crap="2" count="0"/>
+      <line num="17" type="stmt" count="0"/>
+      <line num="21" type="method" name="Subscriber" crap="12" count="0"/>
       <line num="23" type="stmt" count="0"/>
       <line num="24" type="stmt" count="0"/>
       <line num="25" type="stmt" count="0"/>
       <line num="26" type="stmt" count="0"/>
       <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
       <line num="29" type="stmt" count="0"/>
       <line num="30" type="stmt" count="0"/>
       <line num="31" type="stmt" count="0"/>
-      <line num="32" type="stmt" count="0"/>
       <line num="33" type="stmt" count="0"/>
       <line num="34" type="stmt" count="0"/>
       <line num="35" type="stmt" count="0"/>
@@ -327,45 +267,52 @@
       <line num="37" type="stmt" count="0"/>
       <line num="38" type="stmt" count="0"/>
       <line num="39" type="stmt" count="0"/>
-      <line num="41" type="method" name="getId" crap="2" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
       <line num="43" type="stmt" count="0"/>
-      <line num="47" type="method" name="getName" crap="2" count="0"/>
-      <line num="49" type="stmt" count="0"/>
-      <line num="52" type="method" name="getEmail" crap="2" count="0"/>
-      <line num="54" type="stmt" count="0"/>
-      <line num="57" type="method" name="getDateOfSubscription" crap="2" count="0"/>
-      <line num="59" type="stmt" count="0"/>
-      <line num="62" type="method" name="getActive" crap="2" count="0"/>
-      <line num="64" type="stmt" count="0"/>
-      <line num="67" type="method" name="getConfiremd" crap="2" count="0"/>
-      <line num="69" type="stmt" count="0"/>
-      <line num="72" type="method" name="isUnsubscribed" crap="6" count="0"/>
-      <line num="74" type="stmt" count="0"/>
-      <line num="77" type="method" name="isUnconfirmed" crap="6" count="0"/>
-      <line num="79" type="stmt" count="0"/>
-      <line num="82" type="method" name="isMoved" crap="6" count="0"/>
-      <line num="84" type="stmt" count="0"/>
-      <line num="87" type="method" name="getNewsletterId" crap="2" count="0"/>
-      <line num="89" type="stmt" count="0"/>
-      <line num="92" type="method" name="replaceCustomFieldValues" crap="2" count="0"/>
-      <line num="94" type="stmt" count="0"/>
-      <line num="98" type="method" name="getCustomFieldValuesByLabels" crap="12" count="0"/>
-      <line num="100" type="stmt" count="0"/>
-      <line num="101" type="stmt" count="0"/>
-      <line num="102" type="stmt" count="0"/>
-      <line num="103" type="stmt" count="0"/>
+      <line num="45" type="method" name="getId" crap="2" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="51" type="method" name="getName" crap="2" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <line num="56" type="method" name="getEmail" crap="2" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <line num="61" type="method" name="getDateOfSubscription" crap="2" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <line num="66" type="method" name="getActive" crap="2" count="0"/>
+      <line num="68" type="stmt" count="0"/>
+      <line num="71" type="method" name="getConfiremd" crap="2" count="0"/>
+      <line num="73" type="stmt" count="0"/>
+      <line num="76" type="method" name="isUnsubscribed" crap="6" count="0"/>
+      <line num="78" type="stmt" count="0"/>
+      <line num="81" type="method" name="isUnconfirmed" crap="6" count="0"/>
+      <line num="83" type="stmt" count="0"/>
+      <line num="86" type="method" name="isMoved" crap="6" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="91" type="method" name="getNewsletterId" crap="2" count="0"/>
+      <line num="93" type="stmt" count="0"/>
+      <line num="96" type="method" name="replaceCustomFieldValues" crap="2" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="102" type="method" name="getCustomFieldValuesByLabels" crap="12" count="0"/>
+      <line num="104" type="stmt" count="0"/>
       <line num="105" type="stmt" count="0"/>
       <line num="106" type="stmt" count="0"/>
       <line num="107" type="stmt" count="0"/>
-      <line num="108" type="stmt" count="0"/>
+      <line num="109" type="stmt" count="0"/>
       <line num="110" type="stmt" count="0"/>
+      <line num="111" type="stmt" count="0"/>
       <line num="112" type="stmt" count="0"/>
-      <line num="113" type="stmt" count="0"/>
       <line num="114" type="stmt" count="0"/>
-      <line num="118" type="method" name="getNewsletter" crap="2" count="0"/>
-      <line num="120" type="stmt" count="0"/>
-      <line num="121" type="stmt" count="0"/>
-      <metrics loc="123" ncloc="123" classes="3" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="0" elements="61" coveredelements="0"/>
+      <line num="115" type="stmt" count="0"/>
+      <line num="116" type="stmt" count="0"/>
+      <line num="122" type="method" name="getNewsletter" crap="2" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
+      <line num="129" type="method" name="getSubscribersOfNewsletter" crap="2.15" count="1"/>
+      <line num="131" type="stmt" count="1"/>
+      <line num="132" type="stmt" count="1"/>
+      <line num="135" type="stmt" count="0"/>
+      <metrics loc="136" ncloc="136" classes="3" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="48" coveredstatements="2" elements="64" coveredelements="2"/>
     </file>
     <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/router.php">
       <class name="Router" namespace="global">
@@ -390,16 +337,6 @@
       <line num="31" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
       <metrics loc="37" ncloc="35" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="10" elements="18" coveredelements="10"/>
-    </file>
-    <file name="/var/www/freeness/wp-content/plugins/WP-Autoresponder/tests/FrameworkTest.php">
-      <class name="DispatcherTest" namespace="global">
-        <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="4" coveredelements="0"/>
-      </class>
-      <line num="6" type="method" name="setUp" crap="2" count="0"/>
-      <line num="8" type="stmt" count="0"/>
-      <line num="11" type="method" name="tearDown" crap="2" count="0"/>
-      <line num="13" type="stmt" count="0"/>
-      <metrics loc="14" ncloc="14" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="4" coveredelements="0"/>
     </file>
     <file name="/var/www/freeness/wp-content/themes/twentyeleven/functions.php">
       <line num="80" type="stmt" count="0"/>
@@ -1861,8 +1798,8 @@
       <line num="61" type="stmt" count="0"/>
       <line num="76" type="stmt" count="0"/>
       <line num="78" type="stmt" count="0"/>
-      <line num="91" type="stmt" count="12"/>
-      <line num="93" type="stmt" count="12"/>
+      <line num="91" type="stmt" count="15"/>
+      <line num="93" type="stmt" count="15"/>
       <line num="111" type="stmt" count="3"/>
       <line num="113" type="stmt" count="3"/>
       <line num="129" type="stmt" count="0"/>
@@ -1908,9 +1845,9 @@
       <line num="362" type="stmt" count="0"/>
       <line num="364" type="stmt" count="0"/>
       <line num="365" type="stmt" count="0"/>
-      <line num="375" type="method" name="flush" crap="1" count="12"/>
-      <line num="376" type="stmt" count="12"/>
-      <line num="378" type="stmt" count="12"/>
+      <line num="375" type="method" name="flush" crap="1" count="15"/>
+      <line num="376" type="stmt" count="15"/>
+      <line num="378" type="stmt" count="15"/>
       <line num="398" type="method" name="get" crap="4.32" count="3"/>
       <line num="399" type="stmt" count="3"/>
       <line num="400" type="stmt" count="3"/>
@@ -17774,17 +17711,17 @@
       <line num="98" type="stmt" count="0"/>
       <line num="99" type="stmt" count="0"/>
       <line num="101" type="stmt" count="0"/>
-      <line num="135" type="stmt" count="16"/>
-      <line num="137" type="stmt" count="16"/>
-      <line num="140" type="stmt" count="16"/>
+      <line num="135" type="stmt" count="20"/>
+      <line num="137" type="stmt" count="20"/>
+      <line num="140" type="stmt" count="20"/>
       <line num="141" type="stmt" count="0"/>
       <line num="142" type="stmt" count="0"/>
       <line num="143" type="stmt" count="0"/>
       <line num="144" type="stmt" count="0"/>
-      <line num="146" type="stmt" count="16"/>
-      <line num="147" type="stmt" count="16"/>
-      <line num="148" type="stmt" count="16"/>
-      <line num="149" type="stmt" count="16"/>
+      <line num="146" type="stmt" count="20"/>
+      <line num="147" type="stmt" count="20"/>
+      <line num="148" type="stmt" count="20"/>
+      <line num="149" type="stmt" count="20"/>
       <line num="152" type="stmt" count="3"/>
       <line num="153" type="stmt" count="3"/>
       <line num="156" type="stmt" count="3"/>
@@ -27677,22 +27614,22 @@
       <line num="534" type="stmt" count="0"/>
       <line num="535" type="stmt" count="0"/>
       <line num="536" type="stmt" count="0"/>
-      <line num="547" type="method" name="set_charset" crap="9.21" count="12"/>
-      <line num="548" type="stmt" count="12"/>
-      <line num="549" type="stmt" count="12"/>
-      <line num="550" type="stmt" count="12"/>
-      <line num="551" type="stmt" count="12"/>
-      <line num="552" type="stmt" count="12"/>
-      <line num="553" type="stmt" count="12"/>
-      <line num="554" type="stmt" count="12"/>
-      <line num="555" type="stmt" count="12"/>
-      <line num="556" type="stmt" count="12"/>
+      <line num="547" type="method" name="set_charset" crap="9.21" count="15"/>
+      <line num="548" type="stmt" count="15"/>
+      <line num="549" type="stmt" count="15"/>
+      <line num="550" type="stmt" count="15"/>
+      <line num="551" type="stmt" count="15"/>
+      <line num="552" type="stmt" count="15"/>
+      <line num="553" type="stmt" count="15"/>
+      <line num="554" type="stmt" count="15"/>
+      <line num="555" type="stmt" count="15"/>
+      <line num="556" type="stmt" count="15"/>
       <line num="557" type="stmt" count="0"/>
       <line num="558" type="stmt" count="0"/>
       <line num="559" type="stmt" count="0"/>
       <line num="560" type="stmt" count="0"/>
-      <line num="562" type="stmt" count="12"/>
-      <line num="563" type="stmt" count="12"/>
+      <line num="562" type="stmt" count="15"/>
+      <line num="563" type="stmt" count="15"/>
       <line num="574" type="method" name="set_prefix" crap="110" count="0"/>
       <line num="576" type="stmt" count="0"/>
       <line num="577" type="stmt" count="0"/>
@@ -27773,16 +27710,16 @@
       <line num="725" type="stmt" count="0"/>
       <line num="726" type="stmt" count="0"/>
       <line num="728" type="stmt" count="0"/>
-      <line num="743" type="method" name="select" crap="4.54" count="12"/>
-      <line num="744" type="stmt" count="12"/>
-      <line num="745" type="stmt" count="12"/>
-      <line num="747" type="stmt" count="12"/>
+      <line num="743" type="method" name="select" crap="4.54" count="15"/>
+      <line num="744" type="stmt" count="15"/>
+      <line num="745" type="stmt" count="15"/>
+      <line num="747" type="stmt" count="15"/>
       <line num="748" type="stmt" count="0"/>
       <line num="749" type="stmt" count="0"/>
       <line num="750" type="stmt" count="0"/>
       <line num="757" type="stmt" count="0"/>
       <line num="758" type="stmt" count="0"/>
-      <line num="760" type="stmt" count="12"/>
+      <line num="760" type="stmt" count="15"/>
       <line num="772" type="method" name="_weak_escape" crap="2" count="0"/>
       <line num="773" type="stmt" count="0"/>
       <line num="787" type="method" name="_real_escape" crap="12" count="0"/>
@@ -27866,66 +27803,66 @@
       <line num="1011" type="stmt" count="0"/>
       <line num="1012" type="stmt" count="0"/>
       <line num="1013" type="stmt" count="0"/>
-      <line num="1022" type="method" name="flush" crap="1" count="13"/>
-      <line num="1023" type="stmt" count="13"/>
-      <line num="1024" type="stmt" count="13"/>
-      <line num="1025" type="stmt" count="13"/>
-      <line num="1026" type="stmt" count="13"/>
-      <line num="1033" type="method" name="db_connect" crap="3.41" count="12"/>
-      <line num="1035" type="stmt" count="12"/>
-      <line num="1037" type="stmt" count="12"/>
-      <line num="1038" type="stmt" count="12"/>
-      <line num="1039" type="stmt" count="12"/>
+      <line num="1022" type="method" name="flush" crap="1" count="17"/>
+      <line num="1023" type="stmt" count="17"/>
+      <line num="1024" type="stmt" count="17"/>
+      <line num="1025" type="stmt" count="17"/>
+      <line num="1026" type="stmt" count="17"/>
+      <line num="1033" type="method" name="db_connect" crap="3.41" count="15"/>
+      <line num="1035" type="stmt" count="15"/>
+      <line num="1037" type="stmt" count="15"/>
+      <line num="1038" type="stmt" count="15"/>
+      <line num="1039" type="stmt" count="15"/>
       <line num="1040" type="stmt" count="0"/>
-      <line num="1043" type="stmt" count="12"/>
+      <line num="1043" type="stmt" count="15"/>
       <line num="1044" type="stmt" count="0"/>
       <line num="1045" type="stmt" count="0"/>
       <line num="1054" type="stmt" count="0"/>
       <line num="1056" type="stmt" count="0"/>
-      <line num="1059" type="stmt" count="12"/>
-      <line num="1061" type="stmt" count="12"/>
-      <line num="1063" type="stmt" count="12"/>
-      <line num="1064" type="stmt" count="12"/>
-      <line num="1076" type="method" name="query" crap="12.02" count="13"/>
-      <line num="1077" type="stmt" count="13"/>
-      <line num="1078" type="stmt" count="13"/>
-      <line num="1081" type="stmt" count="13"/>
-      <line num="1083" type="stmt" count="13"/>
-      <line num="1084" type="stmt" count="13"/>
-      <line num="1087" type="stmt" count="13"/>
-      <line num="1090" type="stmt" count="13"/>
-      <line num="1092" type="stmt" count="13"/>
-      <line num="1093" type="stmt" count="13"/>
-      <line num="1095" type="stmt" count="13"/>
-      <line num="1096" type="stmt" count="13"/>
-      <line num="1098" type="stmt" count="13"/>
-      <line num="1099" type="stmt" count="13"/>
-      <line num="1102" type="stmt" count="13"/>
+      <line num="1059" type="stmt" count="15"/>
+      <line num="1061" type="stmt" count="15"/>
+      <line num="1063" type="stmt" count="15"/>
+      <line num="1064" type="stmt" count="15"/>
+      <line num="1076" type="method" name="query" crap="12.02" count="17"/>
+      <line num="1077" type="stmt" count="17"/>
+      <line num="1078" type="stmt" count="17"/>
+      <line num="1081" type="stmt" count="17"/>
+      <line num="1083" type="stmt" count="17"/>
+      <line num="1084" type="stmt" count="17"/>
+      <line num="1087" type="stmt" count="17"/>
+      <line num="1090" type="stmt" count="17"/>
+      <line num="1092" type="stmt" count="17"/>
+      <line num="1093" type="stmt" count="17"/>
+      <line num="1095" type="stmt" count="17"/>
+      <line num="1096" type="stmt" count="17"/>
+      <line num="1098" type="stmt" count="17"/>
+      <line num="1099" type="stmt" count="17"/>
+      <line num="1102" type="stmt" count="17"/>
       <line num="1103" type="stmt" count="0"/>
       <line num="1104" type="stmt" count="0"/>
-      <line num="1107" type="stmt" count="13"/>
-      <line num="1108" type="stmt" count="13"/>
-      <line num="1109" type="stmt" count="13"/>
-      <line num="1110" type="stmt" count="12"/>
-      <line num="1112" type="stmt" count="12"/>
-      <line num="1113" type="stmt" count="12"/>
-      <line num="1114" type="stmt" count="12"/>
-      <line num="1116" type="stmt" count="12"/>
-      <line num="1117" type="stmt" count="12"/>
-      <line num="1118" type="stmt" count="13"/>
-      <line num="1119" type="stmt" count="13"/>
-      <line num="1120" type="stmt" count="9"/>
-      <line num="1121" type="stmt" count="9"/>
-      <line num="1122" type="stmt" count="9"/>
-      <line num="1123" type="stmt" count="13"/>
-      <line num="1124" type="stmt" count="13"/>
-      <line num="1125" type="stmt" count="8"/>
-      <line num="1126" type="stmt" count="8"/>
-      <line num="1127" type="stmt" count="8"/>
-      <line num="1129" type="stmt" count="13"/>
-      <line num="1133" type="stmt" count="13"/>
-      <line num="1134" type="stmt" count="13"/>
-      <line num="1137" type="stmt" count="13"/>
+      <line num="1107" type="stmt" count="17"/>
+      <line num="1108" type="stmt" count="17"/>
+      <line num="1109" type="stmt" count="17"/>
+      <line num="1110" type="stmt" count="16"/>
+      <line num="1112" type="stmt" count="16"/>
+      <line num="1113" type="stmt" count="16"/>
+      <line num="1114" type="stmt" count="16"/>
+      <line num="1116" type="stmt" count="16"/>
+      <line num="1117" type="stmt" count="16"/>
+      <line num="1118" type="stmt" count="17"/>
+      <line num="1119" type="stmt" count="17"/>
+      <line num="1120" type="stmt" count="12"/>
+      <line num="1121" type="stmt" count="12"/>
+      <line num="1122" type="stmt" count="12"/>
+      <line num="1123" type="stmt" count="17"/>
+      <line num="1124" type="stmt" count="17"/>
+      <line num="1125" type="stmt" count="11"/>
+      <line num="1126" type="stmt" count="11"/>
+      <line num="1127" type="stmt" count="11"/>
+      <line num="1129" type="stmt" count="17"/>
+      <line num="1133" type="stmt" count="17"/>
+      <line num="1134" type="stmt" count="17"/>
+      <line num="1137" type="stmt" count="17"/>
       <line num="1159" type="method" name="insert" crap="2" count="0"/>
       <line num="1160" type="stmt" count="0"/>
       <line num="1182" type="method" name="replace" crap="2" count="0"/>
@@ -27993,14 +27930,14 @@
       <line num="1339" type="stmt" count="0"/>
       <line num="1340" type="stmt" count="0"/>
       <line num="1343" type="stmt" count="0"/>
-      <line num="1359" type="method" name="get_row" crap="21.65" count="3"/>
-      <line num="1360" type="stmt" count="3"/>
-      <line num="1362" type="stmt" count="3"/>
+      <line num="1359" type="method" name="get_row" crap="21.65" count="5"/>
+      <line num="1360" type="stmt" count="5"/>
+      <line num="1362" type="stmt" count="5"/>
       <line num="1364" type="stmt" count="0"/>
-      <line num="1366" type="stmt" count="3"/>
-      <line num="1367" type="stmt" count="3"/>
-      <line num="1369" type="stmt" count="3"/>
-      <line num="1370" type="stmt" count="3"/>
+      <line num="1366" type="stmt" count="5"/>
+      <line num="1367" type="stmt" count="5"/>
+      <line num="1369" type="stmt" count="5"/>
+      <line num="1370" type="stmt" count="5"/>
       <line num="1371" type="stmt" count="0"/>
       <line num="1372" type="stmt" count="0"/>
       <line num="1373" type="stmt" count="0"/>
@@ -28014,13 +27951,13 @@
       <line num="1400" type="stmt" count="0"/>
       <line num="1401" type="stmt" count="0"/>
       <line num="1402" type="stmt" count="0"/>
-      <line num="1418" type="method" name="get_results" crap="72.95" count="9"/>
-      <line num="1419" type="stmt" count="9"/>
-      <line num="1422" type="stmt" count="9"/>
+      <line num="1418" type="method" name="get_results" crap="72.95" count="12"/>
+      <line num="1419" type="stmt" count="12"/>
+      <line num="1422" type="stmt" count="12"/>
       <line num="1424" type="stmt" count="0"/>
-      <line num="1426" type="stmt" count="9"/>
-      <line num="1427" type="stmt" count="9"/>
-      <line num="1429" type="stmt" count="9"/>
+      <line num="1426" type="stmt" count="12"/>
+      <line num="1427" type="stmt" count="12"/>
+      <line num="1429" type="stmt" count="12"/>
       <line num="1430" type="stmt" count="0"/>
       <line num="1433" type="stmt" count="0"/>
       <line num="1434" type="stmt" count="0"/>
@@ -28072,23 +28009,23 @@
       <line num="1542" type="stmt" count="0"/>
       <line num="1553" type="method" name="supports_collation" crap="2" count="0"/>
       <line num="1554" type="stmt" count="0"/>
-      <line num="1566" type="method" name="has_cap" crap="5.20" count="12"/>
-      <line num="1567" type="stmt" count="12"/>
-      <line num="1569" type="stmt" count="12"/>
-      <line num="1570" type="stmt" count="12"/>
-      <line num="1571" type="stmt" count="12"/>
-      <line num="1572" type="stmt" count="12"/>
-      <line num="1573" type="stmt" count="12"/>
-      <line num="1574" type="stmt" count="12"/>
-      <line num="1575" type="stmt" count="12"/>
+      <line num="1566" type="method" name="has_cap" crap="5.20" count="15"/>
+      <line num="1567" type="stmt" count="15"/>
+      <line num="1569" type="stmt" count="15"/>
+      <line num="1570" type="stmt" count="15"/>
+      <line num="1571" type="stmt" count="15"/>
+      <line num="1572" type="stmt" count="15"/>
+      <line num="1573" type="stmt" count="15"/>
+      <line num="1574" type="stmt" count="15"/>
+      <line num="1575" type="stmt" count="15"/>
       <line num="1576" type="stmt" count="0"/>
       <line num="1578" type="stmt" count="0"/>
       <line num="1591" type="method" name="get_caller" crap="2" count="0"/>
       <line num="1592" type="stmt" count="0"/>
-      <line num="1602" type="method" name="db_version" crap="1" count="12"/>
-      <line num="1603" type="stmt" count="12"/>
+      <line num="1602" type="method" name="db_version" crap="1" count="15"/>
+      <line num="1603" type="stmt" count="15"/>
       <metrics loc="1605" ncloc="700" classes="1" methods="40" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="395" coveredstatements="85" elements="435" coveredelements="87"/>
     </file>
-    <metrics files="75" loc="69657" ncloc="40368" classes="76" methods="571" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="27069" coveredstatements="1170" elements="27640" coveredelements="1202"/>
+    <metrics files="73" loc="69586" ncloc="40295" classes="74" methods="573" coveredmethods="34" conditionals="0" coveredconditionals="0" statements="27016" coveredstatements="1177" elements="27589" coveredelements="1211"/>
   </project>
 </coverage>

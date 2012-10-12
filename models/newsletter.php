@@ -30,7 +30,6 @@ class Newsletter
 			throw new InvalidNewsletterIDException();
 		
 		$tableName = $wpdb->prefix."wpr_newsletters";
-		
 		$getNewsletterInformationQuery = sprintf("SELECT * FROM %s WHERE id=%d",$tableName,$nid);
 		$newsletters = $wpdb->get_results($getNewsletterInformationQuery);
 		
@@ -42,10 +41,7 @@ class Newsletter
 		$this->name = $newsletter->name;
 		$this->reply_to = $newsletter->reply_to;
 		$this->description = $newsletter->description;
-		$this->confirm_subject = $newsletter->confirm_subject;
-		$this->confirm_body = $newsletter->confirm_body;
-		$this->confirmed_subject = $newsletter->confirmed_subject;
-		$this->confirmed_body = $newsletter->confirmed_body;
+
 		$this->fromname = $newsletter->fromname;
 		$this->fromemail = $newsletter->fromemail;
 	}
@@ -177,6 +173,7 @@ class Newsletter
 		
 		if (0 == $count)
 			return false;
+
 		return true;
 	}
 	

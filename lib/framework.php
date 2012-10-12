@@ -45,6 +45,7 @@ function _wpr_render_view()
         $plugindir = $GLOBALS['WPR_PLUGIN_DIR'];
 
         $currentView = _wpr_get("_wpr_view");
+
         foreach ($wpr_globals as $name=>$value)
         {
                 ${$name} = $value;

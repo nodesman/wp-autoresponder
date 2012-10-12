@@ -19,6 +19,10 @@ class AutoresponderTest extends WP_UnitTestCase {
         $wpdb->query($createNewsletterQuery);
         $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
         $wpdb->query($truncateAutorespondersTable);
+
+
+        $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
+        $wpdb->query($truncateAutorespondersTable);
     }
     
     public function tearDown() {
@@ -28,6 +32,9 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$wpdb->query($truncateAutorespondersTable);
     	$truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters;");
     	$wpdb->query($truncateAutorespondersTable);
+
+        $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
+        $wpdb->query($truncateAutorespondersTable);
     }
     
     
@@ -103,19 +110,19 @@ class AutoresponderTest extends WP_UnitTestCase {
     	
     	//no empty names;
     	$autoresponder = array("name"=> "");
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a empty autoresponder name is validated as invalid");
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponderName($autoresponder),"Test to see if a empty autoresponder name is validated as invalid");
 
     	$autoresponder = array("name"=> "      ");
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder), "Test to see if just white space is validated as invalid");
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponderName($autoresponder), "Test to see if just white space is validated as invalid");
     	
     	
     	$autoresponder = array("name"=> '"\'');
-    	$this->assertFalse(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if autoresponder name containing a slash is marked invalid");
+    	$this->assertFalse(Autoresponder::whetherValidAutoresponderName($autoresponder),"Test to see if autoresponder name containing a slash is marked invalid");
     	
     	
     	//TODO: The autoresponder field should have a nid field if not, the below must become an exception
     	$autoresponder = array("name"=>'Sample Autoresponder 1234 ');
-    	$this->assertTrue(Autoresponder::whetherValidAutoresponder($autoresponder),"Test to see if a valid autoresponder is marked as valid");
+    	$this->assertTrue(Autoresponder::whetherValidAutoresponderName($autoresponder),"Test to see if a valid autoresponder is marked as valid");
     }
     
     
@@ -124,20 +131,20 @@ class AutoresponderTest extends WP_UnitTestCase {
      */
     public function testWhetherMissingFieldsResultInException() {
     	$autoresponder = array();
-    	Autoresponder::whetherValidAutoresponder($autoresponder); 
+    	Autoresponder::whetherValidAutoresponderName($autoresponder);
     }
     
     /**
      * @expectedException InvalidArgumentException
      */
     public function testWhetherInvalidDataTypeResultsInException() {
-    	Autoresponder::whetherValidAutoresponder(null);
+    	Autoresponder::whetherValidAutoresponderName(null);
     }
     /**
      * @expectedException InvalidArgumentException
      */
     public function testWhetherLackOfArgumentForWhetherValidAutoresponderResultsInException() {
-    	Autoresponder::whetherValidAutoresponder("");
+    	Autoresponder::whetherValidAutoresponderName("");
     }
     
     //TODO: Add autoresponder
@@ -166,6 +173,9 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$this->assertEquals($autoresponder->getNewsletterId(), $autoresponderDef['nid']);
     	$this->assertEquals($autoresponder->getName(), $autoresponderDef['name']);
     }
+
+
+
     
     //     - Test the case where you use invalid names and other inputs for autoresponder
     
@@ -236,6 +246,129 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$difference = array_diff($responderNames, $defNames);
     	$this->assertEquals(count($difference),0);
     }
+
+    private function addAutoresponderMessage(array $options) {
+        global $wpdb;
+
+        if (!isset($options['aid']) || !isset($options['subject']) || !isset($options['htmlbody']) || !isset($options['textbody']) || !isset($options['sequence']) || !isset($options['attachimages'])) {
+            throw new InvalidArgumentException();
+        }
+
+
+
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlbody`, `textbody`, `sequence`, `htmlenabled`, `attachimages`) VALUES (%d, '%s','%s','%s', %d, %d, %d);",
+                                                                                    $wpdb->prefix, $options['aid'], $options['subject'], $options['htmlbody'], $options['textbody'], $options['sequence'], $options['htmlenabled'], $options['attachimages']);
+
+        $wpdb->query($addAutoresponderMessageQuery);
+        $insert_id = $wpdb->insert_id;
+        $autoresponderMessage = $wpdb->get_results(sprintf("SELECT * FROM %swpr_autoresponder_messages WHERE id=%d",$wpdb->prefix, $insert_id));
+        if (count($autoresponderMessage) > 0) {
+            return $autoresponderMessage[0];
+        }
+        else
+        {
+            throw new Exception("Unable to fetch added autoresponder message");
+        }
+
+
+
+    }
+
+    public function testGettingMessagesOfAutoresponders() {
+
+        $autoresponder = $this->addAutoresponder($this->newsletterId, "Sample Newsletter");
+
+        $autoresponderMessages = array(
+
+            array(
+                "aid"          => $autoresponder->id,
+                "subject"      => md5(microtime().rand(1,2000000)),
+                "htmlbody"     => md5(microtime().rand(1,2000000)),
+                "textbody"     => "",
+                "htmlenabled" => 1,
+                "sequence"     => 0,
+                "attachimages" => 1
+            ),
+            array(
+                "aid"          => $autoresponder->id,
+                "subject"      => md5(microtime().rand(1,2000000)),
+                "htmlbody"     => md5(microtime().rand(1,2000000)),
+                "textbody"     => "",
+                "htmlenabled" => 1,
+                "sequence"     => 1,
+                "attachimages" => 1
+            ),
+            array(
+                "aid"          => $autoresponder->id,
+                "subject"      => md5(microtime().rand(1,2000000)),
+                "htmlbody"     => md5(microtime().rand(1,2000000)),
+                "textbody"     => "",
+                "htmlenabled" => 1,
+                "sequence"     => 2,
+                "attachimages" => 2
+            ),
+            array(
+                "aid"          => $autoresponder->id,
+                "subject"      => md5(microtime().rand(1,2000000)),
+                "htmlbody"     => md5(microtime().rand(1,2000000)),
+                "textbody"     => "",
+                "htmlenabled" => 1,
+                "sequence"     => 3,
+                "attachimages" => 3
+            )
+        );
+        $originalSubjects = array();
+
+        foreach ($autoresponderMessages as $responder) {
+            $autoresponderMessages = $this->addAutoresponderMessage($responder);
+            $originalSubjects[] = $responder['subject'];
+        }
+
+
+        $autoresponderObj = new Autoresponder(intval($autoresponder->id));
+
+        $autoresponderMessagesRes = $autoresponderObj->getMessages();
+
+        $this->assertEquals(count($autoresponderMessagesRes), count($originalSubjects));
+
+        foreach ($autoresponderMessagesRes as $message) {
+            $receivedMessageSubjects[] = $message->subject;
+        }
+
+        $difference = array_diff($receivedMessageSubjects, $originalSubjects);
+        $this->assertEquals(count($difference), 0);
+    }
+
+    public function testGettingNumberOfAutoresponderSubscribers() {
+
+
+
+
+
+
+    }
+
+
+
+    public function testGettingIdOfAutoresponderObject() {
+        $responder = array(
+            "subject"      => md5(microtime().rand(1,2000000)),
+            "htmlbody"     => md5(microtime().rand(1,2000000)),
+            "textbody"     => "",
+            "htmlenabled" => 1,
+            "sequence"     => 2,
+            "attachimages" => 2
+        );
+
+        $autores = $this->addAutoresponder($this->newsletterId, "Sample Autoresponder");
+        $testObj = new Autoresponder((int) $autores->id);
+
+        $id = $testObj->getId();
+        $this->assertEquals($id, $autores->id);
+
+    }
+
+
     
     
     //TODO: Delete autoresponder    

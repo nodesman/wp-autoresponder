@@ -11,65 +11,70 @@ Author URI: http://www.nodesman.com/
 
 //protect from multiple copies of the plugin. this can happen sometimes.
 
-if (!defined("WPR_DEFS"))
-{
-    define("WPR_DEFS",1);
-	
-	$dir_name= basename(dirname(__FILE__));
+if (!defined("WPR_DEFS")) {
+    define("WPR_DEFS", 1);
 
-	$plugindir = ABSPATH. '/' . PLUGINDIR .'/' . $dir_name;
-	
-	define("WPR_DIR",$plugindir);
-	
-	$controllerDir = WPR_DIR. "/controllers";
+    $dir_name = basename(__DIR__);
+
+    $plugindir = ABSPATH . '/' . PLUGINDIR . '/' . $dir_name;
+
+    define("WPR_DIR", __DIR__);
+
+    $controllerDir = WPR_DIR . "/controllers";
     $modelsDir = "$plugindir/models";
     $helpersDir = "$plugindir/helpers";
 
-    define("WPR_VERSION","5.2.8");
-    define("WPR_PLUGIN_DIR","$plugindir");
-	
-	
+    define("WPR_VERSION", "5.3");
+    define("WPR_PLUGIN_DIR", "$plugindir");
+
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
-    require_once WPR_DIR. "/home.php" ;	
-    include_once WPR_DIR ."/blog_series.php";
-    include_once WPR_DIR ."/forms.php";
-    include_once "newmail.php";
-    include_once "customizeblogemail.php";
-    include_once "subscribers.php";
-    include_once "wpr_deactivate.php";
-    include_once "all_mailouts.php";
-    include_once "actions.php";
-    include_once "blogseries.lib.php";
-    include_once "lib.php";
-    require_once "$plugindir/meta.php";
-    require_once "$plugindir/lib/swift_required.php";
-    require_once "$plugindir/lib/admin_notifications.php";
-    require_once "$plugindir/lib/global.php";
-    require_once "$plugindir/lib/custom_fields.php";
-    require_once "$plugindir/lib/database_integrity_checker.php";
-    require_once "$plugindir/lib/framework.php";
-    require_once "$plugindir/lib/database_integrity_checker.php";    
-    require_once "$plugindir/lib/mail_functions.php";
-    require_once "$plugindir/other/cron.php";
-    require_once "$plugindir/other/firstrun.php";
-    require_once "$plugindir/other/queue_management.php";
-    require_once "$plugindir/other/notifications_and_tutorials.php";
-    require_once "$plugindir/other/background.php";
-    require_once "$plugindir/other/install.php";
-    require_once "$plugindir/other/maintain.php";
-    require_once "$plugindir/other/blog_crons.php";
-    include_once "widget.php";
-    require_once "$controllerDir/newsletters.php";
-    require_once "$controllerDir/custom_fields.php";
-    require_once "$controllerDir/importexport.php";
-    require_once "$controllerDir/background_procs.php";
-    require_once "$controllerDir/settings.php";
-    require_once "$controllerDir/new-broadcast.php";
-    require_once "$controllerDir/queue_management.php";
-    require_once "$modelsDir/subscriber.php";
-    require_once "$modelsDir/newsletter.php";
-    require_once "$helpersDir/routing.php";
+    include_once WPR_DIR . "/home.php";
+    include_once WPR_DIR . "/blog_series.php";
+    include_once WPR_DIR . "/forms.php";
+    include_once __DIR__ . '/newmail.php';
+    include_once __DIR__ . '/customizeblogemail.php';
+    include_once __DIR__ . '/subscribers.php';
+    include_once __DIR__ . '/wpr_deactivate.php';
+    include_once __DIR__ . '/all_mailouts.php';
+    include_once __DIR__ . '/actions.php';
+    include_once __DIR__ . '/blogseries.lib.php';
+    include_once __DIR__ . '/lib.php';
+    include_once __DIR__ . '/conf/meta.php';
+    include_once __DIR__ . '/lib/swift_required.php';
+    include_once __DIR__ . '/lib/admin_notifications.php';
+    include_once __DIR__ . '/lib/global.php';
+    include_once __DIR__ . '/lib/custom_fields.php';
+    include_once __DIR__ . '/lib/database_integrity_checker.php';
+    include_once __DIR__ . '/lib/framework.php';
+    include_once __DIR__ . '/lib/database_integrity_checker.php';
+    include_once __DIR__ . '/lib/mail_functions.php';
+    include_once __DIR__ . '/other/cron.php';
+    include_once __DIR__ . '/other/firstrun.php';
+    include_once __DIR__ . '/other/queue_management.php';
+    include_once __DIR__ . '/other/notifications_and_tutorials.php';
+    include_once __DIR__ . '/other/background.php';
+    include_once __DIR__ . '/other/install.php';
+    include_once __DIR__ . '/other/blog_crons.php';
+    include_once __DIR__ . '/other/maintain.php';
+    include_once 'widget.php';
+
+    include_once "$controllerDir/newsletters.php";
+    include_once "$controllerDir/custom_fields.php";
+    include_once "$controllerDir/importexport.php";
+    include_once "$controllerDir/background_procs.php";
+    include_once "$controllerDir/settings.php";
+    include_once "$controllerDir/new-broadcast.php";
+    include_once "$controllerDir/queue_management.php";
+    include_once "$controllerDir/autoresponder.php";
+
+
+    include_once "$modelsDir/subscriber.php";
+    include_once "$modelsDir/newsletter.php";
+    include_once "$modelsDir/autoresponder.php";
+
+
+    include_once "$helpersDir/routing.php";
 
     $GLOBALS['db_checker'] = new DatabaseChecker();
     $GLOBALS['wpr_globals'] = array();
@@ -88,7 +93,7 @@ if (!defined("WPR_DEFS"))
 	}
 	
 	add_action("plugins_loaded","_wpr_nag");
-        add_action("admin_init","_wpr_admin_init");
+    add_action("admin_init","_wpr_admin_init");
 	
 	function no_address_error()
 	{
@@ -138,47 +143,43 @@ if (!defined("WPR_DEFS"))
 		{
 			return;		
 		}
-		
-		$directory = str_replace("wpresponder.php","",__FILE__);
-		$containingdirectory = basename($directory);
-		wp_enqueue_style("wpresponder-tabber","/".PLUGINDIR."/".$containingdirectory."/tabber.css");
-		wp_enqueue_script("wpresponder-tabber");
-		wp_enqueue_script("wpresponder-addedit");		
-		 wp_enqueue_script("wpresponder-ckeditor");
-		wp_enqueue_script("jquery");
+
+        wp_enqueue_style("wpresponder-tabber", get_bloginfo("wpurl") . "/?wpr-file=tabber.css");
+        wp_enqueue_script("wpresponder-tabber");
+        wp_enqueue_script("wpresponder-addedit");
+        wp_enqueue_script("wpresponder-ckeditor");
+        wp_enqueue_script("jquery");
 	}
 	
 	
 	function wpr_enqueue_admin_scripts()
-	{
-		$directory = str_replace("wpresponder.php","",__FILE__);
-		$containingdirectory = basename($directory);
-		$home_url = get_bloginfo("url");
-		if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@_wpr/.*@",$_GET['page']))
-		{
-			wp_enqueue_script('post');
+    {
+        $directory = str_replace("wpresponder.php", "", __FILE__);
+        $containingdirectory = basename($directory);
+        $home_url = get_bloginfo("wpurl");
+        if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@_wpr/.*@", $_GET['page'])) {
+            wp_enqueue_script('post');
+            wp_enqueue_script('editor');
+            wp_enqueue_script('angularjs');
+            wp_enqueue_script('word-count');
+            wp_enqueue_script('wpresponder-uis', "$home_url/?wpr-file=jqui.js");
+            add_thickbox();
+            wp_enqueue_script('media-upload');
+            wp_enqueue_script('quicktags');
+            wp_enqueue_script('jquery');
+            wp_enqueue_script('jqueryui-full');
 
-			wp_enqueue_script('editor');
-			wp_enqueue_script('word-count');
-			wp_enqueue_script('wpresponder-uis',"$home_url/?wpr-file=jqui.js");
-			wp_enqueue_style("wpresponder-ui-style","$home_url/?wpr-file=jqui.css");		
-			add_thickbox();
-			wp_enqueue_script('media-upload');
-			wp_enqueue_script('quicktags');
-			add_action( 'admin_print_footer_scripts', 'wp_tiny_mce', 50 );
-			wp_enqueue_script('jquery');
-			wp_enqueue_script('jqueryui-full');			
-		}
-                if(isset($_GET['page'])) {
-                        $url = $_GET['page'];
-        		if (preg_match("@newmail\.php@",$url) || preg_match("@autoresponder\.php@",$url)|| preg_match("@allmailouts\.php\&action=edit@",$url))
-                	{
-                        	wp_enqueue_script("wpresponder-ckeditor");
-                                wp_enqueue_script("jquery");
-        		}
-                }
 
-	}	
+            wp_enqueue_style('wpresponder-admin-ui-style', get_bloginfo('wpurl') . '/?wpr-file=admin-ui.css');
+
+        }
+        $url = (isset($_GET['page'])) ? $_GET['page'] : "";
+        if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || preg_match("@allmailouts\.php\&action=edit@", $url)) {
+            wp_enqueue_script("wpresponder-ckeditor");
+            wp_enqueue_script("jquery");
+        }
+
+    }
         
         
         
@@ -256,7 +257,7 @@ if (!defined("WPR_DEFS"))
 		       require "broadcast_html_frame.php";
 		       exit;
 		    }
-                }
+        }
    		
         
 		
@@ -292,21 +293,21 @@ if (!defined("WPR_DEFS"))
 	 		_wpr_run_controller();
 		}
 		//a visitor is trying to subscribe.
-		$directory = str_replace(basename(__FILE__),"",__FILE__);
-		$containingdirectory = basename($directory);
-		$url = get_bloginfo("url");
-		wp_register_script( "jqueryui-full","$url/?wpr-file=jqui.js" );
-		wp_register_script( "wpresponder-tabber", "$url/?wpr-file=tabber.js");
-		wp_register_script( "wpresponder-ckeditor", "/".PLUGINDIR."/".$containingdirectory."/ckeditor/ckeditor.js");
-		wp_register_script( "wpresponder-addedit", "/".PLUGINDIR."/".$containingdirectory."/script.js");
-                
-                
-                /*
-                 * The following code ensures that the WP Responder's crons are always scheduled no matter what
-                 * Sometimes the crons go missing from cron's registry. Only the great zeus knows why that happens. 
-                 * The following code ensures that the crons are always scheduled immediately after they go missing. 
-                 * It also unenqueues duplicate crons that get enqueued when the plugin is deactivated and then reactivated.
-                 */
+        $containingdirectory = basename(__DIR__);
+        $url = get_bloginfo("wpurl");
+        wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
+        wp_register_script("angularjs", "$url/?wpr-file=angular.js");
+        wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
+        wp_register_script("wpresponder-ckeditor", "/" . PLUGINDIR . "/" . $containingdirectory . "/ckeditor/ckeditor.js");
+        wp_register_script("wpresponder-addedit", "/" . PLUGINDIR . "/" . $containingdirectory . "/script.js");
+
+
+        /*
+         * The following code ensures that the WP Responder's crons are always scheduled no matter what
+         * Sometimes the crons go missing from cron's registry. Only the great zeus knows why that happens.
+         * The following code ensures that the crons are always scheduled immediately after they go missing.
+         * It also unenqueues duplicate crons that get enqueued when the plugin is deactivated and then reactivated.
+         */
                 
                 //run the single instances every day once:
                 $last_run_esic = intval(_wpr_option_get("_wpr_ensure_single_instances_of_crons_last_run"));
@@ -368,7 +369,8 @@ if (!defined("WPR_DEFS"))
 		 add_action('admin_init','wpr_enqueue_admin_scripts');
 		 add_action('admin_menu', 'wpresponder_meta_box_add');
 		 //count all non-WP Autoresponder emails so that the hourly limit can be suitably adjusted
-		 add_filter("wp_mail","_wpr_non_wpr_email_sent");
+		//TODO: This doesn't work. Write unit tests for this
+        add_filter("wp_mail","_wpr_non_wpr_email_sent");
 		 
 
 		 add_action('edit_post', "wpr_edit_post_save");
@@ -404,6 +406,8 @@ if (!defined("WPR_DEFS"))
 	}
 
     add_filter('cron_schedules','wpr_cronschedules');
-	
-	
+
+
+
 }
+	

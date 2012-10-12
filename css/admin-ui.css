@@ -46,7 +46,11 @@
     padding-bottom: 10px;;
     border: 1px solid #949494;
 }
-
+#autoresponder-manage-header:after {
+    content:'';
+    display: block;
+    clear:both;
+}
 .wpr-list-content {
     background-color: #fff;
 }
@@ -100,6 +104,8 @@ clear:both;;
 .wpr-autoresponder-list-item h3 {
     font-size: 12px;
     font-weight: normal;
+    padding: 0;
+    margin: 0;
     color: #909090;
 }
 
@@ -110,4 +116,37 @@ clear:both;;
 
 #autoresponder-manage-header {
     padding: 10px 10px;
+}
+
+.wpr-autoresponder-overview {
+    border: 1px solid #999999;
+    background-color: #Fcfcfc;
+    min-height: 60px;
+    float:right;
+    bottom: 27px;
+    width: 70%;
+    padding: 10px;;
+}
+
+h2.wpr-autoresponder-title {
+    font-size: 16px;;
+    margin: 0 !important;
+    padding:0 !important;
+}
+
+.wpr-autoresponder-action-items {
+    clear:both;
+    padding-top: 10px;;
+}
+
+.wpr-overview-statistic {
+    display: block;;
+}
+
+.wpr-autoresponder-overview-heading {
+    background-color: #7f7d7d;
+    color: #fff;
+    padding: 5px;;
+    margin: -10px;
+    margin-bottom: 5px;;
 }

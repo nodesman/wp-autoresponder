@@ -222,14 +222,12 @@ function _wpr_newsletter_update($info)
 }
 
 function _wpr_newsletter_create($info)
-
 {
-
 	global $wpdb;
 
 	$info = (object) $info;
 
-	$query = "INSERT INTO ".$wpdb->prefix."wpr_newsletters (name,reply_to, description,confirm_subject,confirm_body,confirmed_subject,confirmed_body,fromname,fromemail) values ('$info->name','$info->reply_to','$info->description','$info->confirm_subject','$info->confirm_body','$info->confirmed_subject','$info->confirmed_body','$info->fromname','$info->fromemail');";
+	$query = "INSERT INTO ".$wpdb->prefix."wpr_newsletters (name,reply_to, description, fromname, fromemail) values ('$info->name','$info->reply_to','$info->description','$info->confirm_subject','$info->fromname','$info->fromemail');";
 
 	$wpdb->query($query);
 }

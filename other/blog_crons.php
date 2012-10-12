@@ -776,6 +776,7 @@ function getBlogContentInDefaultLayout($post_id)
     $content = '<div style="background-color:  #dfdfdf;padding: 5px;"><span style="font-size: 9px; font-family: Arial; text-align:center;\">'.
                sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
                        "<a href=\"".home_url()."\">".get_bloginfo("name")."</a>").
+
                "</span></div>";
 
     $content .= "<h1>";
@@ -808,6 +809,7 @@ function getBlogContentInDefaultLayout($post_id)
 function getBlogContentInDefaultTextLayout($post_id)
 {
     $post = get_post($post_id);
+
     $content = sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
                        get_bloginfo("name"). ": ". home_url());
 

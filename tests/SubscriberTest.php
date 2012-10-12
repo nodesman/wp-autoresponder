@@ -34,7 +34,7 @@ class SubscriberTest extends WP_UnitTestCase {
 
     public function  tearDown() {
         global $wpdb;
-        $truncateNewsletterTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters");
+        $truncateNewsletterTable = sprintf('TRUNCATE %swpr_newsletters', $wpdb->prefix);
         $wpdb->query($truncateNewsletterTable);
 
     }

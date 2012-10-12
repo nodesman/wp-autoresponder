@@ -20,7 +20,7 @@ function error($error)
     <a href="javascript:window.history.go(-1);">Click Here To Go Back</a> </div>
 </div>
 <?php
-	wp_credits();
+	// wp_credits(); // throws an fatal error ?! 
 	exit;
 
 }
@@ -263,6 +263,8 @@ if ($success)
 	$query = $wpdb->prepare("SELECT b.name name from {$wpdb->prefix}wpr_custom_fields_values a, {$wpdb->prefix}wpr_custom_fields b where a.sid=%d and b.id=a.cid;",$id);
 
 	$fields = $wpdb->get_results($query);
+        
+        $existing = array();
 
 	if (count ($fields) > 0)
 
@@ -355,14 +357,14 @@ if ($success)
 
 	}
 	
-	
+
 	do_action("_wpr_subscriber_added",$id);
 
 	$theqstring = $subscriber->id."%%".$subscriber->hash."%%".$fid;
 
 	$p = trim(base64_encode($theqstring),"=");
 
-	$link = get_bloginfo("siteurl")."/?wpr-confirm=".$p;
+	$link = home_url("/?wpr-confirm=".$p);
 	
 	$dirname = str_replace("optin.php","",__FILE__);
 	$confirm = file_get_contents($dirname."/templates/confirm.txt");
@@ -455,7 +457,7 @@ window.location='<?php echo $return_url; ?>';
 	{
         ?>
 <script>
-		window.location='<?php echo get_bloginfo("home")."/?wpr-optin=2" ?>';
+		window.location='<?php echo home_url("/?wpr-optin=2"); ?>';
 		</script>
 <?php
 		exit;

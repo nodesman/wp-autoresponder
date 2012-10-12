@@ -377,7 +377,7 @@ function _wpr_process_blog_subscriptions()
                 $post = _wpr_blog_subscription_get_post_to_deliver($subscription);
                 if ($post == false)
                     continue;
-                $footerMessage = sprintf(__("You are receiving this email because you are subscribed to articles published at <a href=\"%s\">%s</a>"),$blogURL,$blogName);
+                $footerMessage = sprintf(__("You are receiving this email because you are subscribed to articles published at <a href=\"%s\">%s</a>",'wpr_autoresponder'),$blogURL,$blogName);
                 $postId = (int) $post->ID;
                 if ($postId == 0)
                     continue;
@@ -496,7 +496,7 @@ function _wpr_process_blog_category_subscriptions()
                     $post = _wpr_blog_subscription_get_category_post_to_deliver($subscription);
                     if ($post == false)
                         continue;
-                    $footerMessage = sprintf(__("You are receiving this email because you are subscribed to articles published at <a href=\"%s\">%s</a>"),$blogURL,$blogName);
+                    $footerMessage = sprintf(__("You are receiving this email because you are subscribed to articles published at <a href=\"%s\">%s</a>",'wpr_autoresponder'),$blogURL,$blogName);
                     $postId = (int) $post->ID;
                     if ($postId == 0)
                         continue;
@@ -733,7 +733,7 @@ function substitutePostRelatedShortcodes($text,$post_id)
     $post = get_post($post_id);
     $postDate = $post->post_date;
     $postEpoch = strtotime($postDate);
-    $postDate = date(__("dS, F Y"),$postEpoch);
+    $postDate = date(__("dS, F Y",'wpr_autoresponder'),$postEpoch);
     $text = str_replace("[!post_date!] ",$postDate,$text);
    
     return $text;
@@ -774,18 +774,23 @@ function getBlogContentInDefaultLayout($post_id)
 {
     $post = get_post($post_id);
     $content = '<div style="background-color:  #dfdfdf;padding: 5px;"><span style="font-size: 9px; font-family: Arial; text-align:center;\">'.
-               sprintf(__("You are receiving this email because you are subscribed to new posts at %s"),
-                       "<a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a>").
+               sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
+                       "<a href=\"".home_url()."\">".get_bloginfo("name")."</a>").
                "</span></div>";
 
-    $content .= "<h1><a href=\"".get_permalink($post_id)."\" style=\"font-size:22px; font-family: Arial, Verdana; text-decoration: none; color: #333399\">";
-  $content .= $post->post_title;
-  $content .= "</a></h1>";
-    $content .= '<p style="font-family: Arial; font-size: 10px;">' . __("Dated: ") . date(__("d F,Y"),strtotime($post->post_date));
+    $content .= "<h1>";
+    $corp_logo = get_option("wpr_corp_logo");
+    if (!empty($corp_logo)) { 
+           $content .= "<img src=\"".$corp_logo."\" align=\"right\">"; 
+    }
+    $content .= "<a href=\"".get_permalink($post_id)."\" style=\"font-size:22px; font-family: Arial, Verdana; text-decoration: none; color: #333399\">";
+    $content .= $post->post_title;
+    $content .= "</a></h1>";
+    $content .= '<p style="font-family: Arial; font-size: 10px;">' . __("Dated: ",'wpr_autoresponder') . date(__("d F,Y",'wpr_autoresponder'),strtotime($post->post_date));
     $post->content = apply_filters("the_content",$post->post_content);
     $content .= "</p><p><span style=\"font-family: Arial, Verdana; font-size: 12px\">".wptexturize(wpautop(nl2br($post->post_content)))."</span>";
 
-    $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\">" . sprintf(__("<a href=\"%s\">Click here</a> to read this post at %s"),get_permalink($post_id),"<a href=\"".get_bloginfo("home")."\">".get_bloginfo("name")."</a>") . "</div>.";
+    $content .= "<br><br><span style=\"font-size: 12px; font-family: Arial\">" . sprintf(__("<a href=\"%s\">Click here</a> to read this post at %s",'wpr_autoresponder'),get_permalink($post_id),"<a href=\"".home_url()."\">".get_bloginfo("name")."</a>") . "</div>.";
     $content = apply_filters("_wpr_blog_delivery_email_default_layout",$content,$post_id);
     return $content;
 }
@@ -803,15 +808,15 @@ function getBlogContentInDefaultLayout($post_id)
 function getBlogContentInDefaultTextLayout($post_id)
 {
     $post = get_post($post_id);
-    $content = sprintf(__("You are receiving this email because you are subscribed to new posts at %s"),
-                       get_bloginfo("name"). ": ". get_bloginfo("home"));
+    $content = sprintf(__("You are receiving this email because you are subscribed to new posts at %s",'wpr_autoresponder'),
+                       get_bloginfo("name"). ": ". home_url());
 
     $content .= "\n\n" . $post->post_title;
-    $content .= "\n\n" . __("Dated: ") . date(__("d F,Y"),strtotime($post->post_date));
+    $content .= "\n\n" . __("Dated: ",'wpr_autoresponder') . date(__("d F,Y",'wpr_autoresponder'),strtotime($post->post_date));
     $post->content = apply_filters("the_content",$post->post_content);
     $content .= "\n\n" . strip_tags(str_replace(array("<p>","<br>","<br/>","<br />"),array("\n\n","\n","\n","\n"),$post->post_content));
 
-    $content .= "\n\n" . sprintf(__("Click here to read this post at %s: %s"),get_bloginfo("name"),get_permalink($post_id));
+    $content .= "\n\n" . sprintf(__("Click here to read this post at %s: %s",'wpr_autoresponder'),get_bloginfo("name"),get_permalink($post_id));
     $content = apply_filters("_wpr_blog_delivery_email_default_layout",$content,$post_id);
     return $content;
 }

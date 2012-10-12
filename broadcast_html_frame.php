@@ -15,7 +15,7 @@ if (current_user_can('manage_newsletters'))
 	$htmlbody = $broadcast->htmlbody;
 	if (empty($htmlbody))
 	{
-		echo __("The HTML body is empty. No HTML body specified.");
+		echo __("The HTML body is empty. No HTML body specified.",'wpr_autoresponder');
 	}
 	else
 	{

@@ -786,7 +786,7 @@ toggleHTML();
         <td colspan="3"><br />
           <input type="hidden" name="mid" value="<?php echo $parameters->id ?>"  />
           <input type="hidden" name="recipients" id="recipients" value="<?php echo $parameters->recipients ?>" />
-          <a href="javascript:showWindow();" class="button">Customize Recipients <img src="<?php bloginfo("siteurl") ?>/<?php echo PLUGINDIR ?>/<?php echo WPR_PLUGIN_DIR ?>/newwindow.gif" /></a><br />
+          <a href="javascript:showWindow();" class="button">Customize Recipients <img src="<?php bloginfo("url") ?>/<?php echo PLUGINDIR ?>/<?php echo WPR_PLUGIN_DIR ?>/newwindow.gif" /></a><br />
           <br /></td>
       </tr>
       <?php

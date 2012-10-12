@@ -25,7 +25,7 @@ function _wpr_new_broadcast_post_handler()
 	
 	if (false == $newsletter_obj)	
 	{
-		$errors[] = __("The selected newsletter doesn't exist.");	
+		$errors[] = __("The selected newsletter doesn't exist.",'wpr_autoresponder');	
 		//then again.. what are the odds of the newsletter not existing..  
 	}
 	
@@ -42,18 +42,18 @@ function _wpr_new_broadcast_post_handler()
 		{
 			 
 			if (3 != count($date_parts))
-				throw new Exception(__("The date is entered in an invalid format. Please enter a valid date in MM/DD/YYYY format."));
+				throw new Exception(__("The date is entered in an invalid format. Please enter a valid date in MM/DD/YYYY format.",'wpr_autoresponder'));
 				
 			foreach ($date_parts as $index=>$parts)
 				$date_parts[$index] = intval($parts);
 			
 			if (in_array(0,$date_parts))
-				throw new Exception(__("The date is entered in an invalid format. Please enter a valid date in MM/DD/YYYY format."));
+				throw new Exception(__("The date is entered in an invalid format. Please enter a valid date in MM/DD/YYYY format.",'wpr_autoresponder'));
 				
 			list($month,$date,$year) = split("/",$date);				
 				
 			if (!checkdate($month,$date,$year))
-				throw new Exception(__("The date entered in the date field is invalid. Please enter a valid date."));
+				throw new Exception(__("The date entered in the date field is invalid. Please enter a valid date.",'wpr_autoresponder'));
 				
 			$send_hour = intval($_POST['send_hour']);
 			$send_minutes = intval($_POST['send_minute']);
@@ -90,7 +90,7 @@ function _wpr_new_broadcast_post_handler()
 	
 	if (empty($content) && empty($textbody))
 	{
-		$errors[] = __("Both the HTML and text body of the broadcast are empty. Atleast one of them must be filled to send a broadcast.");
+		$errors[] = __("Both the HTML and text body of the broadcast are empty. Atleast one of them must be filled to send a broadcast.",'wpr_autoresponder');
 	}
 	
 	

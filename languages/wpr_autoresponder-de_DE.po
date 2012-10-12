@@ -1,0 +1,259 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-Autoresponder\n"
+"POT-Creation-Date: 2012-10-08 01:03+0100\n"
+"PO-Revision-Date: 2012-10-08 12:53+0100\n"
+"Last-Translator: HiOrg Server GmbH <support@hiorg-server.de>\n"
+"Language-Team: HiOrg Server GmbH <support@hiorg-server.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
+"X-Poedit-Basepath: C:\\Daten\\html\\wordpress\\wp-content\\plugins\\wp-"
+"responder-email-autoresponder-and-newsletter-plugin\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:\\Daten\\html\\wordpress\\wp-content\\plugins\\wp-"
+"responder-email-autoresponder-and-newsletter-plugin\n"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/broadcast_html_frame.php:18
+msgid "The HTML body is empty. No HTML body specified."
+msgstr "Der HTML-Body ist leer. Kein KTML-Body angegeben."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/forms.php:384
+msgid "Name"
+msgstr "Name"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/forms.php:389
+msgid "E-Mail Address"
+msgstr "E-Mail"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/forms.php:471
+msgid "Subscribe"
+msgstr "Anmelden"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/forms.php:475
+msgid "Email Marketing by WP Autoresponder"
+msgstr " Email Marketing by WP Autoresponder"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/meta.php:435
+msgid "Every 5 Minutes"
+msgstr "Alle 5 Minuten"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/meta.php:440
+msgid "Every 10 Minutes"
+msgstr "Alle 10 Minuten"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/meta.php:445
+msgid "Every Minute"
+msgstr "Jede Minute"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/meta.php:450
+msgid "Every Half an Hour"
+msgstr "Jede halbe Stunde"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:23
+msgid "Subscribed"
+msgstr "Angemeldet"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:25
+msgid "Subscribed and Unconfirmed"
+msgstr "Angemeldet und bestätigt"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:27
+msgid "Unsubscribed"
+msgstr "ABgemeldet"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:29
+msgid "Transfered"
+msgstr "Verschoben"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:31
+msgid "Disabled Due To Delivery Problems"
+msgstr "Deaktiviert wegen Zustellungsproblemen"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscribers.php:828
+msgid "Associated Newsletter Deleted"
+msgstr "Zugehöriger Newsletter gelöscht"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/widget.php:71
+msgid "Newsletter Subscription Form (WPR)"
+msgstr "Newsletter Anmelde-Formular (WPR)"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/widget.php:87
+msgid "Title"
+msgstr "Titel"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/widget.php:91
+msgid "Text To Place Before The Form"
+msgstr "Text vor dem Formular"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/widget.php:98
+msgid "Text To Place After The Form"
+msgstr "Text nach dem Formular"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/new-broadcast.php:28
+msgid "The selected newsletter doesn't exist."
+msgstr "Der gewählte Newsletter existiert nicht."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/new-broadcast.php:45
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/new-broadcast.php:51
+msgid ""
+"The date is entered in an invalid format. Please enter a valid date in MM/DD/"
+"YYYY format."
+msgstr ""
+"Das Datum wurde in einem falschen Format eingegeben. Bitte geben Sie ein "
+"gültiges Datum im Format MM/DD/YYYY ein."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/new-broadcast.php:56
+msgid ""
+"The date entered in the date field is invalid. Please enter a valid date."
+msgstr ""
+"Das eingetragene Datum ist ungültig. Bitte geben Sie ein gültiges Datum ein."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/new-broadcast.php:93
+msgid ""
+"Both the HTML and text body of the broadcast are empty. Atleast one of them "
+"must be filled to send a broadcast."
+msgstr ""
+"Sowohl HTML als auch Textkörper der Nachricht sind leer. Wenigstens eines "
+"von beiden muss ausgefüllt werden, um eine Nachricht zu senden."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:9
+msgid ""
+"The newsletter name field was left empty. Please fill it in to continue."
+msgstr "Das Namensfeld wurde leer gelassen. Bitte ausfüllen, um fortzufahren."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:14
+msgid "A newsletter with that name already exists. "
+msgstr "Es existiert bereits ein Newsletter mit diesem Namen."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:23
+msgid "The 'From Name' field was left empty. Please fill it in to continue. "
+msgstr ""
+"Das Feld 'Absender-Name' wurde leer gelassen. Bitte ausfüllen um "
+"fortzufahren."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:33
+msgid "The 'From Email' field was left empty. Please fill it in to continue. "
+msgstr ""
+"Das Feld 'Absender-E-Mail wurde leer gelassen. Bitte ausfüllen um "
+"fortzufahren."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:38
+msgid ""
+"The email address provided for 'From Email' is not a valid e-mail address. "
+"Please enter a valid email address."
+msgstr ""
+"Die E-Mail-Adresse 'Absender' ist ungültig. Bitte geben Sie eine gültige E-"
+"Mail-Adresse ein."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:48
+msgid ""
+"The 'Reply-To' field was left empty. Please fill in an email address in the "
+"reply-to field."
+msgstr ""
+"Das Feld 'Reply-To' wurde leer gelassen. Bitte geben Sie dort eine E-Mail-"
+"Adresse ein."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:53
+msgid ""
+"The 'Reply-To' field was filled with an invalid e-mail address. Please fill "
+"in a valid email address."
+msgstr ""
+"Im Feld 'Reply-To' wurde eine ungültige E-Mail-Adresse eingegeben. Bitte "
+"geben Sie dort eine gültige E-Mail-Adresse ein."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:82
+msgid "Edit Newsletter"
+msgstr "Newsletter bearbeiten"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:84
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:147
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/controllers/newsletters.php:149
+msgid "Create Newsletter"
+msgstr "Newsletter erstellen"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/lib/mail_functions.php:84
+msgid "To unsubscribe or change subscription options visit"
+msgstr "Zum Abbestellen oder Ändern des Abonnements besuchen Sie"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/lib/mail_functions.php:93
+msgid "To unsubscribe or change subscriber options visit:"
+msgstr "Zum Abbestellen oder Ändern des Abonnements besuchen Sie:"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/lib/mail_functions.php:543
+#, php-format
+msgid ""
+"To manage your email subscriptions or to unsubscribe click on the URL "
+"below:\n"
+"%s\n"
+"\n"
+"If the above URL is not a clickable link simply copy it and paste it in your "
+"web browser."
+msgstr ""
+"Um Ihre E-Mail-Abos zu verwalten oder abzubestellen klicken Sie auf folgende "
+"URL:\n"
+"%s\n"
+"\n"
+"Wenn die URL nicht klickbar ist, kopieren Sie einfach alles in die "
+"Adresszeile Ihres Webbrowsers."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:380
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:499
+#, php-format
+msgid ""
+"You are receiving this email because you are subscribed to articles "
+"published at <a href=\"%s\">%s</a>"
+msgstr ""
+"Sie erhalten diese E-Mail, weil Sie neue Artikel auf <a href=\"%s\">%s</a> "
+"abonniert haben"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:736
+msgid "dS, F Y"
+msgstr "d.m.Y"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:777
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:811
+#, php-format
+msgid ""
+"You are receiving this email because you are subscribed to new posts at %s"
+msgstr ""
+"Sie erhalten diese E-Mail, weil Sie neue Beiträge abonniert haben von %s"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:789
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:815
+msgid "Dated: "
+msgstr "Datum:"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:789
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:815
+msgid "d F,Y"
+msgstr "d.m.Y"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:793
+#, php-format
+msgid "<a href=\"%s\">Click here</a> to read this post at %s"
+msgstr "<a href=\"%s\">Hier klicken</a> um diesen Beitrag zu lesen auf %s"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/other/blog_crons.php:819
+#, php-format
+msgid "Click here to read this post at %s: %s"
+msgstr "Klicken Sie hier, um diesen Post auf %s zu lesen: %s"
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/views/newsletter_form.php:41
+msgid ""
+"When subscribers of this newsletter receive any email (follow up , "
+"broadcasts, blog emails), they will see what you set here in the From column "
+"in their mail client."
+msgstr ""
+"Wenn Abonnenten dieses Newsletters eine E-Mail erhalten, sehen Sie dies in "
+"der \"Von\"-Spalte ihres E-Mail-Clients."
+
+#: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/views/settings.php:17
+msgid "Corporate Logo (URL)"
+msgstr "Firmenlogo (URL)"

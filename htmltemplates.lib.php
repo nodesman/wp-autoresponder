@@ -16,7 +16,7 @@ function CreateNewTemplateSwitcherButton($nameOfCKEditorObject,$nameOfTextArea,$
         }        
     }
 
-    $home = get_bloginfo("home");
+    $home = home_url();
     $path = PLUGINDIR;
 	
     $fullpath = $home."/?wpr-template="

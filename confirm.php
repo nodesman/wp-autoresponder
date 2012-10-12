@@ -28,7 +28,7 @@ $subs = $subs[0];
 $query = $wpdb->prepare("UPDATE $subscribers_table set confirmed=1,  active=1 where id=%d and hash='%s';",$id,$hash);
 $wpdb->query($query);
 
-$redirectionUrl = get_bloginfo("home")."/?wpr-confirm=2";
+$redirectionUrl = home_url("/?wpr-confirm=2");
 $subscriber = _wpr_subscriber_get($id);
 _wpr_move_subscriber($subscriber->nid,$subscriber->email);
 //This subscriber's follow up subscriptions' time of creation should be updated to the time of confirmation. 

@@ -17,8 +17,6 @@ class AutorespondersController
         $start = (int)(true === isset($_GET['start'])) ? $_GET['start'] : 0;
         $start = ($start > 0) ? $start : 0;
 
-        //get the total number of autoresponders in all
-
 
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
 

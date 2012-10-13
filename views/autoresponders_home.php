@@ -9,11 +9,13 @@
 
         <div id="autoresponder-manage-header" ng-app="WPRAutoresponderManage">
 
+            <?php
+            do_action("_wpr_autoresponders_manage_list_header");
+            ?>
+
             <div class="alignright">
                 <input type="button" value="Add Autoresponder" class="wpr-action-button" id="autoresponder-add">
             </div>
-
-
         </div>
         <div class="wpr-list-wrapper">
             <div class="wpr-list-content">

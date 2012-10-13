@@ -68,7 +68,6 @@ function wpr_replace_tags($sid,&$subject,&$body,$additional = array())
 
 	//blog url
 
-<<<<<<< Updated upstream
 	$parameters['homeurl'] = get_bloginfo("url");
 
 	//subscriber name
@@ -397,11 +396,7 @@ function wpr_place_tags($sid,&$strings,$additional=array())
 
 	//blog url
 
-<<<<<<< Updated upstream
 	$parameters['homeurl'] = home_url();
-=======
-	$parameters['homeurl'] = get_bloginfo("wpurl");
->>>>>>> Stashed changes
 
 	//subscriber name
 

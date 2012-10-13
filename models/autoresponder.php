@@ -1,7 +1,6 @@
 <?php
 class Autoresponder
 {
-
     private $id;
     private $name;
 
@@ -20,6 +19,19 @@ class Autoresponder
         $this->id = $autoresponder->id;
         $this->nid = $autoresponder->nid;
         $this->name = $autoresponder->name;
+    }
+
+    public static function getNumberOfAutorespondersAvailable() {
+
+        global $wpdb;
+
+        $getNumberOfAutorespondersQuery = sprintf("SELECT COUNT(*) NUM_OF_RESPONDERS FROM {$wpdb->prefix}wpr_autoresponders a, {$wpdb->prefix}wpr_newsletters n WHERE a.nid=n.id;");
+
+        $countResultSet = $wpdb->get_results($getNumberOfAutorespondersQuery);
+        $count = (int) $countResultSet[0]->NUM_OF_RESPONDERS;
+
+        return $count;
+
     }
 
 
@@ -47,7 +59,6 @@ class Autoresponder
         return $this->name;
     }
 
-
     public static function getAutorespondersOfNewsletter($nid)
     {
 
@@ -70,10 +81,13 @@ class Autoresponder
      * 1. Get all autoresponders
      * 2. Get only autoresponders that have a newsletter associated with them
      */
-    public static function getAllAutoresponders()
+    public static function getAllAutoresponders($start=0,$numberToReturn=-1)
     {
         global $wpdb;
-        $getAllAutorespondersQuery = sprintf("SELECT autores.id FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id;");
+
+        $limitClause = self::getLimitClauseForAllAutorespondersFetch($start, $numberToReturn);
+
+        $getAllAutorespondersQuery = sprintf("SELECT autores.id FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id ORDER BY id ASC %s;",$limitClause);
         $respondersRes = $wpdb->get_results($getAllAutorespondersQuery);
 
         $autoresponders = array();
@@ -83,13 +97,22 @@ class Autoresponder
         return $autoresponders;
     }
 
+    private static function getLimitClauseForAllAutorespondersFetch($start, $numberToReturn)
+    {
+        $limitClause = "";
+        if ($start == 0 && $numberToReturn === -1)
+            return $limitClause;
+
+        $limitClause = sprintf("LIMIT %d, %d", $start, $numberToReturn);
+        return $limitClause;
+
+    }
 
     public static function getAutoresponderById($autoresponder_id)
     {
         $resultObj = new Autoresponder($autoresponder_id);
         return $resultObj;
     }
-
 
     public static function whetherValidAutoresponderName($autoresponderInfo)
     {
@@ -115,7 +138,6 @@ class Autoresponder
         return true;
     }
 
-
     public static function addAutoresponder($nid, $name)
     {
         global $wpdb;
@@ -134,7 +156,6 @@ class Autoresponder
 
     }
 
-
     public function getMessages()
     {
         global $wpdb;
@@ -142,7 +163,6 @@ class Autoresponder
         $messages = $wpdb->get_results($getMessagesQuery);
         return $messages;
     }
-
 
 }
 

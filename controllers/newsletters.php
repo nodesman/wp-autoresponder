@@ -227,7 +227,8 @@ function _wpr_newsletter_create($info)
 
 	$info = (object) $info;
 
-	$query = "INSERT INTO ".$wpdb->prefix."wpr_newsletters (name,reply_to, description, fromname, fromemail) values ('$info->name','$info->reply_to','$info->description','$info->confirm_subject','$info->fromname','$info->fromemail');";
+
+	$query = "INSERT INTO ".$wpdb->prefix."wpr_newsletters (name,reply_to, description, fromname, fromemail) values ('$info->name','$info->reply_to','$info->description','$info->fromname','$info->fromemail');";
 
 	$wpdb->query($query);
 }

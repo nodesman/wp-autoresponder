@@ -167,22 +167,16 @@ class Newsletter
 	 */
 	public static function whetherNewsletterIDExists($newsletter_id) {
 		global $wpdb;
-		$checkWhetherNewsletterIDExistsQuery = sprintf("SELECT COUNT(*) result_count FROM `{$wpdb->prefix}wpr_newsletters` WHERE `id`=%d",$newsletter_id);
+		$checkWhetherNewsletterIDExistsQuery = sprintf("SELECT COUNT(*) result_count FROM {$wpdb->prefix}wpr_newsletters WHERE id=%d",$newsletter_id);
 		$newslettersCountRes = $wpdb->get_results($checkWhetherNewsletterIDExistsQuery);
-		$count = $newslettersCountRes[0]->result_count;
-		
-		if (0 == $count)
-			return false;
-
-		return true;
+		$count = (int) $newslettersCountRes[0]->result_count;
+		return (0 != $count);
 	}
-	
-	
-	
+
 	function getNumberOfActiveSubscribers()
 	{
-			global $wpdb;
-		$getNumberOfSubscribersQuery = sprintf("SELECT count(*) number FROM %swpr_subscribers WHERE nid=%d AND active=1 AND confirmed=1",$wpdb->prefix,$this->id);	
+	    global $wpdb;
+		$getNumberOfSubscribersQuery = sprintf("SELECT COUNT(*) number FROM %swpr_subscribers WHERE nid=%d AND active=1 AND confirmed=1",$wpdb->prefix,$this->id);
 		$result = $wpdb->get_results($getNumberOfSubscribersQuery);
 		$number = $result[0]->number;
 		return $number;

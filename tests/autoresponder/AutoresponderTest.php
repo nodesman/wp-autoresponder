@@ -2,12 +2,14 @@
 require_once __DIR__."/../../models/autoresponder.php";
 
 class AutoresponderTest extends WP_UnitTestCase {
+
+
     public $plugin_slug = 'wp-autoresponder';
 
     private $autoresponder;
     
-    private $newsletterId=1000; 
-    
+    private $newsletterId=1000;
+
     public function setUp() {
         parent::setUp();
         global $wpdb;
@@ -19,7 +21,6 @@ class AutoresponderTest extends WP_UnitTestCase {
         $wpdb->query($createNewsletterQuery);
         $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
         $wpdb->query($truncateAutorespondersTable);
-
 
         $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
         $wpdb->query($truncateAutorespondersTable);
@@ -37,17 +38,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         $wpdb->query($truncateAutorespondersTable);
     }
     
-    
-    
-    public function addAutoresponder($newsletterId, $nameOfAutoresponder) {
-    	global $wpdb;
-    	$addAutoresponder = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponders (`nid`, `name`) VALUES(%d, '%s');", $newsletterId, $nameOfAutoresponder);
-    	$wpdb->query($addAutoresponder);
-    	    	
-    	$getAutoresponderJustInserted = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponders WHERE name='%s' AND nid=%d", $nameOfAutoresponder, $newsletterId);
-    	$autoresponder = $wpdb->get_row($getAutoresponderJustInserted);
-    	return $autoresponder;
-    }
+
     
     public function testGetAllAutoresponders() {
     	
@@ -63,7 +54,7 @@ class AutoresponderTest extends WP_UnitTestCase {
     			);
     	
     	foreach ($autoresponderDefinitions as $currentAutoresponder) {
-    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    		AutoresponderTestHelper::addAutoresponderAndFetchRow($currentAutoresponder["nid"], $currentAutoresponder["name"]);
     	}
     	
     	$autoresponders = Autoresponder::getAllAutoresponders();
@@ -98,7 +89,7 @@ class AutoresponderTest extends WP_UnitTestCase {
     						   'name'=> "Autoresponder_1" 
     			);
     	
-    	$autoresponder = $this->addAutoresponder($autoresponder['nid'], $autoresponder['name']);
+    	$autoresponder = AutoresponderTestHelper::addAutoresponderAndFetchRow($autoresponder['nid'], $autoresponder['name']);
     	$autoresponderResultant = Autoresponder::getAutoresponderById(intval($autoresponder->id));
     	
     	$this->assertEquals($autoresponder->nid, $autoresponderResultant->getNewsletterId(), "Newsletter ID is the same as input");
@@ -174,11 +165,6 @@ class AutoresponderTest extends WP_UnitTestCase {
     	$this->assertEquals($autoresponder->getName(), $autoresponderDef['name']);
     }
 
-
-
-    
-    //     - Test the case where you use invalid names and other inputs for autoresponder
-    
     /**
      * @expectedException NonExistentNewsletterException
      */
@@ -222,11 +208,11 @@ class AutoresponderTest extends WP_UnitTestCase {
     	);
     	 
     	foreach ($autoresponderDefinitions as $currentAutoresponder) {
-    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    		AutoresponderTestHelper::addAutoresponderAndFetchRow($currentAutoresponder["nid"], $currentAutoresponder["name"]);
     	}
     	
     	foreach ($autoresponderDefinitionsOfSecondNewsleter as $currentAutoresponder) {
-    		$this->addAutoresponder($currentAutoresponder["nid"], $currentAutoresponder["name"]);
+    		AutoresponderTestHelper::addAutoresponderAndFetchRow($currentAutoresponder["nid"], $currentAutoresponder["name"]);
     	}
     	 
     	$autoresponders = Autoresponder::getAutorespondersOfNewsletter($this->newsletterId);
@@ -269,14 +255,24 @@ class AutoresponderTest extends WP_UnitTestCase {
         {
             throw new Exception("Unable to fetch added autoresponder message");
         }
+    }
 
+    public function testGettingLimitedNumberOfAutoresponderMessages() {
 
+        $NUMBER_OF_AUTORESPONDERS_QUERIED = 5;
+
+        $autoresponderRowsAdded = AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId, 10);
+        $autorespondersList = Autoresponder::getAllAutoresponders(0, $NUMBER_OF_AUTORESPONDERS_QUERIED);
+        $difference = AutoresponderTestHelper::getDifferenceInAutoresponders($autorespondersList, $NUMBER_OF_AUTORESPONDERS_QUERIED, $autoresponderRowsAdded);
+        $this->assertEquals(0, count($difference));
 
     }
 
+
+
     public function testGettingMessagesOfAutoresponders() {
 
-        $autoresponder = $this->addAutoresponder($this->newsletterId, "Sample Newsletter");
+        $autoresponder = AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletterId, "Sample Newsletter");
 
         $autoresponderMessages = array(
 
@@ -339,16 +335,6 @@ class AutoresponderTest extends WP_UnitTestCase {
         $this->assertEquals(count($difference), 0);
     }
 
-    public function testGettingNumberOfAutoresponderSubscribers() {
-
-
-
-
-
-
-    }
-
-
 
     public function testGettingIdOfAutoresponderObject() {
         $responder = array(
@@ -360,12 +346,41 @@ class AutoresponderTest extends WP_UnitTestCase {
             "attachimages" => 2
         );
 
-        $autores = $this->addAutoresponder($this->newsletterId, "Sample Autoresponder");
-        $testObj = new Autoresponder((int) $autores->id);
+        $autoresponderRow = AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletterId, "Sample Autoresponder");
+        $testObj = new Autoresponder((int) $autoresponderRow->id);
 
         $id = $testObj->getId();
-        $this->assertEquals($id, $autores->id);
+        $this->assertEquals($id, $autoresponderRow->id);
 
+    }
+
+
+
+    public function testGetNumberOfAutoresponders() {
+
+
+        $NUMBER_OF_AUTORESPONDERS_ADDED = 7;
+
+        AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId, $NUMBER_OF_AUTORESPONDERS_ADDED);
+
+        $numberOfAutorespondersReturned = Autoresponder::getNumberOfAutorespondersAvailable();
+
+        $this->assertEquals($NUMBER_OF_AUTORESPONDERS_ADDED, $numberOfAutorespondersReturned);
+
+
+
+    }
+
+    public function testGetNumberOfAutorespondersShouldNotReturnAutorespondersWhenNewsletterIsDeleted() {
+
+        global $wpdb;
+        $deleteNewsletterQuery = sprintf("DELETE FROM {$wpdb->prefix}wpr_newsletters WHERE id=%d",$this->newsletterId);
+        $wpdb->query($deleteNewsletterQuery);
+        AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId, 20);
+
+        $numberOfAutorespondersAvailable = Autoresponder::getNumberOfAutorespondersAvailable();
+
+        $this->assertEquals(0, $numberOfAutorespondersAvailable);
     }
 
 

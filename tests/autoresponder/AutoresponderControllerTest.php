@@ -25,16 +25,43 @@ class AutoresponderControllerTest extends WP_UnitTestCase
     public function  testDefaultPageLoadInvocationFetchesOnlyTheFirstTenAutorespondersInOrderOfCreation() {
 
         $this->newsletterId = $this->newsletterId;
-        $autoresponderObject = AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId,20);
-
+        $autorespondersRowList = AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId,20);
         $this->autoresponderController->autorespondersListPage();
+        $numberOfPagesInAutorespondersList = intval(_wpr_get("number_of_pages"));
 
-        $this->assertEquals(2, intval(_wpr_get("number_of_pages")));
+        $autorespondersListToRender = _wpr_get("autoresponders");
 
-        //test whether adding 10 autoresponders results in 2 pages
+        $first10Autoresponders = array_slice($autorespondersRowList,0,10);
+        $autoresponderNamesFromRows = self::getAutoresponderNamesFromRows($first10Autoresponders);
 
+        $autoresponderNamesFromObjects = $this->getAutoresponderNamesFromAutoresponderObjects($autorespondersListToRender);
 
+        $difference = array_diff($autoresponderNamesFromRows, $autoresponderNamesFromObjects);
+        $numberOfDifferingRows = count($difference);
+
+        $viewToRender = _wpr_get("_wpr_view");
+
+        $this->assertEquals("integer", getType($numberOfPagesInAutorespondersList));
+        $this->assertEquals(2, $numberOfPagesInAutorespondersList);
+        $this->assertEquals(0, $numberOfDifferingRows);
+        $this->assertEquals("autoresponders_home",$viewToRender);
     }
+
+    private function getAutoresponderNamesFromAutoresponderObjects($autorespondersListToRender)
+    {
+        $autoresponderNamesFromObjects = array();
+        foreach ($autorespondersListToRender as $autoresponderObject) {
+            $autoresponderNamesFromObjects[] = $autoresponderObject->getName();
+        }
+        return $autoresponderNamesFromObjects;
+    }
+
+    private static function getAutoresponderNamesFromRows($autorespondersRowList)
+    {$autoresponderNamesFromRows = array();
+        foreach ($autorespondersRowList as $responder) {
+            $autoresponderNamesFromRows[] = $responder->name;
+        }return $autoresponderNamesFromRows;
+}
 
 
     public function tearDown() {

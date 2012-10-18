@@ -63,7 +63,7 @@
                     //end foreach
                 } else {
                     ?>
-                    <div class="empty-list=message">
+                    <div class="empty-list-message">
                         <?php _e('No autoresponders have been created yet. Click on Add Autoresponder button to create one now.') ?>
                     </div>
                     <?php

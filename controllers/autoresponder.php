@@ -19,9 +19,7 @@ class AutorespondersController
 
 
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
-
         $numberOfPages = ceil(Autoresponder::getNumberOfAutorespondersAvailable() / $this->getNumberOfAutorespondersPerPage());
-
         _wpr_set('number_of_pages', $numberOfPages);
         _wpr_set('autoresponders', $autoresponders);
         _wpr_setview('autoresponders_home');

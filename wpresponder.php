@@ -267,19 +267,12 @@ if (!defined("WPR_DEFS")) {
 		_wpr_attach_cron_actions_to_functions();
 		
 		add_action('admin_menu', 'wpr_admin_menu');
-		/*
-		 * This is needed until all the pages are migrated to the
-		 * MVC format. 
-		 */
 
-		if (isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page'])))
+		if (Routing::isWPRAdminPage())
 		{
 			Routing::init();
-			_wpr_handle_post();
-	 		_wpr_run_controller();
 		}
-		
-		//a visitor is trying to subscribe.
+
         $containingdirectory = basename(__DIR__);
         $url = get_bloginfo("wpurl");
         wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");

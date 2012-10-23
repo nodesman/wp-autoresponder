@@ -65,7 +65,7 @@ function _wpr_render_view()
 class Routing {
 
     public function __construct() {
-        add_action('init', array($this, 'init'));
+
     }
     
     
@@ -85,12 +85,13 @@ class Routing {
 		}
 
     }
-    
 
     public static function init() {
     
         global $wpr_routes;
-        
+        _wpr_handle_post();
+        _wpr_run_controller();
+
         Routing::legacyInit();
         
         $path = $_GET['page'];
@@ -116,6 +117,10 @@ class Routing {
             do_action('_wpr_router_post_callback');
         }
     }
+
+    public static function isWPRAdminPage() {
+        return isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
+    }
     
     public static function url($string,$arguments=array())
 	{
@@ -136,5 +141,3 @@ class Routing {
 	}
 
 }
-
-$wpr_router = new Routing();

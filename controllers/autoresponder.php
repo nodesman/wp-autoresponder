@@ -17,7 +17,6 @@ class AutorespondersController
         $start = (int)(true === isset($_GET['start'])) ? $_GET['start'] : 0;
         $start = ($start > 0) ? $start : 0;
 
-
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
         $numberOfPages = ceil(Autoresponder::getNumberOfAutorespondersAvailable() / $this->getNumberOfAutorespondersPerPage());
         _wpr_set('number_of_pages', $numberOfPages);
@@ -31,7 +30,6 @@ class AutorespondersController
         return $this->defaultAutorespondersPerPage;
     }
     //end autorespondersListPage
-
 
 }//end class
 

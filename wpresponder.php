@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: WP Autoresponder
 Plugin URI: http://www.wpresponder.com
@@ -29,9 +30,10 @@ if (!defined("WPR_DEFS")) {
 
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
-    include_once WPR_DIR . "/home.php";
-    include_once WPR_DIR . "/blog_series.php";
-    include_once WPR_DIR . "/forms.php";
+    
+    include_once __DIR__ . "/home.php";
+    include_once __DIR__ . "/blog_series.php";
+    include_once __DIR__ . "/forms.php";
     include_once __DIR__ . '/newmail.php';
     include_once __DIR__ . '/customizeblogemail.php';
     include_once __DIR__ . '/subscribers.php';
@@ -57,7 +59,7 @@ if (!defined("WPR_DEFS")) {
     include_once __DIR__ . '/other/install.php';
     include_once __DIR__ . '/other/blog_crons.php';
     include_once __DIR__ . '/other/maintain.php';
-    include_once 'widget.php';
+    include_once __DIR__ . '/widget.php';
 
     include_once "$controllerDir/newsletters.php";
     include_once "$controllerDir/custom_fields.php";
@@ -73,9 +75,9 @@ if (!defined("WPR_DEFS")) {
     include_once "$modelsDir/newsletter.php";
     include_once "$modelsDir/autoresponder.php";
 
-
+    include_once __DIR__ . '/conf/routes.php';
     include_once "$helpersDir/routing.php";
-
+    
     $GLOBALS['db_checker'] = new DatabaseChecker();
     $GLOBALS['wpr_globals'] = array();
 
@@ -86,7 +88,6 @@ if (!defined("WPR_DEFS")) {
 		{
 			add_action("admin_notices","no_address_error");	
 		}
-		
 		
 		add_action("admin_notices","_wpr_admin_notices_show");
 		
@@ -258,30 +259,14 @@ if (!defined("WPR_DEFS")) {
 		       exit;
 		    }
         }
-   		
-        
 		
 		require WPR_PLUGIN_DIR."/proxy.php";
 		
-
-		
 		do_action("_wpr_init");
-                
-		$admin_page_definitions = $GLOBALS['admin_pages_definitions'];
-		foreach ($admin_page_definitions as $item)
-		{
-			if (isset($item['legacy']) && $item['legacy']===0)
-			{
-				$slug = str_replace("_wpr/","",$item['menu_slug']);
-				$actionName = "_wpr_".$slug."_handle";
-				$handler = "_wpr_".$slug."_handler";
-				add_action($actionName,$handler);
-			}
-		}
+		
 		_wpr_attach_cron_actions_to_functions();
-	
+		
 		add_action('admin_menu', 'wpr_admin_menu');
-                
 		/*
 		 * This is needed until all the pages are migrated to the
 		 * MVC format. 
@@ -289,9 +274,11 @@ if (!defined("WPR_DEFS")) {
 
 		if (isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page'])))
 		{
+			Routing::init();
 			_wpr_handle_post();
 	 		_wpr_run_controller();
 		}
+		
 		//a visitor is trying to subscribe.
         $containingdirectory = basename(__DIR__);
         $url = get_bloginfo("wpurl");
@@ -309,15 +296,15 @@ if (!defined("WPR_DEFS")) {
          * It also unenqueues duplicate crons that get enqueued when the plugin is deactivated and then reactivated.
          */
                 
-                //run the single instances every day once:
-                $last_run_esic = intval(_wpr_option_get("_wpr_ensure_single_instances_of_crons_last_run"));
-                $timeSinceLast = time() - $last_run_esic;
-                if ($timeSinceLast > WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY)
-                {
-                    do_action("_wpr_ensure_single_instances_of_crons");
-                    $currentTime= time();
-                    _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime );
-                }
+        //run the single instances every day once:
+        $last_run_esic = intval(_wpr_option_get("_wpr_ensure_single_instances_of_crons_last_run"));
+        $timeSinceLast = time() - $last_run_esic;
+        if ($timeSinceLast > WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY)
+        {
+            do_action("_wpr_ensure_single_instances_of_crons");
+            $currentTime= time();
+            _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime );
+        }
 		
 		if (isset($_GET['wpr-confirm']) && $_GET['wpr-confirm']==2)
 		{
@@ -368,8 +355,9 @@ if (!defined("WPR_DEFS")) {
 		
 		 add_action('admin_init','wpr_enqueue_admin_scripts');
 		 add_action('admin_menu', 'wpresponder_meta_box_add');
-		 //count all non-WP Autoresponder emails so that the hourly limit can be suitably adjusted
-		//TODO: This doesn't work. Write unit tests for this
+		 
+		//count all non-WP Autoresponder emails so that the hourly limit can be suitably adjusted
+		//TODO: This doesn't work. Write unit tests for this.
         add_filter("wp_mail","_wpr_non_wpr_email_sent");
 		 
 
@@ -385,20 +373,6 @@ if (!defined("WPR_DEFS")) {
 	register_deactivation_hook(__FILE__,"wpresponder_deactivate");
 	$url = $_SERVER['REQUEST_URI'];	
 	
-	function wpr_admin_menu()
-	{
-		add_menu_page('Newsletters','Newsletters','manage_newsletters',__FILE__);
-		//TODO: Refactor to use the new standard template rendering function for all pages.
-		add_submenu_page(__FILE__,'Dashboard','Dashboard','manage_newsletters',__FILE__,"wpr_dashboard");
-		$admin_pages_definitions = $GLOBALS['admin_pages_definitions'];
-		$admin_pages_definitions = apply_filters("_wpr_menu_definition",$admin_pages_definitions);
-		foreach ($admin_pages_definitions as $definition)
-		{
-			add_submenu_page(__FILE__,$definition['page_title'],$definition['menu_title'],$definition['capability'],$definition['menu_slug'],$definition['callback']);
-		}
-		
-		
-	}
 	
 	function wpr_widgets_init()
 	{
@@ -406,8 +380,5 @@ if (!defined("WPR_DEFS")) {
 	}
 
     add_filter('cron_schedules','wpr_cronschedules');
-
-
-
 }
 	

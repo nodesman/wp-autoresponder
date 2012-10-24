@@ -29,16 +29,16 @@ function _wpr_handle_post()
         }
 }
 
-function _wpr_run_controller()
-{
-    $page = $_GET['page'];
-    $parts = explode("/",$page);
-    $action = $parts[1];
-    $arguments= array_splice($parts,1, count($parts));
-    $actionName = "_wpr_".$action."_handle";
-    _wpr_set("_wpr_view",$action);
-    do_action($actionName,$arguments);
-}
+//function _wpr_run_controller()
+//{
+//    $page = $_GET['page'];
+//    $parts = explode("/",$page);
+//    $action = $parts[1];
+//    $arguments= array_splice($parts,1, count($parts));
+//    $actionName = "_wpr_".$action."_handle";
+//    _wpr_set("_wpr_view",$action);
+//    do_action($actionName,$arguments);
+//}
 
 
 function _wpr_render_view()
@@ -67,8 +67,7 @@ class Routing {
     public function __construct() {
 
     }
-    
-    
+
     private static function legacyInit() {
     	global $wpr_routes;
 	    $admin_page_definitions = $wpr_routes;
@@ -89,10 +88,11 @@ class Routing {
     public static function init() {
     
         global $wpr_routes;
-        _wpr_handle_post();
-        _wpr_run_controller();
 
         Routing::legacyInit();
+
+        _wpr_handle_post();
+
         
         $path = $_GET['page'];
         

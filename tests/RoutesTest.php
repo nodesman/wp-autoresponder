@@ -22,6 +22,7 @@ class RoutesTest  extends WP_UnitTestCase {
 
     public function setUp() {
         //set up the routes global variable
+        parent::setUp();
         global $wpr_routes;
 
         $wpr_routes = array(
@@ -73,8 +74,37 @@ class RoutesTest  extends WP_UnitTestCase {
         do_action('init');
     }
 
-    public function tearDown() {
+    function testWhetherAutoresponderListPageGetsInvokedWhenVisited() {
+
+        global $wpr_routes;
+
+        $wpr_routes = array(
+            array(
+            'page_title' => 'Autoresponders',
+            'menu_title' => 'Autoresponders',
+            'controller' => '_wpr_autoresponders_handler',
+            'capability' => 'manage_newsletters',
+            'legacy' => 0,
+            'menu_slug' => '_wpr/autoresponders',
+            'callback' => '_wpr_render_view',
+            'children' => array (
+                'manage' => '_wpr_autoresponder_manage',
+            ))
+        );
+
+        $_GET['page'] =  "_wpr/autoresponders";
+        do_action("init");
+        $currentlyRenderingView = _wpr_get('_wpr_view');
+        $this->assertEquals('autoresponders_home', $currentlyRenderingView);
 
     }
+
+    public function tearDown() {
+        parent::tearDown();
+    }
+
+}
+
+class ExpectedInvocationException extends Exception {
 
 }

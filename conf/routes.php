@@ -29,10 +29,14 @@ $wpr_routes = array(
     array(
         'page_title' => 'Autoresponders',
         'menu_title' => 'Autoresponders',
+        'controller' => '_wpr_autoresponders_handler',
         'capability' => 'manage_newsletters',
         'legacy' => 0,
         'menu_slug' => '_wpr/autoresponders',
-        'callback' => '_wpr_render_view'
+        'callback' => '_wpr_render_view',
+        'children' => array (
+            'manage' => '_wpr_autoresponder_manage',
+        )
     ),
     array(
         'page_title' => 'Post Series',

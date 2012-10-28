@@ -30,6 +30,18 @@ class ViewFrameworkTest  extends WP_UnitTestCase {
     }
 
 
+    public function testWhetherValuesSetArePropagatedToView() {
+        $microtime = microtime();
+        _wpr_set("test_variable", );
+        ob_start();
+        _wpr_render_view();
+        $content = ob_get_clean();
+        $content = trim($content);
+
+        $this->assertEquals($content, $microtime);
+    }
+
+
     public function tearDown() {
         parent::tearDown();
     }

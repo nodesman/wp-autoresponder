@@ -32,7 +32,8 @@ class ViewFrameworkTest  extends WP_UnitTestCase {
 
     public function testWhetherValuesSetArePropagatedToView() {
         $microtime = microtime();
-        _wpr_set("test_variable", );
+        _wpr_setview("../tests/test_variable_rendering");
+        _wpr_set("test_variable", $microtime);
         ob_start();
         _wpr_render_view();
         $content = ob_get_clean();

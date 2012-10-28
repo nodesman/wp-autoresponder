@@ -4,7 +4,7 @@ function wpr_admin_menu()
 {
 	global $wpr_routes;
 	add_menu_page('Newsletters','Newsletters','manage_newsletters',__FILE__);
-	
+
 	//TODO: Refactor to use the new standard template rendering function for all pages.
 	add_submenu_page(__FILE__,'Dashboard','Dashboard','manage_newsletters',__FILE__,"wpr_dashboard");
 
@@ -29,17 +29,6 @@ function _wpr_handle_post()
         }
 }
 
-//function _wpr_run_controller()
-//{
-//    $page = $_GET['page'];
-//    $parts = explode("/",$page);
-//    $action = $parts[1];
-//    $arguments= array_splice($parts,1, count($parts));
-//    $actionName = "_wpr_".$action."_handle";
-//    _wpr_set("_wpr_view",$action);
-//    do_action($actionName,$arguments);
-//}
-
 
 function _wpr_render_view()
 {
@@ -48,30 +37,26 @@ function _wpr_render_view()
 
         $currentView = _wpr_get("_wpr_view");
 
-        foreach ($wpr_globals as $name=>$value)
-        {
-                ${$name} = $value;
-        }
-        
+        extract($wpr_globals);
+
         $viewfile ="$plugindir/views/".$currentView.".php";
+
         if (is_file($viewfile)) {
-	        include $viewfile;
+	        require($viewfile); // this statement is necessarily a require and not an include. we want feedback when the file is not found.
 	    }
-        $wpr_globals = array();
+        else
+            throw new ViewFileNotFoundException();
 }
 
 
 
 class Routing {
 
-    public function __construct() {
-
-    }
 
     private static function legacyInit() {
     	global $wpr_routes;
 	    $admin_page_definitions = $wpr_routes;
-	    
+
 		foreach ($admin_page_definitions as $item)
 		{
 			if (isset($item['legacy']) && $item['legacy']===0)
@@ -86,42 +71,94 @@ class Routing {
     }
 
     public static function init() {
-    
-        global $wpr_routes;
 
+        global $wpr_routes;
         Routing::legacyInit();
 
         _wpr_handle_post();
 
-        
         $path = $_GET['page'];
-        
-        if (0 != strpos($path, '_wpr/')) {
-            return;
+
+        $method_to_invoke = self::getMethodToInvoke();
+
+        if (self::whetherControllerMethodExists($method_to_invoke)) {
+            self::callControllerMethod($method_to_invoke);
         }
 
-        if (!isset($wpr_routes[$path])) {
-            return;
+    }
+
+    private static function getMethodToInvoke()
+    {
+        global $wpr_routes;
+        $method_to_invoke = "";
+
+
+        $current_path = trim($_GET['page']);
+        if (self::whetherPathExists($current_path)) {
+
+            $method_to_invoke = $wpr_routes[$current_path]['controller'];
+
+
+            if (self::whetherSubPageRequested($current_path)) {
+
+                $subpage_name = self::getSubPageName();
+
+                if (self::whetherSubPageExists($current_path, $subpage_name)) {
+
+                    $method_to_invoke = $wpr_routes[$current_path]['children'][$subpage_name];
+
+                }
+                else
+                    throw new UnknownSubPageRequestedException("Unknown sub page requested");
+            }
         }
+        else
+            throw new DestinationControllerNotFoundException("Unknown destination invoked: $current_path");
 
+        return $method_to_invoke;
+    }
 
-        $action = (!isset($_GET['action']))?'default':$_GET['action'];
+    private static function whetherSubPageExists($current_path, $action)
+    {
+        global $wpr_routes;
+        return isset($wpr_routes[$current_path]['children'][$action]);
+    }
 
+    private static function getSubPageName()
+    {
+        $action = $_GET['action'];
+        $action = preg_replace('@[^a-zA-Z0-9_]@', '', $action);
+        return $action;
+    }
 
-        //just to be sure get rid of anything suspicious
-        $action = preg_replace('@[^a-zA-Z0-9_]@','',$action);
+    private static function whetherSubPageRequested()
+    {
+        return isset($_GET['action']);
+    }
 
-        if (function_exists($wpr_routes[$path][$action])) {
-            do_action('_wpr_router_pre_callback');
-            call_user_func($wpr_routes[$path][$action]);
-            do_action('_wpr_router_post_callback');
-        }
+    private static function whetherPathExists($current_path)
+    {
+        global $wpr_routes;
+        return isset($current_path) && isset($wpr_routes[$current_path]) && isset($wpr_routes[$current_path]['controller']);
+    }
+
+    public static function whetherControllerMethodExists($methodToCall)
+    {
+        return function_exists($methodToCall);
+    }
+
+    private  static function callControllerMethod($methodToCall)
+    {
+        do_action('_wpr_router_pre_callback');
+        call_user_func($methodToCall);
+        do_action('_wpr_router_post_callback');
     }
 
     public static function isWPRAdminPage() {
-        return isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
+        $result = isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
+        return $result;
     }
-    
+
     public static function url($string,$arguments=array())
 	{
 		$queryString = "";
@@ -134,10 +171,25 @@ class Routing {
 		}
 		return "admin.php?page=_wpr/".$string.$queryString;
 	}
-	
+
 	public static function newsletterHome()
 	{
 		return Routing::url("newsletter");
 	}
+
+}
+
+
+class DestinationControllerNotFoundException extends Exception
+{
+
+}
+
+
+class UnknownSubPageRequestedException extends Exception {
+
+}
+
+class ViewFileNotFoundException extends Exception {
 
 }

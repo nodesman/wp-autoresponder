@@ -132,6 +132,8 @@ class Subscriber
             throw new NewsletterNotFoundException();
         }
 
+        throw new BadMethodCallException("Subscribers of newsletter get yet to be implemented   ");
+
     }
 
 }

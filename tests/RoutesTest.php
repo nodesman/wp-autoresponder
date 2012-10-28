@@ -6,7 +6,7 @@
  * Time: 12:13 AM
  */
 
-require_once __DIR__. '/../helpers/routing.php';
+require_once __DIR__ . '/../helpers/routing.php';
 
 class DefaultActionCalledException extends Exception {
 
@@ -19,32 +19,88 @@ class SpecificRouteItemCalledException extends Exception {
 
 class RoutesTest  extends WP_UnitTestCase {
 
+    private $beforeTestRoutesArray;
+
+    private $autoresponderPath = '_wpr/autoresponders';
 
     public function setUp() {
         //set up the routes global variable
         parent::setUp();
         global $wpr_routes;
+        $this->beforeTestRoutesArray = $wpr_routes;
 
-        $wpr_routes = array(
-            '_wpr/autoresponders' => array(
-                'default' => '_wpr_autoresponders_home',
-                'add' => '_wpr_autoresponders_add'
+    }
+
+    function testWhetherChecksIfCurrentRequestIsAWPRAdminRequest() {
+
+        $_GET['page'] = $this->autoresponderPath;
+        $this->assertEquals(true, Routing::isWPRAdminPage());
+
+        $_GET['page'] = "some_random_page.php";
+        $this->assertEquals(false, Routing::isWPRAdminPage());
+
+    }
+
+    /**
+     * @expectedException DestinationControllerNotFoundException
+     */
+    function testWhetherRequestingANonExistentURLResutlsInException() {
+        $_GET['page'] = "_wpr/something_that_doesnt_exit";
+        Routing::init();
+    }
+
+    /**
+     * @expectedException UnknownSubPageRequestedException
+     */
+    function testWhetherRequestingANonExistentSubactionResutlsInException() {
+        $_GET['page'] = "_wpr/autoresponders";
+        $_GET['action'] = "doesnt_exist_something";
+        Routing::init();
+    }
+
+
+    function testWhetherPostAndPreCallbackActionsExecuted() {
+
+
+        $wpr_routes['_wpr/my_path' ]=  array(
+            'page_title' => 'My Path',
+            'menu_title' => 'Autoresponders',
+            'controller' => '_wpr_autoresponder_testcallback',
+            'capability' => 'manage_newsletters',
+            'legacy'     => 0,
+            'menu_slug'  => '_wpr/autoresponders',
+            'callback'   => '_wpr_render_view',
+            'children'   => array (
+                'manage' => '_wpr_autoresponder_manage',
             )
         );
-
-
     }
 
     /**
      * @expectedException DefaultActionCalledException
      */
     function testWhetherDefaultActionGetsCalled() {
-        $_GET['page'] = '_wpr/autoresponders';
 
+        $_GET['page'] = $this->autoresponderPath;
+        global $wpr_routes;
 
-        function _wpr_autoresponders_home() {
+        $wpr_routes[ $this->autoresponderPath ]=  array(
+            'page_title' => 'Autoresponders',
+            'menu_title' => 'Autoresponders',
+            'controller' => '_wpr_autoresponder_testcallback',
+            'capability' => 'manage_newsletters',
+            'legacy'     => 0,
+            'menu_slug'  => '_wpr/autoresponders',
+            'callback'   => '_wpr_render_view',
+            'children'   => array (
+                 'manage' => '_wpr_autoresponder_manage',
+            )
+        );
+
+        function _wpr_autoresponder_testcallback() {
             throw new DefaultActionCalledException();
         }
+
         do_action('init');
     }
 
@@ -52,16 +108,30 @@ class RoutesTest  extends WP_UnitTestCase {
      * @expectedException SpecificRouteItemCalledException
      */
     function testWhetherSpecificActionGetsCalled() {
-        $_GET['page'] = '_wpr/autoresponders';
-        $_GET['action'] = 'add';
 
-        function _wpr_autoresponders_add() {
+        $_GET['page'] = $this->autoresponderPath;
+        $_GET['action'] = 'manage';
+        global $wpr_routes;
+
+        $wpr_routes[$this->autoresponderPath] =  array(
+            'page_title' => 'Autoresponders',
+            'menu_title' => 'Autoresponders',
+            'controller' => '_wpr_manage_callback',
+            'capability' => 'manage_newsletters',
+            'legacy' => 0,
+            'menu_slug' => '_wpr/autoresponders',
+            'callback' => '_wpr_render_view',
+            'children' => array (
+                'manage' => '_wpr_manage_callback',
+            )
+        );
+
+        function _wpr_manage_callback() {
             throw new SpecificRouteItemCalledException();
         }
 
         do_action("init");
     }
-
 
     function testWhetherOtherURLsDontGetRouted() {
         $_GET['page'] = 'some_other_page.php';
@@ -74,33 +144,10 @@ class RoutesTest  extends WP_UnitTestCase {
         do_action('init');
     }
 
-    function testWhetherAutoresponderListPageGetsInvokedWhenVisited() {
-
-        global $wpr_routes;
-
-        $wpr_routes = array(
-            array(
-            'page_title' => 'Autoresponders',
-            'menu_title' => 'Autoresponders',
-            'controller' => '_wpr_autoresponders_handler',
-            'capability' => 'manage_newsletters',
-            'legacy' => 0,
-            'menu_slug' => '_wpr/autoresponders',
-            'callback' => '_wpr_render_view',
-            'children' => array (
-                'manage' => '_wpr_autoresponder_manage',
-            ))
-        );
-
-        $_GET['page'] =  "_wpr/autoresponders";
-        do_action("init");
-        $currentlyRenderingView = _wpr_get('_wpr_view');
-        $this->assertEquals('autoresponders_home', $currentlyRenderingView);
-
-    }
-
     public function tearDown() {
         parent::tearDown();
+        global $wpr_routes;
+        $wpr_routes = $this->beforeTestRoutesArray;
     }
 
 }

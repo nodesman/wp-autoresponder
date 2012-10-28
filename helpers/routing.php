@@ -16,7 +16,6 @@ function wpr_admin_menu()
 	}
 }
 
-
 function _wpr_handle_post()
 {
         if (count($_POST)>0 && isset($_POST['wpr_form']))
@@ -28,7 +27,6 @@ function _wpr_handle_post()
             do_action($actionName);
         }
 }
-
 
 function _wpr_render_view()
 {
@@ -52,35 +50,12 @@ function _wpr_render_view()
 
 class Routing {
 
-
-    private static function legacyInit() {
-    	global $wpr_routes;
-	    $admin_page_definitions = $wpr_routes;
-
-		foreach ($admin_page_definitions as $item)
-		{
-			if (isset($item['legacy']) && $item['legacy']===0)
-			{
-				$slug = str_replace("_wpr/","",$item['menu_slug']);
-				$actionName = "_wpr_".$slug."_handle";
-				$handler = "_wpr_".$slug."_handler";
-				add_action($actionName,$handler);
-			}
-		}
-
-    }
-
     public static function init() {
 
         global $wpr_routes;
-        Routing::legacyInit();
-
         _wpr_handle_post();
-
         $path = $_GET['page'];
-
         $method_to_invoke = self::getMethodToInvoke();
-
         if (self::whetherControllerMethodExists($method_to_invoke)) {
             self::callControllerMethod($method_to_invoke);
         }
@@ -168,6 +143,9 @@ class Routing {
     }
 
     public static function isWPRAdminPage() {
+        if (!isset($_GET['page'])) {
+            return false;
+        }
         $res = preg_match("@^wpresponder/.*@",$_GET['page']);
         $result = isset($_GET['page']) && ( 0 != preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
         return $result;

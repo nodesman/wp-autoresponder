@@ -268,7 +268,7 @@ if (!defined("WPR_DEFS")) {
 		
 		add_action('admin_menu', 'wpr_admin_menu');
 
-		if (Routing::isWPRAdminPage())
+		if (is_admin() && Routing::isWPRAdminPage())
 		{
 			Routing::init();
 		}

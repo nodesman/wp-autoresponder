@@ -94,6 +94,14 @@ class Routing {
 
 
         $current_path = trim($_GET['page']);
+
+
+        if (self::whetherLegacyURL($current_path)) {
+            return;
+        }
+
+
+
         if (self::whetherPathExists($current_path)) {
 
             $method_to_invoke = $wpr_routes[$current_path]['controller'];
@@ -116,6 +124,11 @@ class Routing {
             throw new DestinationControllerNotFoundException("Unknown destination invoked: $current_path");
 
         return $method_to_invoke;
+    }
+
+    private static function whetherLegacyURL($current_path)
+    {
+        return 0 < preg_match("@^wpresponder/@", $current_path);
     }
 
     private static function whetherSubPageExists($current_path, $action)
@@ -155,7 +168,8 @@ class Routing {
     }
 
     public static function isWPRAdminPage() {
-        $result = isset($_GET['page']) && ( preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
+        $res = preg_match("@^wpresponder/.*@",$_GET['page']);
+        $result = isset($_GET['page']) && ( 0 != preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
         return $result;
     }
 

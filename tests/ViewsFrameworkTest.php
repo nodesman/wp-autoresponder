@@ -38,10 +38,8 @@ class ViewFrameworkTest  extends WP_UnitTestCase {
         _wpr_render_view();
         $content = ob_get_clean();
         $content = trim($content);
-
         $this->assertEquals($content, $microtime);
     }
-
 
     public function tearDown() {
         parent::tearDown();

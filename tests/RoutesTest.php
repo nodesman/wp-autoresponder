@@ -133,6 +133,46 @@ class RoutesTest  extends WP_UnitTestCase {
         do_action("init");
     }
 
+
+    function testWhetherSkipsProcessingLegacyURLS() {
+        global $wpr_skiptest;
+
+        $wpr_skiptest = true;
+        $_GET['page'] = 'wpresponder/allmailouts.php';
+        add_action("_wpr_router_pre_callback","_wpr_skipstest_callback");
+        function _wpr_skipstest_callback() {
+            global $wpr_skiptest;
+            $wpr_skiptest = false;
+
+        }
+        Routing::init();
+        $this->assertEquals(true, $wpr_skiptest);
+    }
+
+
+    function testWhetherPreAndPostCallbackTriggered() {
+        global $post_callback_invoked;
+        global $pre_callback_invoked;
+
+        add_action("_wpr_router_pre_callback","_wpr_precallback_test");
+        add_action("_wpr_router_post_callback","_wpr_postcallback_test");
+        function _wpr_precallback_test() {
+            global $pre_callback_invoked;
+            $pre_callback_invoked = true;
+        }
+
+        function _wpr_postcallback_test() {
+            global $post_callback_invoked;
+            $post_callback_invoked = true;
+        }
+
+        $_GET['page'] = '_wpr/autoresponders';
+        Routing::init();
+
+        $this->assertEquals($pre_callback_invoked, true);
+        $this->assertEquals($post_callback_invoked, true);
+    }
+
     function testWhetherOtherURLsDontGetRouted() {
         $_GET['page'] = 'some_other_page.php';
 

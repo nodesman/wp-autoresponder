@@ -1,117 +1,139 @@
 
 
 #wpr-chrome {
-    background-color: #f4f4f4;
-    border: 1px solid #9c9c9c;
-    border-radius: 5px;
+    margin-top: 3em;
     padding: 15px;
     min-width: 1024px;
+    min-height: 50em;
+    background-color: #fff !important;
+    font-size: 14px;
+    font-family: "Helvetica", "Calibri", "Tahoma", "Arial";
 }
 
 #breadcrumb ul {
-    padding: 0;
     margin: 0;
-    list-style:  none;
     margin: -15px;
     margin-bottom: 0;
-    background-color: #767676;
+    padding: 0;
+    border: 1px solid #c0bebe;
+    background-color: #f0f0f0;
+    list-style:  none;
 }
 
 
 #breadcrumb li a {
-    color: #fff;
-    text-decoration: none;
     display: inline-block;
     padding: 10px 30px;
+    color: #a7a6a6;
+    text-decoration: none;
+    font-family: ;
+}
+
+#breadcrumb li {
+	margin-bottom: 0;
 }
 
 
 #breadcrumb li a:hover {
-    color: #ffd800
+    color: #000;
+    cursor: default;
 }
 
 .wpr-action-button {
-    background-color: #686868 !important;
+    padding: 5px 14px;
+    border: 0 !important;
+    background-color: #4A4A4A !important;
+    box-shadow: 0px 0px 5px #888 inset;
     color: #fff !important;
-    padding-left: 30px;
-    padding-right: 30px;
-    border: 1px solid #a99c9c;
+    text-transform: uppercase;
+    font-size: 11px;
 }
 
+.wpr-action-button:hover {
+	background-color: #ff5c32 !important;
+}
 
 .wpr-list-wrapper {
-    border-radius: 5px;
-    background-color: #484646;
-    padding-top: 30px;
-    padding-bottom: 10px;;
-    border: 1px solid #949494;
+    padding-top: 40px;
+    background-color: #989898;
 }
 #autoresponder-manage-header:after {
-    content:'';
     display: block;
     clear:both;
+    content:'';
 }
 .wpr-list-content {
     background-color: #fff;
 }
 
-.wpr-autoresponder-list-item {
-    background-color: #f9f9f9;
-    border-bottom: #9c9c9c;
-    padding: 10px;
-    position:  relative;
+.wpr-table {
+	display: table;
 }
 
+.wpr-autoresponder-list-item {
+    position:  relative;
+    display: table-row;
+    padding: 10px;
+}
+
+.wpr-autoresponder-list-item > div {
+	vertical-align: top;
+}
+
+.wpr-autoresponder-list-item.odd {
+	background-color: #f8f5f5;
+} 
+
 .autoresponder-messages-list {
-    background-color: #f6efc2;
-    border: 1px solid #9c9c9c;
+    float: right;
+    margin: 10px;
     padding: 5px;
     width: 500px;
-    margin: 10px;
-    float: right;
+    border: 1px solid #9c9c9c;
+    background-color: #f6efc2;
     text-align: center;
 }
 
 .autoresponder-messages-list:after {
-    content: '';
     display: block;
     clear:both;
+    content: '';
 }
 .autoresponder-messages-list h2 {
-    font-size: 14px;
-    text-align: left;
     margin: 0;
-    padding: 0;;
+    padding: 0;
+    text-align: left;
+    font-size: 14px;;
 }
 
 .autoresponder-messages-list select {
-    height: 200px !important;
-    width: 270px;
     display:block;
+    width: 270px;
+    height: 200px !important;
 }
 
 .autoresponder-message-actions input {
-   width: 200px;
-    margin-top: 20px;;
+    margin-top: 20px;
+   width: 200px;;
 }
 
 .wpr-autoresponder-list-item:after {
-    content: '';
     display: block;
-clear:both;;
+clear:both;
+    content: '';;
 }
 
 .wpr-autoresponder-list-item h3 {
-    font-size: 12px;
-    font-weight: normal;
-    padding: 0;
     margin: 0;
+    padding: 0;
     color: #909090;
+    font-weight: normal;
+    font-size: 12px;
 }
 
 .autoresponder-message-actions {
-    width: 220px;
     float:right;
+    width: 220px;
 }
 
 #autoresponder-manage-header {
@@ -119,19 +141,25 @@ clear:both;;
 }
 
 .wpr-autoresponder-overview {
-    border: 1px solid #999999;
-    background-color: #Fcfcfc;
+    float:left;
+    margin: 0.5em;
+    padding: 10px;
     min-height: 60px;
-    float:right;
-    bottom: 27px;
-    width: 70%;
-    padding: 10px;;
+    width: 28%;
+    position: relative;
 }
 
 h2.wpr-autoresponder-title {
-    font-size: 16px;;
     margin: 0 !important;
     padding:0 !important;
+
+    font-size: 16px;;
+
+}
+
+h2.wpr-autoresponder-title a {
+    color: #ff5c32;
+    text-decoration: none;
 }
 
 .wpr-autoresponder-action-items {
@@ -144,14 +172,59 @@ h2.wpr-autoresponder-title {
 }
 
 .wpr-autoresponder-overview-heading {
-    background-color: #7f7d7d;
-    color: #fff;
-    padding: 5px;;
     margin: -10px;
-    margin-bottom: 5px;;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #7f7d7d;
+    color: #fff;;;
 }
-
+.wpr-table {
+	width: 100%;
+}
 .empty-list-message {
 	padding: 3em;
+	text-align: center;
+}
+
+
+.wpr-autoresponder-messages {
+	position: relative;
+	padding: 0;
+	margin-top: 1em;
+	padding-left: 1em;
+	width: 45%;
+	max-height: 130px;
+	float:left;
+	background-color: #fff;
+	overflow-y: auto;
+	border: 	0.1em solid #ccc;
+	margin-right: 1em;
+
+	word-wrap: break-word;
+	overflow: hidden;
+	margin-bottom: 1em;
+}
+
+.wpr-autoresponder-messages h2 {
+	background-color: #ddd;
+	font-size: 18px;
+	margin: -10px;
+	margin-left: -15px;
+	padding-left: 0.5em;
+	
+}
+
+
+
+.wpr-autoresponder-list-item .title-actions {
+	padding: 1em 1em;
+}
+
+.title-actions {
+	width: 20%;
+	float:left;
+}
+
+.empty {
 	text-align: center;
 }

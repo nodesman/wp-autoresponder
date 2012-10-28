@@ -101,7 +101,7 @@ class RoutesTest  extends WP_UnitTestCase {
             throw new DefaultActionCalledException();
         }
 
-        do_action('init');
+        Routing::init();
     }
 
     /**
@@ -130,7 +130,7 @@ class RoutesTest  extends WP_UnitTestCase {
             throw new SpecificRouteItemCalledException();
         }
 
-        do_action("init");
+        Routing::init();
     }
 
 

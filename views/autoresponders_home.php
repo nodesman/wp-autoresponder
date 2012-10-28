@@ -22,16 +22,26 @@
                 <?php
                 if ((true === isset($autoresponders)) && 0 < count($autoresponders)) {
 
-                    foreach ($autoresponders as $autoresponder) {
+                    foreach ($autoresponders as $index=>$autoresponder) {
                         ?>
-                        <div class="wpr-autoresponder-list-item">
+                        <div class="wpr-table">
+	                        <div class="wpr-autoresponder-list-item <?php echo (($index+1) % 2 == 0 ) ? "even": "odd"; ?>">
+	                        
+	                        
+                            
+                            
+                            <div class="title-actions">
+                            	<h2 class="wpr-autoresponder-title"><a href="#"><?php echo $autoresponder->getName(); ?></a>
+                            	</h2>
 
-                            <div class="wpr-autoresponder-overview">
+                            	<h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getNewsletterName()); ?></h3>
 
-                                <div class="wpr-autoresponder-overview-heading">
-                                    Autoresponder Status
-                                </div>
-
+	                            <div class="wpr-autoresponder-action-items">
+	                                <a href="#"><?php _e('Delete Autoresponder'); ?></a> | <a href="#">Manage Messages</a>
+	                                <?php do_action('_wpr_autoresponder_list_item_actions_section', $autoresponder->getId()); ?>
+	                            </div>
+                            </div>
+                             <div class="wpr-autoresponder-overview">
                                 <table>
                                     <tr>
                                         <td><strong><?php _e('Messages: '); ?></strong></td>
@@ -44,18 +54,34 @@
                                 </table>
                                 <?php do_action("_wpr_autoresponder_list_item_overview", $autoresponder->getId()); ?>
                             </div>
-
-                            <h2 class="wpr-autoresponder-title"><a href="#"><?php echo $autoresponder->getName(); ?></a>
-                            </h2>
-
-                            <h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getNewsletterName()); ?></h3>
-
-                            <div class="wpr-autoresponder-action-items">
-                                <a href="#"><?php _e('Delete Autoresponder'); ?></a> | <a href="#">Manage Messages</a>
-                                <?php do_action('_wpr_autoresponder_list_item_actions_section', $autoresponder->getId()); ?>
-                            </div>
-
-
+	                        <div class="wpr-autoresponder-messages">
+	                        <h2>Messages</h2>
+	                            	<ul>
+	                            	<?php 
+	                            	$messagesInResponder = $autoresponder->getMessages();
+	                            	if (0 == count($messagesInResponder)) {
+	                            		
+	                            		?>
+	                            		<div class="empty">-- No Messages Defined --</div>
+	                            		<?php
+		                            	
+	                            	}
+	                            	else
+	                            	{
+		                            	foreach ($messagesInResponder as $message) 
+		                            	{
+			                            ?>
+			                            <li><?php echo $message->subject ?></li>
+			                            <?php
+		                            	}
+		                            }
+	                            	?>
+	                            	
+	                            	</ul>
+                            
+                                 </div>                         
+	                           
+	                        </div>
                         </div>
                         <?php
 

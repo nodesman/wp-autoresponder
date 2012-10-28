@@ -281,7 +281,6 @@ if (!defined("WPR_DEFS")) {
         wp_register_script("wpresponder-ckeditor", "/" . PLUGINDIR . "/" . $containingdirectory . "/ckeditor/ckeditor.js");
         wp_register_script("wpresponder-addedit", "/" . PLUGINDIR . "/" . $containingdirectory . "/script.js");
 
-
         /*
          * The following code ensures that the WP Responder's crons are always scheduled no matter what
          * Sometimes the crons go missing from cron's registry. Only the great zeus knows why that happens.

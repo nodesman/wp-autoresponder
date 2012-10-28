@@ -67,15 +67,11 @@ class Routing {
         global $wpr_routes;
         $method_to_invoke = "";
 
-
         $current_path = trim($_GET['page']);
-
 
         if (self::whetherLegacyURL($current_path)) {
             return;
         }
-
-
 
         if (self::whetherPathExists($current_path)) {
 
@@ -87,9 +83,7 @@ class Routing {
                 $subpage_name = self::getSubPageName();
 
                 if (self::whetherSubPageExists($current_path, $subpage_name)) {
-
                     $method_to_invoke = $wpr_routes[$current_path]['children'][$subpage_name];
-
                 }
                 else
                     throw new UnknownSubPageRequestedException("Unknown sub page requested");

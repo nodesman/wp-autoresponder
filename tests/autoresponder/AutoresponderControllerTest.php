@@ -19,6 +19,9 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name, fromname, fromemail) VALUES ('%s', '%s', '%s')", "Test Newsletter", "test", "test@gmail.com");
         $wpdb->query($createNewsletterQuery);
 
+        $truncateAutorespondresTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
+        $wpdb->query($truncateAutorespondresTable);
+
         $this->autoresponderController = new AutorespondersController();
         $this->newsletterId = 1;
     }

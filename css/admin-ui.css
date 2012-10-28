@@ -145,7 +145,7 @@ clear:both;
     margin: 0.5em;
     padding: 10px;
     min-height: 60px;
-    width: 28%;
+    width: 20%;
     position: relative;
 }
 
@@ -192,7 +192,7 @@ h2.wpr-autoresponder-title a {
 	padding: 0;
 	margin-top: 1em;
 	padding-left: 1em;
-	width: 45%;
+	width: 39%;
 	max-height: 130px;
 	float:left;
 	background-color: #fff;
@@ -203,6 +203,23 @@ h2.wpr-autoresponder-title a {
 	word-wrap: break-word;
 	overflow: hidden;
 	margin-bottom: 1em;
+}
+
+.wpr-autoresponder-action-items a {
+    display: block;
+    float:left;
+}
+
+.wpr-autoresponder-action-items a:after {
+    content: '|';
+    margin-left: 1em;
+    cursor: default;
+    text-decoration: none;
+    margin-right: 1em;
+}
+
+.wpr-autoresponder-action-items a:last-child:after {
+    content: '';
 }
 
 .wpr-autoresponder-messages h2 {
@@ -221,7 +238,7 @@ h2.wpr-autoresponder-title a {
 }
 
 .title-actions {
-	width: 20%;
+	width: 30%;
 	float:left;
 }
 

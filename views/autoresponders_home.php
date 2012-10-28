@@ -37,7 +37,7 @@
                             	<h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getNewsletterName()); ?></h3>
 
 	                            <div class="wpr-autoresponder-action-items">
-	                                <a href="#"><?php _e('Delete Autoresponder'); ?></a> | <a href="#">Manage Messages</a>
+	                                <a href="#"><?php _e('Delete Autoresponder'); ?></a> <a href="#">Manage Messages</a>
 	                                <?php do_action('_wpr_autoresponder_list_item_actions_section', $autoresponder->getId()); ?>
 	                            </div>
                             </div>

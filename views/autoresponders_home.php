@@ -1,5 +1,4 @@
 <div class="wrap">
-
     <div id="wpr-chrome">
         <div id="breadcrumb">
             <ul>
@@ -110,5 +109,15 @@
         </div>
 
 
+        <?php
+        $start = $pages['start'];
+        $end = $pages['end'];
+
+        for ($iter=$start;$iter<$end;$iter++) {
+            ?>
+                <a href="admin.php?page=_wpr/autoresponders&page=<?php echo $iter ?>"><?php echo $iter ?></a>
+            <?php
+        }
+?>
     </div>
 </div>

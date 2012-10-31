@@ -15,7 +15,7 @@ class AutorespondersController
         $numberOfPages = 1;
         $pages = array();
 
-        $start = (int)(true === isset($_GET['page'])) ? $_GET['page'] : 0;
+        $start = (int)(true === isset($_GET['p'])) ? $_GET['p'] : 0;
         $start = ($start > 0) ? $start : 0;
 
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
@@ -72,7 +72,7 @@ class AutorespondersController
         $pages['current_page'] = $current_page;
 
 
-        if ($current_page == 1) {
+        if ($current_page <=10) {
             $pages['before'] = false;
         }
         else
@@ -109,7 +109,7 @@ class AutorespondersController
 
     private static function getCurrentPageNumber()
     {
-        $pageParameter = isset($_GET['page']) ? intval($_GET['page']) : 0;
+        $pageParameter = isset($_GET['p']) ? intval($_GET['p']) : 0;
         $pageParameter = (0 < $pageParameter) ?$pageParameter:1;
         return $pageParameter;
     }

@@ -108,16 +108,39 @@
             </div>
         </div>
 
+        <div class="tablenav">
+            <div class="tablenav-pages">
+                <div class="pagination-links">
+                    <?php
+                    if (false !== $pages['before']) {
 
-        <?php
-        $start = $pages['start'];
-        $end = $pages['end'];
+                        ?>
+                        <a href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
+                        <?php
+                    }
+                    ?>
 
-        for ($iter=$start;$iter<$end;$iter++) {
-            ?>
-                <a href="admin.php?page=_wpr/autoresponders&page=<?php echo $iter ?>"><?php echo $iter ?></a>
-            <?php
-        }
-?>
+                    <?php
+                    $start = $pages['start'];
+                    $end = $pages['end'];
+
+                    for ($iter=$start;$iter<=$end;$iter++) {
+                        ?>
+                        <a class="next-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $iter ?>"><?php echo $iter ?></a>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if (false !== $pages['after']) {
+
+                        ?>
+                        <a class="last-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['after'] ?>">&raquo;</a>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

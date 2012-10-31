@@ -245,3 +245,7 @@ h2.wpr-autoresponder-title a {
 .empty {
 	text-align: center;
 }
+
+.paging .before {
+    border: 1px solid #ccc;
+}

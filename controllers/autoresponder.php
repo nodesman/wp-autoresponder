@@ -19,10 +19,8 @@ class AutorespondersController
         $start = ($start > 0) ? $start : 0;
 
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
-        $numberOfPages = ceil(Autoresponder::getNumberOfAutorespondersAvailable() / $this->getNumberOfAutorespondersPerPage());
 
         $this->getPageNumbers(Autoresponder::getNumberOfAutorespondersAvailable(), $pages, $numberOfPages);
-
         $current_page = $pages['current_page'];
 
         _wpr_set('number_of_pages', $numberOfPages);
@@ -30,7 +28,6 @@ class AutorespondersController
         _wpr_set('current_page',$current_page);
 
         _wpr_set('pages', $pages);
-
         _wpr_setview('autoresponders_home');
     }
 
@@ -51,32 +48,70 @@ class AutorespondersController
         $current_page = self::getCurrentPageNumber();
 
         $rowsPerPage = self::getRowsPerPage();
-        $numberOfPages = ceil($number_of_autoresponders/10);
+        $numberOfPages = ceil($number_of_autoresponders/$rowsPerPage);
 
+        if ($current_page %10 == 0) {
+            $start = intval((( ($current_page/10) - 1)*10)+1);
+            $end=$current_page;
+        }
+        else {
+            $start = intval(floor($current_page/10)*10+1);
+            $end = intval(ceil($current_page/10)*10);
+        }
 
-        $start = floor($current_page/10)+1;
-
-        $end = ceil($current_page/10);
-
-        if ($end > $numberOfPages)
+        if ($end >= $numberOfPages)
+        {
             $end = $numberOfPages;
+
+        }
+
+
 
         $pages['start'] = $start;
         $pages['end']  = $end;
         $pages['current_page'] = $current_page;
 
-        $nuumberOfPages = 10;
+
+        if ($current_page == 1) {
+            $pages['before'] = false;
+        }
+        else
+            $pages['before'] = $pages['start'] -1;
+
+        if ($end == $numberOfPages) {
+            $pages['after'] = false;
+        }
+        else
+            $pages['after'] = $pages['end'] +1;
+
+
     }
 
     public  static function getRowsPerPage()
     {
-        return (isset($_GET['pp']) && 0 < intval($_GET['pp'])) ? intval($_GET['pp']) : 10;
+
+        $per_page =  (isset($_GET['pp']) && 0 < intval($_GET['pp'])) ? intval($_GET['pp']) : 10;
+
+        if ($per_page > 10 && $per_page < 50)
+            return 50;
+
+        if ($per_page < 10)
+            return 10;
+
+        if ($per_page >50 && $per_page < 100)
+            return 100;
+
+        if ($per_page > 100)
+            return 100;
+
+        return $per_page;
     }
 
     private static function getCurrentPageNumber()
     {
-        $pageParameter = isset($_GET['page']) ? intval($_GET['page']) : 1;
-        return (0 < $pageParameter) ?$pageParameter:1;;
+        $pageParameter = isset($_GET['page']) ? intval($_GET['page']) : 0;
+        $pageParameter = (0 < $pageParameter) ?$pageParameter:1;
+        return $pageParameter;
     }
 
 

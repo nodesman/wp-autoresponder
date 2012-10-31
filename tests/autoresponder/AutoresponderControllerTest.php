@@ -131,7 +131,7 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         $_GET['page'] = 100;
 
         AutorespondersController::getPageNumbers(1000, $pages, $number_of_pages);
-        $this->assertEquals(90, $pages['start']);
+        $this->assertEquals(91, $pages['start']);
         $this->assertEquals(100, $pages['end']);
 
 
@@ -140,7 +140,6 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         AutorespondersController::getPageNumbers(1000, $pages, $number_of_pages);
         $this->assertEquals(1, $pages['start']);
         $this->assertEquals(10, $pages['end']);
-
 
         $_GET['page'] = -1;
 
@@ -172,10 +171,39 @@ class AutoresponderControllerTest extends WP_UnitTestCase
 
     public function testValidValuesForCurrentPage() {
         $_GET['page'] = -3;
+        AutorespondersController::getPageNumbers(0, $pages, $number);
+        $this->assertEquals(0, $pages['current_page']);
 
-        _wpr_autoresponders_handler();
+        unset($_GET['page']);
+        AutorespondersController::getPageNumbers(10, $pages, $number);
+        $this->assertEquals(1, $pages['current_page']);
 
-        $this->assertEquals(1, _wpr_get("current_page"));
+        $_GET['page'] = 5;
+        AutorespondersController::getPageNumbers(10,$pages,$number);
+        $this->assertEquals(5, $pages['current_page']);
+
+    }
+
+    public function testSettingPreviousNext() {
+        $_GET['page'] = 4;
+        AutorespondersController::getPageNumbers(240, $pages, $number_of_pages);
+        $this->assertEquals(false, $pages['before']);
+        $this->assertEquals(11, $pages['after']);
+
+        $_GET['page'] = 10;
+        AutorespondersController::getPageNumbers(240, $pages, $number_of_pages);
+        $this->assertEquals(11, $pages['after']);
+        $this->assertEquals(false, $pages['before']);
+
+        $_GET['page'] = 11;
+        AutorespondersController::getPageNumbers(240, $pages, $number_of_pages);
+        $this->assertEquals(10, $pages['before']);
+        $this->assertEquals(21, $pages['after']);
+
+        $_GET['page'] = 100;
+        AutorespondersController::getPageNumbers(1000, $pages, $number_of_pages);
+        $this->assertEquals(90, $pages['before']);
+        $this->assertEquals(false, $pages['after']);
     }
 
     public function testNonMultipleOfTenPagesEndInNumberOfPages() {
@@ -208,30 +236,30 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         AutorespondersController::getPageNumbers(480, $pages, $number_of_pages);
         $this->assertEquals(1, $pages['start']);
         $this->assertEquals(10, $pages['end']);
+        $this->assertEquals(false, $pages['before']);
+        $this->assertEquals(false, $pages['after']);
         $this->assertEquals(10, $number_of_pages);
-
-
 
         $_GET['page'] = 3;
         $_GET['pp'] = 50;
         AutorespondersController::getPageNumbers(400, $pages, $number_of_pages);
         $this->assertEquals(1, $pages['start']);
+        $this->assertEquals(false, $pages['before']);
+        $this->assertEquals(false, $pages['after']);
         $this->assertEquals(8, $pages['end']);
         $this->assertEquals(8, $number_of_pages);
 
     }
-    public function testNonMultipleOfTenPagesEndInNumberOfPagesOnAllRowsSimultantously() {
+    public function testNonMultipleOfTenPagesEndInNumberOfPagesOnAllRowsSimultaneously() {
 
         $pages = array();
         $number_of_pages = 1;
 
-        $_GET['page'] = 21;
+        $_GET['page'] = 3;
         $_GET['pp'] = 50;
         AutorespondersController::getPageNumbers(240, $pages, $number_of_pages);
         $this->assertEquals(1, $pages['start']);
-        $this->assertEquals(24, $pages['start']);
-
-
+        $this->assertEquals(5, $pages['end']);
 
     }
 

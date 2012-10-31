@@ -189,7 +189,6 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         $this->assertEquals(24, $pages['end']);
         $this->assertEquals(24, $number_of_pages);
 
-
         $_GET['page'] = 4;
         AutorespondersController::getPageNumbers(80, $pages, $number_of_pages);
         $this->assertEquals(1, $pages['start']);

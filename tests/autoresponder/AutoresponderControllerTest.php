@@ -281,10 +281,11 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         return $autoresponderNamesFromRows;
     }
 
-
     public function testAutoresponderAddAssignsNewsletters() {
 
         global $wpdb;
+        $truncateNewslettersQuery = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters;");
+        $wpdb->query($truncateNewslettersQuery);
         $newsletters = array(
 
             array(
@@ -297,10 +298,26 @@ class AutoresponderControllerTest extends WP_UnitTestCase
             )
         );
 
+        $namesUsed = array();
         foreach ($newsletters as $newsletter) {
             $addNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name) VALUES ('%s')",$newsletter['name']);
             $wpdb->query($addNewsletterQuery);
+            $namesUsed[] = $newsletter['name'];
         }
+
+        AutorespondersController::add();
+        $newslettersReceived = _wpr_get("newsletters");
+
+        $receivedNames = array();
+        foreach ($newslettersReceived as $newsletter) {
+            $receivedNames[] = $newsletter->getName();
+        }
+
+        $diff = array_diff($namesUsed,$receivedNames);
+
+        $this->assertEquals(0, count($diff));
+
+
     }
 
     public function tearDown()

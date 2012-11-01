@@ -130,7 +130,9 @@ class AutorespondersController
     
     public static function add() {
 	    global $wpdb;
-	    
+
+        $newsletters = Newsletter::getAllNewsletters();
+        _wpr_set("newsletters",$newsletters);
 	    _wpr_setview("autoresponder_add");
 	    
     }

@@ -46,71 +46,15 @@ class Newsletter
 		$this->fromemail = $newsletter->fromemail;
 	}
 	
-	function getNewsletterName()
+	function getName()
 	{
-		$this->ensureNotDeleted();
 		return $this->name;
 	}
-	function getNewsletterId()
+	function getId()
 	{
-		$this->ensureNotDeleted();
 		return $this->id;
 	}
-	function getConfirmSubject()
-	{
-		$this->ensureNotDeleted();
-		return $this->confirm_subject;
-	}
-	
-	function getConfirmedSubject()
-	{
-		$this->ensureNotDeleted();
-		return $this->confirmed_subject;
-	}
-	
-	function getConfirmBody()
-	{
-		$this->ensureNotDeleted();
-		return $this->confirm_body;	
-	}
-	
-	function getConfirmedBody()
-	{
-		$this->ensureNotDeleted();
-		return $this->confirmed_body;
-	}
-	
-	function getDescription()
-	{
-		$this->ensureNotDeleted();
-		return $this->description;
-	}
-	
-	function getNewsletterReplyToEmailAddress()
-	{
-		$this->ensureNotDeleted();
-		return $this->reply_to;
-	}
-	
-	function getFromName()
-	{
-		$this->ensureNotDeleted();
-		return $this->fromname;
-	}
-	
-	function ensureNotDeleted()
-	{
-		if ($this->deleted)
-			throw new DeletedNewsletterAccessException();
-	}
-	
-	function getFromEmail()
-	{
-		$this->ensureNotDeleted();
-		return $this->fromemail;
-	}
-	
-	
+
 	function delete()
 	{
 		global $wpdb;
@@ -157,14 +101,7 @@ class Newsletter
 		return $number;
 		
 	}
-	
-	function getNumberOfUnconfirmed()
-	{
-		//TODO: Implement this
-	}
-	/*
-	 * 
-	 */
+
 	public static function whetherNewsletterIDExists($newsletter_id) {
 		global $wpdb;
 		$checkWhetherNewsletterIDExistsQuery = sprintf("SELECT COUNT(*) result_count FROM {$wpdb->prefix}wpr_newsletters WHERE id=%d",$newsletter_id);
@@ -172,6 +109,19 @@ class Newsletter
 		$count = (int) $newslettersCountRes[0]->result_count;
 		return (0 != $count);
 	}
+
+    public static function getAllNewsletters() {
+        global $wpdb;
+
+        $getAllNewslettersQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_newsletters");
+        $newsletters = $wpdb->get_results($getAllNewslettersQuery);
+
+        $result = array();
+        foreach ($newsletters as $newsletter) {
+            $result[] = new Newsletter($newsletter->id);
+        }
+        return $result;
+    }
 
 	function getNumberOfActiveSubscribers()
 	{

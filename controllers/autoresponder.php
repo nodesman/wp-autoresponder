@@ -6,8 +6,14 @@ function _wpr_autoresponders_handler() {
 }//end _wpr_autoresponders_handler
 
 
+function _wpr_autoresponder_add() {
+	
+	AutorespondersController::add();
+}
+
 class AutorespondersController
 {
+
 
     private $defaultAutorespondersPerPage = 10;
     public function autorespondersListPage()
@@ -120,6 +126,14 @@ class AutorespondersController
         return $this->defaultAutorespondersPerPage;
     }
     //end autorespondersListPage
+    
+    
+    public static function add() {
+	    global $wpdb;
+	    
+	    _wpr_setview("autoresponder_add");
+	    
+    }
 
 }//end class
 

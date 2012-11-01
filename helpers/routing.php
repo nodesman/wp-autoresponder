@@ -46,6 +46,10 @@ function _wpr_render_view()
             throw new ViewFileNotFoundException();
 }
 
+class UnknownControllerInvokeRequested extends Exception {
+	
+}
+
 
 
 class Routing {
@@ -57,8 +61,11 @@ class Routing {
         $path = $_GET['page'];
         $method_to_invoke = self::getMethodToInvoke();
         if (self::whetherControllerMethodExists($method_to_invoke)) {
+
             self::callControllerMethod($method_to_invoke);
         }
+        else
+	        throw new UnknownControllerInvokeRequested();
 
     }
 
@@ -77,8 +84,7 @@ class Routing {
 
             $method_to_invoke = $wpr_routes[$current_path]['controller'];
 
-
-            if (self::whetherSubPageRequested($current_path)) {
+            if (self::whetherSubPageRequested()) {
 
                 $subpage_name = self::getSubPageName();
 
@@ -115,7 +121,8 @@ class Routing {
 
     private static function whetherSubPageRequested()
     {
-        return isset($_GET['action']);
+    	$whether = isset($_GET['action']);
+        return $whether;
     }
 
     private static function whetherPathExists($current_path)

@@ -13,7 +13,7 @@
             ?>
 
             <div class="alignright">
-                <input type="button" value="Add Autoresponder" class="wpr-action-button" id="autoresponder-add">
+                <a href="admin.php?page=_wpr/autoresponders&action=add" class="wpr-action-button" id="autoresponder-add"> Add Autoresponder </a>
             </div>
         </div>
         <div class="wpr-list-wrapper">
@@ -112,31 +112,35 @@
             <div class="tablenav-pages">
                 <div class="pagination-links">
                     <?php
-                    if (false !== $pages['before']) {
-
-                        ?>
-                        <a href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
-                        <?php
-                    }
-                    ?>
-
-                    <?php
-                    $start = $pages['start'];
-                    $end = $pages['end'];
-
-                    for ($iter=$start;$iter<=$end;$iter++) {
-                        ?>
-                        <a class="next-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $iter ?>"><?php echo $iter ?></a>
-                        <?php
-                    }
-                    ?>
-                    <?php
-                    if (false !== $pages['after']) {
-
-                        ?>
-                        <a class="last-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['after'] ?>">&raquo;</a>
-                        <?php
-                    }
+                    
+                    if ($pages['start'] > 0)
+                    {
+	                    if (false !== $pages['before']) {
+	
+	                        ?>
+	                        <a href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
+	                        <?php
+	                    }
+	                    ?>
+	
+	                    <?php
+	                    $start = $pages['start'];
+	                    $end = $pages['end'];
+	
+	                    for ($iter=$start;$iter<=$end;$iter++) {
+	                        ?>
+	                        <a class="next-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $iter ?>"><?php echo $iter ?></a>
+	                        <?php
+	                    }
+	                    ?>
+	                    <?php
+	                    if (false !== $pages['after']) {
+	
+	                        ?>
+	                        <a class="last-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['after'] ?>">&raquo;</a>
+	                        <?php
+	                    }
+	                }
                     ?>
                 </div>
             </div>

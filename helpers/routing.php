@@ -47,25 +47,30 @@ function _wpr_render_view()
 }
 
 class UnknownControllerInvokeRequested extends Exception {
-	
-}
 
+    public function  __construct($message){
+        parent::__construct($message, 0, null);
+    }
+}
 
 
 class Routing {
 
     public static function init() {
-
         global $wpr_routes;
         _wpr_handle_post();
+
+        if (self::whetherLegacyURL($_GET['page'])) {
+            return;
+        }
+
         $path = $_GET['page'];
         $method_to_invoke = self::getMethodToInvoke();
         if (self::whetherControllerMethodExists($method_to_invoke)) {
-
             self::callControllerMethod($method_to_invoke);
         }
         else
-	        throw new UnknownControllerInvokeRequested();
+	        throw new UnknownControllerInvokeRequested("Unknown control invoked - '{$method_to_invoke}''");
 
     }
 
@@ -75,10 +80,6 @@ class Routing {
         $method_to_invoke = "";
 
         $current_path = trim($_GET['page']);
-
-        if (self::whetherLegacyURL($current_path)) {
-            return;
-        }
 
         if (self::whetherPathExists($current_path)) {
 
@@ -101,9 +102,10 @@ class Routing {
         return $method_to_invoke;
     }
 
-    private static function whetherLegacyURL($current_path)
+    public  static function whetherLegacyURL($current_path)
     {
-        return 0 < preg_match("@^wpresponder/@", $current_path);
+        $result = preg_match("@^wpresponder/@", $current_path);
+        return false != $result;
     }
 
     private static function whetherSubPageExists($current_path, $action)

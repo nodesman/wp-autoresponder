@@ -282,6 +282,27 @@ class AutoresponderControllerTest extends WP_UnitTestCase
     }
 
 
+    public function testAutoresponderAddAssignsNewsletters() {
+
+        global $wpdb;
+        $newsletters = array(
+
+            array(
+                "name"=> "Newsletter2",
+                "reply_to"=> "test@test.com",
+            ),
+            array(
+                "name"=> "Newsletter3",
+                "reply_to"=> "test@test.com",
+            )
+        );
+
+        foreach ($newsletters as $newsletter) {
+            $addNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name) VALUES ('%s')",$newsletter['name']);
+            $wpdb->query($addNewsletterQuery);
+        }
+    }
+
     public function tearDown()
     {
         parent::tearDown();

@@ -10,6 +10,12 @@
     font-family: "Helvetica", "Calibri", "Tahoma", "Arial";
 }
 
+#wpr-chrome h2 {
+    font-size: 28px;;
+    padding-bottom: 1em;
+    padding-top: 0.5em;
+}
+
 #breadcrumb ul {
     margin: 0;
     margin: -15px;
@@ -276,4 +282,10 @@ h2.wpr-autoresponder-title a {
 #autoresponder-add-form label {
 	width: 250px;
 	display: inline-block;
+}
+
+#autoresponder-add-form label small {
+    padding-top: 10px;
+    display: block;
+    padding-bottom: 10px;
 }

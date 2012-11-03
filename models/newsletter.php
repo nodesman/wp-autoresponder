@@ -123,6 +123,20 @@ class Newsletter
         return $result;
     }
 
+
+    private static function getNumberOfNewsletters() {
+        global $wpdb;
+
+        $getCountNewslettersQuery = sprintf("SELECT count(*) num FROM {$wpdb->prefix}wpr_newsletters");
+        $results = $wpdb->get_results($getCountNewslettersQuery);
+        $count = $results[0]->num;
+        return $count;
+    }
+
+    public static function whetherNoNewslettersExist() {
+        return 0 == self::getNumberOfNewsletters();
+    }
+
 	function getNumberOfActiveSubscribers()
 	{
 	    global $wpdb;

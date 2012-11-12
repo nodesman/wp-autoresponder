@@ -1,13 +1,13 @@
 <?php
 
 $wpr_routes = array(
-    'wpresponder/newmail.php' => array(
+    '_wpr/broadcast_compose' => array(
         'page_title' => 'New Broadcast',
         'menu_title' => 'New Broadcast',
         'capability' => 'manage_newsletters',
-        'legacy' => 1,
-        'menu_slug' => 'wpresponder/newmail.php',
-        'callback' => 'wpr_newmail'
+        'controller' => '_wpr_broadcast_compose',
+        'menu_slug' => '_wpr/broadcast_compose',
+        'callback' => '_wpr_render_view',
     ),
     'wpresponder/allmailouts.php' => array(
         'page_title' => 'All Broadcasts',

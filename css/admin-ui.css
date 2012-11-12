@@ -289,3 +289,32 @@ h2.wpr-autoresponder-title a {
     display: block;
     padding-bottom: 10px;
 }
+
+.ui-tabs {
+    padding: 0;
+}
+
+.ui-widget-header {
+    background-color: transparent;
+}
+
+.ui-widget-content {
+    background-color: transparent;
+    border:0;
+}
+
+.ui-tabs .ui-tabs-panel {
+    border: 0.1em solid #ccc;
+    border-top: 0;
+}
+
+.ui-widget-header {
+    border:0;
+    border-bottom: 0.1em solid #ccc;
+}
+
+.ui-tabs .ui-tabs-nav {
+    padding: 0;
+    -webkit-border-radius:0;
+    border-radius: 0;
+}

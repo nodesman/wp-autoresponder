@@ -69,6 +69,7 @@ if (!defined("WPR_DEFS")) {
     include_once "$controllerDir/new-broadcast.php";
     include_once "$controllerDir/queue_management.php";
     include_once "$controllerDir/autoresponder.php";
+    include_once "$controllerDir/newsletter.php";
 
 
     include_once "$modelsDir/subscriber.php";
@@ -100,44 +101,7 @@ if (!defined("WPR_DEFS")) {
 	{
             ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
 	}
-	
-	function _wpr_no_newsletters($message)
-	{
-		
-		global $wpdb;
-	
-		$query = "SELECT * FROM ".$wpdb->prefix."wpr_newsletters"; 
-	
-		$countOfNewsletters = $wpdb->get_results($query);
-	
-		$count = count($countOfNewsletters);
-	
-		unset($countOfNewsletters);
-	
-		if ($count ==0)
-		{
-	
-			?>
-<div class="wrap">
-  <h2>No Newsletters Created Yet</h2>
 
-<?php echo $message ?>, you must first create a newsletter. <br />
-<br/>
-<a href="admin.php?page=_wpr/newsletter&act=add" class="button">Create Newsletter</a>
-</div>
-<?php
-	
-			return true;
-	
-		}
-	
-		else
-	
-			return false;
-		
-	}
-	
-	
 	function wpr_enqueue_post_page_scripts()
 	{
 		if (isset($_GET['post_type']) && $_GET['post_type'] == "page")
@@ -268,18 +232,20 @@ if (!defined("WPR_DEFS")) {
 		
 		add_action('admin_menu', 'wpr_admin_menu');
 
-		if (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']))
-		{
-			Routing::init();
-		}
 
         $containingdirectory = basename(__DIR__);
         $url = get_bloginfo("wpurl");
         wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
+        wp_register_style("jqueryui-style", "$url/?wpr-file=jqui.css");
         wp_register_script("angularjs", "$url/?wpr-file=angular.js");
         wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
         wp_register_script("wpresponder-ckeditor", "/" . PLUGINDIR . "/" . $containingdirectory . "/ckeditor/ckeditor.js");
         wp_register_script("wpresponder-addedit", "/" . PLUGINDIR . "/" . $containingdirectory . "/script.js");
+
+        if (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']))
+        {
+            Routing::init();
+        }
 
         /*
          * The following code ensures that the WP Responder's crons are always scheduled no matter what

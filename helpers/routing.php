@@ -59,19 +59,34 @@ class Routing {
     public static function init() {
         global $wpr_routes;
         _wpr_handle_post();
+        $path = $_GET['page'];
+
+        if (self::whetherCurrentPathRequiresAtleastOneNewsletterToExistToBeAccessible($wpr_routes, $path)) {
+            _wpr_setview("no_newsletter");
+            return;
+        }
 
         if (self::whetherLegacyURL($_GET['page'])) {
             return;
         }
 
-        $path = $_GET['page'];
+
         $method_to_invoke = self::getMethodToInvoke();
+
+
+
+
         if (self::whetherControllerMethodExists($method_to_invoke)) {
             self::callControllerMethod($method_to_invoke);
         }
         else
 	        throw new UnknownControllerInvokeRequested("Unknown control invoked - '{$method_to_invoke}''");
 
+    }
+
+    public static function whetherCurrentPathRequiresAtleastOneNewsletterToExistToBeAccessible($wpr_routes, $path)
+    {
+        return isset($wpr_routes[$path]['require_newsletters']) && $wpr_routes[$path]['require_newsletters'] == true && Newsletter::whetherNoNewslettersExist();
     }
 
     private static function getMethodToInvoke()

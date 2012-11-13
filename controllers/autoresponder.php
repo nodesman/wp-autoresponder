@@ -7,7 +7,6 @@ function _wpr_autoresponders_handler() {
 
 
 function _wpr_autoresponder_add() {
-	
 	AutorespondersController::add();
 }
 
@@ -41,11 +40,9 @@ class AutorespondersController
         return $start;
     }
 
-
     public static function getPageNumbers($number_of_autoresponders, &$pages, &$numberOfPages) {
 
         $pages = array();
-
         if ($number_of_autoresponders == 0)
         {
             $pages['start'] = 0;
@@ -73,12 +70,9 @@ class AutorespondersController
             $end = $numberOfPages;
         }
 
-
-
         $pages['start'] = $start;
         $pages['end']  = $end;
         $pages['current_page'] = $current_page;
-
 
         if ($current_page <=10) {
             $pages['before'] = false;

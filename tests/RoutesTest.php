@@ -27,7 +27,27 @@ class RoutesTest  extends WP_UnitTestCase {
         //set up the routes global variable
         parent::setUp();
         global $wpr_routes;
+        global $wpdb;
+
+        $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name) VALUES ('Test')");
+        $wpdb->query($createNewsletterQuery);
+
         $this->beforeTestRoutesArray = $wpr_routes;
+    }
+
+    function testWhetherNewsletterRequiredSectionsShowTheNewsletterRequiredPage() {
+        global $wpr_routes;
+        global $wpdb;
+
+        $truncateNewslettersQuery = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters");
+        $wpdb->query($truncateNewslettersQuery);
+
+        $_GET['page'] = '_wpr/newsletter';
+
+        Routing::init();
+
+        $view_name = _wpr_get("_wpr_view");
+        $this->assertEquals("no_newsletter", $view_name);
 
     }
 
@@ -90,6 +110,7 @@ class RoutesTest  extends WP_UnitTestCase {
             'controller' => '_wpr_autoresponder_testcallback',
             'capability' => 'manage_newsletters',
             'legacy'     => 0,
+            'require_newsletters' =>true,
             'menu_slug'  => '_wpr/autoresponders',
             'callback'   => '_wpr_render_view',
             'children'   => array (
@@ -117,6 +138,7 @@ class RoutesTest  extends WP_UnitTestCase {
             'page_title' => 'Autoresponders',
             'menu_title' => 'Autoresponders',
             'controller' => '_wpr_manage_callback',
+            'require_newsletters' => true,
             'capability' => 'manage_newsletters',
             'legacy' => 0,
             'menu_slug' => '_wpr/autoresponders',

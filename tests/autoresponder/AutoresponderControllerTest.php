@@ -94,6 +94,74 @@ class AutoresponderControllerTest extends WP_UnitTestCase
 
     }
 
+    public function testFetchingAddFormPostData() {
+        $_POST['nid'] = 9801;
+        $_POST['autoresponder_name'] = "Test Autoresponder";
+        $data = AutorespondersController::getAddAutoresponderFormPostedData();
+        $this->assertEquals(9801, $data['nid']);
+        $this->assertEquals("Test Autoresponder", $data['name']);
+        $this->assertEquals(2, count($data));
+    }
+
+    public function testValidationAutoresponderFormData() {
+
+        $post_data['nid'] = '';
+        $post_data['name'] = '';
+        $errors = array();
+        AutorespondersController::validateAddFormPostData($post_data, $errors);
+        $this->assertEquals(2 , count($errors));
+
+        unset($errors);
+        unset($post_data);
+
+        $post_data['nid']= 1;
+        $post_data['name'] = '';
+        AutorespondersController::validateAddFormPostData($post_data, $errors);
+        $this->assertEquals(1 , count($errors));
+
+
+        unset($errors);
+        unset($post_data);
+        $post_data['nid']=91;
+        $post_data['name'] = 'Test Autoresponder';
+        AutorespondersController::validateAddFormPostData($post_data, $errors);
+        $this->assertEquals(1 , count($errors));
+
+
+        unset($errors);
+        unset($post_data);
+        $post_data['nid']=1;
+        $post_data['name'] = 'Test Autoresponder';
+        AutorespondersController::validateAddFormPostData($post_data, $errors);
+        $this->assertEquals(0 , count($errors));
+    }
+
+    public function testWhetherAutoresponderIsAdded() {
+        $_POST['nid'] = 1;
+        $responderName = 'Test Autoresponder 5432';
+        $_POST['autoresponder_name'] = $responderName;
+        try {
+            AutorespondersController::add_post_handler();
+        }
+        catch (Exception $e) {
+
+        }
+
+        $autoresponders = Autoresponder::getAllAutoresponders();
+
+        $found = false;
+
+        foreach ($autoresponders as $responder) {
+            $name = $responder->getName();
+            if ($name == $responderName)
+                $found=true;
+        }
+        $this->assertEquals(true, $found);
+
+
+
+    }
+
 
     public function testWhetherPagesRunMultiplesOfTen() {
 

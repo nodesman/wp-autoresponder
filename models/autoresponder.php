@@ -150,7 +150,6 @@ class Autoresponder
         $wpdb->query($createAutoresponderQuery);
         $autoresponder_id = $wpdb->insert_id;
         return new Autoresponder($autoresponder_id);
-
     }
 
     public function getMessages()

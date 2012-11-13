@@ -3,7 +3,6 @@ require_once __DIR__."/../../models/autoresponder.php";
 
 class AutoresponderTest extends WP_UnitTestCase {
 
-
     public $plugin_slug = 'wp-autoresponder';
 
     private $autoresponder;

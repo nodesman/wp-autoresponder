@@ -33,7 +33,7 @@
                             	<h2 class="wpr-autoresponder-title"><a href="#"><?php echo $autoresponder->getName(); ?></a>
                             	</h2>
 
-                            	<h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getNewsletterName()); ?></h3>
+                            	<h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getName()); ?></h3>
 
 	                            <div class="wpr-autoresponder-action-items">
 	                                <a href="#"><?php _e('Delete Autoresponder'); ?></a> <a href="#">Manage Messages</a>

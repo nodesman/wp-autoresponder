@@ -13,16 +13,13 @@ function _wpr_autoresponder_add() {
 
 class AutorespondersController
 {
-
-
     private $defaultAutorespondersPerPage = 10;
     public function autorespondersListPage()
     {
         $numberOfPages = 1;
         $pages = array();
 
-        $start = (int)(true === isset($_GET['p'])) ? $_GET['p'] : 0;
-        $start = ($start > 0) ? $start : 0;
+        $start = $this->getStartIndexOfAutoresponderRecordSet();
 
         $autoresponders = Autoresponder::getAllAutoresponders($start, $this->getNumberOfAutorespondersPerPage());
 
@@ -35,6 +32,13 @@ class AutorespondersController
 
         _wpr_set('pages', $pages);
         _wpr_setview('autoresponders_home');
+    }
+
+    private function getStartIndexOfAutoresponderRecordSet()
+    {
+        $start = (int)(true === isset($_GET['p'])) ? $_GET['p'] : 0;
+        $start = ($start > 1) ? $start : 0;
+        return $start;
     }
 
 
@@ -52,7 +56,6 @@ class AutorespondersController
         }
 
         $current_page = self::getCurrentPageNumber();
-
         $rowsPerPage = self::getRowsPerPage();
         $numberOfPages = ceil($number_of_autoresponders/$rowsPerPage);
 
@@ -68,7 +71,6 @@ class AutorespondersController
         if ($end >= $numberOfPages)
         {
             $end = $numberOfPages;
-
         }
 
 
@@ -120,13 +122,11 @@ class AutorespondersController
         return $pageParameter;
     }
 
-
     private function getNumberOfAutorespondersPerPage()
     {
         return $this->defaultAutorespondersPerPage;
     }
     //end autorespondersListPage
-    
     
     public static function add() {
 	    global $wpdb;
@@ -137,5 +137,56 @@ class AutorespondersController
 	    
     }
 
+    public function add_post_handler() {
+
+        $post_data = self::getAddAutoresponderFormPostedData();
+
+        self::validateAddFormPostData($post_data, $errors);
+
+        if (0 == count($errors)) {
+            $autoresponder = Autoresponder::addAutoresponder($post_data['nid'],$post_data['name']);
+            wp_redirect("admin.php?page=_wpr/autoresponders&action=manage&aid=".$autoresponder->getId());
+        }
+
+        _wpr_set("_wpr_add_errors", $errors);
+
+    }
+
+    public static function validateAddFormPostData($post_data, &$errors)
+    {
+        $name = $post_data['name'];
+        if (!Autoresponder::whetherValidAutoresponderName(array('name'=>$name))) {
+            $errors[] = __("The name for the autoresponder you've entered is invalid");
+        }
+
+        if (!Newsletter::whetherNewsletterIDExists($post_data['nid'])) {
+            $errors[] = __("The newsletter you've selected doesn't exist");
+            return $errors;
+        }
+    }
+
+    public static function getAddAutoresponderFormPostedData()
+    {
+        return array(
+            'name' => $_POST['autoresponder_name'],
+            'nid' => $_POST['nid']
+        );
+    }
+
 }//end class
 
+
+add_action("_wpr_add_autoresponder_post_handler","_wpr_add_autoresponder_post_handler");
+
+function _wpr_add_autoresponder_post_handler() {
+    global $wpdb;
+
+
+    if (!wp_verify_nonce($_POST['_wpr_add_autoresponder'], '_wpr_add_autoresponder')) {
+        return;
+    }
+
+    AutorespondersController::add_post_handler();
+
+
+}

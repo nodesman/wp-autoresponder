@@ -14,7 +14,7 @@
         
         <h2>Add Autoresponder</h2>
 
-			<form action="admin.php?_wpr/autoresponders&act" method="post">
+			<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 
             <table>
 
@@ -34,7 +34,7 @@
 				</label>
                          </td>
                 <td>
-                <select name="newsletter" id="newsletter_select">
+                <select name="nid" id="newsletter_select">
                     <?php
                     if (0 < count($newsletters)) {
                     ?>
@@ -49,6 +49,9 @@
                       </td>
                 </tr>
         </table>
+
+                <input type="hidden" name="wpr_form" value="add_autoresponder"/>
+                <?php wp_nonce_field('_wpr_add_autoresponder', '_wpr_add_autoresponder'); ?>
 			<input type="submit" value="Add" class="wpr-action-button">
 			<a href="admin.php?page=_wpr/autoresponders" class="wpr-button">Cancel</a>
 			</form>

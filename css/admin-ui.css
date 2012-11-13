@@ -289,3 +289,8 @@ h2.wpr-autoresponder-title a {
     display: block;
     padding-bottom: 10px;
 }
+
+#wpr-chrome .wpr-autoresponder-messages h2 {
+    font-size: 17px;
+    padding: 10px 0 1px 10px ;
+}

@@ -39,6 +39,7 @@ $wpr_routes = array(
         'callback' => '_wpr_render_view',
         'children' => array (
             'add' => '_wpr_autoresponder_add',
+            'delete' => '_wpr_autoresponder_delete'
         )
     ),
     'wpresponder/blogseries.php'=> array(

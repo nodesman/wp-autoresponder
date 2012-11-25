@@ -4,7 +4,7 @@ class Autoresponder
     private $id;
     private $name;
 
-    function __construct($id)
+    private function __construct($id)
     {
         global $wpdb;
 
@@ -19,6 +19,10 @@ class Autoresponder
         $this->id = $autoresponder->id;
         $this->nid = $autoresponder->nid;
         $this->name = $autoresponder->name;
+    }
+
+    public static function getAutoresponder($autoresponder_id) {
+        return new Autoresponder($autoresponder_id);
     }
 
     public static function getNumberOfAutorespondersAvailable() {

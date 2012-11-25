@@ -42,8 +42,7 @@ class RoutesTest  extends WP_UnitTestCase {
         $truncateNewslettersQuery = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters");
         $wpdb->query($truncateNewslettersQuery);
 
-        $_GET['page'] = '_wpr/newsletter';
-
+        $_GET['page'] = '_wpr/autoresponders';
         Routing::init();
 
         $view_name = _wpr_get("_wpr_view");

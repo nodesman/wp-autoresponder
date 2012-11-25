@@ -9,10 +9,22 @@ function _wpr_autoresponders_handler() {
 function _wpr_autoresponder_add() {
 	AutorespondersController::add();
 }
-
+function _wpr_autoresponder_delete() {
+    AutorespondersController::delete();
+}
 class AutorespondersController
 {
     private $defaultAutorespondersPerPage = 10;
+
+
+    public static  function delete() {
+        $autoresponder_id = intval($_GET['id']);
+        $autoresponder = Autoresponder::getAutoresponder($autoresponder_id);
+        _wpr_set("autoresponder",$autoresponder);
+        _wpr_setview("autoresponder_delete");
+    }
+
+
     public function autorespondersListPage()
     {
         $numberOfPages = 1;

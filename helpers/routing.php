@@ -70,11 +70,7 @@ class Routing {
             return;
         }
 
-
         $method_to_invoke = self::getMethodToInvoke();
-
-
-
 
         if (self::whetherControllerMethodExists($method_to_invoke)) {
             self::callControllerMethod($method_to_invoke);

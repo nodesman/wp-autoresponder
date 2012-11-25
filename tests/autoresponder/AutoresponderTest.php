@@ -79,7 +79,7 @@ class AutoresponderTest extends WP_UnitTestCase {
      * @expectedException NonExistentAutoresponderException
      */
     public function testNonExistentAutoresponderInitializationException() {
-    	new Autoresponder(1);
+    	Autoresponder::getAutoresponder(1);
     }
     
     public function testGetAutoresponderById() {
@@ -320,7 +320,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         }
 
 
-        $autoresponderObj = new Autoresponder(intval($autoresponder->id));
+        $autoresponderObj = Autoresponder::getAutoresponder(intval($autoresponder->id));
 
         $autoresponderMessagesRes = $autoresponderObj->getMessages();
 
@@ -346,7 +346,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         );
 
         $autoresponderRow = AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletterId, "Sample Autoresponder");
-        $testObj = new Autoresponder((int) $autoresponderRow->id);
+        $testObj = Autoresponder::getAutoresponder((int) $autoresponderRow->id);
 
         $id = $testObj->getId();
         $this->assertEquals($id, $autoresponderRow->id);

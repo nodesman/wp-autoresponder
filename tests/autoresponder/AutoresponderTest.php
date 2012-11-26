@@ -446,11 +446,11 @@ class AutoresponderTest extends WP_UnitTestCase {
     }
 
     public function testDeletionofAutoresponderResultsInCorrespondingAutoresponderSubscriptionsBeingDeleted() {
-
+        throw new Exception();
     }
 
     public function testDeletionOfAutoresponderResultsInCorrespondingQueueEmailsPendingDeliveryBeingDeleted() {
-
+        throw new Exception();
     }
     
     //TODO: Delete autoresponder    

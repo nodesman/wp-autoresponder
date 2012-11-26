@@ -45,13 +45,13 @@ class Autoresponder
     }
 
     public static function getNumberOfAutorespondersAvailable() {
-
         global $wpdb;
+
         $getNumberOfAutorespondersQuery = sprintf("SELECT COUNT(*) NUM_OF_RESPONDERS FROM {$wpdb->prefix}wpr_autoresponders a, {$wpdb->prefix}wpr_newsletters n WHERE a.nid=n.id;");
         $countResultSet = $wpdb->get_results($getNumberOfAutorespondersQuery);
         $count = (int) $countResultSet[0]->NUM_OF_RESPONDERS;
-        return $count;
 
+        return $count;
     }
 
 
@@ -59,7 +59,6 @@ class Autoresponder
     {
         return $this->id;
     }
-
 
     public function getNewsletterId()
     {

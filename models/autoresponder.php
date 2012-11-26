@@ -21,6 +21,25 @@ class Autoresponder
         $this->name = $autoresponder->name;
     }
 
+    public static function delete(Autoresponder $autoresponder) {
+        global $wpdb;
+        $deleteAutoresponderQuery = sprintf("DELETE FROM {$wpdb->prefix}wpr_autoresponders WHERE id=%d",$autoresponder->getId());
+        $wpdb->query($deleteAutoresponderQuery);
+
+        $deleteAutoresponderMessagesQuery = sprintf("DELETE FROM %swpr_autoresponder_messages WHERE aid=%d", $wpdb->prefix, $autoresponder->getId());
+        $wpdb->query($deleteAutoresponderMessagesQuery);
+    }
+
+    public static function whetherAutoresponderExists($id) {
+        try {
+            new Autoresponder($id);
+        }
+        catch (NonExistentAutoresponderException $exc) {
+            return false;
+        }
+        return true;
+    }
+
     public static function getAutoresponder($autoresponder_id) {
         return new Autoresponder($autoresponder_id);
     }
@@ -163,7 +182,6 @@ class Autoresponder
         $messages = $wpdb->get_results($getMessagesQuery);
         return $messages;
     }
-
 }
 
 class NonExistentNewsletterAutoresponderAdditionException extends Exception

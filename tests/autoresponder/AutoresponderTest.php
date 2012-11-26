@@ -9,6 +9,8 @@ class AutoresponderTest extends WP_UnitTestCase {
     
     private $newsletterId=1000;
 
+    public $autoresponder_id;
+
     public function setUp() {
         parent::setUp();
         global $wpdb;
@@ -382,8 +384,74 @@ class AutoresponderTest extends WP_UnitTestCase {
         $this->assertEquals(0, $numberOfAutorespondersAvailable);
     }
 
+    public function testDeleteAutoresponderDeletesIntendedAutoresponder() {
+        global $wpdb;
+        $autoresponder_id = 1;
+        $addAutoresponderQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponders (`nid`, `id`, `name`) VALUES (%d,%d, 'Test Autoresponder')",$this->newsletterId, $autoresponder_id);
+        $wpdb->query($addAutoresponderQuery);
+        $addAutoresponderQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponders (`nid`, `id`, `name`) VALUES (%d,%d, 'Test Autoresponder2')",$this->newsletterId, 2);
+        $wpdb->query($addAutoresponderQuery);
 
-    
+
+        $this->assertTrue(Autoresponder::whetherAutoresponderExists($autoresponder_id));
+        $this->assertTrue(Autoresponder::whetherAutoresponderExists(2));
+
+
+        Autoresponder::delete(Autoresponder::getAutoresponder($autoresponder_id));
+
+
+        $this->assertFalse(Autoresponder::whetherAutoresponderExists($autoresponder_id));
+        $this->assertTrue(Autoresponder::whetherAutoresponderExists(2));
+    }
+
+    public function testDeleteAutoresponderMessagesWhenDeletingAutoresponder() {
+
+        global $wpdb;
+
+        $addAutoresponderQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponders (`nid`, `id`, `name`) VALUES (%d, 2, 'Test Test');",$this->newsletterId);
+        $wpdb->query($addAutoresponderQuery);
+
+        for ($iter=0 ; $iter < 5; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence, attachimages) VALUES (2, '%s', 1, '%s', '%s', %d, 1)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+        }
+
+        $addAnotherQuery = sprintf("INSERT INTO %swpr_autoresponders (`nid`, `id`, `name`) VALUES (%d, 3, 'Test Another')",$wpdb->prefix, $this->newsletterId);
+        $wpdb->query($addAnotherQuery);
+
+        Autoresponder::getAutoresponder(3);
+
+        for ($iter=0 ; $iter < 5; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence, attachimages) VALUES (3, '%s', 1, '%s', '%s', %d, 1)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+        }
+
+        $one = Autoresponder::getAutoresponder(2);
+        $this->assertEquals(5, count($one->getMessages()));
+
+        $two = Autoresponder::getAutoresponder(3);
+        $this->assertEquals(5, count($two->getMessages()));
+
+        Autoresponder::delete(Autoresponder::getAutoresponder(2));
+
+        $deleteAutoresponderMessagesQuery = sprintf("DELETE FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d",2);
+        $getDeletedAutoresponderMessagesQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d",2);
+        $results = $wpdb->get_results($getDeletedAutoresponderMessagesQuery);
+        $this->assertEquals(0, count($results));
+
+        $getNonDeletedAutoresponderMessagesQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d",3);
+        $results = $wpdb->get_results($getNonDeletedAutoresponderMessagesQuery);
+
+        $this->assertEquals(5, count($results));
+    }
+
+    public function testDeletionofAutoresponderResultsInCorrespondingAutoresponderSubscriptionsBeingDeleted() {
+
+    }
+
+    public function testDeletionOfAutoresponderResultsInCorrespondingQueueEmailsPendingDeliveryBeingDeleted() {
+
+    }
     
     //TODO: Delete autoresponder    
 }

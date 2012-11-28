@@ -480,10 +480,41 @@ class AutoresponderTest extends WP_UnitTestCase {
         $numberOfResults = $numberRes[0]->num;
 
         $this->assertEquals(30, $numberOfResults);
-
     }
 
     public function testDeletionOfAutoresponderResultsInCorrespondingQueueEmailsPendingDeliveryBeingDeleted() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, id, name) VALUES (%d, 1, '%s')",$wpdb->prefix, $this->newsletterId, 'Test');
+        $wpdb->query($addAutoresponderQuery);
+
+        for ($iter =0; $iter < 30; $iter++) {
+            $addAutoresponderSubscription = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', 1, %d, %d, %d, %d)", $wpdb->prefix, $iter, -1, time()-5000, time(), time()-30000, time()-50000);
+            $wpdb->query($addAutoresponderSubscription);
+        }
+
+        for ($iter=0; $iter < 50; $iter++) {
+            $addAutoresponderEmailsQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_queue (meta_key, hash) VALUES ('AR-%d-%d-%d-%d', '%s');", 1,  $iter, $iter, $iter, md5(microtime().$iter) );
+            $wpdb->query($addAutoresponderEmailsQuery);
+        }
+
+        $getAutoresponderEmails = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE meta_key LIKE 'AR-%d-%%';",$wpdb->prefix, 1);
+        $emailsPendingDelivery = $wpdb->get_results($getAutoresponderEmails);
+
+        $num = $emailsPendingDelivery[0]->num;
+
+        $this->assertEquals(50, $num);
+
+        Autoresponder::delete(Autoresponder::getAutoresponder(1));
+
+        $getAutoresponderEmails = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE meta_key LIKE 'AR-%d-%%';",$wpdb->prefix, 1);
+        $emailsPendingDelivery = $wpdb->get_results($getAutoresponderEmails);
+
+        $num = $emailsPendingDelivery[0]->num;
+
+        $this->assertEquals(0, $num);
+
+
     }
     
     //TODO: Delete autoresponder    

@@ -19,7 +19,7 @@ class AutorespondersController
     public static  function delete() {
         $autoresponder_id = intval($_GET['id']);
         $autoresponder = Autoresponder::getAutoresponder($autoresponder_id);
-        _wpr_set("autoresponder",$autoresponder);
+        _wpr_set("autoresponder", $autoresponder);
         _wpr_setview("autoresponder_delete");
     }
 

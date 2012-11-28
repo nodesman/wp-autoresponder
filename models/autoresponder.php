@@ -28,6 +28,9 @@ class Autoresponder
 
         $deleteAutoresponderMessagesQuery = sprintf("DELETE FROM %swpr_autoresponder_messages WHERE aid=%d", $wpdb->prefix, $autoresponder->getId());
         $wpdb->query($deleteAutoresponderMessagesQuery);
+
+        $deleteSubscriptionsQuery = sprintf("DELETE FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder';", $wpdb->prefix, $autoresponder->getId());
+        $wpdb->query($deleteSubscriptionsQuery);
     }
 
     public static function whetherAutoresponderExists($id) {

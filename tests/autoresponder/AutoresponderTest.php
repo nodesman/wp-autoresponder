@@ -445,12 +445,45 @@ class AutoresponderTest extends WP_UnitTestCase {
         $this->assertEquals(5, count($results));
     }
 
-    public function testDeletionofAutoresponderResultsInCorrespondingAutoresponderSubscriptionsBeingDeleted() {
-        throw new Exception();
+    public function testDeletionOfAutoresponderResultsInCorrespondingAutoresponderSubscriptionsBeingDeleted() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, id, name) VALUES (%d, 1, '%s')",$wpdb->prefix, $this->newsletterId, 'Test');
+        $wpdb->query($addAutoresponderQuery);
+
+        for ($iter =0; $iter < 30; $iter++) {
+            $addAutoresponderSubscription = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', 1, %d, %d, %d, %d)", $wpdb->prefix, $iter, -1, time()-5000, time(), time()-30000, time()-50000);
+            $wpdb->query($addAutoresponderSubscription);
+        }
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, id, name) VALUES (%d, 2, '%s')",$wpdb->prefix, $this->newsletterId, 'Test 2');
+        $wpdb->query($addAutoresponderQuery);
+
+        for ($iter =0; $iter < 30; $iter++) {
+            $addAutoresponderSubscription = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', 2, %d, %d, %d, %d)", $wpdb->prefix, $iter, -1, time()-5000, time(), time()-30000, time()-50000);
+            $wpdb->query($addAutoresponderSubscription);
+        }
+
+        Autoresponder::delete(Autoresponder::getAutoresponder(1));
+
+
+        $getAutoresponderSubscriptionsQuery = sprintf("SELECT COUNT(*) num FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder';", $wpdb->prefix, 1);
+        $numberRes = $wpdb->get_results($getAutoresponderSubscriptionsQuery);
+
+        $numberOfResults = $numberRes[0]->num;
+
+        $this->assertEquals(0, $numberOfResults);
+
+
+        $getAutoresponderSubscriptionsQuery = sprintf("SELECT COUNT(*) num FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder';", $wpdb->prefix, 2);
+        $numberRes = $wpdb->get_results($getAutoresponderSubscriptionsQuery);
+        $numberOfResults = $numberRes[0]->num;
+
+        $this->assertEquals(30, $numberOfResults);
+
     }
 
     public function testDeletionOfAutoresponderResultsInCorrespondingQueueEmailsPendingDeliveryBeingDeleted() {
-        throw new Exception();
     }
     
     //TODO: Delete autoresponder    

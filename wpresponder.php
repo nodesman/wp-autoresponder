@@ -77,7 +77,8 @@ if (!defined("WPR_DEFS")) {
 
     include_once __DIR__ . '/conf/routes.php';
     include_once "$helpersDir/routing.php";
-    
+    include_once "$helpersDir/paging.php";
+
     $GLOBALS['db_checker'] = new DatabaseChecker();
     $GLOBALS['wpr_globals'] = array();
 

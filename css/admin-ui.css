@@ -295,8 +295,95 @@ h2.wpr-autoresponder-title a {
     padding: 10px 0 1px 10px ;
 }
 
-
 .wpr-chrome ul {
     list-style: disc;
     padding: 0 0 0 20px;;
+}
+
+.autoresponder-manage.wpr-chrome table {
+    font-size: 12px;
+}
+
+
+.autoresponder-manage .day-index {
+    font-size: 17px;
+    vertical-align: middle;;
+    text-transform: uppercase;
+}
+
+td.message-title {
+    width: auto;
+}
+
+h2.message-title {
+    font-size: 19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-wrap: hidden;
+    max-width: 100% ;
+    margin: 0;
+    padding: 0;
+
+}
+
+.wpr-chrome.autoresponder-manage .row {
+    background-color: #ccc;
+}
+
+.wpr-chrome.autoresponder-manage .row:after {
+    content: '';
+    display: block;
+    clear:both;
+}
+
+.wpr-chrome.autoresponder-manage .row .column {
+    height: 100%;
+    display: table-cell;
+}
+
+.wpr-chrome.autoresponder-manage .row .column.day-index {
+    padding: 15px;
+    width: 70px;
+}
+
+.wpr-chrome.autoresponder-manage .row.head {
+    background-color: #a0a0a0 ;
+}
+
+.wpr-chrome.autoresponder-manage .row.head .column.message-title {
+    font-size: 18px;;
+}
+
+
+.wpr-chrome.autoresponder-manage .row .column.edit-link {
+    padding: 15px;
+    width: 5%;
+
+}
+
+.wpr-chrome.autoresponder-manage .row .column.delete-link {
+    padding: 15px;
+    width: 5%;
+}
+.wpr-chrome.autoresponder-manage .row .column.delete-link a {
+    color: #f00;
+}
+
+
+
+.wpr-chrome.autoresponder-manage .row .column.message-title {
+    padding: 15px;
+    max-width: 600px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wpr-chrome.autoresponder-manage .row .column.message-title  a {
+    font-size: 16px;
+    color: #f04040;
+    font-weight: normal;
+}
+
+.wpr-chrome.autoresponder-manage .row .column.message-title h2 {
 }

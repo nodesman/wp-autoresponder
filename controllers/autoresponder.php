@@ -12,6 +12,10 @@ function _wpr_autoresponder_add() {
 function _wpr_autoresponder_delete() {
     AutorespondersController::delete();
 }
+
+function _wpr_autoresponder_manage() {
+    AutorespondersController::manage();
+}
 class AutorespondersController
 {
     private $defaultAutorespondersPerPage = 10;
@@ -66,7 +70,7 @@ class AutorespondersController
 
         if (0 == count($errors)) {
             $autoresponder = Autoresponder::addAutoresponder($post_data['nid'],$post_data['name']);
-            wp_redirect("admin.php?page=_wpr/autoresponders&action=manage&aid=".$autoresponder->getId());
+            wp_redirect("admin.php?page=_wpr/autoresponders&action=manage&id=".$autoresponder->getId());
         }
 
         _wpr_set("_wpr_add_errors", $errors);
@@ -93,6 +97,20 @@ class AutorespondersController
             'nid' => $_POST['nid']
         );
     }
+
+
+    public function autoresponderMessagesList() {
+
+    }
+
+
+    public static function manage() {
+
+        _wpr_setview("autoresponder_manage");
+
+
+    }
+
 
 }//end class
 

@@ -76,8 +76,10 @@ if (!defined("WPR_DEFS")) {
     include_once "$modelsDir/autoresponder.php";
 
     include_once __DIR__ . '/conf/routes.php';
-    include_once "$helpersDir/routing.php";
-    include_once "$helpersDir/paging.php";
+    include_once __DIR__ . '/conf/files.php';
+
+    include_once __DIR__."/helpers/routing.php";
+    include_once __DIR__."/helpers/paging.php";
 
     $GLOBALS['db_checker'] = new DatabaseChecker();
     $GLOBALS['wpr_globals'] = array();
@@ -152,8 +154,7 @@ if (!defined("WPR_DEFS")) {
         wp_enqueue_script("wpresponder-ckeditor");
         wp_enqueue_script("jquery");
 	}
-	
-	
+
 	function wpr_enqueue_admin_scripts()
     {
         $directory = str_replace("wpresponder.php", "", __FILE__);
@@ -180,98 +181,139 @@ if (!defined("WPR_DEFS")) {
         }
 
     }
-        
-        
-        
-        function _wpr_admin_init()
+
+    function _wpr_admin_init()
+    {
+        $first_run = get_option("_wpr_firstrunv526");
+        if ($first_run != "done")
         {
-            
-            //first run?
-            $first_run = get_option("_wpr_firstrunv526");
-            if ($first_run != "done")
-            {
-                    _wpr_firstrunv526();
-                    add_option("_wpr_firstrunv526","done");
-            }
+                _wpr_firstrunv526();
+                add_option("_wpr_firstrunv526","done");
         }
+    }
         
-        function _wpr_load_plugin_textdomain() 
-        {
-            $domain = 'wpr_autoresponder';
-            $locale = apply_filters('plugin_locale', get_locale(), $domain);
-            $plugindir = dirname(plugin_basename(__FILE__));
-            load_textdomain($domain, WP_LANG_DIR.'/'.$plugindir.'/'.$domain.'-'.$locale.'.mo');
-            load_plugin_textdomain($domain, FALSE, $plugindir.'/languages/');
-        }
+    function _wpr_load_plugin_textdomain()
+    {
+        $domain = 'wpr_autoresponder';
+        $locale = apply_filters('plugin_locale', get_locale(), $domain);
+        $plugindir = dirname(plugin_basename(__FILE__));
+        load_textdomain($domain, WP_LANG_DIR.'/'.$plugindir.'/'.$domain.'-'.$locale.'.mo');
+        load_plugin_textdomain($domain, FALSE, $plugindir.'/languages/');
+    }
 	
 	function wpresponder_init_method() 
 	{
 		//load the scripts only for the administrator.
 		global $current_user;
 		global $db_checker;
-                
-                _wpr_load_plugin_textdomain();
-                
-                $activationDate = get_option("_wpr_NEWAGE_activation");
-                if (empty($activationDate) || !$activationDate)
-                {
-                    $timeNow = time();
-                    update_option("_wpr_NEWAGE_activation",$timeNow);
-                    /*
-                     * Because of the lack of tracking that was done in previous versions
-                     * of the blog category subscriptions, this version will deliver
-                     * blog posts to blog category subscribers ONLY after this date 
-                     * This was done to prevent triggering a full delivery of all 
-                     * blog posts in all categories to the respective category subscribers
-                     * on upgrade to this version.
-                     * I came up with the lousy name. Was a good idea at the time. 
-                     */
-                }
 
-		if (isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 1)
-		{
-			require "optin.php";			
-			exit;
-		}
-		
-		if (isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 2)
-		{
-			require "verify.php";	
-			exit;
-		}
-                
-                
-		
-		//a subscriber is trying to confirm their subscription. 
-		if (isset($_GET['wpr-confirm']) && $_GET['wpr-confirm']!=2)
-		{
-			include "confirm.php";			
-			exit;
-		}
-		
-		if (isset($_GET['wpr-vb']))
- 		{
-		    $vb = intval($_GET['wpr-vb']);
-		    if (isset($_GET['wpr-vb']) && $vb > 0)
-		    {
-		       require "broadcast_html_frame.php";
-		       exit;
-		    }
-        }
-		
-		require WPR_PLUGIN_DIR."/proxy.php";
-		
-		do_action("_wpr_init");
-		
+        _wpr_load_plugin_textdomain();
+        _wpr_add_required_blogseries_variables();
+
+		if (_wpr_whether_optin_post_request())
+            _wpr_optin();
+		if (_wpr_whether_verify_subscription_request())
+            _wpr_render_verify_email_address_page();
+		if (_wpr_whether_confirm_subscription_request())
+            _wpr_render_confirm_subscription();
+		if (_wpr_whether_html_broadcast_view_frame_request())
+             _wpr_render_broadcast_view_frame();
+        if (_wpr_whether_file_request())
+            _wpr_serve_file();
+        if (_wpr_whether_confirmed_subscription_request())
+            _wpr_render_confirmed_subscription_page();
+        if (_wpr_whether_subscription_management_page_request())
+            _wpr_render_subscription_management_page();
+        if (_wpr_whether_template_html_request())
+            _wpr_render_template_html();
+        if (_wpr_whether_wpresponder_admin_page())
+            Routing::init();
+        if (_wpr_whether_admin_popup())
+            _wpr_render_admin_screen_popup();
+
 		_wpr_attach_cron_actions_to_functions();
-		
-		add_action('admin_menu', 'wpr_admin_menu');
+        _wpr_register_wpresponder_scripts();
+        _wpr_ensure_single_instance_of_cron_is_registered();
+        _wpr_attach_to_non_wpresponder_email_delivery_filter();
 
-		if (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']))
-		{
-			Routing::init();
-		}
+        do_action("_wpr_init");
+        add_action('admin_menu', 'wpr_admin_menu');
+        add_action('admin_init','wpr_enqueue_admin_scripts');
+        add_action('admin_menu', 'wpresponder_meta_box_add');
+        add_action('edit_post', "wpr_edit_post_save");
+		add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
+        add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
+        add_action('publish_post', "wpr_add_post_save");
+	}
 
+    function _wpr_attach_to_non_wpresponder_email_delivery_filter()
+    {
+        //TODO: This doesn't work. Write unit tests for this.
+        add_filter("wp_mail", "_wpr_non_wpr_email_sent");
+    }
+
+    function _wpr_render_admin_screen_popup()
+    {
+        switch ($_GET['wpr-admin-action']) {
+            case 'preview_email':
+                include "preview_email.php";
+                exit;
+                break;
+            case 'view_recipients':
+                include("view_recipients.php");
+                exit;
+                break;
+            case 'filter':
+                include("filter.php");
+                exit;
+                break;
+            case 'delete_mailout':
+                include "delmailout.php";
+                exit;
+                break;
+        }
+    }
+
+    function _wpr_whether_admin_popup()
+    {
+        return isset($_GET['wpr-admin-action']);
+    }
+
+    function _wpr_render_template_html()
+    {
+        include "templateproxy.php";
+        exit;
+    }
+
+    function _wpr_whether_template_html_request()
+    {
+        return isset($_GET['wpr-template']);
+    }
+
+    function _wpr_render_subscription_management_page()
+    {
+        include "manage.php";
+        exit;
+    }
+
+    function _wpr_whether_subscription_management_page_request()
+    {
+        return isset($_GET['wpr-manage']);
+    }
+
+    function _wpr_render_confirmed_subscription_page()
+    {
+        include "confirmed.php";
+        exit;
+    }
+
+    function _wpr_whether_confirmed_subscription_request()
+    {
+        return isset($_GET['wpr-confirm']) && $_GET['wpr-confirm'] == 2;
+    }
+
+    function _wpr_register_wpresponder_scripts()
+    {
         $containingdirectory = basename(__DIR__);
         $url = get_bloginfo("wpurl");
         wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
@@ -279,86 +321,118 @@ if (!defined("WPR_DEFS")) {
         wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
         wp_register_script("wpresponder-ckeditor", "/" . PLUGINDIR . "/" . $containingdirectory . "/ckeditor/ckeditor.js");
         wp_register_script("wpresponder-addedit", "/" . PLUGINDIR . "/" . $containingdirectory . "/script.js");
+    }
 
+    function _wpr_whether_wpresponder_admin_page()
+    {
+        return is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']);
+    }
+
+    function _wpr_serve_file()
+    {
+        global $wpr_files;
+        $name = $_GET['wpr-file'];
+        if (preg_match("@.*\.js@", $wpr_files[$name]))
+            header("Content-Type: text/javascript");
+        else if (preg_match("@.*\.css@", $wpr_files[$name]))
+            header("Content-Type: text/css");
+        else if (preg_match("@.*\.png@", $wpr_files[$name]))
+            header("Content-Type: image/png");
+        $file_path = __DIR__ . "/{$wpr_files[$name]}";
+        readfile($file_path);
+        exit;
+    }
+
+    function _wpr_whether_file_request()
+    {
+        global $wpr_files;
+        return isset($_GET['wpr-file']) && isset($wpr_files[$_GET['wpr-file']]);
+    }
+
+    function _wpr_render_broadcast_view_frame()
+    {
+        $vb = intval($_GET['wpr-vb']);
+        if (isset($_GET['wpr-vb']) && $vb > 0) {
+            require "broadcast_html_frame.php";
+            exit;
+        }
+    }
+
+    function _wpr_whether_html_broadcast_view_frame_request()
+    {
+        return isset($_GET['wpr-vb']);
+    }
+
+    function _wpr_whether_confirm_subscription_request()
+    {
+        return isset($_GET['wpr-confirm']) && $_GET['wpr-confirm'] != 2;
+    }
+
+    function _wpr_render_confirm_subscription()
+    {
+        include "confirm.php";
+        exit;
+    }
+
+    function _wpr_whether_verify_subscription_request()
+    {
+        return isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 2;
+    }
+
+    function _wpr_render_verify_email_address_page()
+    {
+        require "verify.php";
+        exit;
+    }
+
+    function _wpr_optin()
+    {
+        require "optin.php";
+        exit;
+    }
+
+    function _wpr_whether_optin_post_request()
+    {
+        return isset($_GET['wpr-optin']) && $_GET['wpr-optin'] == 1;
+    }
+
+    function _wpr_add_required_blogseries_variables()
+    {
+        $activationDate = get_option("_wpr_NEWAGE_activation");
+        if (empty($activationDate) || !$activationDate) {
+            $timeNow = time();
+            update_option("_wpr_NEWAGE_activation", $timeNow);
+            /*
+             * Because of the lack of tracking that was done in previous versions
+             * of the blog category subscriptions, this version will deliver
+             * blog posts to blog category subscribers ONLY after this date
+             * This was done to prevent triggering a full delivery of all
+             * blog posts in all categories to the respective category subscribers
+             * on upgrade to this version.
+             * I came up with the lousy name. Was a good idea at the time.
+             */
+        }
+    }
+
+    function _wpr_ensure_single_instance_of_cron_is_registered()
+    {
         /*
          * The following code ensures that the WP Responder's crons are always scheduled no matter what
          * Sometimes the crons go missing from cron's registry. Only the great zeus knows why that happens.
          * The following code ensures that the crons are always scheduled immediately after they go missing.
          * It also unenqueues duplicate crons that get enqueued when the plugin is deactivated and then reactivated.
          */
-                
-        //run the single instances every day once:
+
         $last_run_esic = intval(_wpr_option_get("_wpr_ensure_single_instances_of_crons_last_run"));
         $timeSinceLast = time() - $last_run_esic;
-        if ($timeSinceLast > WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY)
-        {
+        if ($timeSinceLast > WPR_ENSURE_SINGLE_INSTANCE_CHECK_PERIODICITY) {
             do_action("_wpr_ensure_single_instances_of_crons");
-            $currentTime= time();
-            _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime );
+            $currentTime = time();
+            _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime);
         }
-		
-		if (isset($_GET['wpr-confirm']) && $_GET['wpr-confirm']==2)
-		{
-			include "confirmed.php";
-			exit;
-		}
-		
-		if (isset($_GET['wpr-manage']))
-		{
-			include "manage.php";
-			exit;
-		}
-		
-		if (isset($_GET['wpr-admin-action']) )
-		{
-			switch ($_GET['wpr-admin-action'])
-			{
-				case 'preview_email':
-					include "preview_email.php";
-					exit;
-				break;
-				case 'view_recipients':
-					include("view_recipients.php");
-					exit;
-				break;
-				case 'filter':
-					include("filter.php");
-					exit;
-				break;
-				case 'delete_mailout':
-				
-				include "delmailout.php";
-				exit;
-				
-				break;
-				case '':
-				
-				break;
-				
-                        }
-		}
-		
-		if (isset($_GET['wpr-template']))
-		{
-			include "templateproxy.php";
-			exit;
-		}
-		
-		 add_action('admin_init','wpr_enqueue_admin_scripts');
-		 add_action('admin_menu', 'wpresponder_meta_box_add');
-		 
-		//count all non-WP Autoresponder emails so that the hourly limit can be suitably adjusted
-		//TODO: This doesn't work. Write unit tests for this.
-        add_filter("wp_mail","_wpr_non_wpr_email_sent");
-		 
+    }
 
-		 add_action('edit_post', "wpr_edit_post_save");
-		 add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
-		 add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
-		 add_action('publish_post', "wpr_add_post_save");	
-	}    
-	
-	add_action('widgets_init','wpr_widgets_init');
+    add_action('widgets_init','wpr_widgets_init');
 	add_action('init', "wpresponder_init_method",1);
 	register_activation_hook(__FILE__,"wpresponder_install");
 	register_deactivation_hook(__FILE__,"wpresponder_deactivate");

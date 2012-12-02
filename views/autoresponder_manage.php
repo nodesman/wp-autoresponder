@@ -8,8 +8,6 @@
         </ul>
     </div>
     <h2>Manage Autoresponder</h2>
-
-
     <div class="autoresponder-manage">
         <div class="row head">
             <div class="day-index column" valign="middle">Day #</div>

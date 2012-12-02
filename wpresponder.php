@@ -159,7 +159,7 @@ if (!defined("WPR_DEFS")) {
         $directory = str_replace("wpresponder.php", "", __FILE__);
         $containingdirectory = basename($directory);
         $home_url = get_bloginfo("wpurl");
-        if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@_wpr/.*@", $_GET['page'])) {
+        if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
             wp_enqueue_script('post');
             wp_enqueue_script('editor');
             wp_enqueue_script('angularjs');
@@ -170,8 +170,6 @@ if (!defined("WPR_DEFS")) {
             wp_enqueue_script('quicktags');
             wp_enqueue_script('jquery');
             wp_enqueue_script('jqueryui-full');
-
-
             wp_enqueue_style('wpresponder-admin-ui-style', get_bloginfo('wpurl') . '/?wpr-file=admin-ui.css');
 
         }

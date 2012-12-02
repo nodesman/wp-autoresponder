@@ -48,10 +48,9 @@
                 </select>
                       </td>
                 </tr>
-        </table>
-
-                <input type="hidden" name="wpr_form" value="add_autoresponder"/>
-                <?php wp_nonce_field('_wpr_add_autoresponder', '_wpr_add_autoresponder'); ?>
+            </table>
+            <input type="hidden" name="wpr_form" value="add_autoresponder"/>
+            <?php wp_nonce_field('_wpr_add_autoresponder', '_wpr_add_autoresponder'); ?>
 			<input type="submit" value="Add" class="wpr-action-button">
 			<a href="admin.php?page=_wpr/autoresponders" class="wpr-button">Cancel</a>
 			</form>

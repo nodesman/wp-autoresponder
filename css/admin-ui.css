@@ -295,12 +295,12 @@ h2.wpr-autoresponder-title a {
     padding: 10px 0 1px 10px ;
 }
 
-.wpr-chrome ul {
+#wpr-chrome ul {
     list-style: disc;
     padding: 0 0 0 20px;;
 }
 
-.autoresponder-manage.wpr-chrome table {
+.autoresponder-manage#wpr-chrome table {
     font-size: 12px;
 }
 
@@ -326,52 +326,52 @@ h2.message-title {
 
 }
 
-.wpr-chrome.autoresponder-manage .row {
+#wpr-chrome.autoresponder-manage .row {
     background-color: #ccc;
 }
 
-.wpr-chrome.autoresponder-manage .row:after {
+#wpr-chrome.autoresponder-manage .row:after {
     content: '';
     display: block;
     clear:both;
 }
 
-.wpr-chrome.autoresponder-manage .row .column {
+#wpr-chrome.autoresponder-manage .row .column {
     height: 100%;
     display: table-cell;
 }
 
-.wpr-chrome.autoresponder-manage .row .column.day-index {
+#wpr-chrome.autoresponder-manage .row .column.day-index {
     padding: 15px;
     width: 70px;
 }
 
-.wpr-chrome.autoresponder-manage .row.head {
+#wpr-chrome.autoresponder-manage .row.head {
     background-color: #a0a0a0 ;
 }
 
-.wpr-chrome.autoresponder-manage .row.head .column.message-title {
+#wpr-chrome.autoresponder-manage .row.head .column.message-title {
     font-size: 18px;;
 }
 
 
-.wpr-chrome.autoresponder-manage .row .column.edit-link {
+#wpr-chrome.autoresponder-manage .row .column.edit-link {
     padding: 15px;
     width: 5%;
 
 }
 
-.wpr-chrome.autoresponder-manage .row .column.delete-link {
+#wpr-chrome.autoresponder-manage .row .column.delete-link {
     padding: 15px;
     width: 5%;
 }
-.wpr-chrome.autoresponder-manage .row .column.delete-link a {
+#wpr-chrome.autoresponder-manage .row .column.delete-link a {
     color: #f00;
 }
 
 
 
-.wpr-chrome.autoresponder-manage .row .column.message-title {
+#wpr-chrome.autoresponder-manage .row .column.message-title {
     padding: 15px;
     max-width: 600px;
     text-overflow: ellipsis;
@@ -379,11 +379,11 @@ h2.message-title {
     overflow: hidden;
 }
 
-.wpr-chrome.autoresponder-manage .row .column.message-title  a {
+#wpr-chrome.autoresponder-manage .row .column.message-title  a {
     font-size: 16px;
     color: #f04040;
     font-weight: normal;
 }
 
-.wpr-chrome.autoresponder-manage .row .column.message-title h2 {
+#wpr-chrome.autoresponder-manage .row .column.message-title h2 {
 }

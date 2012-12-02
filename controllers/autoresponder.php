@@ -27,6 +27,12 @@ class AutorespondersController
         _wpr_setview("autoresponder_delete");
     }
 
+    public static function delete_handler() {
+        $id = $_POST['autoresponder'];
+        Autoresponder::delete(Autoresponder::getAutoresponder(intval($id)));
+        wp_redirect("admin.php?page=_wpr/autoresponders");
+    }
+
     public function autorespondersListPage()
     {
         $numberOfPages = 1;
@@ -103,29 +109,26 @@ class AutorespondersController
 
     }
 
-
     public static function manage() {
-
         _wpr_setview("autoresponder_manage");
-
-
     }
-
-
 }//end class
 
-
 add_action("_wpr_add_autoresponder_post_handler","_wpr_add_autoresponder_post_handler");
+add_action("_wpr_delete_autoresponder_post_handler","_wpr_delete_autoresponder_post_handler");
 
 function _wpr_add_autoresponder_post_handler() {
     global $wpdb;
-
-
     if (!wp_verify_nonce($_POST['_wpr_add_autoresponder'], '_wpr_add_autoresponder')) {
         return;
     }
-
     AutorespondersController::add_post_handler();
+}
 
-
+function _wpr_delete_autoresponder_post_handler() {
+    global $wpdb;
+    if (!wp_verify_nonce($_POST['_wpr_delete_autoresponder'], '_wpr_delete_autoresponder')) {
+        return;
+    }
+    AutorespondersController::delete_handler();
 }

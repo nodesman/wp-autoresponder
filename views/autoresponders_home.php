@@ -30,7 +30,7 @@
                             
                             
                             <div class="title-actions">
-                            	<h2 class="wpr-autoresponder-title"><a href="#"><?php echo $autoresponder->getName(); ?></a>
+                            	<h2 class="wpr-autoresponder-title"><a href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId() ?>"><?php echo $autoresponder->getName(); ?></a>
                             	</h2>
 
                             	<h3><?php printf(__('belongs to %s newsletter.'), $autoresponder->getNewsletter()->getName()); ?></h3>
@@ -107,44 +107,6 @@
                 </script>
             </div>
         </div>
-
-        <div class="tablenav">
-            <div class="tablenav-pages">
-                <div class="pagination-links">
-                    <?php
-                    
-                    if ($pages['start'] > 0)
-                    {
-	                    if (false !== $pages['before']) {
-	
-	                        ?>
-	                        <a href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
-	                        <?php
-	                    }
-	                    ?>
-	
-	                    <?php
-	                    $start = $pages['start'];
-	                    $end = $pages['end'];
-	
-	                    for ($iter=$start;$iter<=$end;$iter++) {
-	                        ?>
-	                        <a class="next-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $iter ?>"><?php echo $iter ?></a>
-	                        <?php
-	                    }
-	                    ?>
-	                    <?php
-	                    if (false !== $pages['after']) {
-	
-	                        ?>
-	                        <a class="last-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['after'] ?>">&raquo;</a>
-	                        <?php
-	                    }
-	                }
-                    ?>
-                </div>
-            </div>
-        </div>
-
+        <?php require_once __DIR__."/templates/paging.php"; ?>
     </div>
 </div>

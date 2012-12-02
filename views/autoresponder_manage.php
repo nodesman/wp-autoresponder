@@ -4,7 +4,7 @@
     <div id="breadcrumb">
         <ul>
             <li><a href="admin.php?page=_wpr/autoresponders"><?php _e("Autoresponders"); ?></a></li>
-            <li><a href="admin.php?page=_wpr/autoresponders&action=manage&id=[IDGOESHERE]?>"><?php _e("Delete"); ?></a></li>
+            <li><a href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>"><?php _e(sprintf("Manage '%s'", $autoresponder->getName())); ?></a></li>
         </ul>
     </div>
     <h2>Manage Autoresponder</h2>

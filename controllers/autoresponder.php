@@ -110,6 +110,13 @@ class AutorespondersController
     }
 
     public static function manage() {
+
+        $autoresponder_id = $_GET['id'];
+
+        $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
+
+        _wpr_set("autoresponder", $autoresponder);
+
         _wpr_setview("autoresponder_manage");
     }
 }//end class

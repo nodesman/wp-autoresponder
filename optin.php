@@ -47,8 +47,6 @@ if ($success)
 	$return_url = wpr_sanitize($_POST['return_url']);
 	$commentfield = $_POST['comment'];
 	
-	
-	
 	if (!empty($commentfield))
 	{
 		//stupid spambot spamming my subscription forms. damn the bot!

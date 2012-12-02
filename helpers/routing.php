@@ -56,7 +56,7 @@ class UnknownControllerInvokeRequested extends Exception {
 
 class Routing {
 
-    public static function init() {
+    public static function run_controller() {
         global $wpr_routes;
         _wpr_handle_post();
         $path = $_GET['page'];

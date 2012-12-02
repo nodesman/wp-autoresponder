@@ -93,13 +93,81 @@ if (!defined("WPR_DEFS")) {
 		}
 		
 		add_action("admin_notices","_wpr_admin_notices_show");
-		
 	}
 	
-	add_action("plugins_loaded","_wpr_nag");
-    add_action("admin_init","_wpr_admin_init");
-	
-	function no_address_error()
+
+    class WP_Autoresponder {
+
+        function __construct() {
+
+            add_action('admin_init',array(&$this, 'admin_init'));
+            add_action('init', array(&$this, 'init'),1);
+            add_action('plugins_loaded','_wpr_nag');
+            add_action('admin_menu', 'wpr_admin_menu');
+            add_action('admin_menu', 'wpresponder_meta_box_add');
+            add_action('widgets_init','wpr_widgets_init');
+            register_activation_hook(__FILE__,"wpresponder_install");
+            register_deactivation_hook(__FILE__,"wpresponder_deactivate");
+            add_filter('cron_schedules','wpr_cronschedules');
+
+        }
+
+        function init()
+        {
+            _wpr_load_plugin_textdomain();
+            _wpr_add_required_blogseries_variables();
+
+            if (_wpr_whether_optin_post_request())
+                _wpr_optin();
+            if (_wpr_whether_verify_subscription_request())
+                _wpr_render_verify_email_address_page();
+            if (_wpr_whether_confirm_subscription_request())
+                _wpr_render_confirm_subscription();
+            if (_wpr_whether_html_broadcast_view_frame_request())
+                _wpr_render_broadcast_view_frame();
+            if (_wpr_whether_file_request())
+                _wpr_serve_file();
+            if (_wpr_whether_confirmed_subscription_request())
+                _wpr_render_confirmed_subscription_page();
+            if (_wpr_whether_subscription_management_page_request())
+                _wpr_render_subscription_management_page();
+
+            _wpr_attach_cron_actions_to_functions();
+            _wpr_ensure_single_instance_of_cron_is_registered(); //TODO: Get rid of this and make something more appropriate
+            _wpr_attach_to_non_wpresponder_email_delivery_filter();
+
+            do_action("_wpr_init");
+        }
+
+
+        function admin_init()
+        {
+            if (_wpr_whether_first_run()) {
+                _wpr_do_first_run_initializations();
+            }
+
+            _wpr_initialize_admin_pages();
+
+            if (_wpr_whether_admin_popup())
+                _wpr_render_admin_screen_popup();
+
+            if (_wpr_whether_template_html_request())
+                _wpr_render_template_html();
+
+            if (_wpr_whether_wpresponder_admin_page())
+                Routing::run_controller();
+
+
+            add_action('edit_post', "wpr_edit_post_save");
+            add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
+            add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
+            add_action('publish_post', "wpr_add_post_save");
+        }
+    }
+
+    $WPR = new WP_Autoresponder();
+
+    function no_address_error()
 	{
             ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
 	}
@@ -139,14 +207,11 @@ if (!defined("WPR_DEFS")) {
 			return false;
 		
 	}
-	
-	
+
 	function wpr_enqueue_post_page_scripts()
 	{
 		if (isset($_GET['post_type']) && $_GET['post_type'] == "page")
-		{
-			return;		
-		}
+			return;
 
         wp_enqueue_style("wpresponder-tabber", get_bloginfo("wpurl") . "/?wpr-file=tabber.css");
         wp_enqueue_script("wpresponder-tabber");
@@ -155,43 +220,33 @@ if (!defined("WPR_DEFS")) {
         wp_enqueue_script("jquery");
 	}
 
-	function wpr_enqueue_admin_scripts()
+	function _wpr_enqueue_admin_scripts()
     {
-        $directory = str_replace("wpresponder.php", "", __FILE__);
-        $containingdirectory = basename($directory);
-        $home_url = get_bloginfo("wpurl");
-        if (current_user_can('manage_newsletters') && isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
+        $url = $_GET['page'];
+        $wp_home_url = get_bloginfo('wpurl');
+
+        if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
             wp_enqueue_script('post');
-            wp_enqueue_script('editor');
-            wp_enqueue_script('angularjs');
-            wp_enqueue_script('word-count');
-            wp_enqueue_script('wpresponder-uis', "$home_url/?wpr-file=jqui.js");
-            add_thickbox();
-            wp_enqueue_script('media-upload');
-            wp_enqueue_script('quicktags');
             wp_enqueue_script('jquery');
             wp_enqueue_script('jqueryui-full');
-            wp_enqueue_style('wpresponder-admin-ui-style', get_bloginfo('wpurl') . '/?wpr-file=admin-ui.css');
 
         }
-        $url = (isset($_GET['page'])) ? $_GET['page'] : "";
         if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || preg_match("@allmailouts\.php\&action=edit@", $url)) {
             wp_enqueue_script("wpresponder-ckeditor");
             wp_enqueue_script("jquery");
         }
 
+        add_action("admin_head", "_wpr_admin_enqueue_less");
     }
 
-    function _wpr_admin_init()
+    function _wpr_admin_enqueue_less()
     {
-        $first_run = get_option("_wpr_firstrunv526");
-        if ($first_run != "done")
-        {
-                _wpr_firstrunv526();
-                add_option("_wpr_firstrunv526","done");
-        }
-    }
-        
+    ?>
+<link rel="stylesheet/less" type="text/css" href="<?php echo get_bloginfo('wpurl') ?>/?wpr-file=admin-ui.less"/>
+<script type="text/javascript" src="<?php echo get_bloginfo('wpurl') ?>/?wpr-file=less.js"></script>
+<?php
+     }
+
     function _wpr_load_plugin_textdomain()
     {
         $domain = 'wpr_autoresponder';
@@ -200,51 +255,25 @@ if (!defined("WPR_DEFS")) {
         load_textdomain($domain, WP_LANG_DIR.'/'.$plugindir.'/'.$domain.'-'.$locale.'.mo');
         load_plugin_textdomain($domain, FALSE, $plugindir.'/languages/');
     }
-	
-	function wpresponder_init_method() 
-	{
-		//load the scripts only for the administrator.
-		global $current_user;
-		global $db_checker;
 
-        _wpr_load_plugin_textdomain();
-        _wpr_add_required_blogseries_variables();
 
-		if (_wpr_whether_optin_post_request())
-            _wpr_optin();
-		if (_wpr_whether_verify_subscription_request())
-            _wpr_render_verify_email_address_page();
-		if (_wpr_whether_confirm_subscription_request())
-            _wpr_render_confirm_subscription();
-		if (_wpr_whether_html_broadcast_view_frame_request())
-             _wpr_render_broadcast_view_frame();
-        if (_wpr_whether_file_request())
-            _wpr_serve_file();
-        if (_wpr_whether_confirmed_subscription_request())
-            _wpr_render_confirmed_subscription_page();
-        if (_wpr_whether_subscription_management_page_request())
-            _wpr_render_subscription_management_page();
-        if (_wpr_whether_template_html_request())
-            _wpr_render_template_html();
-        if (_wpr_whether_wpresponder_admin_page())
-            Routing::init();
-        if (_wpr_whether_admin_popup())
-            _wpr_render_admin_screen_popup();
+    function _wpr_do_first_run_initializations()
+    {
+        _wpr_firstrunv526();
+        add_option("_wpr_firstrunv526", "done");
+    }
 
-		_wpr_attach_cron_actions_to_functions();
+    function _wpr_whether_first_run()
+    {
+        return get_option("_wpr_firstrunv526") != "done";
+    }
+
+
+    function _wpr_initialize_admin_pages()
+    {
         _wpr_register_wpresponder_scripts();
-        _wpr_ensure_single_instance_of_cron_is_registered();
-        _wpr_attach_to_non_wpresponder_email_delivery_filter();
-
-        do_action("_wpr_init");
-        add_action('admin_menu', 'wpr_admin_menu');
-        add_action('admin_init','wpr_enqueue_admin_scripts');
-        add_action('admin_menu', 'wpresponder_meta_box_add');
-        add_action('edit_post', "wpr_edit_post_save");
-		add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
-        add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
-        add_action('publish_post', "wpr_add_post_save");
-	}
+        _wpr_enqueue_admin_scripts();
+    }
 
     function _wpr_attach_to_non_wpresponder_email_delivery_filter()
     {
@@ -431,19 +460,12 @@ if (!defined("WPR_DEFS")) {
             _wpr_option_set("_wpr_ensure_single_instances_of_crons_last_run", $currentTime);
         }
     }
-
-    add_action('widgets_init','wpr_widgets_init');
-	add_action('init', "wpresponder_init_method",1);
-	register_activation_hook(__FILE__,"wpresponder_install");
-	register_deactivation_hook(__FILE__,"wpresponder_deactivate");
-	$url = $_SERVER['REQUEST_URI'];	
-	
 	
 	function wpr_widgets_init()
 	{
 		return register_widget("WP_Subscription_Form_Widget");
 	}
 
-    add_filter('cron_schedules','wpr_cronschedules');
+
 }
 	

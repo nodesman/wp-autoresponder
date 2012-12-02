@@ -43,7 +43,7 @@ class RoutesTest  extends WP_UnitTestCase {
         $wpdb->query($truncateNewslettersQuery);
 
         $_GET['page'] = '_wpr/autoresponders';
-        Routing::init();
+        Routing::run_controller();
 
         $view_name = _wpr_get("_wpr_view");
         $this->assertEquals("no_newsletter", $view_name);
@@ -65,7 +65,7 @@ class RoutesTest  extends WP_UnitTestCase {
      */
     function testWhetherRequestingANonExistentURLResutlsInException() {
         $_GET['page'] = "_wpr/something_that_doesnt_exit";
-        Routing::init();
+        Routing::run_controller();
     }
 
     /**
@@ -74,7 +74,7 @@ class RoutesTest  extends WP_UnitTestCase {
     function testWhetherRequestingANonExistentSubactionResutlsInException() {
         $_GET['page'] = "_wpr/autoresponders";
         $_GET['action'] = "doesnt_exist_something";
-        Routing::init();
+        Routing::run_controller();
     }
 
 
@@ -121,7 +121,7 @@ class RoutesTest  extends WP_UnitTestCase {
             throw new DefaultActionCalledException();
         }
 
-        Routing::init();
+        Routing::run_controller();
     }
 
     /**
@@ -151,7 +151,7 @@ class RoutesTest  extends WP_UnitTestCase {
             throw new SpecificRouteItemCalledException();
         }
 
-        Routing::init();
+        Routing::run_controller();
     }
 
 
@@ -166,7 +166,7 @@ class RoutesTest  extends WP_UnitTestCase {
             $wpr_skiptest = false;
 
         }
-        Routing::init();
+        Routing::run_controller();
         $this->assertEquals(true, $wpr_skiptest);
     }
 
@@ -188,7 +188,7 @@ class RoutesTest  extends WP_UnitTestCase {
         }
 
         $_GET['page'] = '_wpr/autoresponders';
-        Routing::init();
+        Routing::run_controller();
 
         $this->assertEquals($pre_callback_invoked, true);
         $this->assertEquals($post_callback_invoked, true);

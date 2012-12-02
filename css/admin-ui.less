@@ -1,0 +1,332 @@
+td.message-title {
+  width: auto;
+}
+
+#autoresponder-add-form {
+  label {
+    width: 250px;
+    display: inline-block;
+    small {
+      padding-top: 10px;
+      display: block;
+      padding-bottom: 10px;
+    }
+  }
+}
+.wpr-action-button:hover {
+  background-color: #ff5c32 !important;
+}
+.wpr-action-button {
+  padding: 5px 14px;
+  border: 0 !important;
+  background-color: #4A4A4A !important;
+  box-shadow: 0px 0px 5px #888 inset;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  text-decoration: none;
+}
+.wpr-button {
+  padding: 5px 14px;
+  border: 0 !important;
+  background-color: #ccc !important;
+  box-shadow: 0px 0px 5px #888 inset;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: default;
+}
+.wpr-autoresponder-overview-heading {
+  margin: -10px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: #7f7d7d;
+  color: #fff;
+}
+.wpr-autoresponder-overview {
+  float:left;
+  margin: 0.5em;
+  padding: 10px;
+  min-height: 60px;
+  width: 10%;
+  position: relative;
+}
+.wpr-table {
+  display: table;
+  width: 100%;
+}
+.empty {
+  text-align: center;
+}
+#autoresponder-manage-header {
+  padding: 10px 10px;
+}
+.autoresponder-manage {
+  .day-index {
+    font-size: 17px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+}
+.autoresponder-messages-list:after {
+  display: block;
+  clear:both;
+  content: '';
+}
+.autoresponder-messages-list {
+  float: right;
+  margin: 10px;
+  padding: 5px;
+  width: 500px;
+  border: 1px solid #9c9c9c;
+  background-color: #f6efc2;
+  text-align: center;
+  select {
+    display:block;
+    width: 270px;
+    height: 200px !important;
+  }
+  h2 {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 14px;
+  }
+}
+.wpr-autoresponder-list-item.odd {
+  background-color: #f8f5f5;
+}
+.wpr-list-content {
+  background-color: #fff;
+}
+#wpr-chrome.autoresponder-manage {
+  .row.head {
+    background-color: #a0a0a0;
+    .column.message-title {
+      font-size: 18px;
+    }
+  }
+  .row {
+    background-color: #ccc;
+    .column.message-title {
+      padding: 15px;
+      max-width: 600px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      a {
+        font-size: 16px;
+        color: #f04040;
+        font-weight: normal;
+      }
+    }
+    .column.edit-link {
+      padding: 15px;
+      width: 5%;
+    }
+    .column.day-index {
+      padding: 15px;
+      width: 70px;
+    }
+    .column {
+      height: 100%;
+      display: table-cell;
+    }
+    .column.delete-link {
+      padding: 15px;
+      width: 5%;
+      a {
+        color: #f00;
+      }
+    }
+  }
+  .row:after {
+    content: '';
+    display: block;
+    clear:both;
+  }
+}
+.title-actions {
+  width: 40%;
+  float:left;
+}
+.wpr-autoresponder-list-item {
+  position:  relative;
+  display: table-row;
+  padding: 10px;
+  h3 {
+    margin: 0;
+    padding: 0;
+    color: #909090;
+    font-weight: normal;
+    font-size: 12px;
+  }
+  .title-actions {
+    padding: 1em 1em;
+  }
+  &> {
+    div {
+      vertical-align: top;
+    }
+  }
+}
+#wpr-chrome {
+  margin-top: 3em;
+  padding: 15px;
+  min-width: 1024px;
+  min-height: 50em;
+  background-color: #fff !important;
+  font-size: 14px;
+  font-family: "Helvetica", "Calibri", "Tahoma", "Arial";
+  ul {
+    list-style: disc;
+    padding: 0 0 0 20px;
+  }
+  .wpr-autoresponder-messages {
+    h2 {
+      font-size: 17px;
+      padding: 10px 0 1px 10px;
+    }
+  }
+  h2 {
+    font-size: 28px;
+    padding-bottom: 1em;
+    padding-top: 0.5em;
+  }
+}
+h2.message-title {
+  font-size: 19px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.wpr-autoresponder-action-items {
+  clear:both;
+  padding-top: 10px;
+  a {
+    display: block;
+    float:left;
+  }
+  a:last-child:after {
+    content: '';
+  }
+  a:after {
+    content: '|';
+    margin-left: 1em;
+    cursor: default;
+    text-decoration: none;
+    margin-right: 1em;
+  }
+}
+.paging {
+  .before {
+    border: 1px solid #ccc;
+  }
+}
+.empty-list-message {
+  padding: 3em;
+  text-align: center;
+}
+.autoresponder-message-actions {
+  float:right;
+  width: 220px;
+  input {
+    margin-top: 20px;
+    width: 200px;
+  }
+}
+#autoresponder-manage-header:after {
+  display: block;
+  clear:both;
+  content:'';
+}
+.wpr-list-wrapper {
+  padding-top: 40px;
+  background-color: #989898;
+}
+#breadcrumb {
+  ul {
+    margin: 0;
+    margin: -15px;
+    margin-bottom: 0;
+    padding: 0;
+    border: 1px solid #c0bebe;
+    background-color: #f0f0f0;
+    list-style:  none;
+  }
+  li:last-child:after {
+    content:'';
+  }
+  li {
+    margin-bottom: 0;
+    display: inline-block;
+    a {
+      display: inline-block;
+      padding: 10px 30px;
+      color: #a7a6a6;
+      text-decoration: none;
+      font-family:;
+    }
+    a:hover {
+      color: #000;
+      cursor: default;
+    }
+  }
+  li:after {
+    content: '>';
+    font-family: "Calibri", "Trebuchet MS", Arial;
+  }
+}
+.autoresponder-manage#wpr-chrome {
+  table {
+    font-size: 12px;
+  }
+}
+.wpr-autoresponder-messages {
+  position: relative;
+  padding: 0;
+  margin-top: 1em;
+  padding-left: 1em;
+  width: 39%;
+  max-height: 130px;
+  float:left;
+  background-color: #fff;
+  overflow-y: auto;
+  border: 	0.1em solid #ccc;
+  margin-right: 1em;
+  word-wrap: break-word;
+  overflow: hidden;
+  margin-bottom: 1em;
+  h2 {
+    background-color: #ddd;
+    font-size: 18px;
+    margin: -10px;
+    margin-left: -15px;
+    padding-left: 0.5em;
+  }
+}
+.wpr-overview-statistic {
+  display: block;
+}
+h2.wpr-autoresponder-title {
+  margin: 0 !important;
+  padding:0 !important;
+  width: 440px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 16px;
+  a {
+    color: #ff5c32;
+    text-decoration: none;
+  }
+}
+.wpr-autoresponder-list-item:after {
+  display: block;
+  clear:both;
+  content: '';
+}

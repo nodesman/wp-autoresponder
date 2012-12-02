@@ -6,6 +6,6 @@ $wpr_files = array(
     'less.js'  => 'js/less.js',
     'widget-help.png' => 'images/widget-help.png',
     'tabber.css'=>'css/tabber.css',
-    'admin-ui.css'  => 'css/admin-ui.css',
+    'admin-ui.less'  => 'css/admin-ui.less',
     'jqui.css'=>'css/jqueryui.css',
 );

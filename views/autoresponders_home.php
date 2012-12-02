@@ -25,10 +25,6 @@
                         ?>
                         <div class="wpr-table">
 	                        <div class="wpr-autoresponder-list-item <?php echo (($index+1) % 2 == 0 ) ? "even": "odd"; ?>">
-	                        
-	                        
-                            
-                            
                             <div class="title-actions">
                             	<h2 class="wpr-autoresponder-title"><a href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId() ?>"><?php echo $autoresponder->getName(); ?></a>
                             	</h2>

@@ -50,18 +50,15 @@ function _wpr_blog_series_delete()
 
 function _wpr_blog_series_list()
 {
-	global $wpdb;
-	?><div class="wrap">
+  global $wpdb;
+  ?><div class="wrap">
   <h2>Manage Post Series</h2>
   <p>With post series you can use your blog posts as follow up autoresponder emails. To do so:
-      
   <ol><li>Create a new category using the Posts > Categories link (say 'Email Marketing Series').
       <li>Either edit the previous posts that are part of the post series and mark them under this category or if you are yet to add the posts, add the new posts and mark the new posts under this category while publishing.</li>
       <li>Create a new Post series using the "Create" button below. Select the category from step 2.</li>
       <li>That's it. Now create a new subscription form. Select the follow up series to the post series you just selected. Each subscriber subscribing using that form will receive the posts in the post series in the order they were published.</li>
   </ol>
-
-
 </div>
 <form action="<? echo $_SERVER['PHP_SELF'] ?>">
   <table class="widefat">
@@ -88,34 +85,16 @@ function _wpr_blog_series_list()
 	  }
 	  ?>
     </tr>
-    
   </table>
+
 </form>
-      
 <input type="button" value="Create" onclick="window.location='admin.php?page=wpresponder/blogseries.php&action=create';" style="margin: 10px;clear:both;" class="button" />
-
-
-
-  <div style="width: 500px; background-color: #efefef; border: 1px solid #ddd; padding: 20px;"><span style="font-size: 17px; margin:10px 0px; font-weight: bold; display: block">Why Use Post Series?</span>
-  
-      Often as bloggers we use post series to:
-      
-  <ol>
-      <li>Cover a big topic more completely</li>
-      <li>Have more content that ranks higher in the search engines, see <a href="http://www.copyblogger.com/how-to-create-cornerstone-content-that-google-loves/">cornerstone content</a> by <a href="http://www.copyblogger.com">CopyBlogger.</a>
-  </ol>
-
-  Cornerstone content get a lot of traffic. You can use this content to gather more subscribers for your blog. You can do this by
-  offering to send this post series to the visitor over a 5-10 day period.
-  </div>
-
-
-
 <?php
 }
 
 function _wpr_blog_series_create()
 {
+
 	global $wpdb;
 	if (isset($_POST['name']))
 	{

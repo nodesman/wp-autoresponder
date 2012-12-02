@@ -113,6 +113,10 @@ class AutorespondersController
 
         $autoresponder_id = $_GET['id'];
         $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
+
+        $messages = $autoresponder->getMessages();
+
+        _wpr_set("messages", $messages);
         _wpr_set("autoresponder", $autoresponder);
         _wpr_setview("autoresponder_manage");
     }

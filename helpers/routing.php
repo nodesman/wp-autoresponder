@@ -113,6 +113,43 @@ class Routing {
         return $method_to_invoke;
     }
 
+    public static function serve_file()
+    {
+        global $wpr_files;
+        $name = $_GET['wpr-file'];
+        if (self::is_js_file($wpr_files, $name))
+            header("Content-Type: text/javascript");
+        else if (self::is_css_file($wpr_files, $name))
+            header("Content-Type: text/css");
+        else if (self::is_png_file($wpr_files, $name))
+            header("Content-Type: image/png");
+        $file_path = __DIR__ . "/../{$wpr_files[$name]}";
+        readfile($file_path);
+        exit;
+    }
+
+    public static function is_js_file($wpr_files, $name)
+    {
+        return preg_match("@.*\.js@", $wpr_files[$name]);
+    }
+
+    public static function is_css_file($wpr_files, $name)
+    {
+        return preg_match("@.*\.css@", $wpr_files[$name]);
+    }
+
+    public static function is_png_file($wpr_files, $name)
+    {
+        return preg_match("@.*\.png@", $wpr_files[$name]);
+    }
+
+
+    public static function whether_file_request()
+    {
+        global $wpr_files;
+        return isset($_GET['wpr-file']) && isset($wpr_files[$_GET['wpr-file']]);
+    }
+
 
     public static function render_template_html()
     {

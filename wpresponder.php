@@ -125,8 +125,9 @@ if (!defined("WPR_DEFS")) {
                 _wpr_render_confirm_subscription();
             if (_wpr_whether_html_broadcast_view_frame_request())
                 _wpr_render_broadcast_view_frame();
-            if (_wpr_whether_file_request())
-                _wpr_serve_file();
+            if (Routing::whether_file_request())
+                Routing::serve_file();
+
             if (_wpr_whether_confirmed_subscription_request())
                 _wpr_render_confirmed_subscription_page();
             if (_wpr_whether_subscription_management_page_request())
@@ -313,27 +314,6 @@ if (!defined("WPR_DEFS")) {
     function _wpr_whether_wpresponder_admin_page()
     {
         return is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']);
-    }
-
-    function _wpr_serve_file()
-    {
-        global $wpr_files;
-        $name = $_GET['wpr-file'];
-        if (preg_match("@.*\.js@", $wpr_files[$name]))
-            header("Content-Type: text/javascript");
-        else if (preg_match("@.*\.css@", $wpr_files[$name]))
-            header("Content-Type: text/css");
-        else if (preg_match("@.*\.png@", $wpr_files[$name]))
-            header("Content-Type: image/png");
-        $file_path = __DIR__ . "/{$wpr_files[$name]}";
-        readfile($file_path);
-        exit;
-    }
-
-    function _wpr_whether_file_request()
-    {
-        global $wpr_files;
-        return isset($_GET['wpr-file']) && isset($wpr_files[$_GET['wpr-file']]);
     }
 
     function _wpr_render_broadcast_view_frame()

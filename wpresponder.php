@@ -139,7 +139,6 @@ if (!defined("WPR_DEFS")) {
             do_action("_wpr_init");
         }
 
-
         function admin_init()
         {
             if (_wpr_whether_first_run()) {
@@ -152,11 +151,10 @@ if (!defined("WPR_DEFS")) {
                 _wpr_render_admin_screen_popup();
 
             if (_wpr_whether_template_html_request())
-                _wpr_render_template_html();
+                Routing::render_template_html();
 
             if (_wpr_whether_wpresponder_admin_page())
                 Routing::run_controller();
-
 
             add_action('edit_post', "wpr_edit_post_save");
             add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
@@ -170,42 +168,6 @@ if (!defined("WPR_DEFS")) {
     function no_address_error()
 	{
             ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
-	}
-	
-	function _wpr_no_newsletters($message)
-	{
-		
-		global $wpdb;
-	
-		$query = "SELECT * FROM ".$wpdb->prefix."wpr_newsletters"; 
-	
-		$countOfNewsletters = $wpdb->get_results($query);
-	
-		$count = count($countOfNewsletters);
-	
-		unset($countOfNewsletters);
-	
-		if ($count ==0)
-		{
-	
-			?>
-<div class="wrap">
-  <h2>No Newsletters Created Yet</h2>
-
-<?php echo $message ?>, you must first create a newsletter. <br />
-<br/>
-<a href="admin.php?page=_wpr/newsletter&act=add" class="button">Create Newsletter</a>
-</div>
-<?php
-	
-			return true;
-	
-		}
-	
-		else
-	
-			return false;
-		
 	}
 
 	function wpr_enqueue_post_page_scripts()
@@ -308,11 +270,7 @@ if (!defined("WPR_DEFS")) {
         return isset($_GET['wpr-admin-action']);
     }
 
-    function _wpr_render_template_html()
-    {
-        include "templateproxy.php";
-        exit;
-    }
+
 
     function _wpr_whether_template_html_request()
     {
@@ -431,15 +389,6 @@ if (!defined("WPR_DEFS")) {
         if (empty($activationDate) || !$activationDate) {
             $timeNow = time();
             update_option("_wpr_NEWAGE_activation", $timeNow);
-            /*
-             * Because of the lack of tracking that was done in previous versions
-             * of the blog category subscriptions, this version will deliver
-             * blog posts to blog category subscribers ONLY after this date
-             * This was done to prevent triggering a full delivery of all
-             * blog posts in all categories to the respective category subscribers
-             * on upgrade to this version.
-             * I came up with the lousy name. Was a good idea at the time.
-             */
         }
     }
 

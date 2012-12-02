@@ -113,6 +113,20 @@ class Routing {
         return $method_to_invoke;
     }
 
+
+    public static function render_template_html()
+    {
+        if (isset($_GET['wpr-template']))
+        {
+            if (!preg_match("@^[a-zA-Z0-9_]@". $template)) //ensure that the file starts with a alphanumeric character
+                return;
+            $filePath = __DIR__."/htmltemplates/$template";
+            if (file_exists($filePath))
+                readfile($filePath);
+            exit;
+        }
+    }
+
     public  static function whetherLegacyURL($current_path)
     {
         $result = preg_match("@^wpresponder/@", $current_path);
@@ -155,6 +169,8 @@ class Routing {
         call_user_func($methodToCall);
         do_action('_wpr_router_post_callback');
     }
+
+
 
     public static function isWPRAdminPage() {
         if (!isset($_GET['page'])) {

@@ -66,7 +66,7 @@
 		                            	foreach ($messagesInResponder as $message) 
 		                            	{
 			                            ?>
-			                            <li><?php echo $message->subject ?></li>
+			                            <li><?php echo $message->getSubject() ?></li>
 			                            <?php
 		                            	}
 		                            }

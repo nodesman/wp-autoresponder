@@ -73,6 +73,7 @@ if (!defined("WPR_DEFS")) {
 
     include_once "$modelsDir/subscriber.php";
     include_once "$modelsDir/newsletter.php";
+    include_once "$modelsDir/autoresponder_message.php";
     include_once "$modelsDir/autoresponder.php";
 
     include_once __DIR__ . '/conf/routes.php';
@@ -130,7 +131,7 @@ if (!defined("WPR_DEFS")) {
 
             if (_wpr_whether_confirmed_subscription_request())
                 _wpr_render_confirmed_subscription_page();
-            if (_wpr_whether_subscription_management_page_request())
+            if (Routing::is_subscription_management_page_request())
                 _wpr_render_subscription_management_page();
 
             _wpr_attach_cron_actions_to_functions();
@@ -147,12 +148,6 @@ if (!defined("WPR_DEFS")) {
             }
 
             _wpr_initialize_admin_pages();
-
-            if (_wpr_whether_admin_popup())
-                _wpr_render_admin_screen_popup();
-
-            if (_wpr_whether_template_html_request())
-                Routing::render_template_html();
 
             if (_wpr_whether_wpresponder_admin_page())
                 Routing::run_controller();
@@ -240,54 +235,17 @@ if (!defined("WPR_DEFS")) {
 
     function _wpr_attach_to_non_wpresponder_email_delivery_filter()
     {
-        //TODO: This doesn't work. Write unit tests for this.
         add_filter("wp_mail", "_wpr_non_wpr_email_sent");
     }
 
-    function _wpr_render_admin_screen_popup()
-    {
-        switch ($_GET['wpr-admin-action']) {
-            case 'preview_email':
-                include "preview_email.php";
-                exit;
-                break;
-            case 'view_recipients':
-                include("view_recipients.php");
-                exit;
-                break;
-            case 'filter':
-                include("filter.php");
-                exit;
-                break;
-            case 'delete_mailout':
-                include "delmailout.php";
-                exit;
-                break;
-        }
-    }
-
-    function _wpr_whether_admin_popup()
-    {
-        return isset($_GET['wpr-admin-action']);
-    }
-
-
-
-    function _wpr_whether_template_html_request()
-    {
-        return isset($_GET['wpr-template']);
-    }
-
+    //TODO: Refactor the contents of manage.php
     function _wpr_render_subscription_management_page()
     {
         include "manage.php";
         exit;
     }
 
-    function _wpr_whether_subscription_management_page_request()
-    {
-        return isset($_GET['wpr-manage']);
-    }
+
 
     function _wpr_render_confirmed_subscription_page()
     {

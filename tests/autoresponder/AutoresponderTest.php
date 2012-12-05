@@ -74,9 +74,23 @@ class AutoresponderTest extends WP_UnitTestCase {
     	
     	$difference = array_diff($responderNames, $defNames);
     	$this->assertEquals(count($difference),0);
-    	
-    	
     }
+
+
+    public function testGettingNewsletterOfAutoresponder() {
+        //create an autoresponder
+        $responder = AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletterId, "TEst");
+
+        $autoresponder = Autoresponder::getAutoresponder(intval($responder->id));
+
+        $newsletter = $autoresponder->getNewsletter();
+
+        $this->assertEquals($this->newsletterId, $newsletter->getId());
+
+
+    }
+
+
     /**
      * @expectedException NonExistentAutoresponderException
      */
@@ -329,7 +343,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         $this->assertEquals(count($autoresponderMessagesRes), count($originalSubjects));
 
         foreach ($autoresponderMessagesRes as $message) {
-            $receivedMessageSubjects[] = $message->subject;
+            $receivedMessageSubjects[] = $message->getSubject();
         }
 
         $difference = array_diff($receivedMessageSubjects, $originalSubjects);

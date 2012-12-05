@@ -37,9 +37,7 @@ class AutorespondersController
     {
         $numberOfPages = 1;
         $pages = array();
-
         $start = $this->getStartIndexOfAutoresponderRecordSet();
-
         $autoresponders = Autoresponder::getAllAutoresponders($start, Pager::getRowsPerPage());
 
         Pager::getPageNumbers(Autoresponder::getNumberOfAutorespondersAvailable(), $pages, $numberOfPages);

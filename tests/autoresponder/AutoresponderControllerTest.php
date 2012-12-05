@@ -180,7 +180,6 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         }
 
         $diff = array_diff($namesUsed,$receivedNames);
-
         $this->assertEquals(0, count($diff));
 
 

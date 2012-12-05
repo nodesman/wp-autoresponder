@@ -123,7 +123,6 @@ class Newsletter
         return $result;
     }
 
-
     private static function getNumberOfNewsletters() {
         global $wpdb;
 

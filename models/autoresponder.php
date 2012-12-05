@@ -56,10 +56,8 @@ class Autoresponder
         $getNumberOfAutorespondersQuery = sprintf("SELECT COUNT(*) NUM_OF_RESPONDERS FROM {$wpdb->prefix}wpr_autoresponders a, {$wpdb->prefix}wpr_newsletters n WHERE a.nid=n.id;");
         $countResultSet = $wpdb->get_results($getNumberOfAutorespondersQuery);
         $count = (int) $countResultSet[0]->NUM_OF_RESPONDERS;
-
         return $count;
     }
-
 
     public function getId()
     {
@@ -71,7 +69,6 @@ class Autoresponder
         return $this->nid;
     }
 
-    //TODO: Write test coverage for this:
 
     public function getNewsletter()
     {
@@ -185,7 +182,13 @@ class Autoresponder
         global $wpdb;
         $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d', $wpdb->prefix, $this->id);
         $messages = $wpdb->get_results($getMessagesQuery);
-        return $messages;
+
+        $messageObjects = array();
+        foreach ($messages as $message) {
+            $messageObjects[] = AutoresponderMessage::getMessage(intval($message->id));
+        }
+
+        return $messageObjects;
     }
 }
 

@@ -61,6 +61,14 @@ class Routing {
         _wpr_handle_post();
         $path = $_GET['page'];
 
+
+        if (self::is_admin_popup())
+            self::render_admin_screen_popup();
+
+        if (self::is_template_html_request())
+            self::render_template_html();
+
+
         if (self::whetherCurrentPathRequiresAtleastOneNewsletterToExistToBeAccessible($wpr_routes, $path)) {
             _wpr_setview("no_newsletter");
             return;
@@ -78,6 +86,11 @@ class Routing {
         else
 	        throw new UnknownControllerInvokeRequested("Unknown control invoked - '{$method_to_invoke}''");
 
+    }
+
+    public static function is_subscription_management_page_request()
+    {
+        return isset($_GET['wpr-manage']);
     }
 
     public static function whetherCurrentPathRequiresAtleastOneNewsletterToExistToBeAccessible($wpr_routes, $path)
@@ -126,6 +139,39 @@ class Routing {
         $file_path = __DIR__ . "/../{$wpr_files[$name]}";
         readfile($file_path);
         exit;
+    }
+
+
+    private static function render_admin_screen_popup()
+    {
+        switch ($_GET['wpr-admin-action']) {
+            case 'preview_email':
+                include "preview_email.php";
+                exit;
+                break;
+            case 'view_recipients':
+                include("view_recipients.php");
+                exit;
+                break;
+            case 'filter':
+                include("filter.php");
+                exit;
+                break;
+            case 'delete_mailout':
+                include "delmailout.php";
+                exit;
+                break;
+        }
+    }
+
+    public static function is_template_html_request()
+    {
+        return isset($_GET['wpr-template']);
+    }
+
+    private static function is_admin_popup()
+    {
+        return isset($_GET['wpr-admin-action']);
     }
 
     public static function is_js_file($wpr_files, $name)

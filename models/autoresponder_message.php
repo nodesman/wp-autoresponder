@@ -12,6 +12,8 @@ class AutoresponderMessage
         $this->subject = $autoresponder_result_row->subject;
         $this->id = $autoresponder_result_row->id;
 
+        $this->offset = $autoresponder_result_row->sequence;
+
     }
 
     public function getSubject() {
@@ -20,6 +22,10 @@ class AutoresponderMessage
 
     public function getId() {
         return $this->id;
+    }
+
+    public function getDayNumber() {
+        return $this->offset;
     }
 
     public function getMessage($message_id) {

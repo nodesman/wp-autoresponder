@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__."/../models/autoresponder_message.php";
+require __DIR__ . "/../../models/autoresponder_message.php";
 
 class AutoresponderMessagesTest extends WP_UnitTestCase {
 
@@ -57,13 +57,15 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
 
         global $wpdb;
         $autoresponder =  AutoresponderTestHelper::addAutoresponderAndFetchRow(1, "test");
-        $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject) VALUES (%d, '%s')", $autoresponder->id, 'Test Subject');
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, sequence) VALUES (%d, '%s', %d)", $autoresponder->id, 'Test Subject', 1);
         $wpdb->query($addAutoresponderMessageQuery);
         $autoresponder_message_id = $wpdb->insert_id;
         $message = AutoresponderMessage::getMessage($autoresponder_message_id);
 
         $this->assertEquals('Test Subject', $message->getSubject());
         $this->assertEquals($autoresponder_message_id, $message->getId());
+        $this->assertEquals(1, $message->getDayNumber());
+
 
 
     }

@@ -245,8 +245,6 @@ if (!defined("WPR_DEFS")) {
         exit;
     }
 
-
-
     function _wpr_render_confirmed_subscription_page()
     {
         include "confirmed.php";

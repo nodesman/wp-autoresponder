@@ -24,18 +24,18 @@ class PagerTest extends WP_UnitTestCase {
 
     public function testGettingIndicesBasedOnArguments() {
         $_GET['p'] = 3;
-        $_GET['n'] = 40;
+        $_GET['pp'] = 40;
 
         $start = Pager::getStartIndexOfRecordSet();
         $this->assertEquals(80, $start);
 
         $_GET['p'] = 1;
-        $_GET['n'] = 30;
+        $_GET['pp'] = 30;
         $start = Pager::getStartIndexOfRecordSet();
         $this->assertEquals(0, $start);
 
         unset($_GET['p']);
-        unset($_GET['n']);
+        unset($_GET['pp']);
         $start = Pager::getStartIndexOfRecordSet();
         $this->assertEquals(0, $start);
 

@@ -29,7 +29,7 @@ class Pager {
         if ($start <= 1)
             return 0;
 
-        $number_per_page = (!isset($_GET['n']) || intval($_GET['n'])==0)?10:intval($_GET['n']);
+        $number_per_page = (!isset($_GET['pp']) || intval($_GET['pp'])==0)?10:intval($_GET['pp']);
 
         $start = ($start-1)*$number_per_page;
 

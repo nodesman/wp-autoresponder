@@ -110,7 +110,6 @@ class AutorespondersController
         //TODO: Unknown autoresponder
 
         try {
-
             $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
         }
         catch (NonExistentAutoresponderException $exp) {

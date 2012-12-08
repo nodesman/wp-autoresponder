@@ -17,7 +17,7 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
         $truncateAutorespondresTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
         $wpdb->query($truncateAutorespondresTable);
 
-        $truncateAutoresponderMessagesTableQuery = "TRUNCATE {$wpdb->prefix}wpr_autoresponders";
+        $truncateAutoresponderMessagesTableQuery = "TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages";
         $wpdb->query($truncateAutoresponderMessagesTableQuery);
 
     }

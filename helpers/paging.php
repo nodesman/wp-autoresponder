@@ -22,6 +22,20 @@ class Pager {
         return $per_page;
     }
 
+    public static function getStartIndexOfRecordSet()
+    {
+        $start = (int)(true === isset($_GET['p'])) ? $_GET['p'] : 0;
+
+        if ($start <= 1)
+            return 0;
+
+        $number_per_page = (!isset($_GET['n']) || intval($_GET['n'])==0)?10:intval($_GET['n']);
+
+        $start = ($start-1)*$number_per_page;
+
+        return $start;
+    }
+
 
     public function testEnsureOnlyOnePageWhenLessThan10RowsAndDefaultRowsPerPage() {
 

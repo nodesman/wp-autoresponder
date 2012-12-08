@@ -37,25 +37,21 @@ class AutorespondersController
     {
         $numberOfPages = 1;
         $pages = array();
-        $start = $this->getStartIndexOfAutoresponderRecordSet();
-        $autoresponders = Autoresponder::getAllAutoresponders($start, Pager::getRowsPerPage());
+        $autoresponders = Autoresponder::getAllAutoresponders(Pager::getStartIndexOfRecordSet(), Pager::getRowsPerPage());
 
         Pager::getPageNumbers(Autoresponder::getNumberOfAutorespondersAvailable(), $pages, $numberOfPages);
         $current_page = $pages['current_page'];
+
 
         _wpr_set('number_of_pages', $numberOfPages);
         _wpr_set('autoresponders', $autoresponders);
         _wpr_set('current_page',$current_page);
         _wpr_set('pages', $pages);
+        _wpr_set('base_url', 'admin.php?page=_wpr/autoresponders');
         _wpr_setview('autoresponders_home');
     }
 
-    private function getStartIndexOfAutoresponderRecordSet()
-    {
-        $start = (int)(true === isset($_GET['p'])) ? $_GET['p'] : 0;
-        $start = ($start > 1) ? $start : 0;
-        return $start;
-    }
+
 
 
     public static function add() {
@@ -102,22 +98,39 @@ class AutorespondersController
         );
     }
 
-
     public function autoresponderMessagesList() {
 
     }
 
     public static function manage() {
 
+        $numberOfPages = 1;
         $autoresponder_id = $_GET['id'];
-        $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
 
-        $messages = $autoresponder->getMessages();
+        //TODO: Unknown autoresponder
 
+        try {
+
+            $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
+        }
+        catch (NonExistentAutoresponderException $exp) {
+            wp_redirect("admin.php?page=_wpr/autoresponders");
+        }
+
+        Pager::getPageNumbers($autoresponder->getNumberOfMessages(), $pages, $numberOfPages);
+        $current_page = $pages['current_page'];
+
+        $messages = $autoresponder->getMessages(Pager::getStartIndexOfRecordSet(), Pager::getRowsPerPage());
+
+        _wpr_set('number_of_pages', $numberOfPages);
+        _wpr_set('current_page',$current_page);
+        _wpr_set('pages', $pages);
         _wpr_set("messages", $messages);
+        _wpr_set('base_url', 'admin.php?page=_wpr/autoresponders&action=manage&id='.$autoresponder_id);
         _wpr_set("autoresponder", $autoresponder);
         _wpr_setview("autoresponder_manage");
     }
+
 }//end class
 
 add_action("_wpr_add_autoresponder_post_handler","_wpr_add_autoresponder_post_handler");

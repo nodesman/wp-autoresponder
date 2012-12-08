@@ -23,8 +23,8 @@ class AutoresponderTest extends WP_UnitTestCase {
         $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
         $wpdb->query($truncateAutorespondersTable);
 
-        $truncateAutorespondersTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
-        $wpdb->query($truncateAutorespondersTable);
+        $truncateAutorespondersMessagesTable= sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
+        $wpdb->query($truncateAutorespondersMessagesTable);
     }
     
     public function tearDown() {
@@ -377,12 +377,8 @@ class AutoresponderTest extends WP_UnitTestCase {
         $NUMBER_OF_AUTORESPONDERS_ADDED = 7;
 
         AutoresponderTestHelper::addAutoresponderObjects($this->newsletterId, $NUMBER_OF_AUTORESPONDERS_ADDED);
-
         $numberOfAutorespondersReturned = Autoresponder::getNumberOfAutorespondersAvailable();
-
         $this->assertEquals($NUMBER_OF_AUTORESPONDERS_ADDED, $numberOfAutorespondersReturned);
-
-
 
     }
 
@@ -512,21 +508,85 @@ class AutoresponderTest extends WP_UnitTestCase {
         $emailsPendingDelivery = $wpdb->get_results($getAutoresponderEmails);
         $num = $emailsPendingDelivery[0]->num;
 
-
         $this->assertEquals(50, $num);
-
-
         Autoresponder::delete(Autoresponder::getAutoresponder(1));
-
 
         $getAutoresponderEmails = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE meta_key LIKE 'AR-%d-%%';",$wpdb->prefix, 1);
         $emailsPendingDelivery = $wpdb->get_results($getAutoresponderEmails);
         $num = $emailsPendingDelivery[0]->num;
 
-
         $this->assertEquals(0, $num);
+    }
 
 
+    public function testFetchingRangesOfAutoresponderMessages() {
+        global $wpdb;
+        //add an autoresponder
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder_id = $wpdb->insert_id;
+        //add hundred messages
+        for ($iter=0;$iter< 100; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence) VALUES (%d, '%s', '%s', %d)",$wpdb->prefix, $autoresponder_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+        $autoresponder = Autoresponder::getAutoresponder($autoresponder_id);
+
+        //default case
+        $messagesReturned = $autoresponder->getMessages(); // returns from 1 to 10
+
+        //ensure that the number of messages is 10
+        $this->assertEquals(100, count($messagesReturned));
+
+        $returnedMessageIds = array();
+        for ($iter = 0; $iter < count($messagesReturned); $iter++) {
+            $returnedMessageIds[] = $messagesReturned[$iter]->getId();
+        }
+
+        $difference = array_diff($returnedMessageIds, $autoresponderMessagesIds);
+        $this->assertEquals(0, count($difference));
+
+
+        $messagesReturned = $autoresponder->getMessages(10, 50);
+        $this->assertEquals(50, count($messagesReturned));
+
+        $returnedMessageIds = array();
+        for ($iter = 0; $iter < count($messagesReturned); $iter++) {
+            $returnedMessageIds[] = $messagesReturned[$iter]->getId();
+        }
+
+        $difference = array_diff($returnedMessageIds, array_slice($autoresponderMessagesIds, 10, 50));
+        $this->assertEquals(0, count($difference));
+
+
+    }
+
+    public function testGetNumberOfMessagesTest() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+
+
+        $autoresponder_id = $wpdb->insert_id;
+        //add hundred messages
+        $size = rand(1, 100);
+        for ($iter=0;$iter< $size; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence) VALUES (%d, '%s', '%s', %d)",$wpdb->prefix, $autoresponder_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+
+        $responder = Autoresponder::getAutoresponder($autoresponder_id);
+
+        $number = $responder->getNumberOfMessages();
+
+        $this->assertEquals($size, $number);
     }
     
     //TODO: Delete autoresponder    

@@ -8,7 +8,7 @@
                 if (false !== $pages['before']) {
 
                     ?>
-                    <a href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
+                    <a href="<?php echo $base_url ?>&p=<?php echo $pages['before'] ?>" class="first-page">&laquo;</a>
                     <?php
                 }
                 ?>
@@ -19,7 +19,7 @@
 
                 for ($iter=$start;$iter<=$end;$iter++) {
                     ?>
-                    <a class="next-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $iter ?>"><?php echo $iter ?></a>
+                    <a class="next-page" href="<?php echo $base_url ?>&p=<?php echo $iter ?>"><?php echo $iter ?></a>
                     <?php
                 }
                 ?>
@@ -27,7 +27,7 @@
                 if (false !== $pages['after']) {
 
                     ?>
-                    <a class="last-page" href="admin.php?page=_wpr/autoresponders&p=<?php echo $pages['after'] ?>">&raquo;</a>
+                    <a class="last-page" href="<?php echo $base_url ?>&p=<?php echo $pages['after'] ?>">&raquo;</a>
                     <?php
                 }
             }

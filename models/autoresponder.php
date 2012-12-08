@@ -99,15 +99,11 @@ class Autoresponder
     }
 
 
-    /*
-     * 1. Get all autoresponders
-     * 2. Get only autoresponders that have a newsletter associated with them
-     */
     public static function getAllAutoresponders($start=0,$numberToReturn=-1)
     {
         global $wpdb;
 
-        $limitClause = self::getLimitClauseForAllAutorespondersFetch($start, $numberToReturn);
+        $limitClause = self::getLimitClauseForRecordSetFetch($start, $numberToReturn);
 
         $getAllAutorespondersQuery = sprintf("SELECT autores.id FROM {$wpdb->prefix}wpr_autoresponders autores, {$wpdb->prefix}wpr_newsletters newsletters WHERE autores.nid=newsletters.id ORDER BY id ASC %s;",$limitClause);
         $respondersRes = $wpdb->get_results($getAllAutorespondersQuery);
@@ -119,14 +115,12 @@ class Autoresponder
         return $autoresponders;
     }
 
-    private static function getLimitClauseForAllAutorespondersFetch($start, $numberToReturn)
+    private static function getLimitClauseForRecordSetFetch($start, $numberToReturn)
     {
-        $limitClause = "";
         if ($start == 0 && $numberToReturn === -1)
-            return $limitClause;
+            return '';
 
-        $limitClause = sprintf("LIMIT %d, %d", $start, $numberToReturn);
-        return $limitClause;
+        return sprintf("LIMIT %d, %d", $start, $numberToReturn);
 
     }
 
@@ -177,10 +171,16 @@ class Autoresponder
         return new Autoresponder($autoresponder_id);
     }
 
-    public function getMessages()
+    public function getMessages($start = 0, $length = -1)
     {
         global $wpdb;
-        $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d', $wpdb->prefix, $this->id);
+
+        $start = (0 ==  intval($start))?0: intval($start);
+
+        $limitClause = Autoresponder::getLimitClauseForRecordSetFetch($start, $length);
+
+
+        $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d %s', $wpdb->prefix, $this->id, $limitClause);
         $messages = $wpdb->get_results($getMessagesQuery);
 
         $messageObjects = array();
@@ -189,6 +189,14 @@ class Autoresponder
         }
 
         return $messageObjects;
+    }
+
+
+    public function getNumberOfMessages() {
+        global $wpdb;
+        $getNumberOfMessagesQuery = sprintf("SELECT COUNT(*) num FROM %swpr_autoresponder_messages WHERE aid=%d",$wpdb->prefix, $this->getId());
+        $messagesCountRes = $wpdb->get_results($getNumberOfMessagesQuery);
+        return $messagesCountRes[0]->num;
     }
 }
 

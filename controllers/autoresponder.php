@@ -16,6 +16,10 @@ function _wpr_autoresponder_delete() {
 function _wpr_autoresponder_manage() {
     AutorespondersController::manage();
 }
+
+function _wpr_autoresponder_add_message() {
+    AutorespondersController::add_message();
+}
 class AutorespondersController
 {
     private $defaultAutorespondersPerPage = 10;
@@ -50,9 +54,6 @@ class AutorespondersController
         _wpr_set('base_url', 'admin.php?page=_wpr/autoresponders');
         _wpr_setview('autoresponders_home');
     }
-
-
-
 
     public static function add() {
 	    global $wpdb;
@@ -107,8 +108,6 @@ class AutorespondersController
         $numberOfPages = 1;
         $autoresponder_id = $_GET['id'];
 
-        //TODO: Unknown autoresponder
-
         try {
             $autoresponder = Autoresponder::getAutoresponder((int) $autoresponder_id);
         }
@@ -130,12 +129,22 @@ class AutorespondersController
         _wpr_setview("autoresponder_manage");
     }
 
+
+    function add_message() {
+
+        _wpr_setview("autoresponder_add_message");
+
+    }
+
+
+
 }//end class
 
 add_action("_wpr_add_autoresponder_post_handler","_wpr_add_autoresponder_post_handler");
 add_action("_wpr_delete_autoresponder_post_handler","_wpr_delete_autoresponder_post_handler");
 
 function _wpr_add_autoresponder_post_handler() {
+
     global $wpdb;
     if (!wp_verify_nonce($_POST['_wpr_add_autoresponder'], '_wpr_add_autoresponder')) {
         return;

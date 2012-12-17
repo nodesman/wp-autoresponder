@@ -16,7 +16,7 @@
 
 			<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 
-            <table>
+                <table>
 
                 <tr>
                     <td><label for="autoresponder_name">
@@ -26,6 +26,7 @@
                     </td>
                     <td valign="top"><input type="text" name="autoresponder_name" id="autoresponder_name" value="" /></td>
                 </tr>
+
                 <tr>
                       <td>
 				<label for="newsletter_select">

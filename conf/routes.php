@@ -40,7 +40,8 @@ $wpr_routes = array(
         'children' => array (
             'add' => '_wpr_autoresponder_add',
             'delete' => '_wpr_autoresponder_delete',
-            'manage' => '_wpr_autoresponder_manage'
+            'manage' => '_wpr_autoresponder_manage',
+            'add_message' => '_wpr_autoresponder_add_message'
         )
     ),
     'wpresponder/blogseries.php'=> array(

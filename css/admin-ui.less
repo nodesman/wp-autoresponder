@@ -121,6 +121,7 @@ td.message-title {
         font-weight: normal;
       }
     }
+
     .column.edit-link {
       padding: 15px;
       width: 5%;
@@ -172,13 +173,15 @@ td.message-title {
   }
 }
 #wpr-chrome {
-  margin-top: 3em;
+  margin-top: 10px;
   padding: 15px;
   min-width: 1024px;
   min-height: 50em;
   background-color: #fff !important;
   font-size: 14px;
   font-family: "Helvetica", "Calibri", "Tahoma", "Arial";
+
+
   ul {
     list-style: disc;
     padding: 0 0 0 20px;
@@ -191,8 +194,8 @@ td.message-title {
   }
   h2 {
     font-size: 28px;
-    padding-bottom: 1em;
-    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-top: 0em;
   }
 }
 h2.message-title {
@@ -285,7 +288,45 @@ h2.message-title {
   table {
     font-size: 12px;
   }
+  #wpr-add-message {
+    float: right;
+    margin-bottom: 20px;
+  }
+
+  .autoresponder-manage {
+    clear:both;
+  }
 }
+
+.compose_message {
+  #post-compose-subject {
+    height: 40px;
+    width: 750px;
+    padding: 5px 10px;
+    font-size: 22px;
+  }
+
+  #composition-section {
+     width: 750px;
+    padding-top: 10px;
+
+    #rich_body_field {
+      width: 700px;
+      height: 300px;
+    }
+
+    #text_body_field {
+      width: 700px;
+      height: 300px;
+    }
+
+  }
+
+
+}
+
+
+
 .wpr-autoresponder-messages {
   position: relative;
   padding: 0;

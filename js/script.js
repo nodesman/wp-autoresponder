@@ -1,9 +1,5 @@
 var listOfEditors= new Array();;
-/*
-Contract: number->boolean
-Precondition: The editor doesn't already exist.
-Postcondition: The editor is created and the contents of the text editor, if any, is loaded into the wysiwyg editor.
-*/
+
 
 
 function createEditor(editorId)
@@ -88,3 +84,58 @@ function changeTemplate(editor,nameOfTextArea)
       }
 }
 
+
+(function composeMessage() {
+
+    jQuery(document).ready(function() {
+        "use strict";
+
+
+        if (0 === jQuery('.compose_message').size())
+            return;
+
+        var ComposePositionDialog = function() {
+
+            var getCurrentSubjectFieldValue = function() {
+                return jQuery('#post-compose-subject').val();
+            };
+            var bindSubjectFieldEvents = function() {
+
+                jQuery('#post-compose-subject').on('click', function() {
+                    if (whetherSubjectEdited === true)
+                        return;
+                    this.value= '';
+                }).on('blur', function () {
+                    if (whetherSubjectEdited === true) {
+                        return;
+                    }
+                    this.value = subjectFieldDefaultValue;
+                }).on('keydown', function() {
+                    whetherSubjectEdited = true;
+                });
+
+            };
+
+            var initializeTabbedInterface = function() {
+                jQuery('#compose_tabs').tabs();
+            };
+
+            var whetherSubjectEdited = false;
+            var subjectFieldDefaultValue = getCurrentSubjectFieldValue();
+
+            bindSubjectFieldEvents();
+            initializeTabbedInterface();
+
+        };
+
+        var Dialog = new ComposePositionDialog();
+
+
+
+
+
+    });
+
+
+
+})();

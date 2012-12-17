@@ -8,8 +8,12 @@
         </ul>
     </div>
     <h2>Manage Autoresponder</h2>
-    <div class="autoresponder-manage">
 
+    <form method="post" action="admin.php?page=_wpr/autoresponders&action=add_message&id=<?php echo $autoresponder->getId(); ?>">
+        <input type="submit" value="Add Message" id="wpr-add-message" title="Add Message" class="wpr-action-button"/>
+    </form>
+
+    <div class="autoresponder-manage">
 
         <div class="row head">
             <div class="day-index column" valign="middle">Day #</div>
@@ -20,11 +24,11 @@
 foreach ($messages as $message) {
  ?>
     <div class="row">
-            <div class="day-index column" valign="middle">Day <?php echo $message->getDayNumber(); ?></div>
-            <div class="message-title column"><a href="#"><?php echo $message->getSubject(); ?></a></div>
-            <div class="edit-link column"><a href="admin.php?page=_wpr/autoresponders&action=message_edit&id=<?php echo $message->getId(); ?>" class="wpr-action-button">Edit</a></div>
-            <div class="delete-link column"><a href="admin.php?page=_wpr/autoresponders&action=message_delete&id=<?php echo $message->getId(); ?>" class="wpr-action-button">Delete</a> </div>
-        </div>
+        <div class="day-index column" valign="middle">Day <?php echo $message->getDayNumber(); ?></div>
+        <div class="message-title column"><a href="#"><?php echo $message->getSubject(); ?></a></div>
+        <div class="edit-link column"><a href="admin.php?page=_wpr/autoresponders&action=message_edit&id=<?php echo $message->getId(); ?>" class="wpr-action-button">Edit</a></div>
+        <div class="delete-link column"><a href="admin.php?page=_wpr/autoresponders&action=message_delete&id=<?php echo $message->getId(); ?>" class="wpr-action-button">Delete</a> </div>
+    </div>
     <?php
 }
 ?>

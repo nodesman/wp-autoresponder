@@ -2,7 +2,16 @@
     <h2>Add Message</h2>
 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 
+
+    <div id="compose-sidebar">
+        <strong>For autoresponder:</strong> <p id="autoresponder-name-sidebar"><?php echo $autoresponder->getName(); ?></p>
+        <strong>To be sent on:</strong> <p id="autoresponder-offset"><input type="text" size="3" value="0" id="offset"/> days after subscription</p>
+    </div>
+
+
     <input type="text" name="subject" id="post-compose-subject" value="Subject..."/>
+
+
 
     <div id="composition-section">
         <div id="compose_tabs">

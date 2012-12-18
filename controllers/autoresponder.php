@@ -132,7 +132,12 @@ class AutorespondersController
 
     function add_message() {
 
+        $autoresponder_id = intval($_GET['id']);
+
+        $autoresponderObject = Autoresponder::getAutoresponder($autoresponder_id);
+
         _wpr_setview("autoresponder_add_message");
+        _wpr_set("autoresponder", $autoresponderObject);
 
     }
 

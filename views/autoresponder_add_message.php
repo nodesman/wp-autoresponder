@@ -6,14 +6,23 @@
     <div id="compose-sidebar">
         <strong>For autoresponder:</strong> <p id="autoresponder-name-sidebar"><?php echo $autoresponder->getName(); ?></p>
         <strong>To be sent on:</strong> <p id="autoresponder-offset"><input type="text" size="3" value="0" id="offset"/> days after subscription</p>
+        <input id="add_autoresponder_button" type="submit" value="<?php echo _e("Add Message"); ?>" class="wpr-action-button"/>
+        <a id="autoresponder_add_cancel" href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>" class="wpr-action-button"><?php echo _e("Cancel"); ?></a>
+    </div>
+    <div id="custom-fields-sidebar">
+
+         <h2>Custom Fields Placeholders</h2>
+
+        <p>Use the following placeholders in the email to have the recipient information appear where you place them:</p>
+        <ul>
+            <li>[!name!] - Name of subscriber</li>
+        </ul>
+
     </div>
 
-
     <input type="text" name="subject" id="post-compose-subject" value="Subject..."/>
-
-
-
     <div id="composition-section">
+
         <div id="compose_tabs">
             <ul>
                 <li><a href="#rich_body">Rich Text</a></li>
@@ -29,10 +38,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
 </form>
 </div>

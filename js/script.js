@@ -88,7 +88,6 @@ function changeTemplate(editor,nameOfTextArea)
 (function composeMessage() {
 
     jQuery(document).ready(function() {
-        "use strict";
 
 
         if (0 === jQuery('.compose_message').size())
@@ -113,7 +112,6 @@ function changeTemplate(editor,nameOfTextArea)
                 }).on('keydown', function() {
                     whetherSubjectEdited = true;
                 });
-
             };
 
             var initializeTabbedInterface = function() {

@@ -16,6 +16,12 @@
         <p>Use the following placeholders in the email to have the recipient information appear where you place them:</p>
         <ul>
             <li>[!name!] - Name of subscriber</li>
+            <?php foreach ($custom_fields as $key=>$label) {
+  ?>
+                <li>[!<?php echo $key?>!] - <?php echo $label ?></li>
+    <?php
+}
+?>
         </ul>
 
     </div>

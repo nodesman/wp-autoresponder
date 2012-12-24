@@ -46,7 +46,7 @@ function wpr_replace_tags($sid,&$subject,&$body,$additional = array())
 	$subscriber = $subscriber[0];
 	$nid = $subscriber->nid;
 	
-	$newsletter = new Newsletter($nid);
+	$newsletter = Newsletter::getNewsletter($nid);
 
 	$parameters = array();
 

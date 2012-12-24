@@ -73,7 +73,7 @@ class Autoresponder
     public function getNewsletter()
     {
         $newsletterId = $this->getNewsletterId();
-        return new Newsletter($newsletterId);
+        return Newsletter::getNewsletter($newsletterId);
     }
 
     public function getName()
@@ -176,9 +176,7 @@ class Autoresponder
         global $wpdb;
 
         $start = (0 ==  intval($start))?0: intval($start);
-
         $limitClause = Autoresponder::getLimitClauseForRecordSetFetch($start, $length);
-
 
         $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d %s', $wpdb->prefix, $this->id, $limitClause);
         $messages = $wpdb->get_results($getMessagesQuery);

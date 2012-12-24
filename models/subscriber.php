@@ -117,11 +117,9 @@ class Subscriber
 
     }
 
-
-
     function getNewsletter()
     {
-        $newsletter = new Newsletter($this->getNewsletterId());
+        $newsletter = Newsletter::getNewsletter($this->getNewsletterId());
         return $newsletter;
     }
 

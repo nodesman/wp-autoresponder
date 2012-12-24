@@ -59,6 +59,9 @@ class AutorespondersController
 	    global $wpdb;
 
         $newsletters = Newsletter::getAllNewsletters();
+
+
+
         _wpr_set("newsletters",$newsletters);
 	    _wpr_setview("autoresponder_add");
     }
@@ -136,8 +139,11 @@ class AutorespondersController
 
         $autoresponderObject = Autoresponder::getAutoresponder($autoresponder_id);
 
-        _wpr_setview("autoresponder_add_message");
+        $custom_fields = $autoresponderObject->getNewsletter()->getCustomFieldKeyLabelPair();
+
+        _wpr_set("custom_fields", $custom_fields);
         _wpr_set("autoresponder", $autoresponderObject);
+        _wpr_setview("autoresponder_add_message");
 
     }
 

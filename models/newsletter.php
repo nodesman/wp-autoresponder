@@ -19,9 +19,48 @@ class Newsletter
 	private  $fromname;
 	private  $fromemail;
 	private  $deleted = false;
+
+
+    public static function getNewsletter($id) {
+
+        global $wpdb;
+
+        $getNewsletterQuery = sprintf("SELECT * FROM %swpr_newsletters WHERE id=%d", $wpdb->prefix, $id);
+        $newsletterRes = $wpdb->get_results($getNewsletterQuery);
+
+        if (count($newsletterRes) == 0 )
+            throw new NonExistentNewsletterException();
+
+        return new Newsletter($id);
+    }
+
+    public function getCustomFieldKeys() {
+        global $wpdb;
+
+        $getCustomFieldKeysQuery = sprintf("SELECT name FROM %swpr_custom_fields WHERE nid=%d", $wpdb->prefix, $this->id);
+        $custom_fields = $wpdb->get_col($getCustomFieldKeysQuery);
+
+        return $custom_fields;
+    }
+
+
+    public function getCustomFieldKeyLabelPair() {
+        global $wpdb;
+
+        $getCustomFieldsQuery = sprintf("SELECT * FROM %swpr_custom_fields WHERE nid=%d", $wpdb->prefix, $this->id);
+        $custom_fields = $wpdb->get_results($getCustomFieldsQuery);
+
+        $result = array();
+        foreach ($custom_fields as $field) {
+            $result[$field->name] = $field->label;
+        }
+
+        return $result;
+
+
+    }
 	
-	
-	function Newsletter($nid)
+	private function Newsletter($nid)
 	{
 		global $wpdb;
 		$nid = intval($nid);
@@ -118,14 +157,14 @@ class Newsletter
 
         $result = array();
         foreach ($newsletters as $newsletter) {
-            $result[] = new Newsletter($newsletter->id);
+            $result[] = Newsletter::getNewsletter($newsletter->id);
         }
+
         return $result;
     }
 
     private static function getNumberOfNewsletters() {
         global $wpdb;
-
         $getCountNewslettersQuery = sprintf("SELECT count(*) num FROM {$wpdb->prefix}wpr_newsletters");
         $results = $wpdb->get_results($getCountNewslettersQuery);
         $count = $results[0]->num;

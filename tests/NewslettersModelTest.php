@@ -10,6 +10,10 @@ class NewsletterTest extends WP_UnitTestCase {
 		$truncateNewslettersTableQuery = sprintf("TRUNCATE %swpr_newsletters",$wpdb->prefix);
 		$wpdb->query($truncateNewslettersTableQuery);
 
+
+        $truncateSubscribersTableQuery = sprintf("TRUNCATE %swpr_custom_fields",$wpdb->prefix);
+        $wpdb->query($truncateSubscribersTableQuery);
+
         $truncateSubscribersTableQuery = sprintf("TRUNCATE %swpr_subscribers",$wpdb->prefix);
         $wpdb->query($truncateSubscribersTableQuery);
 
@@ -64,6 +68,83 @@ class NewsletterTest extends WP_UnitTestCase {
 		$this->assertFalse($whetherNewsletterExists);
 
 	}
+
+    public function testWhetherNewsletterFetchesItsCustomFieldsNames() {
+
+        global $wpdb;
+        //add a newsletter
+        $addNewsletterQuery = sprintf("INSERT INTO  %swpr_newsletters (`name`) VALUES ('%s')", $wpdb->prefix, 'Test Newsletter');
+        $wpdb->query($addNewsletterQuery);
+
+        $id = $wpdb->insert_id;
+
+        $expected = array();
+
+        for ($iter=0;$iter<5;$iter++) {
+
+            $name = md5(microtime()."name".$iter);
+
+            $expected[] = $name;
+            $addCustomFieldsQuery = sprintf("INSERT INTO %swpr_custom_fields (`nid`, `type`, `name`, `label`) VALUES (%d, 'text', '%s', '%s')", $wpdb->prefix, $id, $name, $name);
+            $wpdb->query($addCustomFieldsQuery);
+        }
+
+        $newsletter = Newsletter::getNewsletter($id);
+
+        $custom_field_keys =  $newsletter->getCustomFieldKeys();
+
+        $intersect = array_intersect($custom_field_keys, $expected);
+        $diff = array_diff($intersect, $expected);
+        $this->assertEquals(0, count($diff));
+    }
+
+
+    public function testWhetherNewsletterFetchesItsCustomFieldsKeyLabelPairs() {
+
+        global $wpdb;
+        //add a newsletter
+        $addNewsletterQuery = sprintf("INSERT INTO  %swpr_newsletters (`name`) VALUES ('%s')", $wpdb->prefix, 'Test Newsletter');
+        $wpdb->query($addNewsletterQuery);
+
+        $id = $wpdb->insert_id;
+
+        $expected = array();
+
+        for ($iter=0;$iter<5;$iter++) {
+
+            $name = md5(microtime()."name".$iter);
+
+            $expected[$name] = strtoupper($name);
+            $addCustomFieldsQuery = sprintf("INSERT INTO %swpr_custom_fields (`nid`, `type`, `name`, `label`) VALUES (%d, 'text', '%s', '%s')", $wpdb->prefix, $id, $name, strtoupper($name));
+            $wpdb->query($addCustomFieldsQuery);
+        }
+
+        $newsletter = Newsletter::getNewsletter($id);
+
+        $custom_field_keys =  $newsletter->getCustomFieldKeyLabelPair();
+
+        $intersect = array_intersect($custom_field_keys, $expected);
+        $diff = array_diff($intersect, $expected);
+        $this->assertEquals(0, count($diff));
+    }
+
+
+    /**
+     * @expectedException NonExistentNewsletterException
+     */
+    public function testGetNewsletterFactoryFetchesOnlyExistentNewsletters() {
+        Newsletter::getNewsletter(9876);
+    }
+
+    public function testGetNewsletterFactoryFetchesExistentNewsletters() {
+
+        global $wpdb;
+        $addNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`) VALUES ('%s')", $wpdb->prefix, 'Test Newsletter');
+        $wpdb->query($addNewsletterQuery);
+        $newsletter = Newsletter::getNewsletter(intval($wpdb->insert_id));
+        $this->assertEquals($wpdb->insert_id, $newsletter->getId());
+    }
+
 
     public function tearDown() {
         global $wpdb;

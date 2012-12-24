@@ -250,7 +250,7 @@ function _wpr_newsletter_delete()
 	$prefix = $wpdb->prefix;
 	$nid = $_GET['nid'];
 	try {
-		$newsletter = new Newsletter($nid);
+		$newsletter = Newsletter::getNewsletter($nid);
 	}
 	catch (Exception $excp)
 	{

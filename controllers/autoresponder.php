@@ -60,8 +60,6 @@ class AutorespondersController
 
         $newsletters = Newsletter::getAllNewsletters();
 
-
-
         _wpr_set("newsletters",$newsletters);
 	    _wpr_setview("autoresponder_add");
     }
@@ -133,7 +131,7 @@ class AutorespondersController
     }
 
 
-    function add_message() {
+    public static function add_message() {
 
         $autoresponder_id = intval($_GET['id']);
 
@@ -141,10 +139,16 @@ class AutorespondersController
 
         $custom_fields = $autoresponderObject->getNewsletter()->getCustomFieldKeyLabelPair();
 
+        self::enqueue_wysiwyg();
+
         _wpr_set("custom_fields", $custom_fields);
         _wpr_set("autoresponder", $autoresponderObject);
         _wpr_setview("autoresponder_add_message");
 
+    }
+
+    private static function enqueue_wysiwyg() {
+        wp_enqueue_script('wpresponder-ckeditor');
     }
 
 

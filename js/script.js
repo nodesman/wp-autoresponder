@@ -121,8 +121,24 @@ function changeTemplate(editor,nameOfTextArea)
 
             var initializeWYSIWYG = function() {
                 "use strict";
-                
-            }
+
+                CKEDITOR.replace('rich_body_field', {
+                    'width': '700px',
+                    'toolbarGroups': [
+                        { name: 'source', items: ['Source']},
+                        { name: 'document' },
+                        { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+                        { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+                        { name: 'links' },
+                        '/',
+                        { name: 'styles'},
+                        { name: 'basicstyles'},
+                        { name: 'colors' },
+                        '/',
+                        { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] }
+                    ]
+                });
+            };
 
 
 
@@ -131,6 +147,7 @@ function changeTemplate(editor,nameOfTextArea)
 
             bindSubjectFieldEvents();
             initializeTabbedInterface();
+            initializeWYSIWYG();
 
         };
 

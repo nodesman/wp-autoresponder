@@ -32,15 +32,15 @@
 
         <div id="compose_tabs">
             <ul>
-                <li><a href="#rich_body">Rich Text</a></li>
-                <li><a href="#text_body">Plain Text</a></li>
+                <li><a href="#rich_body">Rich Text Email Body</a></li>
+                <li><a href="#text_body">Plain Text Email Body</a></li>
             </ul>
 
             <div id="rich_body">
                 <textarea name="rich_text" id="rich_body_field"></textarea>
             </div>
             <div id="text_body">
-                <textarea name="text_body" id="text_body_field"></textarea>
+                <textarea name="text_body" id="text_body_field" placeholder="Enter text body here..."></textarea>
 
             </div>
             <?php do_action("_wpr_autoresponder_message_after_custom_fields"); ?>

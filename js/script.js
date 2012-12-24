@@ -118,6 +118,14 @@ function changeTemplate(editor,nameOfTextArea)
                 jQuery('#compose_tabs').tabs();
             };
 
+
+            var initializeWYSIWYG = function() {
+                "use strict";
+                
+            }
+
+
+
             var whetherSubjectEdited = false;
             var subjectFieldDefaultValue = getCurrentSubjectFieldValue();
 
@@ -127,8 +135,6 @@ function changeTemplate(editor,nameOfTextArea)
         };
 
         var Dialog = new ComposePositionDialog();
-
-
 
 
 

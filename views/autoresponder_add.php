@@ -17,7 +17,6 @@
 			<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 
                 <table>
-
                 <tr>
                     <td><label for="autoresponder_name">
                         <strong><?php _e("Name Of Autoresponder:","wpr_autoresponder") ?></strong>

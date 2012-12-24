@@ -1,5 +1,19 @@
 <div class="wrap compose_message" id="wpr-chrome">
     <h2>Add Message</h2>
+
+    <?php
+    if (isset($errors) && 0 == count($errors)) {
+    ?>
+        <div class="wpr-error">
+
+
+
+        </div>
+    <?php
+    }
+?>
+
+
 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
     <?php do_action("_wpr_autoresponder_add_message_before_sidebars"); ?>
 
@@ -27,7 +41,7 @@
     </div>
     <?php do_action("_wpr_autoresponder_add_message_after_sidebars"); ?>
 
-    <input type="text" name="subject" id="post-compose-subject" value="Subject..."/>
+    <input type="text" name="subject" id="post-compose-subject" placeholder="Subject..." value="Subject..."/>
     <div id="composition-section">
 
         <div id="compose_tabs">

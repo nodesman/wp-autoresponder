@@ -123,7 +123,8 @@ function changeTemplate(editor,nameOfTextArea)
                 "use strict";
 
                 CKEDITOR.replace('rich_body_field', {
-                    'width': '700px',
+                    'width': '713px',
+                    'height': '330px',
                     'toolbarGroups': [
                         { name: 'source', items: ['Source']},
                         { name: 'document' },

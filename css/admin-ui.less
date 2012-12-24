@@ -484,6 +484,17 @@ h2.message-title {
   padding-top: 40px;
   background-color: #989898;
 }
+
+.hide {
+  display: none;
+}
+
+.wpr-error {
+  border: 1px solid #ccc;
+  background-color: #E9FF21;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 #breadcrumb {
   ul {
     margin: 0;
@@ -532,12 +543,14 @@ h2.message-title {
 }
 
 .compose_message {
+
   #post-compose-subject {
     height: 40px;
     width: 750px;
     padding: 5px 10px;
     font-size: 22px;
   }
+
   #compose-sidebar, #custom-fields-sidebar {
     float:right;
     width: 270px;
@@ -593,6 +606,10 @@ h2.message-title {
 
   #autoresponder-name-sidebar {
     padding: 0;
+    .one-liner;
+    max-width: 270px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: 5px 0 15px 0;
   }
 

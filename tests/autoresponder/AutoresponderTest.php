@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../../models/autoresponder.php";
+require_once __DIR__ . "/../../models/autoresponder.php";
 
 class AutoresponderTest extends WP_UnitTestCase {
 
@@ -588,7 +588,250 @@ class AutoresponderTest extends WP_UnitTestCase {
 
         $this->assertEquals($size, $number);
     }
-    
-    //TODO: Delete autoresponder    
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testNotMentioningSubjectThrowsInvalidArgumentException() {
+
+        //empty subject
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+
+        $autoresponder_message = array(
+            'textbody' => 'This is a test',
+            'htmlbody' => 'This is a <test>body</test>',
+            'offset' => 3,
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testNotMentioningHTMLBodyThrowsInvalidArgumentException() {
+
+        //empty subject
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+
+        $autoresponder_message = array(
+            'textbody' => 'This is a test',
+            'offset' => 3,
+            'subject' => ''
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testNotMentioningOffsetThrowsInvalidArgumentException() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'htmlbody'=> 'test',
+            'subject' => 'test',
+            'textbody' => 'tests',
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testNotMentioningTextBodyThrowsInvalidArgumentException() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'offset' => 3,
+            'htmlbody'=> 'test',
+            'subject' => 'test'
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+
+    /**
+     * @expectedException InvalidAutoresponderMessageException
+     */
+    public function testAddingAAutoresponderMessageWithoutSubjectThrowsException() {
+
+        //empty subject
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+          'subject' => '',
+          'textbody' => 'This is a test',
+          'htmlbody' => 'This is a <test>body</test>',
+          'offset' => 3,
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+
+    public function testAddingAAutoresponderMessageWithoutSubjectThrowsExceptionCode4000() {
+
+        //empty subject
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => '',
+            'textbody' => 'This is a test',
+            'htmlbody' => 'This is a <test>body</test>',
+            'offset' => 3,
+        );
+
+        try {
+            $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            $code = $exc->getCode();
+            $this->assertEquals(4000, $code);
+        }
+    }
+
+    /**
+     * @expectedException InvalidAutoresponderMessageException
+     */
+    public function testAddingAAutoresponderMessageWithoutAnyBodyThrowsException() {
+
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => 'test',
+            'textbody' => '',
+            'htmlbody' => '',
+            'offset' => 3,
+        );
+
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+    public function testAddingAInvalidAutoresponderMessageThrowsExceptionCode4002() {
+
+        //empty subject
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => 'Test',
+            'textbody' => '',
+            'htmlbody' => '',
+            'offset' => 3,
+        );
+
+        try {
+            $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            $code = $exc->getCode();
+            $this->assertEquals(4002, $code);
+        }
+    }
+
+    /**
+     * @expectedException InvalidAutoresponderMessageException
+     */
+    public function testAddingAAutoresponderMessageWithoutAValidSequenceThrowsException() {
+
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => 'test',
+            'textbody' => 'test',
+            'htmlbody' => 'test',
+            'offset' => '',
+        );
+        $autoresponder->addMessage($autoresponder_message);
+    }
+
+    public function testAddingAInvalidAutoresponderMessageThrowsExceptionCode4004() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => 'Test',
+            'textbody' => 'Test',
+            'htmlbody' => 'Test',
+            'offset' => '',
+        );
+
+        try {
+            $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            $code = $exc->getCode();
+            $this->assertEquals(4004, $code);
+        }
+    }
+
+    public function testAddingAAutoresponderMessageResultsInAddition() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => md5(microtime()."subject"),
+            'textbody' => md5(microtime()."textbody"),
+            'htmlbody' => md5(microtime()."htmlbody"),
+            'offset' => 0,
+        );
+
+
+        $message = $autoresponder->addMessage($autoresponder_message);
+
+
+        $this->assertEquals($autoresponder_message['subject'], $message->getSubject());
+        $this->assertEquals($autoresponder_message['htmlbody'], $message->getHTMLBody());
+        $this->assertEquals($autoresponder_message['textbody'], $message->getTextBody());
+        $this->assertEquals($autoresponder_message['offset'], $message->getDayNumber());
+
+    }
 }
 

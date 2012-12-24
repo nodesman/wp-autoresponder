@@ -21,6 +21,39 @@ class Autoresponder
         $this->name = $autoresponder->name;
     }
 
+
+    public function addMessage($args) {
+
+        global $wpdb;
+        //ensure that all required arguments are present
+        $argument_keys = array_keys($args);
+        $diff = array_diff( array('subject', 'textbody', 'htmlbody', 'offset'), $argument_keys);
+        if (count($diff) > 0)
+            throw new InvalidArgumentException();
+
+
+        if (empty($args['subject']))
+            throw new InvalidAutoresponderMessageException(__('Follow-up message subject is empty'), 4000);
+
+        if (empty($args['textbody']) && empty($args['htmlbody']))
+            throw new InvalidAutoresponderMessageException(__('Both HTML and text bodies of the message is empty'), 4002);
+
+        if ("integer" != gettype($args['offset']) || 0 > $args['offset'])
+            throw new InvalidAutoresponderMessageException(__('Invalid day offset for autoresponder message'), 4004);
+
+
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
+                        (%d, '%s', '%s', '%s', %d, 1);", $wpdb->prefix, $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
+
+        $wpdb->query($addAutoresponderMessageQuery);
+        $id = $wpdb->insert_id;
+        $getAutoresponderMessageQuery = sprintf("SELECT * FROM %swpr_autoresponder_messages WHERE id=%d", $wpdb->prefix, $id);
+        $message = $wpdb->get_row($getAutoresponderMessageQuery);
+
+        return AutoresponderMessage::getMessage($id);
+
+    }
+
     public static function delete(Autoresponder $autoresponder) {
         global $wpdb;
         $deleteAutoresponderQuery = sprintf("DELETE FROM {$wpdb->prefix}wpr_autoresponders WHERE id=%d",$autoresponder->getId());
@@ -189,7 +222,6 @@ class Autoresponder
         return $messageObjects;
     }
 
-
     public function getNumberOfMessages() {
         global $wpdb;
         $getNumberOfMessagesQuery = sprintf("SELECT COUNT(*) num FROM %swpr_autoresponder_messages WHERE aid=%d",$wpdb->prefix, $this->getId());
@@ -213,5 +245,14 @@ class NonExistentNewsletterException extends Exception
 
 class NonExistentAutoresponderException extends Exception
 {
+
+}
+
+
+class InvalidAutoresponderMessageException extends Exception {
+
+    public function __construct($message, $code) {
+        parent::__construct($message, $code);
+    }
 
 }

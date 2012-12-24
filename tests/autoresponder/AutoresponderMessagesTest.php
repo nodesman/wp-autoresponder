@@ -65,8 +65,6 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
         $this->assertEquals($autoresponder_message_id, $message->getId());
         $this->assertEquals(1, $message->getDayNumber());
 
-
-
     }
 
     public function tearDown() {

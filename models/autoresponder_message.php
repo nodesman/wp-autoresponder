@@ -5,12 +5,17 @@ class AutoresponderMessage
 {
     private $subject;
     private $id;
+    private $htmlbody;
+    private $textbody;
 
     private function __construct($autoresponder_result_row) {
 
         global $wpdb;
         $this->subject = $autoresponder_result_row->subject;
         $this->id = $autoresponder_result_row->id;
+        $this->htmlbody = $autoresponder_result_row->htmlbody;
+        $this->textbody = $autoresponder_result_row->textbody;
+
 
         $this->offset = $autoresponder_result_row->sequence;
 
@@ -18,6 +23,12 @@ class AutoresponderMessage
 
     public function getSubject() {
         return $this->subject;
+    }
+    public function getHTMLBody() {
+        return $this->htmlbody;
+    }
+    public function getTextBody() {
+        return $this->textbody;
     }
 
     public function getId() {
@@ -28,7 +39,7 @@ class AutoresponderMessage
         return $this->offset;
     }
 
-    public function getMessage($message_id) {
+    public static function getMessage($message_id) {
 
         global $wpdb;
 

@@ -261,7 +261,7 @@ td.message-title {
 
 a.wpr-action-button {
   text-align: center;
-  padding: 5px 0;
+  padding: 5px;
 }
 .wpr-button {
   padding: 5px 14px;
@@ -419,10 +419,6 @@ a.wpr-action-button {
   font-family: "Helvetica", "Calibri", "Tahoma", "Arial";
 
 
-  ul {
-    list-style: disc;
-    padding: 0 0 0 20px;
-  }
   .wpr-autoresponder-messages {
     h2 {
       font-size: 17px;
@@ -572,6 +568,7 @@ h2.message-title {
 
     #autoresponder_add_cancel {
       display: block;
+      padding: 0
     }
 
     #autoresponder_add_cancel, #add_autoresponder_button {
@@ -596,19 +593,111 @@ h2.message-title {
 
   #composition-section {
      width: 750px;
-    padding-top: 10px;
+     padding-top: 10px;
+     position: relative;
 
+    .ui-widget-content {
 
+      background: none transparent;
+      border: 0;
 
-    #rich_body_field {
-      width: 700px;
-      height: 300px;
+      .ui-tabs-nav {
+        display: inline-block;
+        clear:none;
+        position: absolute;
+        right: 15px;
+        li {
+          margin-right: 3px;
+          margin-bottom: 0;
+          padding-bottom: 0;
+
+          &.ui-state-active {
+            @activeColor: #FABD4B;
+            border: 1px solid @activeColor;
+            background-color: @activeColor;
+            a {
+              color: #fff;
+              font-weight: bold;
+            }
+          }
+
+          &.ui-tabs-selected {
+            position: relative;
+            top: -2px;
+            height:40px;
+          }
+
+          &.ui-state-hover {
+            @hoverColor: #B3DE2B;
+            border: 1px solid @hoverColor;
+
+            background-color: @hoverColor;
+            a {
+              color: #fff;
+            }
+          }
+        }
+        .ui-state-default a {
+          color: #000;
+          font-size: 12px;
+          font-weight: normal;
+        }
+      }
+
+      .ui-widget-header {
+        background: none transparent;
+        border: 0;
+        .ui-state-default {
+          .rounded(0);
+
+          a {
+            padding: 5px 10px;
+          }
+        }
+      }
     }
 
-    #text_body_field {
-      width: 700px;
-      height: 300px;
+
+    .tab-content {
+      &:after {
+        content: '';
+        display: block;
+        clear:left;
+      }
+      position:absolute;
+      top:32px;
+
+      clear:left;
+
+      background-color: #F6F6F6;
+      border: 1px solid #ccc;
+      padding: 10px;
     }
+
+
+
+
+    #rich_body {
+
+        .tab-content;
+
+        #rich_body_field {
+          width: 715px;
+          height: 430px;
+        }
+    }
+
+    #text_body {
+      .tab-content;
+      #text_body_field {
+        width: 715px;
+        height: 430px;
+      }
+    }
+
+
+
+
 
   }
 }

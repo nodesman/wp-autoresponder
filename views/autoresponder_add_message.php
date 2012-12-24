@@ -32,7 +32,7 @@
         <div id="compose_tabs">
             <ul>
                 <li><a href="#rich_body">Rich Text</a></li>
-                <li><a href="#text_body">Text</a></li>
+                <li><a href="#text_body">Plain Text</a></li>
             </ul>
 
             <div id="rich_body">

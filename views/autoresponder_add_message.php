@@ -14,6 +14,9 @@
             }
             ?>
 </ul>
+            <script>
+                var whetherSecondRendering = true;
+            </script>
 
         </div>
     <?php

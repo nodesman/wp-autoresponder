@@ -98,7 +98,10 @@ function changeTemplate(editor,nameOfTextArea)
 
 
             var initializeTabbedInterface = function() {
-                jQuery('#compose_tabs').tabs();
+                jQuery('#compose_tabs').tabs({
+                    'name': 'wpr-add-autoresponder-message-tabs',
+                    'expires': 1
+                });
             };
 
 
@@ -124,11 +127,20 @@ function changeTemplate(editor,nameOfTextArea)
                 });
             };
 
+            var switchToAppropriateTab = function () {
+                var htmlbody = document.getElementById('rich_body_field').value;
+                var textbody = document.getElementById('text_body_field').value;
 
+                if (htmlbody.length === 0 && textbody.length !==0  && window.whetherSecondRendering === true)
+                {
+                    jQuery("#compose_tabs").tabs('select', 1);
+                }
+            };
 
             var whetherSubjectEdited = false;
 
             initializeTabbedInterface();
+            switchToAppropriateTab();
             initializeWYSIWYG();
 
         };

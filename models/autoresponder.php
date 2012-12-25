@@ -26,12 +26,49 @@ class Autoresponder
 
         global $wpdb;
         //ensure that all required arguments are present
-        $argument_keys = array_keys($args);
-        $diff = array_diff( array('subject', 'textbody', 'htmlbody', 'offset'), $argument_keys);
-        if (count($diff) > 0)
-            throw new InvalidArgumentException();
+        $this->validateAutoresponderMessage($args);
+
+        $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
+                        (%d, %s, %s, %s, %d, 1);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
+
+        $wpdb->query($addAutoresponderMessageQuery);
+        $autoresponder_message_id = $wpdb->insert_id;
+        $getAutoresponderMessageQuery = sprintf("SELECT * FROM %swpr_autoresponder_messages WHERE id=%d", $wpdb->prefix, $autoresponder_message_id);
+        $message = $wpdb->get_row($getAutoresponderMessageQuery);
+
+        return AutoresponderMessage::getMessage($autoresponder_message_id);
+    }
 
 
+    public function updateMessage($message_id, $args) {
+        global $wpdb;
+
+        $this->validateAutoresponderMessage($args);
+
+        $updateAutoresponderQuery = $wpdb->prepare("UPDATE {$wpdb->prefix}wpr_autoresponder_messages SET
+                                                                `subject`=%s,
+                                                                `textbody`=%s,
+                                                                `htmlbody`=%s,
+                                                                `sequence`=%d
+                                                                WHERE
+                                                                id=%d
+            ", $args['subject'], $args['textbody'], $args['htmlbody'], $args['offset'], $message_id);
+        $wpdb->query($updateAutoresponderQuery);
+
+        return AutoresponderMessage::getMessage($message_id);
+    }
+
+
+
+    private function validateAutoresponderMessage($args)
+    {
+        $this->validateAutoresponderMessageArgumentStructure($args);
+        $this->ensureValidityOfAutoresponderMessageContent($args);
+    }
+
+    private function ensureValidityOfAutoresponderMessageContent($args)
+    {
+        global $wpdb;
         if (empty($args['subject']))
             throw new InvalidAutoresponderMessageException(__('Message subject is empty.'), 4000);
 
@@ -40,31 +77,29 @@ class Autoresponder
 
         $offsetVar = trim($args['offset']);
 
-        if  (0 != preg_match("@[^0-9]@", $offsetVar) || strlen($offsetVar) == 0)
+        if (0 != preg_match("@[^0-9]@", $offsetVar) || strlen($offsetVar) == 0)
             throw new InvalidAutoresponderMessageException(__('Invalid non-numeric delivery day mentioned. '), 4004);
 
         $args['offset'] = intval($args['offset']);
 
-        if (0 > $args['offset'] )
+        if (0 > $args['offset'])
             throw new InvalidAutoresponderMessageException(__('Negative days after subscription schedule for autoresponder message.'), 4004);
 
-        $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d",$this->getId(), $args['offset']);
+        $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d", $this->getId(), $args['offset']);
         $checkResults = $wpdb->get_row($checkWhetherAMessageExistsForThatDayOffsetQuery);
 
         if (0 != intval($checkResults->num)) {
-            throw new InvalidAutoresponderMessageException(__('A message for the provided day offset '.$args['offset'].' already exists in the autoresponder. Only one message can be sent on a day.'), 4006);
+            throw new InvalidAutoresponderMessageException(__('A message for the provided day offset ' . $args['offset'] . ' already exists in the autoresponder. Only one message can be sent on a day.'), 4006);
         }
+        return $args;
+    }
 
-        $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
-                        (%d, %s, %s, %s, %d, 1);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
-
-        $wpdb->query($addAutoresponderMessageQuery);
-        $id = $wpdb->insert_id;
-        $getAutoresponderMessageQuery = sprintf("SELECT * FROM %swpr_autoresponder_messages WHERE id=%d", $wpdb->prefix, $id);
-        $message = $wpdb->get_row($getAutoresponderMessageQuery);
-
-        return AutoresponderMessage::getMessage($id);
-
+    private function validateAutoresponderMessageArgumentStructure($args)
+    {
+        $argument_keys = array_keys($args);
+        $diff = array_diff(array('subject', 'textbody', 'htmlbody', 'offset'), $argument_keys);
+        if (count($diff) > 0)
+            throw new InvalidArgumentException();
     }
 
     public static function delete(Autoresponder $autoresponder) {

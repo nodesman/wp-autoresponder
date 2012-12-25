@@ -12,7 +12,7 @@ class AutoresponderMessage
 
         global $wpdb;
         $this->subject = $autoresponder_result_row->subject;
-        $this->id = $autoresponder_result_row->id;
+        $this->id = (int) $autoresponder_result_row->id;
         $this->htmlbody = $autoresponder_result_row->htmlbody;
         $this->textbody = $autoresponder_result_row->textbody;
         $this->offset = $autoresponder_result_row->sequence;

@@ -48,7 +48,7 @@
     </div>
     <?php do_action("_wpr_autoresponder_add_message_after_sidebars"); ?>
 
-    <input type="text" name="subject" id="post-compose-subject" placeholder="Subject..." value="Subject..."/>
+    <input type="text" name="subject" id="post-compose-subject" placeholder="Subject..." value="<?php if (isset($form_values['subject'])) { echo $form_values['subject']; } ?>"/>
     <div id="composition-section">
 
         <div id="compose_tabs">
@@ -58,10 +58,10 @@
             </ul>
 
             <div id="rich_body">
-                <textarea name="htmlbody" id="rich_body_field"></textarea>
+                <textarea name="htmlbody" id="rich_body_field"><?php if (isset($form_values['htmlbody'])) { echo $form_values['htmlbody']; } ?></textarea>
             </div>
             <div id="text_body">
-                <textarea name="textbody" id="text_body_field" placeholder="Enter text body here..."></textarea>
+                <textarea name="textbody" id="text_body_field" placeholder="Enter text body here..."><?php if (isset($form_values['textbody'])) { echo $form_values['textbody']; } ?></textarea>
 
             </div>
             <?php do_action("_wpr_autoresponder_message_after_custom_fields"); ?>

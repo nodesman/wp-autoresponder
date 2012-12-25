@@ -85,7 +85,7 @@ class AutorespondersController
         $subject = $_POST['subject'];
         $htmlbody = $_POST['htmlbody'];
         $textbody = $_POST['textbody'];
-        $offset = intval($_POST['offset']);
+        $offset = $_POST['offset'];
 
         $message_info = array(
             'subject' => $subject,
@@ -105,13 +105,21 @@ class AutorespondersController
 
         try {
             $message = $responder->addMessage($message_info);
+            wp_redirect(sprintf("admin.php?page=_wpr/autoresponders&action=manage&id=%d",$autoresponder_id));
         }
         catch (InvalidAutoresponderMessageException $exc) {
             $errors = array($exc->getMessage());
             _wpr_set("errors", $errors);
         }
 
-        wp_redirect(sprintf("admin.php?page=_wpr/autoresponders&action=manage&id=%d",$autoresponder_id));
+        $form_values = array('subject'=> $subject,
+            'htmlbody' => $htmlbody,
+            'textbody' => $textbody,
+            'offset'   => $offset
+        );
+
+        _wpr_set("form_values",$form_values);
+
 
     }
 

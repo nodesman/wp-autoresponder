@@ -95,24 +95,7 @@ function changeTemplate(editor,nameOfTextArea)
 
         var ComposePositionDialog = function() {
 
-            var getCurrentSubjectFieldValue = function() {
-                return jQuery('#post-compose-subject').val();
-            };
-            var bindSubjectFieldEvents = function() {
 
-                jQuery('#post-compose-subject').on('click', function() {
-                    if (whetherSubjectEdited === true)
-                        return;
-                    this.value= '';
-                }).on('blur', function () {
-                    if (whetherSubjectEdited === true) {
-                        return;
-                    }
-                    this.value = subjectFieldDefaultValue;
-                }).on('keydown', function() {
-                    whetherSubjectEdited = true;
-                });
-            };
 
             var initializeTabbedInterface = function() {
                 jQuery('#compose_tabs').tabs();
@@ -144,9 +127,7 @@ function changeTemplate(editor,nameOfTextArea)
 
 
             var whetherSubjectEdited = false;
-            var subjectFieldDefaultValue = getCurrentSubjectFieldValue();
 
-            bindSubjectFieldEvents();
             initializeTabbedInterface();
             initializeWYSIWYG();
 

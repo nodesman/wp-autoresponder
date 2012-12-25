@@ -33,22 +33,27 @@ class Autoresponder
 
 
         if (empty($args['subject']))
-            throw new InvalidAutoresponderMessageException(__('Follow-up message subject is empty'), 4000);
+            throw new InvalidAutoresponderMessageException(__('Message subject is empty.'), 4000);
 
         if (empty($args['textbody']) && empty($args['htmlbody']))
-            throw new InvalidAutoresponderMessageException(__('Both HTML and text bodies of the message is empty'), 4002);
+            throw new InvalidAutoresponderMessageException(__('Both HTML and text bodies of the message is empty.'), 4002);
 
-        if ("integer" != gettype($args['offset']) || 0 > $args['offset'])
-            throw new InvalidAutoresponderMessageException(__('Invalid day offset for autoresponder message'), 4004);
+        $offsetVar = trim($args['offset']);
 
+        if  (0 != preg_match("@[^0-9]@", $offsetVar) || strlen($offsetVar) == 0)
+            throw new InvalidAutoresponderMessageException(__('Invalid non-numeric delivery-day subscription mentioned. '), 4004);
 
+        $args['offset'] = intval($args['offset']);
+
+        if (0 > $args['offset'] )
+            throw new InvalidAutoresponderMessageException(__('Negative days after subscription schedule for autoresponder message.'), 4004);
 
         $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d",$this->getId(), $args['offset']);
         $checkResults = $wpdb->get_row($checkWhetherAMessageExistsForThatDayOffsetQuery);
-        if (0 != intval($checkResults->num)) {
-            throw new InvalidAutoresponderMessageException(__('A message for the provided day offset already exists in the autoresponder. Only one message can be sent on a day'), 4006);
-        }
 
+        if (0 != intval($checkResults->num)) {
+            throw new InvalidAutoresponderMessageException(__('A message for the provided day offset '.$args['offset'].' already exists in the autoresponder. Only one message can be sent on a day.'), 4006);
+        }
 
         $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
                         (%d, %s, %s, %s, %d, 1);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);

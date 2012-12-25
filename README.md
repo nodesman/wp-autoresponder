@@ -3,7 +3,7 @@ Contributors: rajasekharan
 Donate link: http://wpresponder.com/donate/  
 Tags: email, newsletter, autoresponder, subscribers, mailing list, follow up email autoresponder, email marketing  
 Requires at least: 2.8.2  
-Tested up to: 3.3.1
+Tested up to: 3.5
 Stable tag: 5.2.8
 
 With WP Autoresponder you can create email newsletters, follow up autoresponders and provide subscription to blog via e-mail.  

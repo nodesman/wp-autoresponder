@@ -42,8 +42,16 @@ class Autoresponder
             throw new InvalidAutoresponderMessageException(__('Invalid day offset for autoresponder message'), 4004);
 
 
-        $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
-                        (%d, '%s', '%s', '%s', %d, 1);", $wpdb->prefix, $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
+
+        $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d",$this->getId(), $args['offset']);
+        $checkResults = $wpdb->get_row($checkWhetherAMessageExistsForThatDayOffsetQuery);
+        if (0 != intval($checkResults->num)) {
+            throw new InvalidAutoresponderMessageException(__('A message for the provided day offset already exists in the autoresponder. Only one message can be sent on a day'), 4006);
+        }
+
+
+        $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
+                        (%d, %s, %s, %s, %d, 1);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
 
         $wpdb->query($addAutoresponderMessageQuery);
         $id = $wpdb->insert_id;

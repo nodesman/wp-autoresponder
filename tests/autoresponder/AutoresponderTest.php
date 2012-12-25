@@ -316,7 +316,7 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 2,
-                "attachimages" => 2
+                "attachimages" => 1
             ),
             array(
                 "aid"          => $autoresponder->id,
@@ -325,7 +325,7 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 3,
-                "attachimages" => 3
+                "attachimages" => 1
             )
         );
         $originalSubjects = array();
@@ -336,9 +336,11 @@ class AutoresponderTest extends WP_UnitTestCase {
         }
 
 
+
         $autoresponderObj = Autoresponder::getAutoresponder(intval($autoresponder->id));
 
         $autoresponderMessagesRes = $autoresponderObj->getMessages();
+
 
         $this->assertEquals(count($autoresponderMessagesRes), count($originalSubjects));
 
@@ -461,6 +463,8 @@ class AutoresponderTest extends WP_UnitTestCase {
         $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, id, name) VALUES (%d, 1, '%s')",$wpdb->prefix, $this->newsletterId, 'Test');
         $wpdb->query($addAutoresponderQuery);
 
+        $first_autoresponder_id = $wpdb->insert_id;
+
         for ($iter =0; $iter < 30; $iter++) {
             $addAutoresponderSubscription = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', 1, %d, %d, %d, %d)", $wpdb->prefix, $iter, -1, time()-5000, time(), time()-30000, time()-50000);
             $wpdb->query($addAutoresponderSubscription);
@@ -469,13 +473,14 @@ class AutoresponderTest extends WP_UnitTestCase {
         $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, id, name) VALUES (%d, 2, '%s')",$wpdb->prefix, $this->newsletterId, 'Test 2');
         $wpdb->query($addAutoresponderQuery);
 
+        $second_autoresponder_id = $wpdb->insert_id;
+
         for ($iter =0; $iter < 30; $iter++) {
             $addAutoresponderSubscription = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', 2, %d, %d, %d, %d)", $wpdb->prefix, $iter, -1, time()-5000, time(), time()-30000, time()-50000);
             $wpdb->query($addAutoresponderSubscription);
         }
 
-        Autoresponder::delete(Autoresponder::getAutoresponder(1));
-
+        Autoresponder::delete(Autoresponder::getAutoresponder($first_autoresponder_id));
 
         $getAutoresponderSubscriptionsQuery = sprintf("SELECT COUNT(*) num FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder';", $wpdb->prefix, 1);
         $numberRes = $wpdb->get_results($getAutoresponderSubscriptionsQuery);
@@ -725,7 +730,6 @@ class AutoresponderTest extends WP_UnitTestCase {
      */
     public function testAddingAAutoresponderMessageWithoutAnyBodyThrowsException() {
 
-
         global $wpdb;
         $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
         $results = $wpdb->query($addAutoresponderQuery);
@@ -823,7 +827,6 @@ class AutoresponderTest extends WP_UnitTestCase {
             'offset' => 0,
         );
 
-
         $message = $autoresponder->addMessage($autoresponder_message);
 
 
@@ -832,6 +835,55 @@ class AutoresponderTest extends WP_UnitTestCase {
         $this->assertEquals($autoresponder_message['textbody'], $message->getTextBody());
         $this->assertEquals($autoresponder_message['offset'], $message->getDayNumber());
 
+    }
+    /**
+     * @expectedException InvalidAutoresponderMessageException
+     */
+    public function testAddingAAutoresponderMessageWhenOneAlreadyExistsForSameDayResultsInFailure() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => md5(microtime()."subject"),
+            'textbody' => md5(microtime()."textbody"),
+            'htmlbody' => md5(microtime()."htmlbody"),
+            'offset' => 0,
+        );
+
+        $message = $autoresponder->addMessage($autoresponder_message);
+
+        $autoresponder_message = array(
+            'subject' => md5(microtime()."subject2"),
+            'textbody' => md5(microtime()."textbody2"),
+            'htmlbody' => md5(microtime()."htmlbody2"),
+            'offset' => 0,
+        );
+
+        $message = $autoresponder->addMessage($autoresponder_message);
+    }
+
+
+    /**
+     * @expectedException InvalidAutoresponderMessageException
+     */
+    public function testAddingAAutoresponderMessageWithInvalidOffsetShouldFail() {
+
+        global $wpdb;
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'subject' => md5(microtime()."subject"),
+            'textbody' => md5(microtime()."textbody"),
+            'htmlbody' => md5(microtime()."htmlbody"),
+            'offset' => 'a',
+        );
+
+        $message = $autoresponder->addMessage($autoresponder_message);
     }
 }
 

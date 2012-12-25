@@ -79,6 +79,42 @@ class AutorespondersController
 
     }
 
+
+    public static function add_message_handler() {
+
+        $subject = $_POST['subject'];
+        $htmlbody = $_POST['htmlbody'];
+        $textbody = $_POST['textbody'];
+        $offset = intval($_POST['offset']);
+
+        $message_info = array(
+            'subject' => $subject,
+            'htmlbody' => $htmlbody,
+            'textbody' => $textbody,
+            'offset' => $offset
+        );
+
+        $autoresponder_id = intval($_GET['id']);
+
+        try {
+            $responder = Autoresponder::getAutoresponder($autoresponder_id);
+        }
+        catch (NonExistentAutoresponderException $exc) {
+            wp_redirect("admin.php?page=_wpr/autoresponders");
+        }
+
+        try {
+            $message = $responder->addMessage($message_info);
+        }
+        catch (InvalidAutoresponderMessageException $exc) {
+            $errors = array($exc->getMessage());
+            _wpr_set("errors", $errors);
+        }
+
+        wp_redirect(sprintf("admin.php?page=_wpr/autoresponders&action=manage&id=%d",$autoresponder_id));
+
+    }
+
     public static function validateAddFormPostData($post_data, &$errors)
     {
         $name = $post_data['name'];
@@ -98,10 +134,6 @@ class AutorespondersController
             'name' => $_POST['autoresponder_name'],
             'nid' => $_POST['nid']
         );
-    }
-
-    public function autoresponderMessagesList() {
-
     }
 
     public static function manage() {
@@ -130,7 +162,6 @@ class AutorespondersController
         _wpr_setview("autoresponder_manage");
     }
 
-
     public static function add_message() {
 
         $autoresponder_id = intval($_GET['id']);
@@ -139,7 +170,7 @@ class AutorespondersController
 
         $custom_fields = $autoresponderObject->getNewsletter()->getCustomFieldKeyLabelPair();
 
-        self::enqueue_wysiwyg();
+        self::enqueue_wysiwyg(); //TODO: THIS METHOD DEF SHOULDN'T BE WHERE IT IS RIGHT NOW
 
         _wpr_set("custom_fields", $custom_fields);
         _wpr_set("autoresponder", $autoresponderObject);
@@ -150,10 +181,7 @@ class AutorespondersController
     private static function enqueue_wysiwyg() {
         wp_enqueue_script('wpresponder-ckeditor');
     }
-
-
-
-}//end class
+}
 
 add_action("_wpr_add_autoresponder_post_handler","_wpr_add_autoresponder_post_handler");
 add_action("_wpr_delete_autoresponder_post_handler","_wpr_delete_autoresponder_post_handler");
@@ -165,6 +193,16 @@ function _wpr_add_autoresponder_post_handler() {
         return;
     }
     AutorespondersController::add_post_handler();
+}
+
+function _wpr_add_autoresponder_message_post_handler() {
+
+    global $wpdb;
+    if (!wp_verify_nonce($_POST['_wpr_add_autoresponder_message'], '_wpr_add_autoresponder_message')) {
+        return;
+    }
+
+    AutorespondersController::add_message_handler();
 }
 
 function _wpr_delete_autoresponder_post_handler() {

@@ -7,7 +7,7 @@
             <li><a href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>"><?php _e(sprintf("Manage '%s'", $autoresponder->getName())); ?></a></li>
         </ul>
     </div>
-    <h2>Manage Autoresponder</h2>
+    <h2>Manage Autoresponder '<?php echo $autoresponder->getName(); ?>'</h2>
 
     <form method="post" action="admin.php?page=_wpr/autoresponders&action=add_message&id=<?php echo $autoresponder->getId(); ?>">
         <input type="submit" value="Add Message" id="wpr-add-message" title="Add Message" class="wpr-action-button"/>

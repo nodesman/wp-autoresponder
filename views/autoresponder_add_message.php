@@ -29,7 +29,7 @@
 
     <div id="compose-sidebar">
         <strong>For autoresponder:</strong> <p id="autoresponder-name-sidebar"><?php echo $autoresponder->getName(); ?></p>
-        <strong>To be sent on:</strong> <p id="autoresponder-offset"><input type="text" name="offset" size="3" value="0" id="offset"/> days after subscription</p>
+        <strong>To be sent on:</strong> <p id="autoresponder-offset"><input type="text" name="offset" size="3" value="<?php echo (isset($form_values))?$form_values['offset']:''; ?>" id="offset"/> days after subscription</p>
         <?php do_action("_wpr_autoresponder_message_add_sidebar_before_action_buttons"); ?>
         <input id="add_autoresponder_button" type="submit" value="<?php echo _e("Add Message"); ?>" class="wpr-action-button"/>
         <a id="autoresponder_add_cancel" href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>" class="wpr-action-button"><?php echo _e("Cancel"); ?></a>

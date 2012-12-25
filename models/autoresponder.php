@@ -41,7 +41,7 @@ class Autoresponder
         $offsetVar = trim($args['offset']);
 
         if  (0 != preg_match("@[^0-9]@", $offsetVar) || strlen($offsetVar) == 0)
-            throw new InvalidAutoresponderMessageException(__('Invalid non-numeric delivery-day subscription mentioned. '), 4004);
+            throw new InvalidAutoresponderMessageException(__('Invalid non-numeric delivery day mentioned. '), 4004);
 
         $args['offset'] = intval($args['offset']);
 

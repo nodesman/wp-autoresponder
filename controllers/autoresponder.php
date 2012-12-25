@@ -82,9 +82,9 @@ class AutorespondersController
 
     public static function add_message_handler() {
 
-        $subject = $_POST['subject'];
-        $htmlbody = $_POST['htmlbody'];
-        $textbody = $_POST['textbody'];
+        $subject =  stripslashes($_POST['subject']);
+        $htmlbody = stripslashes($_POST['htmlbody']);
+        $textbody = stripslashes($_POST['textbody']);
         $offset = $_POST['offset'];
 
         $message_info = array(
@@ -112,9 +112,9 @@ class AutorespondersController
             _wpr_set("errors", $errors);
         }
 
-        $form_values = array('subject'=> $subject,
-            'htmlbody' => $htmlbody,
-            'textbody' => $textbody,
+        $form_values = array('subject'=> stripslashes($subject),
+            'htmlbody' => stripslashes($htmlbody),
+            'textbody' => stripslashes($textbody),
             'offset'   => $offset
         );
 

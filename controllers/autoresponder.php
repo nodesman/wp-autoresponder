@@ -20,6 +20,10 @@ function _wpr_autoresponder_manage() {
 function _wpr_autoresponder_add_message() {
     AutorespondersController::add_message();
 }
+
+function _wpr_autoresponder_edit_message() {
+    AutorespondersController::edit_message();
+}
 class AutorespondersController
 {
     private $defaultAutorespondersPerPage = 10;
@@ -186,6 +190,28 @@ class AutorespondersController
 
     }
 
+    public static function edit_message() {
+
+        $message_id = intval($_GET['id']);
+
+        try {
+            $message = AutoresponderMessage::getMessage($message_id);
+        }
+        catch(NonExistentMessageException $ex) {
+            wp_redirect("admin.php?page=_wpr/autoresponders"); //TODO:This shouldn't happen. This should instead be a error screen
+        }
+
+        $autoresponder = $message->getAutoresponder();
+        $custom_fields = $autoresponder->getNewsletter()->getCustomFieldKeyLabelPair();
+
+        self::enqueue_wysiwyg(); //TODO: THIS METHOD DEF SHOULDN'T BE WHERE IT IS RIGHT NOW
+
+        _wpr_set("custom_fields", $custom_fields);
+        _wpr_set("autoresponder", $autoresponder);
+        _wpr_setview("autoresponder_edit_message");
+
+    }
+
     private static function enqueue_wysiwyg() {
         wp_enqueue_script('wpresponder-ckeditor');
     }
@@ -220,3 +246,5 @@ function _wpr_delete_autoresponder_post_handler() {
     }
     AutorespondersController::delete_handler();
 }
+
+

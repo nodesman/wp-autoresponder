@@ -7,6 +7,7 @@ class AutoresponderMessage
     private $id;
     private $htmlbody;
     private $textbody;
+    private $autoresponder_id;
 
     private function __construct($autoresponder_result_row) {
 
@@ -16,6 +17,7 @@ class AutoresponderMessage
         $this->htmlbody = $autoresponder_result_row->htmlbody;
         $this->textbody = $autoresponder_result_row->textbody;
         $this->offset = $autoresponder_result_row->sequence;
+        $this->autoresponder_id = (int) $autoresponder_result_row->aid;
 
     }
 
@@ -27,6 +29,10 @@ class AutoresponderMessage
     }
     public function getTextBody() {
         return $this->textbody;
+    }
+
+    public function getAutoresponder() {
+        return Autoresponder::getAutoresponder($this->autoresponder_id);
     }
 
     public function getId() {

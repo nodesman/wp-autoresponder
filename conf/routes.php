@@ -42,7 +42,8 @@ $wpr_routes = array(
             'delete' => '_wpr_autoresponder_delete',
             'manage' => '_wpr_autoresponder_manage',
             'add_message' => '_wpr_autoresponder_add_message',
-            'edit_message' => '_wpr_autoresponder_edit_message'
+            'edit_message' => '_wpr_autoresponder_edit_message',
+            'delete_message' => '_wpr_autoresponder_delete_message'
         )
     ),
     'wpresponder/blogseries.php'=> array(

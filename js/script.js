@@ -50,9 +50,6 @@ function removeEditor(editorId)
       listOfEditors[editorId].destroy();
 	  
       delete listOfEditors[editorId];
-      
-      
-      
 }
 
 
@@ -95,8 +92,6 @@ function changeTemplate(editor,nameOfTextArea)
 
         var ComposePositionDialog = function() {
 
-
-
             var initializeTabbedInterface = function() {
                 jQuery('#compose_tabs').tabs({
                     'name': 'wpr-add-autoresponder-message-tabs',
@@ -131,7 +126,7 @@ function changeTemplate(editor,nameOfTextArea)
                 var htmlbody = document.getElementById('rich_body_field').value;
                 var textbody = document.getElementById('text_body_field').value;
 
-                if (htmlbody.length === 0 && textbody.length !==0  && window.whetherSecondRendering === true)
+                if (htmlbody.length === 0 && textbody.length !==0  && (window.whetherSecondRendering === true || jQuery('.edit_autoresponder_message').length > 0) )
                 {
                     jQuery("#compose_tabs").tabs('select', 1);
                 }
@@ -147,10 +142,31 @@ function changeTemplate(editor,nameOfTextArea)
 
         var Dialog = new ComposePositionDialog();
 
-
-
     });
-
-
-
+    
 })();
+
+
+(function manageAutorespondersScreen() {
+    jQuery(document).ready(function () {
+       
+       if (0 === jQuery('.autoresponder-manage').length)
+           return;
+           
+        
+        var ManageCompositionDialog = function () {
+        
+              var addConfirmationDialogToAllDeleteButtons = function () {
+                  
+                  jQuery(".delete-autoresponder-message").click(function() {
+                      return window.confirm("Are you sure you want to delete this follow-up message?");
+                  });
+              };
+              
+              addConfirmationDialogToAllDeleteButtons();
+        };
+        
+        var Dialog = new ManageCompositionDialog();
+        
+    });
+})()

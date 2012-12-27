@@ -21,6 +21,9 @@ class AutoresponderMessage
 
     }
 
+    public function getId() {
+        return $this->id;
+    }
     public function getSubject() {
         return $this->subject;
     }
@@ -30,13 +33,8 @@ class AutoresponderMessage
     public function getTextBody() {
         return $this->textbody;
     }
-
     public function getAutoresponder() {
         return Autoresponder::getAutoresponder($this->autoresponder_id);
-    }
-
-    public function getId() {
-        return $this->id;
     }
 
     public function getDayNumber() {
@@ -60,7 +58,7 @@ class AutoresponderMessage
         $autoresponderId = $results[0]->aid;
 
         if (!Autoresponder::whetherAutoresponderExists(intval($autoresponderId))) {
-            throw new NonExistentMessageException();
+            throw new NonExistentAutoresponderException();
         }
 
         $message = new AutoresponderMessage($results[0]);

@@ -15,7 +15,7 @@ function getNumberOfEmailsToDeliver()
 		$emails_sent_this_hour = 0;
 		update_option("_wpr_dq_emails_sent_this_hour",$emails_sent_this_hour);
 	}
-	
+
 	//reseting emails sent this hour value
 	if ($currentTime > ($last_reset_time+3600))
 	{

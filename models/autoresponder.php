@@ -43,7 +43,7 @@ class Autoresponder
     public function updateMessage($message_id, $args) {
         global $wpdb;
 
-        $this->validateAutoresponderMessage($args);
+        $this->validateAutoresponderMessage($args, $message_id);
 
         $updateAutoresponderQuery = $wpdb->prepare("UPDATE {$wpdb->prefix}wpr_autoresponder_messages SET
                                                                 `subject`=%s,
@@ -60,20 +60,20 @@ class Autoresponder
 
 
 
-    private function validateAutoresponderMessage($args)
+    private function validateAutoresponderMessage($args, $message_id = -1)
     {
         $this->validateAutoresponderMessageArgumentStructure($args);
-        $this->ensureValidityOfAutoresponderMessageContent($args);
+        $this->ensureValidityOfAutoresponderMessageContent($args, $message_id);
     }
 
-    private function ensureValidityOfAutoresponderMessageContent($args)
+    private function ensureValidityOfAutoresponderMessageContent($args, $message_id= -1)
     {
         global $wpdb;
         if (empty($args['subject']))
             throw new InvalidAutoresponderMessageException(__('Message subject is empty.'), 4000);
 
         if (empty($args['textbody']) && empty($args['htmlbody']))
-            throw new InvalidAutoresponderMessageException(__('Both HTML and text bodies of the message is empty.'), 4002);
+            throw new InvalidAutoresponderMessageException(__('Both HTML and text bodies of the message are empty.'), 4002);
 
         $offsetVar = trim($args['offset']);
 
@@ -84,8 +84,15 @@ class Autoresponder
 
         if (0 > $args['offset'])
             throw new InvalidAutoresponderMessageException(__('Negative days after subscription schedule for autoresponder message.'), 4004);
-
-        $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d", $this->getId(), $args['offset']);
+            
+        //an update operation
+        if ($message_id !== -1) {
+            $equalityClause = sprintf("AND id != %d", $message_id);
+        }
+        else {
+            $equalityClause = '';
+        }
+        $checkWhetherAMessageExistsForThatDayOffsetQuery = $wpdb->prepare("SELECT COUNT(*) num FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=%d {$equalityClause}", $this->getId(), $args['offset'], $equalityClause);
         $checkResults = $wpdb->get_row($checkWhetherAMessageExistsForThatDayOffsetQuery);
 
         if (0 != intval($checkResults->num)) {
@@ -149,7 +156,6 @@ class Autoresponder
     {
         return $this->nid;
     }
-
 
     public function getNewsletter()
     {
@@ -268,6 +274,19 @@ class Autoresponder
         }
 
         return $messageObjects;
+    }
+
+    public function deleteMessage(AutoresponderMessage $message) {
+        global $wpdb;
+
+        $deleteAutoresponderMessageQuery = sprintf("DELETE FROM %swpr_autoresponder_messages WHERE id=%d AND aid=%d", $wpdb->prefix, $message->getId(), $this->getId());
+        $wpdb->query($deleteAutoresponderMessageQuery);
+
+
+        $deleteMessagesPendingDeliveryQuery = sprintf("DELETE FROM %swpr_queue WHERE `meta_key` LIKE 'AR-%%%%-%%%%-%d-%%' AND sent=0;", $wpdb->prefix, $message->getId());
+        $wpdb->query($deleteMessagesPendingDeliveryQuery);
+
+
     }
 
     public function getNumberOfMessages() {

@@ -1,11 +1,23 @@
-<div class="wrap compose_message" id="wpr-chrome">
-    <h2>Add Message</h2>
+<div class="wrap compose_message edit_autoresponder_message" id="wpr-chrome">
+
+    <?php
+    if (isset($_GET['success'])) 
+    {
+    ?>
+    <div class="updated">
+        <p><?php _e('Message Updated.'); ?> </p>
+    </div>
+    <?php     
+    }
+    ?>
+    
+    <h2><?php _e('Edit Message'); ?></h2>
 
     <?php
     if (isset($errors) && 0 != count($errors)) {
     ?>
         <div class="wpr-error">
-<ul>
+    <ul>
             <?php
             foreach ($errors as $error) {
                 ?>
@@ -13,27 +25,25 @@
                 <?php
             }
             ?>
-</ul>
+    </ul>
             <script>
                 var whetherSecondRendering = true;
             </script>
+
         </div>
     <?php
     }
 ?>
 
-
-
-
-<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
-    <?php do_action("_wpr_autoresponder_add_message_before_sidebars"); ?>
+<form action="admin.php?page=_wpr/autoresponders&action=edit_message&id=<?php echo $message->getId(); ?>" method="post">
+    <?php do_action("_wpr_autoresponder_update_message_before_sidebars"); ?>
 
     <div id="compose-sidebar">
         <strong>For autoresponder:</strong> <p id="autoresponder-name-sidebar"><?php echo $autoresponder->getName(); ?></p>
         <strong>To be sent on:</strong> <p id="autoresponder-offset"><input type="text" name="offset" size="3" value="<?php echo (isset($form_values))?$form_values['offset']:''; ?>" id="offset"/> days after subscription</p>
-        <?php do_action("_wpr_autoresponder_message_add_sidebar_before_action_buttons"); ?>
-        <input id="add_autoresponder_button" type="submit" value="<?php echo _e("Add Message"); ?>" class="wpr-action-button"/>
-        <a id="autoresponder_add_cancel" href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>" class="wpr-action-button"><?php echo _e("Cancel"); ?></a>
+        <?php do_action("_wpr_autoresponder_message_update_sidebar_before_action_buttons"); ?>
+        <input id="update_autoresponder_button" type="submit" value="<?php echo _e("Update Message"); ?>" class="wpr-action-button"/>
+        <a id="autoresponder_update_cancel" href="admin.php?page=_wpr/autoresponders&action=manage&id=<?php echo $autoresponder->getId(); ?>" class="wpr-action-button"><?php echo _e("Cancel"); ?></a>
     </div>
     <div id="custom-fields-sidebar">
          <h2>Custom Fields Placeholders</h2>
@@ -50,7 +60,7 @@
         </ul>
 
     </div>
-    <?php do_action("_wpr_autoresponder_add_message_after_sidebars"); ?>
+    <?php do_action("_wpr_autoresponder_update_message_after_sidebars"); ?>
 
     <input type="text" name="subject" id="post-compose-subject" placeholder="Subject..." value="<?php if (isset($form_values['subject'])) { echo $form_values['subject']; } ?>"/>
     <div id="composition-section">
@@ -71,9 +81,9 @@
             <?php do_action("_wpr_autoresponder_message_after_custom_fields"); ?>
         </div>
     </div>
-    <?php wp_nonce_field('_wpr_add_autoresponder_message', '_wpr_add_autoresponder_message'); ?>
-    <input type="hidden" name="wpr_form" value="add_autoresponder_message"/>
-    <?php do_action("_wpr_autoresponder_add_message_after_compose_box"); ?>
+    <?php wp_nonce_field('_wpr_update_autoresponder_message', '_wpr_update_autoresponder_message'); ?>
+    <input type="hidden" name="wpr_form" value="update_autoresponder_message"/>
+    <?php do_action("_wpr_autoresponder_update_message_after_compose_box"); ?>
 
 </form>
 </div>

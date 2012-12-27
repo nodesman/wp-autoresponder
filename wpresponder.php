@@ -182,7 +182,7 @@ if (!defined("WPR_DEFS")) {
 
 	function _wpr_enqueue_admin_scripts_and_styles()
     {
-        $url = $_GET['page'];
+        $url = (isset($_GET['page']))?$_GET['page']:'';
         $wp_home_url = get_bloginfo('wpurl');
 
         if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {

@@ -25,6 +25,10 @@ class AutoresponderTest extends WP_UnitTestCase {
 
         $truncateAutorespondersMessagesTable= sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages;");
         $wpdb->query($truncateAutorespondersMessagesTable);
+
+
+        $truncateQueue= sprintf("TRUNCATE {$wpdb->prefix}wpr_queue;");
+        $wpdb->query($truncateQueue);
     }
     
     public function tearDown() {
@@ -1333,6 +1337,9 @@ class AutoresponderTest extends WP_UnitTestCase {
 
         $message = $autoresponder->updateMessage($message2->getId(), $autoresponder_message);
     }
+    
+    
+
 
 
     /**
@@ -1367,6 +1374,171 @@ class AutoresponderTest extends WP_UnitTestCase {
         );
 
         $message = $autoresponder->updateMessage($message->getId(), $autoresponder_message);
+    }
+
+    /**
+     * @expectedException NonExistentMessageException
+     */
+    public function testDeletingAutoresponderMessageDeletesTheMessage() {
+
+        global $wpdb;
+        
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'textbody' => 'This is a test',
+            'htmlbody' => 'This is a <test>body</test>',
+            'subject' => 'Test Subject',
+            'offset' => 3,
+        );
+
+        try {
+            $message = $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            throw new BadFunctionCallException();
+        }
+
+        $autoresponder_message = array(
+            'subject' => md5(microtime()."subject"),
+            'textbody' => md5(microtime()."textbody"),
+            'htmlbody' => md5(microtime()."htmlbody"),
+            'offset' => 'a',
+        );
+
+        $message_id = $message->getId();
+
+        $autoresponder->deleteMessage($message);
+
+        AutoresponderMessage::getMessage($message_id);
+    }
+
+
+    public function testDeleteOperationDeletesAutoresponderMessagePendingDelivery() {
+
+        global $wpdb;
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'textbody' => 'This is a test',
+            'htmlbody' => 'This is a <test>body</test>',
+            'subject' => 'Test Subject',
+            'offset' => 3,
+        );
+
+        try {
+            $message = $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            throw new BadFunctionCallException();
+        }
+
+        //add 10 of these messages in the queue.
+        for ($iter = 0; $iter < 10; $iter++) {
+            $addMessageToQueueQuery = sprintf("INSERT INTO %swpr_queue (`to`, `meta_key`, `sent`, `hash`) VALUES ('%s','AR-%d-%d-%d-%d', 0, '%s')", $wpdb->prefix, 'test'.microtime().'@test.com', $autoresponder->getId(), $iter, $message->getId(), $iter, md5(microtime()));
+            $wpdb->query($addMessageToQueueQuery);
+        }
+
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=0 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
+
+        //add 10 of these messages in the queue.
+        for ($iter = 10; $iter < 20; $iter++) {
+            $addMessageToQueueQuery = sprintf("INSERT INTO %swpr_queue (`to`, `meta_key`, `sent`, `hash`) VALUES ('%s','AR-%d-%d-%d-%d', 1, '%s')", $wpdb->prefix, 'test'.microtime().'@test.com', $autoresponder->getId(), $iter, $message->getId(), $iter, md5(microtime()));
+            $wpdb->query($addMessageToQueueQuery);
+        }
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=1 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
+        $autoresponder->deleteMessage($message);
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=0 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(0, $numOfUnsentMessages);
+
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=1 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
+    }
+
+    public function testDeleteAutoresponderMessageDeletesOnlyItsOwnFromQueue() {
+
+        global $wpdb;
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletterId, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder = Autoresponder::getAutoresponder($wpdb->insert_id);
+
+        $autoresponder_message = array(
+            'textbody' => 'This is a test',
+            'htmlbody' => 'This is a <test>body</test>',
+            'subject' => 'Test Subject',
+            'offset' => 3,
+        );
+
+        try {
+            $message = $autoresponder->addMessage($autoresponder_message);
+        }
+        catch (Exception $exc) {
+            throw new BadFunctionCallException();
+        }
+
+
+
+
+        //add 10 of these messages in the queue.
+        for ($iter = 0; $iter < 10; $iter++) {
+            $addMessageToQueueQuery = sprintf("INSERT INTO %swpr_queue (`to`, `meta_key`, `sent`, `hash`) VALUES ('%s','AR-%d-%d-%d-%d', 0, '%s')", $wpdb->prefix, 'test'.microtime().'@test.com', $autoresponder->getId(), $iter, $message->getId(), $iter, md5(microtime()));
+            $wpdb->query($addMessageToQueueQuery);
+        }
+
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=0 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
+
+        //add 10 of these messages in the queue.
+        for ($iter = 10; $iter < 20; $iter++) {
+            $addMessageToQueueQuery = sprintf("INSERT INTO %swpr_queue (`to`, `meta_key`, `sent`, `hash`) VALUES ('%s','AR-%d-%d-%d-%d', 1, '%s')", $wpdb->prefix, 'test'.microtime().'@test.com', $autoresponder->getId(), $iter, 9801, $iter, md5(microtime()));
+            $wpdb->query($addMessageToQueueQuery);
+        }
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=1 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, 9801);
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
+        $autoresponder->deleteMessage($message);
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=0 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, $message->getId());
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(0, $numOfUnsentMessages);
+
+
+        $getNumberOfUnsentMessagesForMessage = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE sent=1 AND meta_key LIKE 'AR-%%%%-%%%%-%d-%%';",$wpdb->prefix, 9801);
+        $resultSet = $wpdb->get_results($getNumberOfUnsentMessagesForMessage);
+        $numOfUnsentMessages = $resultSet[0]->num;
+        $this->assertEquals(10, $numOfUnsentMessages);
+
     }
 
 

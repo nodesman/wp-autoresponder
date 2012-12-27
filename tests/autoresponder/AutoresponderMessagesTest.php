@@ -38,7 +38,7 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
 
 
     /**
-     * @expectedException NonExistentMessageException
+     * @expectedException NonExistentAutoresponderException
      */
     public function testWhetherAutoresponderFactoryDoesntProvideMessagesOfAutorespondersThatDontExist() {
 

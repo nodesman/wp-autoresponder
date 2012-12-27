@@ -64,6 +64,23 @@ class AutoresponderMessage
         $message = new AutoresponderMessage($results[0]);
         return $message;
     }
+
+
+    public static function getAllMessages() {
+        global $wpdb;
+        $getAllValidAutoresponderMessagesQuery = sprintf("SELECT AM.* FROM %swpr_autoresponder_messages AM, %swpr_newsletters N, %swpr_autoresponders AU
+                        WHERE AM.aid=AU.id AND AU.nid=N.id ;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix);
+        $messagesResults = $wpdb->get_results($getAllValidAutoresponderMessagesQuery);
+
+
+        $message_array = array();
+        foreach ($messagesResults as $message_item) {
+            $message_array[] = self::getMessage((int)$message_item->id);
+        }
+
+        return $message_array;
+
+    }
 }
 
 

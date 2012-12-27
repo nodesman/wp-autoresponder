@@ -69,7 +69,6 @@ class AutoresponderMessage
     public static function getAllMessages($start =0, $length=-1) {
         global $wpdb;
 
-
         if  (0 < $length) {
             $limitClause = sprintf("LIMIT %d, %d", $start, $length);
         }
@@ -87,6 +86,18 @@ class AutoresponderMessage
         }
 
         return $message_array;
+
+    }
+
+    public static function getAllMessagesCount() {
+        global $wpdb;
+        $getAllValidAutoresponderMessagesQuery = sprintf("SELECT COUNT(*) num FROM %swpr_autoresponder_messages AM, %swpr_newsletters N, %swpr_autoresponders AU
+                        WHERE AM.aid=AU.id AND AU.nid=N.id;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix);
+        $messagesResults = $wpdb->get_results($getAllValidAutoresponderMessagesQuery);
+
+
+        return $messagesResults[0]->num;
+
 
     }
 }

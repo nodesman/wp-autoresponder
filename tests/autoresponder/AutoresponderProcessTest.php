@@ -132,6 +132,84 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
 
     }
 
+
+    public function testCountingAllMessagesOfAllAutorespondersAndNewslettersThatExist() {
+        //define an autoresponder
+        global $wpdb;
+
+        //add an autoresponder that has a newsletter associated with it.
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletter1_id, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder1_id = $wpdb->insert_id;
+
+        for ($iter=0;$iter< 12; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, $autoresponder1_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+        //add another autoresponder that has another newsletter associated with it.
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletter2_id, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder2_id = $wpdb->insert_id;
+
+        for ($iter=0;$iter< 13; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, $autoresponder2_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+        //add a autoresponder with no newsletter associated with it.
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, 9801, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder3_id = $wpdb->insert_id;
+
+        for ($iter=0;$iter< 13; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, $autoresponder3_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, 9801, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder3_id = $wpdb->insert_id;
+
+        for ($iter=0;$iter< 13; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, $autoresponder3_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+
+        //add messages for an autoresponder that doesn't exist
+        for ($iter=0;$iter< 13; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, 9000,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+        $count = AutoresponderMessage::getAllMessagesCount();
+
+        $this->assertEquals(25, $count);
+
+
+    }
     public function testFetchingPagedListOfAutoresponders() {
         global $wpdb;
 
@@ -151,17 +229,14 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $messages = AutoresponderMessage::getAllMessages(20, 30);
         $this->assertEquals(30, count($messages));
 
-
         $received_ids = $this->getMessageIds($messages);
-
         $expected = array_slice($autoresponderMessagesIds, 20, 30);
-
 
         $intersect = array_intersect($received_ids, $expected);
         $this->assertEquals(count($intersect), count($expected));
 
-
     }
+
 
     private function getMessageIds($messages)
     {

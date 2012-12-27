@@ -66,10 +66,18 @@ class AutoresponderMessage
     }
 
 
-    public static function getAllMessages() {
+    public static function getAllMessages($start =0, $length=-1) {
         global $wpdb;
+
+
+        if  (0 < $length) {
+            $limitClause = sprintf("LIMIT %d, %d", $start, $length);
+        }
+        else
+            $limitClause = '';
+
         $getAllValidAutoresponderMessagesQuery = sprintf("SELECT AM.* FROM %swpr_autoresponder_messages AM, %swpr_newsletters N, %swpr_autoresponders AU
-                        WHERE AM.aid=AU.id AND AU.nid=N.id ;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix);
+                        WHERE AM.aid=AU.id AND AU.nid=N.id %s;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix, $limitClause);
         $messagesResults = $wpdb->get_results($getAllValidAutoresponderMessagesQuery);
 
 

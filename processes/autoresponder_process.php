@@ -6,6 +6,7 @@ class AutoresponderProcess
 
         $number_of_messages = self::getNumberOfAutoresponderMessages();
 
+
     }
 
 }

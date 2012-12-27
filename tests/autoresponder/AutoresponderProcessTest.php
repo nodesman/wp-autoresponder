@@ -130,7 +130,46 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $this->assertEquals(0, count($diff));
         $this->assertEquals(25, count($messages));
 
+    }
 
+    public function testFetchingPagedListOfAutoresponders() {
+        global $wpdb;
+
+        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletter1_id, md5(microtime()) );
+        $results = $wpdb->query($addAutoresponderQuery);
+
+        $autoresponder1_id = $wpdb->insert_id;
+
+        for ($iter=0;$iter< 100; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                ,$wpdb->prefix, $autoresponder1_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
+        }
+
+        $messages = AutoresponderMessage::getAllMessages(20, 30);
+        $this->assertEquals(30, count($messages));
+
+
+        $received_ids = $this->getMessageIds($messages);
+
+        $expected = array_slice($autoresponderMessagesIds, 20, 30);
+
+
+        $intersect = array_intersect($received_ids, $expected);
+        $this->assertEquals(count($intersect), count($expected));
+
+
+    }
+
+    private function getMessageIds($messages)
+    {
+        $received_ids = array();
+        foreach ($messages as $message) {
+            $received_ids[] = $message->getId();
+        }
+        return $received_ids;
     }
 
 

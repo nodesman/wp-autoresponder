@@ -237,6 +237,16 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
 
     }
 
+    public function testAutoresponderMessagesGetCustomFieldValueReplacementInTextBody() {
+
+    }
+    public function testAutoresponderMessagesGetCustomFieldValueReplacementInHTMLBody() {
+
+    }
+    public function testAutoresponderMessagesGetCustomFieldValueReplacementInSubject() {
+
+    }
+
 
     private function getMessageIds($messages)
     {

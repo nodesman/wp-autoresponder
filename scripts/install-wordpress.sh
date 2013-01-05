@@ -3,7 +3,6 @@ cd wordpress
 last_tag=$(git tag | tail -1);
 git reset --hard $last_tag
 cp ./scripts/wp-config.php wordpress/
-
 git clone --recurse-submodules git://github.com/andreascreten/wp-cli.git ./wp-cli  
 cd ./wp-cli  
 sudo utils/build-dev

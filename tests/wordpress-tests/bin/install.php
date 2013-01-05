@@ -29,6 +29,10 @@ $wpdb->suppress_errors();
 $wpdb->hide_errors();
 $installed = $wpdb->get_var( "SELECT option_value FROM $wpdb->options WHERE option_name = 'siteurl'" );
 
+var_dump($installed);
+echo "is installed";
+echo WP_TESTS_VERSION_FILE;
+echo "is version file";
 if ( $installed && file_exists( WP_TESTS_VERSION_FILE ) ) {
 	$installed_version_hash = file_get_contents( WP_TESTS_VERSION_FILE );
 	if ( $installed_version_hash == test_version_check_hash() ) {

@@ -1,7 +1,7 @@
 before_script:
  - mysql -e 'CREATE DATABASE myapp_test;' 
  - ./scripts/install-wordpress.sh
- - cd wordpress; php wpr-activator.php
+ - cd wordpress; php wpr-activator.php; cd ..
 language: php
 php:
  - "5.3"

@@ -386,7 +386,7 @@ if (!empty($form->followup_type) && $form->followup_type != "none")
         <input type="text" name="name" /></td>
     </tr>
     <tr>
-      <td><span class="wprsfl wprsfl-email"><?php _e('E-Mail Address','wpr_autoresponder'); ?>:</span></td>
+      <td><span class="wprsfl wprsfl-email"><?php _e('E-Mail','wpr_autoresponder'); ?>:</span></td>
       <td><span class="wprsftf wpsftf-email">
         <input type="text" name="email" />
         </span>

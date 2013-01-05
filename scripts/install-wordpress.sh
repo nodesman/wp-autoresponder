@@ -11,4 +11,3 @@ cd ../wordpress
 wp core install --blog=12.0.0.1 --email=admin@127.0.0.1 --db-name=wordpress --db-user=root --db-pass="" --db-host=127.0.0.1 --site_url=http://localhost/wordpress/ --site_title="Brown Fox" --admin_email="raj@wpresponder.com" --admin_password="password"
 cp -rv ../src ./wp-content/plugins/wp-responder-email-autoresponder-and-newsletter-plugin
 cp -v ../scripts/wpr-activator.php .
-php wpr-activator.php

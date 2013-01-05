@@ -27,7 +27,9 @@ function wpresponder_install()
 		$last_post_date = date("Y-m-d H:i:s",time());
 	}
 	add_option("wpr_last_post_date",$last_post_date);
-
+	echo "Installing....";
+	sleep(1);
+        
 
         //the confirm email, confirmation email and confirmed subject templates.
 	$confirm_subject = file_get_contents($WPR_PLUGIN_DIR."/templates/confirm_subject.txt");

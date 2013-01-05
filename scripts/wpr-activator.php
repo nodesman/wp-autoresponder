@@ -7,7 +7,7 @@ if (is_file(__DIR__."/wp-content/plugins/wp-responder-email-autoresponder-and-ne
    activate_plugin(__DIR__."/wp-content/plugins/wp-responder-email-autoresponder-and-newsletter-plugin/wpresponder.php");
    $option = get_option("db_version");
    $hash = md5($option);
-   file_put_contents(".wp-tests-version");
+   file_put_contents(".wp-tests-version", $hash);
 }
 else {
    echo "File not found";

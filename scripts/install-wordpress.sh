@@ -12,4 +12,3 @@ wp core install --blog=12.0.0.1 --email=admin@127.0.0.1 --db-name=wordpress --db
 cp -r ../src ./wp-content/plugins/wp-responder-email-autoresponder-and-newsletter-plugin
 cp -v ../scripts/wpr-activator.php .
 touch .wp-tests-version
-date | md5sum > .wp-tests-version

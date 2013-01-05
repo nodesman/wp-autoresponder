@@ -1,6 +1,14 @@
 <?php
 require_once __DIR__."/../src/models/newsletter.php";
 
+mysql_connect("127.0.0.1", "root", "");
+    mysql_select_db("myapp_test");
+    $res = mysql_query("SHOW TABLES;");
+    while ($table = mysql_fetch_object($res)) {
+      print_r($table);
+   }
+
+
 class NewsletterTest extends WP_UnitTestCase {
 	
 	

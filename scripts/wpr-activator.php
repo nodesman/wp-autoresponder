@@ -5,6 +5,8 @@ echo "About to install ".__DIR__."/wp-content/plugins/wp-responder-email-autores
 if (is_file(__DIR__."/wp-content/plugins/wp-responder-email-autoresponder-and-newsletter-plugin/wpresponder.php")) {
    echo "Plugin file found"; 
    var_dump(activate_plugin(__DIR__."/wp-content/plugins/wp-responder-email-autoresponder-and-newsletter-plugin/wpresponder.php"));
+
+    print_r(get_option('active_plugins'));
 }
 else {
    echo "File not found";

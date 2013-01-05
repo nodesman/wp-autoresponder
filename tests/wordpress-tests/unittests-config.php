@@ -2,7 +2,7 @@
 /* Path to the WordPress codebase you'd like to test. Add a backslash in the end. */
 define( 'ABSPATH', __DIR__.'../../../wordpress/');
 
-define( 'DB_NAME', 'wordpress' );
+define( 'DB_NAME', 'myapp_test' );
 define( 'DB_USER', 'root' );
 define( 'DB_PASSWORD', '' );
 define( 'DB_HOST', 'localhost' );

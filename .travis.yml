@@ -2,6 +2,7 @@ before_script:
  - mysql -e 'CREATE DATABASE myapp_test;' 
  - ./scripts/install-wordpress.sh
  - cd wordpress; php wpr-activator.php; cd ..
+ - cd scripts/; mysql -e 'source tables-script.sql'; cd .. 
 language: php
 php:
  - "5.3"

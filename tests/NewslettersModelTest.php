@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../models/newsletter.php";
+require_once __DIR__."/../src/models/newsletter.php";
 
 class NewsletterTest extends WP_UnitTestCase {
 	

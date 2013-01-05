@@ -276,6 +276,24 @@ class Autoresponder
         return $messageObjects;
     }
 
+
+    public function getSubscribersForDelivery(AutoresponderMessage $message, DateTime $time) {
+
+        global $wpdb;
+        $message_id = $message->getId();
+        $offsetDay = $message->getDayNumber();
+
+        $getSubscribersForDeliveryForMessageQuery = sprintf("SELECT SS.*, FLOOR((%d-ASU.doc)/86400) offset, ASU.doc, (%d-ASU.doc) diff FROM `{$wpdb->prefix}wpr_followup_subscriptions` `ASU`, {$wpdb->prefix}wpr_subscribers SS WHERE SS.id=ASU.sid", $time->getTimestamp(), $time->getTimestamp(), $offsetDay);
+        $results = $wpdb->get_results($getSubscribersForDeliveryForMessageQuery);
+        print_r($results);
+
+        $getSubscribersForDeliveryForMessageQuery = sprintf("SELECT SS.* FROM `{$wpdb->prefix}wpr_followup_subscriptions` `ASU`, {$wpdb->prefix}wpr_subscribers SS WHERE SS.id=ASU.sid AND FLOOR((%d-ASU.doc)/86400) = %d", $time->getTimestamp(), $offsetDay);
+        echo $getSubscribersForDeliveryForMessageQuery;
+        $results = $wpdb->get_results($getSubscribersForDeliveryForMessageQuery);
+
+        return $results;
+    }
+
     public function deleteMessage(AutoresponderMessage $message) {
         global $wpdb;
 

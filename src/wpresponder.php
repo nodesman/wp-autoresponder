@@ -17,13 +17,13 @@ if (!defined("WPR_DEFS")) {
 
     $dir_name = basename(__DIR__);
 
-    $plugindir = ABSPATH . '/' . PLUGINDIR . '/' . $dir_name;
+    $plugindir = __DIR__;
 
     define("WPR_DIR", __DIR__);
 
-    $controllerDir = WPR_DIR . "/controllers";
-    $modelsDir = "$plugindir/models";
-    $helpersDir = "$plugindir/helpers";
+    $controllerDir = __DIR__ . "/controllers";
+    $modelsDir = __DIR__."/models";
+    $helpersDir = __DIR__."/helpers";
 
     define("WPR_VERSION", "5.3");
     define("WPR_PLUGIN_DIR", "$plugindir");

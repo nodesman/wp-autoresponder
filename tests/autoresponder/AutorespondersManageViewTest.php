@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__."/../../wpresponder.php";
+
+$wpresponder_path =  __DIR__."/../../src/wpresponder.php";
+
+require_once $wpresponder_path;
 
 $testWhetherAutorespondersListHeaderWasCalled = false;
 

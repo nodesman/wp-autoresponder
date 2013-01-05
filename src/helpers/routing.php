@@ -38,7 +38,6 @@ function _wpr_render_view()
         extract($wpr_globals);
 
         $viewfile ="$plugindir/views/".$currentView.".php";
-
         if (is_file($viewfile)) {
 	        require($viewfile); // this statement is necessarily a require and not an include. we want feedback when the file is not found.
 	    }

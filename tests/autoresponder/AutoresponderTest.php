@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../../models/autoresponder.php";
+require_once __DIR__ . "/../../src/models/autoresponder.php";
 
 class AutoresponderTest extends WP_UnitTestCase {
 

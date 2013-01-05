@@ -7,4 +7,5 @@ cp ./scripts/wp-config.php ./wordpress/
 git clone --recurse-submodules git://github.com/andreascreten/wp-cli.git ./wp-cli  
 cd ./wp-cli  
 sudo utils/build-dev
+cd ../wordpress
 wp core install --blog=12.0.0.1 --email=admin@127.0.0.1 --db-name=wordpress --db-user=root --db-pass="" --db-host=127.0.0.1

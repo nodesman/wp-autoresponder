@@ -1,4 +1,7 @@
 before_script:
+ - sudo pear channel-discover wp-cli.org/pear
+ - sudo pear install wpcli/wpcli
+ - ./scripts/install-wordpress.sh
  - mysql -e 'CREATE DATABASE wordpress;'
 language: php
 php:

@@ -1,10 +1,15 @@
 <?php
 /* Path to the WordPress codebase you'd like to test. Add a backslash in the end. */
 define( 'ABSPATH', __DIR__.'/../../wordpress/');
-
-define( 'DB_NAME', 'myapp_test' );
+if (isset($_ENV['TRAVIS'])) 
+  define( 'DB_NAME', 'myapp_test' );
+else
+  define('DB_NAME', 'freeness');
 define( 'DB_USER', 'root' );
-define( 'DB_PASSWORD', '' );
+if (isset($_ENV['TRAVIS']))
+  define( 'DB_PASSWORD', '' );
+else
+  define('DB_PASSWORD','stinger');
 define( 'DB_HOST', 'localhost' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );

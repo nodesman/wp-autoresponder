@@ -12,18 +12,10 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //create newsletters
         global $wpdb;
 
-        $truncateNewsletterTable = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
-        $wpdb->query($truncateNewsletterTable);
-
-
-        $truncateAutoresponderTable = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
-        $wpdb->query($truncateAutoresponderTable);
-
-        $truncateAutoresponderMessagesTable = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
-        $wpdb->query($truncateAutoresponderMessagesTable);
-
-        $truncateQueueTable = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
-        $wpdb->query($truncateQueueTable);
+        AutoresponderProcessTestHelper::deleteAllNewsletters();
+        AutoresponderProcessTestHelper::deleteAllAutoresponders();
+        AutoresponderProcessTestHelper::deleteAllAutoresponderMessages();
+        AutoresponderProcessTestHelper::deleteAllMessagesFromQueue();
 
         $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `description`, `fromname`, `fromemail`) VALUES (%s, %s, %s , %s, %s);", md5(microtime()."name1"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
         $wpdb->query($createNewsletterOneQuery);
@@ -36,7 +28,6 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $this->newsletter2_id= $wpdb->insert_id;
 
     }
-
     public function testFetchingAllMessagesOfAllAutorespondersAndNewslettersThatExist() {
         //define an autoresponder
         global $wpdb;
@@ -131,8 +122,6 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $this->assertEquals(25, count($messages));
 
     }
-
-
     public function testCountingAllMessagesOfAllAutorespondersAndNewslettersThatExist() {
         //define an autoresponder
         global $wpdb;
@@ -207,23 +196,18 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $this->assertEquals(25, $count);
 
     }
+
     public function testFetchingPagedListOfAutoresponders() {
+
         global $wpdb;
 
-        $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletter1_id, md5(microtime()) );
-        $results = $wpdb->query($addAutoresponderQuery);
+        $autoresponder1_id = $this->createAAutoresponderWithRandomName();
 
-        $autoresponder1_id = $wpdb->insert_id;
+        $numberOfMessagesInAutoresponderOne = 100;
 
-        for ($iter=0;$iter< 100; $iter++) {
-            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
-                                                      VALUES (%d, '%s', '%s', %d)"
-                ,$wpdb->prefix, $autoresponder1_id,  md5($iter . microtime()."auto"), md5(microtime().$iter.'test'), $iter);
-            $wpdb->query($addAutoresponderMessageQuery);
-            $autoresponderMessagesIds[] = $wpdb->insert_id;
-        }
-
+        $autoresponderMessagesIds = $this->createMessagesForAutoresponder($numberOfMessagesInAutoresponderOne, $autoresponder1_id);
         $messages = AutoresponderMessage::getAllMessages(20, 30);
+
         $this->assertEquals(30, count($messages));
 
         $received_ids = $this->getMessageIds($messages);
@@ -233,108 +217,78 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $this->assertEquals(count($intersect), count($expected));
     }
 
-    public function setUpForResponderSubscriberFetcher() {
+
+
+    public function testFetchingSubscribersAlwaysFetchesOnlySubscribedSubscribers() {
+
+
+
+    }
+    
+
+    public function tearDown() {
+        parent::tearDown();
+    }
+    
+    
+    
+    
+    public function createMessagesForAutoresponder($numberOfMessagesInAutoresponderOne, $autoresponder1_id)
+    {
         global $wpdb;
-
-        $subscribersDateOfSubscription = new DateTime();
-        $referenceYear = 2012;
-        $referenceMonth = 12;
-        $referenceDay = 30;
-        $subscribersDateOfSubscription->setDate($referenceYear, $referenceMonth, $referenceDay);
-        $subscribersDateOfSubscription->setTime(0,0,0);
-
-
-        //add 100 subscribers 23 of which are set to receive the message for day 0, 24 of them are
-        //set to receive day 4
-
-        $responder_id = $this->addAutoresponder($wpdb);
-
-        $subscribersForMessage0 = array();
-        //insert 24 subscribers who are subscribed today.
-        for ($iter=0; $iter< 24; $iter++) {
-
-            $currentIterationDate = clone $subscribersDateOfSubscription;
-            $currentIterationDate->setTime(rand(1,12),0,0);
-
-            $insertSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, '%s', '%s', '%s', 1, 1, '%s');",
-                $this->newsletter1_id, md5(microtime()."name1".$iter), md5(microtime()."email{$iter}")."@hotmail.com" , time(), md5(microtime()."test"));
-            $wpdb->query($insertSubscriberQuery);
-            $subscriber_id = $wpdb->insert_id;
-            $subscribersForMessage0[] = $subscriber_id;
-
-            $insertSubscriptionQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_followup_subscriptions (`sid`, `type`, `eid`, `sequence`, `last_date`, `last_processed`, `doc`) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $subscriber_id, $responder_id, $currentIterationDate->getTimestamp(), $currentIterationDate->getTimestamp());
-            $wpdb->query($insertSubscriptionQuery);
+        $autoresponderMessagesIds = array();
+        for ($iter = 0; $iter < $numberOfMessagesInAutoresponderOne; $iter++) {
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                      VALUES (%d, '%s', '%s', %d)"
+                , $wpdb->prefix, $autoresponder1_id, md5($iter . microtime() . "auto"), md5(microtime() . $iter . 'test'), $iter);
+            $wpdb->query($addAutoresponderMessageQuery);
+            $autoresponderMessagesIds[] = $wpdb->insert_id;
         }
-
-
-        //insert 24 subscribers who subscribed much before
-        for ($iter=0; $iter< 24; $iter++) {
-
-            $insertSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, '%s', '%s', '%s', 1, 1, '%s');",
-                $this->newsletter1_id, md5(microtime()."name1".$iter), md5(microtime()."email{$iter}")."@hotmail.com"   , time(), md5(microtime()."test"));
-            $wpdb->query($insertSubscriberQuery);
-            $subscriber_id = $wpdb->insert_id;
-            $subscribersForMessage0[] = $subscriber_id;
-
-            //insert one that is not supposed to receive this email
-            $insertSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, '%s', '%s', '%s', 1, 0, '%s');",
-                $this->newsletter1_id, md5(microtime()."name1".$iter), md5(microtime()."email{$iter}")."@hotmail.com"   , time(), md5(microtime()."test"));
-            $wpdb->query($insertSubscriberQuery);
-            $subscriber_id = $wpdb->insert_id;
-
-            $subscribersDisabledDateOfSubscription = clone $subscribersDateOfSubscription;
-            $randomTimeThePreviousDay = 86400 - rand(1, 86400);
-            $subscribersDisabledDateOfSubscription->setTimestamp($subscribersDisabledDateOfSubscription->getTimestamp() - $randomTimeThePreviousDay);
-            $insertSubscriptionQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_followup_subscriptions (`sid`, `type`, `eid`, `sequence`, `last_date`, `last_processed`, `doc`) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $subscriber_id, $responder_id, $currentIterationDate->getTimestamp(), $currentIterationDate->getTimestamp());
-            $wpdb->query($insertSubscriptionQuery);
-        }
-
-        //insert a message for day zero
-        $addAutoresponderMessageForDayOneQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlenabled`, `textbody`, `htmlbody`, `sequence`,  `attachimages`)
-        VALUES (%d, '%s', 1,  '%s', '%s', -1, 1)", $responder_id, md5(microtime()."subject"), md5(microtime()."textbody"), md5(microtime()."htmlbody"), -1);
-        $wpdb->query($addAutoresponderMessageForDayOneQuery);
-
+        return $autoresponderMessagesIds;
     }
 
-    public function testFetchingSubscribersForAAutoresponderMessage() {
-	global $wpdb;
-        $message_id = $wpdb->insert_id;
-        $responderObj = Autoresponder::getAutoresponder((int) $responder_id);
-        $message = AutoresponderMessage::getMessage((int) $message_id);
-
-        $autoresponderProcessRunTime = clone $subscribersDateOfSubscription;
-
-        $OffsetToGetToSomeTimeInLaterPartOfDay = 43400;
-        $autoresponderProcessRunTime->setTimestamp($autoresponderProcessRunTime->getTimestamp() + $OffsetToGetToSomeTimeInLaterPartOfDay);
-        $subscribers = $responderObj->getSubscribersForDelivery($message, $autoresponderProcessRunTime);
-        $this->assertEquals(24, count($subscribers));
-
-    }
-
-    public function addAutoresponder()
+    public function createAAutoresponderWithRandomName()
     {
         global $wpdb;
         $addAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d,'%s' )", $wpdb->prefix, $this->newsletter1_id, md5(microtime()));
         $results = $wpdb->query($addAutoresponderQuery);
 
-        $responder_id = $wpdb->insert_id;
-        return $responder_id;
+        $autoresponder1_id = $wpdb->insert_id;
+        return $autoresponder1_id;
     }
 
-    public function testEnsureMidnightBiasOfDeliveryTime() {
-
-
-
+    private function addUnsubscribedSubscriber($iter = -1)
+    {
+        global $wpdb;
+        $iter = ( -1 == $iter)?rand(1,9999):$iter;
+        $insertSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, '%s', '%s', '%s', 1, 0, '%s');",
+            $this->newsletter1_id, md5(microtime() . "name1" . $iter), md5(microtime() . "email{$iter}") . "@hotmail.com", time(), md5(microtime() . "test"));
+        $wpdb->query($insertSubscriberQuery);
+        $subscriber_id = $wpdb->insert_id;
+        return $subscriber_id;
     }
 
-    public function testAutoresponderMessagesGetCustomFieldValueReplacementInTextBody() {
-
+    private  function createDateObjectOfRandomHourOnSameDayAsSubscription($subscribersDateOfSubscription)
+    {
+        $currentIterationDate = clone $subscribersDateOfSubscription;
+        $currentIterationDate->setTime(rand(1, 12), 0, 0);
+        return $currentIterationDate;
     }
-    public function testAutoresponderMessagesGetCustomFieldValueReplacementInHTMLBody() {
 
+    private function addAutoresponderSubscription($subscriber_id, $responder_id, $dateObject)
+    {
+        $insertSubscriptionQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_followup_subscriptions (`sid`, `type`, `eid`, `sequence`, `last_date`, `last_processed`, `doc`) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $subscriber_id, $responder_id, $currentIterationDate->getTimestamp(), $currentIterationDate->getTimestamp());
+        $wpdb->query($insertSubscriptionQuery);
+        return $insertSubscriptionQuery;
     }
-    public function testAutoresponderMessagesGetCustomFieldValueReplacementInSubject() {
 
+    private function addConfirmedSubscriber()
+    {
+        $iter = rand(1,9999);
+        $insertSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, '%s', '%s', '%s', 1, 1, '%s');",
+            $this->newsletter1_id, md5(microtime() . "name1" . $iter), md5(microtime() . "email{$iter}") . "@hotmail.com", time(), md5(microtime() . "test".rand(1,10000)));
+        $wpdb->query($insertSubscriberQuery);
+        return $wpdb->insert_id;
     }
 
     private function getMessageIds($messages)
@@ -347,8 +301,37 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
-    public function tearDown() {
-        parent::tearDown();
+
+}
+
+class AutoresponderProcessTestHelper {
+    
+    public static function deleteAllNewsletters()
+    {
+        global $wpdb;
+        $truncateNewsletterTable = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
+        $wpdb->query($truncateNewsletterTable);
     }
 
+    public static function deleteAllMessagesFromQueue()
+    {
+        global $wpdb;
+        $truncateQueueTable = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
+        $wpdb->query($truncateQueueTable);
+    }
+
+    public static function deleteAllAutoresponderMessages()
+    {
+        global $wpdb;
+        $truncateAutoresponderMessagesTable = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
+        $wpdb->query($truncateAutoresponderMessagesTable);
+    }
+
+    public static function deleteAllAutoresponders()
+    {
+        global $wpdb;
+        $truncateAutoresponderTable = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
+        $wpdb->query($truncateAutoresponderTable);
+    }
+    
 }

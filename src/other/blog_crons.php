@@ -354,7 +354,7 @@ function _wpr_process_blog_subscriptions()
         $numberOfIterations = ceil($number/$perIteration);
         for ($iter=0;$iter<$numberOfIterations;$iter++)
         {
-            $getSubscriptionsQuery = sprintf("SELECT b.* number FROM %swpr_blog_subscription b,
+            $getSubscriptionsQuery = sprintf("SELECT b.* FROM %swpr_blog_subscription b,
                                             %swpr_subscribers s
                                             WHERE b.type='all' AND 
                                             (b.last_published_post_date< %d OR

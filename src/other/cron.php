@@ -1,9 +1,9 @@
 <?php
 
-function wpr_cronschedules()
+function wpr_cronschedules($current)
 {
     $schedules = $GLOBALS['schedules'];
-    return  $schedules;
+    return  array_merge($current, $schedules);
 }
 
 

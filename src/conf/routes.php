@@ -99,6 +99,7 @@ $wpr_routes = array(
         'menu_title' => 'Settings',
         'capability' => 'manage_newsletters',
         'legacy' => 0,
+        'controller' => '_wpr_settings_handler',
         'menu_slug' => "_wpr/settings",
         'callback' => '_wpr_render_view'
     ),

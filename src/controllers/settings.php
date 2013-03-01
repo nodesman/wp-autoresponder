@@ -12,8 +12,7 @@ function _wpr_settings_handler()
 	_wpr_set("admin_email",$admin_email);
 	
 	 $notificationEmail = get_option("wpr_notification_custom_email");
-	 if ($notificationEmail != "admin_email")
-	 {
+	 if ($notificationEmail != "admin_email") {
 		  $notification_email_address= get_option("wpr_notification_custom_email");
 	 }
 	 
@@ -38,11 +37,9 @@ function _wpr_settings_handler()
 	 
 	 $smtp_port = get_option("wpr_smtpport");
 	 _wpr_set("smtp_port",$smtp_port);
-	 
-	 
+
 	 $smtp_username = get_option("wpr_smtpusername");
 	 _wpr_set("smtp_username",$smtp_username);
-	 
 	 
 	 $smtp_password = get_option("wpr_smtppassword");
 	 _wpr_set("smtp_password",$smtp_password);
@@ -55,6 +52,8 @@ function _wpr_settings_handler()
 
 	  $is_smtp_secure_none = (get_option("wpr_smtpsecure") == 'none');
 	 _wpr_set("is_smtp_secure_none",$is_smtp_secure_none);
+
+    _wpr_setview("settings");
 }
 
 
@@ -109,10 +108,7 @@ function _wpr_settings_post_handler()
 				add_option('wpr_notification_custom_email','admin_email');						
 				break;
 		}
-					
-					
-	
-				
+
 				
 		if ($_POST['tutorialenable']=='enabled' && get_option('wpr_tutorial_active') == 'off')
 		{
@@ -132,8 +128,8 @@ function _wpr_settings_post_handler()
 			wpr_disable_updates();
 		}
 	
-	
-		$settings_url = _wpr_admin_url("settings");
+
+        $settings_url = "admin.php?page=_wpr/settings";
 		wp_redirect($settings_url);
 		exit;
 	}

@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="891fe277-c296-4901-85a6-0e167065fb87" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TODO" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/actions.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/all_mailouts.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/blog_series.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/blogseries.lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/broadcast_html_frame.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/LICENSE.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/build-config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/ckeditor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/contents.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/lang/en-au.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/lang/en-ca.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/lang/en-gb.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/lang/en.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/_translationstatus.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/bg.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ca.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/cs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/cy.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/da.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/de.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/el.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/en.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/eo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/et.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/fa.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/fi.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/fr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/gu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/he.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/hi.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/hr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/hu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/it.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ku.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/lt.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/lv.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/mk.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/mn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/nb.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/nl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/no.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/pl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/pt-br.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/pt.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ro.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ru.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/sk.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/sl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/tr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/ug.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/uk.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/vi.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/a11yhelp/dialogs/lang/zh-cn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/about/dialogs/about.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/about/dialogs/logo_ckeditor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/clipboard/dialogs/paste.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/colordialog/dialogs/colordialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/dialog/dialogDefinition.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/div/dialogs/div.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/fakeobjects/images/spacer.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/find/dialogs/find.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/flash/dialogs/flash.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/flash/images/placeholder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/button.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/checkbox.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/form.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/hiddenfield.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/radio.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/select.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/textarea.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/dialogs/textfield.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/forms/images/hiddenfield.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/icons.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/iframe/dialogs/iframe.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/iframe/images/placeholder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/image/dialogs/image.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/image/images/noimage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/link/dialogs/anchor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/link/dialogs/link.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/link/images/anchor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/liststyle/dialogs/liststyle.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/magicline/images/icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/pagebreak/images/pagebreak.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/pastefromword/filter/default.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/preview/preview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_address.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_blockquote.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_div.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_h6.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_p.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/showblocks/images/block_pre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/dialogs/smiley.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/angel_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/angry_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/broken_heart.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/confused_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/cry_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/devil_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/embaressed_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/embarrassed_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/envelope.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/heart.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/kiss.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/lightbulb.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/omg_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/regular_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/sad_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/shades_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/teeth_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/thumbs_down.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/thumbs_up.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/tongue_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/tounge_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/whatchutalkingabout_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/smiley/images/wink_smile.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/_translationstatus.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/ca.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/cs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/cy.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/de.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/el.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/en.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/eo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/et.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/fa.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/fi.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/fr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/he.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/hr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/it.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/ku.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/lv.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/nb.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/nl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/no.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/pt-br.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/sk.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/tr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/ug.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/lang/zh-cn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/specialchar/dialogs/specialchar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/table/dialogs/table.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/tabletools/dialogs/tableCell.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/dialogs/templates.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/dialogs/templates.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/templates/default.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/templates/images/template1.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/templates/images/template2.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/plugins/templates/templates/images/template3.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/dialog.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/dialog_ie.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/dialog_ie7.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/dialog_ie8.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/dialog_opera.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/editor.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/editor_gecko.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/editor_ie.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/editor_ie7.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/editor_ie8.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/icons.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/images/arrow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/images/close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/images/mini.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/skins/moono/readme.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ckeditor/styles.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/conf/config.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/conf/files.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/conf/meta.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/conf/routes.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/confirm.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/confirmed.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/autoresponder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/background_procs.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/custom_fields.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/importexport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/new-broadcast.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/newsletters.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/queue_management.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/controllers/settings.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/css/admin-ui.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/css/tabber.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/customize_recipients.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/customizeblogemail.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/delmailout.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/filter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/forms.lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/forms.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/helpers/paging.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/helpers/routing.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/home.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/htmltemplates.lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/htmltemplates/Blue_Vision.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/htmltemplates/Clean_Looks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/breadcrumb-lead.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-anim_basic_16x16.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-bg_gloss-wave_35_f6a828_500x100.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-bg_highlight-soft_100_eeeeee_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-bg_highlight-soft_75_ffe45c_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-icons_ef8c08_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-icons_ffd27a_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/ui-icons_ffffff_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/images/widget-help.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/jqueryui.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/enum.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/jqueryui.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/less.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/script.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/tabber.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/languages/wpr_autoresponder-de_DE.mo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/languages/wpr_autoresponder-de_DE.po" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/admin_notifications.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Attachment.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/ByteStream/AbstractFilterableInputStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/ByteStream/ArrayByteStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/ByteStream/FileByteStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReader/GenericFixedWidthReader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReader/UsAsciiReader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReader/Utf8Reader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReaderFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterReaderFactory/SimpleCharacterReaderFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterStream/ArrayCharacterStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/CharacterStream/NgCharacterStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/ConfigurableSpool.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/DependencyContainer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/DependencyException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/EmbeddedFile.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Encoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Encoder/Base64Encoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Encoder/QpEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Encoder/Rfc2231Encoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Encoding.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/CommandEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/CommandListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/Event.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/EventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/EventListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/EventObject.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/ResponseEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/ResponseListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/SendEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/SendListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/SimpleEventDispatcher.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/TransportChangeEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/TransportChangeListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/TransportExceptionEvent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Events/TransportExceptionListener.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/FailoverTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/FileSpool.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/FileStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Filterable.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Image.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/InputByteStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/IoException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/ArrayKeyCache.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/DiskKeyCache.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/DummyKeyCache.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/KeyCacheInputStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/NullKeyCache.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/KeyCache/SimpleKeyCacheInputStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/LoadBalancedTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/MailTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mailer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mailer/ArrayRecipientIterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mailer/RecipientIterator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/MemorySpool.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Message.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Attachment.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/CharsetObserver.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/ContentEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/ContentEncoder/Base64ContentEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/ContentEncoder/PlainContentEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/ContentEncoder/QpContentEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/EmbeddedFile.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/EncodingObserver.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Grammar.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Header.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/HeaderEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/HeaderEncoder/Base64HeaderEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/HeaderEncoder/QpHeaderEncoder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/HeaderFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/HeaderSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/AbstractHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/DateHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/IdentificationHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/MailboxHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/ParameterizedHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/PathHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Headers/UnstructuredHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/Message.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/MimeEntity.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/MimePart.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/ParameterizedHeader.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/SimpleHeaderFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/SimpleHeaderSet.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/SimpleMessage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Mime/SimpleMimeEntity.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/MimePart.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/NullTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/OutputByteStream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/AntiFloodPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/BandwidthMonitorPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Decorator/Replacements.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/DecoratorPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/ImpersonatePlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Logger.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/LoggerPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Loggers/ArrayLogger.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Loggers/EchoLogger.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/MessageLogger.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Pop/Pop3Connection.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Pop/Pop3Exception.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/PopBeforeSmtpPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/RedirectingPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Reporter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/ReporterPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Reporters/HitReporter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Reporters/HtmlReporter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Sleeper.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/ThrottlerPlugin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Plugins/Timer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Preferences.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/ReplacementFilterFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/RfcComplianceException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/SendmailTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/SmtpTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Spool.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/SpoolTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/StreamFilter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/StreamFilters/ByteArrayReplacementFilter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/StreamFilters/StringReplacementFilter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/StreamFilters/StringReplacementFilterFactory.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/SwiftException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/AbstractSmtpTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/Esmtp/Auth/CramMd5Authenticator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/Esmtp/Auth/LoginAuthenticator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/Esmtp/Auth/PlainAuthenticator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/Esmtp/AuthHandler.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/Esmtp/Authenticator.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/EsmtpHandler.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/EsmtpTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/FailoverTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/IoBuffer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/LoadBalancedTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/MailInvoker.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/MailTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/NullTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/SendmailTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/SimpleMailInvoker.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/SmtpAgent.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/SpoolTransport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Transport/StreamBuffer.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/TransportException.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/classes/Swift/Validate.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/custom_fields.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/database_integrity_checker.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/dependency_maps/cache_deps.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/dependency_maps/message_deps.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/dependency_maps/mime_deps.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/dependency_maps/transport_deps.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/framework.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/global.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/mail_functions.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/mime_types.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/preferences.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/swift_init.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/swift_required.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lib/swift_required_pear.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/mail.lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/manage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/autoresponder.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/autoresponder_message.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/newsletter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/queue.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/subscriber.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/newmail.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/optin.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/background.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/blog_crons.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/cron.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/firstrun.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/install.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/maintain.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/notifications_and_tutorials.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/other/queue_management.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/preview_email.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/processes/autoresponder_process.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/subscriber.lib.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/subscribers.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirm.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirm_body.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirm_email_template.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirm_subject.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirm_subscription.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirmed.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirmed_body.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/confirmed_subject.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/unsubscribed.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/verify.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view_recipients.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/viewbroadcast.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponder_add.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponder_add_message.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponder_delete.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponder_edit_message.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponder_manage.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/autoresponders_home.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/background_procs.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/custom_fields_form.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/custom_fields_list.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/delete_custom_fields.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/import.fifthstep.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/import.finished.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/import.fourthstep.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/import.secondstep.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/import.thirdstep.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/importexport.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/newsletter_custom_fields_list.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/newsletter_delete.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/newsletter_delete_not_found.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/newsletter_form.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/newsletter_home.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/no_newsletter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/queue_management.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/settings.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/templates/paging.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/widget.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wpr_deactivate.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wpresponder.php" afterPath="" />
+    </list>
+    <ignored path="WP-Autoresponder.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="22" />
+    <option name="width" value="1680" />
+    <option name="height" value="930" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents ProjectPane="true" />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WP-Autoresponder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WP-Autoresponder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WP-Autoresponder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1362132387484</created>
+      <updated>1362132387484</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="22" width="1680" height="930" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.249694" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+</project>
+

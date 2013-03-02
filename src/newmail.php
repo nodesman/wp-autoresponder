@@ -1,25 +1,18 @@
 <?php
 
-include "mail.lib.php";
+require_once __DIR__."/mail.lib.php";
 
 
 
-function wpr_newmail () 
-
+function wpr_newmail()
 {
-
 	global $wpdb;
-
 	if (isset($_POST['subject']))
-
 	{
 		date_default_timezone_set("UTC");
 	    $subject = $_POST['subject'];
-
 		$nid = $_POST['newsletter'];
-
 		$textbody = trim($_POST['body']);
-
 		$htmlbody = trim($_POST['htmlbody']);
 
 		$whentosend = $_POST['whentosend'];	
@@ -75,53 +68,33 @@ function wpr_newmail ()
 
 		}
 
-		
-
 		if (!$htmlenabled)
-
 		   $htmlbody="";
 
 		if (!$error)
-
 		{
-
-			
-
 			$query = "insert into ".$wpdb->prefix."wpr_newsletter_mailouts (nid,subject,textbody,htmlbody,time,status,recipients,attachimages) values ('$nid','$subject','$textbody','$htmlbody','$timeToSend',0,'$recipients','$shouldAttachImages');";
-
 			$wpdb->query($query);
-
-				
 			_wpr_mail_sending();
 			return;
-
 		}
-
 	}
 
 	$param = (object)  array("nid"=>$nid,"textbody"=>$textbody,"subject"=>$subject,"htmlbody"=>$htmlbody,"htmlenabled"=>1,"whentosend"=>$whentosend,"date" => $date,"hour"=>$hour,"minute"=>$min,"title"=>"New Mail");
-	
 	//There are no newsletters. Ask to create one before sending mailouts
 
-	if (_wpr_no_newsletters("To send a new e-mail broadcast"))
-
-		return;
-		?>
-
- 
-
-        <?php
-
+	if (Newsletter::whetherNoNewslettersExist()) {
+        ?>
+        <h2>No Newsletters Found</h2>
+            You need to create a newsletter before you can send a broadcast.
+    <?php
+    return;
+    }
 	wpr_mail_form($param,"new",$error);
-
 }
 
-
-
 function _wpr_mail_sending($nowOrLater="now")
-
 {
-
 	?>
 
 <div class="wrap"><h2>Email Broadcast Scheduled.</h2></div>

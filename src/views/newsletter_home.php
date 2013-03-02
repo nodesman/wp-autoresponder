@@ -10,7 +10,6 @@
 
     <table class="widefat">
     <thead><tr>
-       <th scope="col"></th>
                <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">Reply-To</th>
@@ -25,7 +24,6 @@
 		 foreach ($newsletterList as $list) { 
 		 ?>
 		 <tr>
-			 <td><input type="checkbox" name="newsletter[]" value="<?php echo $list->id ?>"/></td>
 			 <td><?php echo $list->id; ?></td>
   			 <td><?php echo $list->name; ?></td>
   			 <td><?php echo $list->reply_to; ?></td>

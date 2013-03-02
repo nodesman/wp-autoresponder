@@ -20,28 +20,43 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="config.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conf/config.php">
+      <file leaf-file-name="newmail.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/newmail.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="86" column="8" selection-start="2063" selection-end="2063" vertical-scroll-proportion="-10.0">
+              <folding>
+                <element signature="e#89#1721#0" expanded="false" />
+                <element signature="e#688#958#0" expanded="false" />
+                <element signature="e#962#1067#0" expanded="false" />
+                <element signature="e#1070#1353#0" expanded="false" />
+                <element signature="e#1398#1718#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="newsletters.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/newsletters.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="272" column="53" selection-start="7529" selection-end="7529" vertical-scroll-proportion="-23.541666">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="files.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conf/files.php">
+      <file leaf-file-name="newsletter_home.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/newsletter_home.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="11" column="15" selection-start="134" selection-end="134" vertical-scroll-proportion="0.22147651">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meta.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conf/meta.php">
+      <file leaf-file-name="routing.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helpers/routing.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="97" column="157" selection-start="2966" selection-end="3003" vertical-scroll-proportion="-5.48">
               <folding />
             </state>
           </provider>
@@ -50,25 +65,34 @@
       <file leaf-file-name="routes.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="46" selection-start="3681" selection-end="3681" vertical-scroll-proportion="-10.14">
+            <state line="37" column="39" selection-start="1327" selection-end="1327" vertical-scroll-proportion="-18.208334">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/controllers/settings.php">
+      <file leaf-file-name="framework.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/framework.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="135" column="1" selection-start="4138" selection-end="4138" vertical-scroll-proportion="0.8770492">
+            <state line="11" column="1" selection-start="226" selection-end="226" vertical-scroll-proportion="-6.875">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/settings.php">
+      <file leaf-file-name="mail.lib.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mail.lib.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="126" selection-start="1755" selection-end="1796" vertical-scroll-proportion="-23.75">
+            <state line="822" column="72" selection-start="19444" selection-end="19444" vertical-scroll-proportion="-11.041667">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wpresponder.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wpresponder.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="42" selection-start="1202" selection-end="1202" vertical-scroll-proportion="-21.25">
               <folding />
             </state>
           </provider>
@@ -84,8 +108,15 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/conf/routes.php" />
         <option value="$PROJECT_DIR$/controllers/settings.php" />
+        <option value="$PROJECT_DIR$/controllers/importexport.php" />
+        <option value="$PROJECT_DIR$/controllers/background_procs.php" />
+        <option value="$PROJECT_DIR$/controllers/queue_management.php" />
+        <option value="$PROJECT_DIR$/mail.lib.php" />
+        <option value="$PROJECT_DIR$/newmail.php" />
+        <option value="$PROJECT_DIR$/conf/routes.php" />
+        <option value="$PROJECT_DIR$/controllers/newsletters.php" />
+        <option value="$PROJECT_DIR$/views/newsletter_home.php" />
       </list>
     </option>
   </component>
@@ -121,6 +152,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -135,7 +167,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="wp-r" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -145,7 +177,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="wp-r" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -155,13 +187,13 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -187,7 +219,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25275397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25887394" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -255,13 +287,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/conf/files.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -278,21 +303,104 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="126" selection-start="1755" selection-end="1796" vertical-scroll-proportion="-23.75">
+        <state line="38" column="126" selection-start="1755" selection-end="1796" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/routes.php">
+    <entry file="file://$PROJECT_DIR$/conf/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="46" selection-start="3681" selection-end="3681" vertical-scroll-proportion="-10.14">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/importexport.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="204" column="30" selection-start="5871" selection-end="5871" vertical-scroll-proportion="-6.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/background_procs.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="37" selection-start="159" selection-end="159" vertical-scroll-proportion="-4.375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/queue_management.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="65" selection-start="438" selection-end="438" vertical-scroll-proportion="-11.875">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="1" selection-start="4138" selection-end="4138" vertical-scroll-proportion="0.8770492">
+        <state line="118" column="4" selection-start="3684" selection-end="3684" vertical-scroll-proportion="0.5844327">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/framework.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="1" selection-start="226" selection-end="226" vertical-scroll-proportion="-6.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wpresponder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="42" selection-start="1202" selection-end="1202" vertical-scroll-proportion="-21.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mail.lib.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="822" column="72" selection-start="19444" selection-end="19444" vertical-scroll-proportion="-11.041667">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/newmail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="8" selection-start="2063" selection-end="2063" vertical-scroll-proportion="-10.0">
+          <folding>
+            <element signature="e#89#1721#0" expanded="false" />
+            <element signature="e#688#958#0" expanded="false" />
+            <element signature="e#962#1067#0" expanded="false" />
+            <element signature="e#1070#1353#0" expanded="false" />
+            <element signature="e#1398#1718#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers/routing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="157" selection-start="2966" selection-end="3003" vertical-scroll-proportion="-5.48">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="39" selection-start="1327" selection-end="1327" vertical-scroll-proportion="-18.208334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/newsletters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="272" column="53" selection-start="7529" selection-end="7529" vertical-scroll-proportion="-23.541666">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/newsletter_home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="15" selection-start="134" selection-end="134" vertical-scroll-proportion="0.22147651">
           <folding />
         </state>
       </provider>

@@ -7,6 +7,8 @@ function _wpr_background_procs_handler()
 	{
 		_wpr_background_procs_manual_run();
 	}
+
+    _wpr_setview("background_procs");
 		
 		
 	

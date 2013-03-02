@@ -202,6 +202,7 @@ function _wpr_import_export_home()
 
     $newsletters = _wpr_newsletters_get();
     _wpr_set("newslettersList",$newsletters);
+    _wpr_setview("importexport");
 }
 
 add_action("_wpr_wpr_import_first_post","_wpr_import_first_post");

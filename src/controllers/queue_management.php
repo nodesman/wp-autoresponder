@@ -15,14 +15,14 @@ function _wpr_queue_management_handler()
 					_wpr_queue_truncate();
 					wp_redirect("admin.php?page=_wpr/queue_management");
 				}
-				break;
+			break;
 			case 'delete_sent_emails':
 				if (check_admin_referer("_wpr_delete_sent_mail"))
 				{
 					_wpr_queue_delete_sentmail();
 					wp_redirect("admin.php?page=_wpr/queue_management");
 				}
-				break;
+			break;
 		}
 		
 	}
@@ -43,4 +43,5 @@ function _wpr_queue_management_handler()
 	_wpr_set("emails_in_queue",$emailsInQueue);
 	_wpr_set("number_of_sent",$number_of_sent);
 	_wpr_set("queue_table_size",$queue_table_size);
+    _wpr_setview("queue_management");
 }

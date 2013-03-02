@@ -99,13 +99,11 @@ function _wpr_settings_post_handler()
 		{				
 			case 'customemail':
 				$theNotificationEmail = $_POST['notification_custom_email'];
-				delete_option('wpr_notification_custom_email');
-				add_option('wpr_notification_custom_email',$theNotificationEmail);
-			break;
-			
+
+				update_option('wpr_notification_custom_email',$theNotificationEmail);
+			    break;
 			case 'adminemail':
-				delete_option('wpr_notification_custom_email');
-				add_option('wpr_notification_custom_email','admin_email');						
+				update_option('wpr_notification_custom_email','admin_email');
 				break;
 		}
 

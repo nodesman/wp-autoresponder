@@ -94,7 +94,7 @@ function _wpr_newsletter_edit_form_post_handler()
     if (count($errors) ===0)
     {
         _wpr_newsletter_update($info);
-        $newsletter_home = _wpr_admin_url("newsletter");
+        $newsletter_home = "admin.php?page=_wpr/newsletter";
         wp_redirect($newsletter_home);
         exit;
     }
@@ -114,7 +114,7 @@ function _wpr_newsletter_create_form_post_handler()
     if (count($errors) ===0)
     {
         _wpr_newsletter_create($info);
-        $newsletter_home = _wpr_admin_url("newsletter");
+        $newsletter_home = "admin.php?page=_wpr/newsletter";
         wp_redirect($newsletter_home);
         exit;
     }
@@ -164,7 +164,8 @@ function _wpr_newsletter_home()
 
 function _wpr_newsletter_handler()
 {
-    $action = @$_GET['act'];
+    $action = (isset($_GET['act']))?$_GET['act']:null;
+
 	switch ($action)
 	{
             case 'add':
@@ -261,7 +262,7 @@ function _wpr_newsletter_delete()
 	if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true')
 	{
 		$newsletter->delete();
-		$newsletter_home = Routing::newsletterHome();
+		$newsletter_home = "admin.php?page=_wpr/newsletter";
 		wp_redirect($newsletter_home);
 	}
 		
@@ -269,7 +270,7 @@ function _wpr_newsletter_delete()
 	$emails_pending_count_result = $wpdb->get_results($getEmailsPendingDeliveryQuery);
 	$number_pending = $emails_pending_count_result[0]->number;
 	
-	_wpr_set("newsletter_name",$newsletter->getNewsletterName());
+	_wpr_set("newsletter_name",$newsletter->getName());
 	_wpr_set("subscriber_count",$newsletter->getNumberOfActiveSubscribers());
 	_wpr_set("_wpr_view","newsletter_delete");
 	_wpr_set("nid",$nid);

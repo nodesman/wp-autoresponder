@@ -5,7 +5,6 @@ function wpr_mail_form($parameters=array(),$mode="new",$error)
 {
 
 	global $wpdb;
-
 	?>
 <style>
 .wrap label {
@@ -646,7 +645,6 @@ function setVisibilityOfHTMLFields()
 {
 	changeHTMLBodyFieldsAvailability(document.getElementById('htmlenabled').checked,'htmlbodyfields');
 }
-
 
 setVisibilityOfHTMLFields();
 toggleHTML();

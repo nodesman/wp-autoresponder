@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__."/../../src/processes/autoresponder_process.php";
-require __DIR__."/../../src/models/autoresponder.php";
+require_once __DIR__."/../../src/processes/autoresponder_process.php";
+require_once __DIR__."/../../src/models/autoresponder.php";
 class AutoresponderProcessTest extends WP_UnitTestCase {
 
     private $newsletter1_id;

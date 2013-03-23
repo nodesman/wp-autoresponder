@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../../src/models/autoresponder_message.php";
+require_once __DIR__ . "/../../src/models/autoresponder_message.php";
 
 class AutoresponderMessagesTest extends WP_UnitTestCase {
 

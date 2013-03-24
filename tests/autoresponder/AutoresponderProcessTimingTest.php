@@ -81,4 +81,27 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $this->assertEquals($this->numberOfSubscribersAdded, $numberOfMessages);
 
     }
+
+    public function testWhetherDayOneDeliveryResultsInDayOneEmails() {
+
+        global $wpr_autoresponder_processor, $wpdb;
+        $currentDayNumber = "1";
+        $timeOfRun = $this->timeOfSubscription+(86400*$currentDayNumber); //within the 5 minutes following
+        $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$timeOfRun)));
+
+        $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d", $this->autoresponder_id, $currentDayNumber);
+        $messageRes = $wpdb->get_results($getMessageForDayZeroId);
+        $message = $messageRes[0];
+
+
+
+        $meta_key = sprintf("AR-%s-%%%%-%s-{$currentDayNumber}", $this->autoresponder_id, $message->id);
+        $getMessagesQuery = sprintf("SELECT * FROM %swpr_queue WHERE meta_key LIKE '%s';", $wpdb->prefix, $meta_key);
+        $messagesDelivered = $wpdb->get_results($getMessagesQuery);
+
+        $numberOfMessages = count($messagesDelivered);
+
+        $this->assertEquals($this->numberOfSubscribersAdded, $numberOfMessages);
+
+    }
 }

@@ -17,23 +17,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $wpdb->show_errors();
 
-        $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
-        $wpdb->query($truncateAutorespondersQuery);
-
-        $truncateNewslettersQuery = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
-        $wpdb->query($truncateNewslettersQuery);
-
-        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
-        $wpdb->query($truncateQueueQuery);
-
-        $truncateSubscriptionsQuery = sprintf("TRUNCATE %swpr_followup_subscriptions;", $wpdb->prefix);
-        $wpdb->query($truncateSubscriptionsQuery);
-
-        $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_subscribers;", $wpdb->prefix);
-        $wpdb->query($truncateSubscribersQuery);
-
-        $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
-        $wpdb->query($truncateSubscribersQuery);
+        $this->truncateAllRelevantTables();
 
 
         $insertNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters ( `name`, `reply_to`, `fromname`, `fromemail`) VALUES ('%s', '%s', '%s', '%s')", $wpdb->prefix, 'Test', 'flare@gmail.com', 'Raj', 'flarecore@gmail.com');
@@ -60,6 +44,31 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
             $addSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $wpdb->prefix, $subscriber_id, $this->autoresponder_id, $this->timeOfSubscription); //Jan 19, 2013
             $wpdb->query($addSubscriptionQuery);
         }
+    }
+
+    public function truncateAllRelevantTables()
+    {
+        global $wpdb;
+        $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
+        $wpdb->query($truncateAutorespondersQuery);
+
+        $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
+        $wpdb->query($truncateAutorespondersQuery);
+
+        $truncateNewslettersQuery = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
+        $wpdb->query($truncateNewslettersQuery);
+
+        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
+        $wpdb->query($truncateQueueQuery);
+
+        $truncateSubscriptionsQuery = sprintf("TRUNCATE %swpr_followup_subscriptions;", $wpdb->prefix);
+        $wpdb->query($truncateSubscriptionsQuery);
+
+        $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_subscribers;", $wpdb->prefix);
+        $wpdb->query($truncateSubscribersQuery);
+
+        $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
+        $wpdb->query($truncateSubscribersQuery);
     }
 
     public function testWhetherDayZeroDeliveryResultsInDayZeroEmails() {
@@ -93,8 +102,6 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $messageRes = $wpdb->get_results($getMessageForDayZeroId);
         $message = $messageRes[0];
 
-
-
         $meta_key = sprintf("AR-%s-%%%%-%s-{$currentDayNumber}", $this->autoresponder_id, $message->id);
         $getMessagesQuery = sprintf("SELECT * FROM %swpr_queue WHERE meta_key LIKE '%s';", $wpdb->prefix, $meta_key);
         $messagesDelivered = $wpdb->get_results($getMessagesQuery);
@@ -102,6 +109,24 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $numberOfMessages = count($messagesDelivered);
 
         $this->assertEquals($this->numberOfSubscribersAdded, $numberOfMessages);
+
+        //check whether running the cron again doesn't enqueue the same messages again.
+        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
+        $wpdb->query($truncateQueueQuery);
+
+        $nextRunOnSameDay = $timeOfRun + 200;
+        $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$nextRunOnSameDay)));
+
+        $getMessagesQuery = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE meta_key LIKE '%s';", $wpdb->prefix, $meta_key);
+        $numberOfMessagesDeliveredRes = $wpdb->get_results($getMessagesQuery);
+        $numberEnqueuedOnSecondRunOnSameDay = $numberOfMessagesDeliveredRes[0]->num;
+
+        $this->assertEquals(0, $numberEnqueuedOnSecondRunOnSameDay);
+
+    }
+
+    public function tearDown() {
+        $this->truncateAllRelevantTables();
 
     }
 }

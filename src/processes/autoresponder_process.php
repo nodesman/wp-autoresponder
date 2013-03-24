@@ -50,6 +50,7 @@
 
         private function deliver($subscriber, AutoresponderMessage $message) {
 
+            global $wpdb;
             $htmlBody = $message->getHTMLBody();
             $htmlenabled = (!empty($htmlBody))?1:0;
             $params= array(
@@ -59,19 +60,24 @@
                 'subject' => $message->getSubject(),
                 'htmlenabled'=> $htmlenabled
             );
+
             sendmail($subscriber->id, $params);
+
+            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d WHERE sid=%d AND eid=%d", $wpdb->prefix, $message->getDayNumber(), $subscriber->id, $message->getAutoresponder()->getId());
+            $wpdb->query($updateSubscriptionMarkingItAsProcessedForCurrentDay);
 
         }
 
         private function getRecipientSubscribers(AutoresponderMessage $message, $currentTime) {
+
             global $wpdb;
-
             $dayOffsetOfMessage = $message->getDayNumber();
-
             $getSubscribersQuery = sprintf("SELECT subscribers.* FROM %swpr_subscribers subscribers, %swpr_followup_subscriptions subscriptions
                                                                  where subscribers.id=subscriptions.sid AND
-                                                                 FLOOR((%d-subscriptions.doc)/86400)=%d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage);
-
+                                                                 FLOOR((%d-subscriptions.doc)/86400)=%d AND
+                                                                 subscribers.active=1 AND
+                                                                 subscribers.confirmed=1 AND
+                                                                 sequence<> %d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage, $message->getDayNumber());
 
             $subscribers = $wpdb->get_results($getSubscribersQuery);
 
@@ -88,6 +94,8 @@
                 AutoresponderProcessor::$processor = new AutoresponderProcessor();
             return AutoresponderProcessor::$processor;
         }
+
+
 
     }
 

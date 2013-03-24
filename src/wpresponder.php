@@ -30,7 +30,21 @@ if (!defined("WPR_DEFS")) {
 
 
     $GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
-    
+    include_once "$controllerDir/newsletters.php";
+    include_once "$controllerDir/custom_fields.php";
+    include_once "$controllerDir/importexport.php";
+    include_once "$controllerDir/background_procs.php";
+    include_once "$controllerDir/settings.php";
+    include_once "$controllerDir/new-broadcast.php";
+    include_once "$controllerDir/queue_management.php";
+    include_once "$controllerDir/autoresponder.php";
+
+
+    include_once "$modelsDir/subscriber.php";
+    include_once "$modelsDir/newsletter.php";
+    include_once "$modelsDir/autoresponder_message.php";
+    include_once "$modelsDir/autoresponder.php";
+
     include_once __DIR__ . "/home.php";
     include_once __DIR__ . "/blog_series.php";
     include_once __DIR__ . "/forms.php";
@@ -60,21 +74,9 @@ if (!defined("WPR_DEFS")) {
     include_once __DIR__ . '/other/blog_crons.php';
     include_once __DIR__ . '/other/maintain.php';
     include_once __DIR__ . '/widget.php';
-
-    include_once "$controllerDir/newsletters.php";
-    include_once "$controllerDir/custom_fields.php";
-    include_once "$controllerDir/importexport.php";
-    include_once "$controllerDir/background_procs.php";
-    include_once "$controllerDir/settings.php";
-    include_once "$controllerDir/new-broadcast.php";
-    include_once "$controllerDir/queue_management.php";
-    include_once "$controllerDir/autoresponder.php";
+    include_once __DIR__ . '/processes/autoresponder_process.php';
 
 
-    include_once "$modelsDir/subscriber.php";
-    include_once "$modelsDir/newsletter.php";
-    include_once "$modelsDir/autoresponder_message.php";
-    include_once "$modelsDir/autoresponder.php";
 
     include_once __DIR__ . '/conf/routes.php';
     include_once __DIR__ . '/conf/files.php';

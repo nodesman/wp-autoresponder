@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/../../src/lib/framework.php";
-require_once __DIR__ . "/../../src/controllers/autoresponder.php";
-require_once __DIR__."/AutoresponderTestHelper.php";
+include_once __DIR__ . "/../../src/lib/framework.php";
+include_once __DIR__ . "/../../src/controllers/autoresponder.php";
+include_once __DIR__."/AutoresponderTestHelper.php";
 
 
 class AutoresponderControllerTest extends WP_UnitTestCase

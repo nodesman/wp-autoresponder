@@ -2,7 +2,7 @@
 
 $wpresponder_path =  __DIR__."/../../src/wpresponder.php";
 
-require_once $wpresponder_path;
+include_once $wpresponder_path;
 
 $testWhetherAutorespondersListHeaderWasCalled = false;
 

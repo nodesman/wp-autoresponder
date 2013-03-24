@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../src/models/newsletter.php";
+include_once __DIR__."/../src/models/newsletter.php";
 
 
 

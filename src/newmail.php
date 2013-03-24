@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/mail.lib.php";
+include_once __DIR__."/mail.lib.php";
 
 
 

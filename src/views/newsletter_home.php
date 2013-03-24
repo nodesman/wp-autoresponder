@@ -3,10 +3,6 @@
 <blockquote>
 
     <h2>Newsletters</h2>
-    
-    <p>
-        
-    </p>
 
     <table class="widefat">
     <thead><tr>

@@ -6,7 +6,7 @@
  * Time: 12:13 AM
  */
 
-require_once __DIR__ . '/../src/helpers/routing.php';
+include_once __DIR__ . '/../src/helpers/routing.php';
 
 class DefaultActionCalledException extends Exception {
 

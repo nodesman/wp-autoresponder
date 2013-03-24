@@ -1,42 +1,94 @@
 <?php
 
-class AutoresponderProcessor
-{
+    class AutoresponderProcessor
+    {
+        private static $processor;
 
-    public function run() {
-        $time = new DateTime();
-        $this->run_for_time($time);
-    }
+        public function run() {
+            $time = new DateTime();
+            $this->run_for_time($time);
+        }
 
-    public function run_for_time(DateTime $time) {
-        $this->process_messages($time);
-    }
+        public function run_for_time(DateTime $time) {
+            $this->process_messages($time);
+        }
 
-    public function process_messages(DateTime $currentTime) {
+        private function getNumberOfAutoresponderMessages() {
+            global $wpdb;
+            return AutoresponderMessage::getAllMessagesCount();
+        }
 
-        $number_of_messages = self::getNumberOfAutoresponderMessages();
-        $batch_size = WPR_Config::$AutoresponderMessagesBatchSize;
-        $number_of_iterations = ceil($number_of_messages/$batch_size);
+        private function process_messages(DateTime $currentTime) {
 
-        for ($iter=0;$iter< $number_of_iterations; $iter++) {
+            $number_of_messages = $this->getNumberOfAutoresponderMessages();
+            $number_of_iterations = ceil($number_of_messages/ $this->iteration_batch_size());
 
-            $start = ($iter*$batch_size);
-            $messages = AutoresponderMessage::getAllMessages($start, $batch_size);
+            for ($iter=0;$iter< $number_of_iterations; $iter++) {
 
-            foreach ($messages as $message) {
-                $this->deliver_message($message, $currentTime);
+                $start = ($iter*$this->iteration_batch_size());
+                $messages = AutoresponderMessage::getAllMessages($start, $this->iteration_batch_size());
+
+                foreach ($messages as $message) {
+                    $this->deliver_message($message, $currentTime);
+                }
             }
         }
-    }
 
-    public function deliver_message(AutoresponderMessage $message, DateTime $time) {
+        private function iteration_batch_size()
+        {
+            //this will be dynamic later on.
+            return 10;
+        }
 
-        $subscribers = $this->getRecipientSubscribers($message, $currentTime);
-        for ($iter=0;$iter< count($subscribers); $iter++) {
+        private function deliver_message(AutoresponderMessage $message, DateTime $time) {
+
+            $subscribers = $this->getRecipientSubscribers($message, $time->getTimestamp());
+            for ($iter=0;$iter< count($subscribers); $iter++) {
+                $this->deliver($subscribers[$iter], $message);
+            }
+        }
+
+        private function deliver($subscriber, AutoresponderMessage $message) {
+
+            $htmlBody = $message->getHTMLBody();
+            $htmlenabled = (!empty($htmlBody))?1:0;
+            $params= array(
+                'meta_key'=> sprintf('AR-%d-%d-%d-%d', $message->getAutoresponder()->getId(), $subscriber->id, $message->getId(), $message->getDayNumber()),
+                'htmlbody' => $message->getHTMLBody(),
+                'textbody' => $message->getTextBody(),
+                'subject' => $message->getSubject(),
+                'htmlenabled'=> $htmlenabled
+            );
+            sendmail($subscriber->id, $params);
 
         }
+
+        private function getRecipientSubscribers(AutoresponderMessage $message, $currentTime) {
+            global $wpdb;
+
+            $dayOffsetOfMessage = $message->getDayNumber();
+
+            $getSubscribersQuery = sprintf("SELECT subscribers.* FROM %swpr_subscribers subscribers, %swpr_followup_subscriptions subscriptions
+                                                                 where subscribers.id=subscriptions.sid AND
+                                                                 FLOOR((%d-subscriptions.doc)/86400)=%d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage);
+
+
+            $subscribers = $wpdb->get_results($getSubscribersQuery);
+
+            return $subscribers;
+
+        }
+
+        private function __construct() {
+
+        }
+
+        public static function getProcessor() {
+            if (empty(AutoresponderProcessor::$processor))
+                AutoresponderProcessor::$processor = new AutoresponderProcessor();
+            return AutoresponderProcessor::$processor;
+        }
+
     }
 
-
-
-}
+$wpr_autoresponder_processor = AutoresponderProcessor::getProcessor();

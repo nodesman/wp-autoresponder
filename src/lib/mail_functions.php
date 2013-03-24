@@ -60,7 +60,7 @@ function sendmail($sid,$params,$footerMessage="")
 	$parameters = _wpr_process_sendmail_parameters($sid,$params,$footerMessage);
 	extract($parameters);
 	$tableName = $wpdb->prefix."wpr_queue";
-	$query = "INSERT INTO $tableName (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','$textbody','$headers','$attachimages','$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
+	$query = "INSERT INTO $tableName (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','$textbody','$headers',1,'$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
 
 	$wpdb->query($query);
 
@@ -84,6 +84,8 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 	$textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit",'wpr_autoresponder').":\r\n\r\n$unsuburl";
 	$reply_to = $newsletter->reply_to;
 	$htmlbody = trim($params['htmlbody']);
+    $textbody = trim($params['textbody']);
+
 	//append the address and the unsub link to the email
 	$address = "<br>
 <br>
@@ -125,7 +127,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 
 	$delivery_type = (!empty($params['delivery_type']))?$params['delivery_type']:0;
 	$email_type = (!empty($params['email_type']))?$params['email_type']:'misc';
-        $attachImages = ($params['attachimages'])?1:0;
+    $attachImages = (isset($params['attachimages']))?1:0;
 	$meta_key = (!empty($params['meta_key']))?$params['meta_key']:"Misc-$sid-$time";
 	$hash = make_hash(array_merge(array('sid'=>$sid),$params));
 	$from = (!empty($params['fromemail']))?$params['fromemail']:(!empty($newsletter->fromemail))?$newsletter->fromemail:get_bloginfo('admin_email');
@@ -138,7 +140,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 					'subject' => $subject,
 					'htmlbody'=>$htmlbody,
 					'textbody' => $textbody,
-					'headers'=>$headers,
+					'headers'=> '',
 					'attachimages'=>$attachImages,
 					'htmlenabled'=>$htmlenabled,
 					'delivery_type' => $delivery_type,

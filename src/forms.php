@@ -9,13 +9,13 @@ function wpr_subscriptionforms()
 	switch ($_GET['action'])
 	{
 		case 'create':
-		_wpr_subscriptionforms_create();
+            _wpr_subscriptionforms_create();
 		break;
 		case 'form':
-		$id = $_GET['fid'];
-		$form = _wpr_subscriptionform_get($id);
-		_wpr_subscriptionform_getcode($form,"'".$form->name."' Form HTML Code");
-		return;
+            $id = $_GET['fid'];
+            $form = _wpr_subscriptionform_get($id);
+            _wpr_subscriptionform_getcode($form,"'".$form->name."' Form HTML Code");
+            return;
 		break;
 		
 		
@@ -243,8 +243,8 @@ function selectAllFormsCheckBox(state)
 			break;
 			
 			case 'autoresponder':
-			$autoresponder = _wpr_autoresponder_get($form->followup_id);
-			echo "Subscribe to the '".$autoresponder->name."' autoresponder.";
+			$autoresponder = Autoresponder::getAutoresponder((int) $form->followup_id);
+			echo sprintf("Subscribe to the '%s' autoresponder.", $autoresponder->getName());
 			break;
 			
 			case 'none':
@@ -651,11 +651,11 @@ foreach ($listOfAutorespondersOfNewsletters as $count=>$news)
 	?>
 AutorespondersOfNewsletters['<?php echo $news->id; ?>'] = new Array();
 	<?php
-	$autoresponders = _wpr_get_autoresponders_of_newsletter($news->id);
+	$autoresponders = Autoresponder::getAutorespondersOfNewsletter($news->id);
 	foreach ($autoresponders as $autoresponder)
 	{
-		$aid = intval($autoresponder->id);
-		$name = $autoresponder->name;
+		$aid = $autoresponder->getId();
+		$name = $autoresponder->getName();
 		
 		if ($aid==0 || empty($name))
 		{

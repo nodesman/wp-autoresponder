@@ -16,6 +16,11 @@ function wpr_admin_menu()
 	}
 }
 
+function _wpr_no_newsletters() {
+
+    _wpr_setview("no_newsletter");
+}
+
 function _wpr_handle_post()
 {
         if (count($_POST)>0 && isset($_POST['wpr_form']))

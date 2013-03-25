@@ -218,7 +218,6 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
-
     public function testFetchingSubscribersAlwaysFetchesOnlySubscribedSubscribers() {
 
 

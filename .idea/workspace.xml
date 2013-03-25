@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="891fe277-c296-4901-85a6-0e167065fb87" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/forms.php" afterPath="$PROJECT_DIR$/src/forms.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helpers/routing.php" afterPath="$PROJECT_DIR$/src/helpers/routing.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/processes/autoresponder_process.php" afterPath="$PROJECT_DIR$/src/processes/autoresponder_process.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/wpresponder.php" afterPath="$PROJECT_DIR$/src/wpresponder.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php" afterPath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php" afterPath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php" />
     </list>
     <ignored path="WP-Autoresponder.iws" />
@@ -16,6 +18,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/WP-Autoresponder$WP_Autoresponder.coverage" NAME="WP-Autoresponder Coverage Results" MODIFIED="1364144308298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -28,16 +33,65 @@
       <file leaf-file-name="AutoresponderProcessTimingTest.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="85" selection-start="2611" selection-end="2611" vertical-scroll-proportion="-11.666667">
+            <state line="42" column="19" selection-start="1913" selection-end="1913" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="autoresponder_process.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="autoresponder_process.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processes/autoresponder_process.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="79" selection-start="2580" selection-end="2580" vertical-scroll-proportion="0.15436241">
+            <state line="63" column="29" selection-start="2228" selection-end="2229" vertical-scroll-proportion="-2.7083333">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/conf/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="0" selection-start="2297" selection-end="2347" vertical-scroll-proportion="-6.875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.lib.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/forms.lib.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/forms.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="245" column="67" selection-start="6994" selection-end="6994" vertical-scroll-proportion="0.75103736">
+              <folding>
+                <element signature="e#5875#5914#0" expanded="true" />
+                <element signature="e#9163#9183#0" expanded="true" />
+                <element signature="e#10520#10540#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routing.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/helpers/routing.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="1" selection-start="737" selection-end="737" vertical-scroll-proportion="-13.125">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="no_newsletter.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/no_newsletter.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -46,16 +100,7 @@
       <file leaf-file-name="wpresponder.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/wpresponder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="53" selection-start="1632" selection-end="1632" vertical-scroll-proportion="-13.541667">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="autoresponder.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/autoresponder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="329" column="0" selection-start="12834" selection-end="12834" vertical-scroll-proportion="0.0">
+            <state line="51" column="53" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -64,7 +109,7 @@
       <file leaf-file-name="AutoresponderProcessTest.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="48" selection-start="1330" selection-end="1330" vertical-scroll-proportion="0.0">
+            <state line="219" column="0" selection-start="10974" selection-end="10974" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,8 +143,11 @@
         <option value="$PROJECT_DIR$/src/lib/mail_functions.php" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/wpresponder.php" />
+        <option value="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php" />
         <option value="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php" />
         <option value="$PROJECT_DIR$/src/processes/autoresponder_process.php" />
+        <option value="$PROJECT_DIR$/src/helpers/routing.php" />
+        <option value="$PROJECT_DIR$/src/forms.php" />
       </list>
     </option>
   </component>
@@ -168,6 +216,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WP-Autoresponder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WP-Autoresponder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="helpers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -175,20 +241,24 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
-    <property name="restartRequiresConfirmation" value="true" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
   </component>
-  <component name="RunManager" selected="PHPUnit.phpunit.xml">
-    <configuration default="false" name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" editBeforeRun="true" singleton="true" temporary="true">
-      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" directory="$PROJECT_DIR$/" />
+  <component name="RunManager" selected="PHPUnit.WP-Autoresponder">
+    <configuration default="false" name="WP-Autoresponder" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" singleton="true" temporary="true">
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" directory="$PROJECT_DIR$/" scope="XML" use_alternative_configuration_file="true" />
       <RunnerSettings RunnerId="PhpRunner" />
+      <RunnerSettings RunnerId="PhpUnitCoverageRunner" />
+      <RunnerSettings RunnerId="PhpUnitDebugRunner" />
       <ConfigurationWrapper RunnerId="PhpRunner" />
+      <ConfigurationWrapper RunnerId="PhpUnitCoverageRunner" />
+      <ConfigurationWrapper RunnerId="PhpUnitDebugRunner" />
       <method />
     </configuration>
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" editBeforeRun="true">
@@ -200,11 +270,11 @@
       <method />
     </configuration>
     <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="PHPUnit.phpunit.xml" />
+      <item index="0" class="java.lang.String" itemvalue="PHPUnit.WP-Autoresponder" />
     </list>
     <recent_temporary>
       <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="PHPUnit.phpunit.xml" />
+        <item index="0" class="java.lang.String" itemvalue="PHPUnit.WP-Autoresponder" />
       </list>
     </recent_temporary>
   </component>
@@ -225,16 +295,17 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1119951" sideWeight="0.39802226" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15177478" sideWeight="0.71075404" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39925835" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60197777" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.289246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32880098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -293,33 +364,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/controllers/autoresponder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="443" selection-end="443" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/autoresponder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="329" column="0" selection-start="12834" selection-end="12834" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TODO">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="15" selection-start="17" selection-end="17" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controllers/autoresponder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="17" selection-start="772" selection-end="772" vertical-scroll-proportion="1.494465" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/wordpress-tests/bin/install.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="29" selection-start="203" selection-end="203" vertical-scroll-proportion="0.055350553" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/newmail.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="7" selection-end="7" vertical-scroll-proportion="0.11627907" />
@@ -354,13 +398,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="48" selection-start="1330" selection-end="1330" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lib/mail_functions.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="142" column="34" selection-start="5025" selection-end="5025" vertical-scroll-proportion="0.0">
@@ -370,22 +407,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/wpresponder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="53" selection-start="1632" selection-end="1632" vertical-scroll-proportion="-13.541667">
+        <state line="51" column="53" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="219" column="0" selection-start="10974" selection-end="10974" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="85" selection-start="2611" selection-end="2611" vertical-scroll-proportion="-11.666667">
+        <state line="42" column="19" selection-start="1913" selection-end="1913" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/processes/autoresponder_process.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="79" selection-start="2580" selection-end="2580" vertical-scroll-proportion="0.15436241">
+        <state line="63" column="29" selection-start="2228" selection-end="2229" vertical-scroll-proportion="-2.7083333">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/conf/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="0" selection-start="2297" selection-end="2347" vertical-scroll-proportion="-6.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms.lib.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/no_newsletter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/routing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="1" selection-start="737" selection-end="737" vertical-scroll-proportion="-13.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="245" column="67" selection-start="6994" selection-end="6994" vertical-scroll-proportion="0.75103736">
+          <folding>
+            <element signature="e#5875#5914#0" expanded="true" />
+            <element signature="e#9163#9183#0" expanded="true" />
+            <element signature="e#10520#10540#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

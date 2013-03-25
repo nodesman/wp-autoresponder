@@ -79,6 +79,8 @@
                                                                  subscribers.confirmed=1 AND
                                                                  sequence<> %d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage, $message->getDayNumber());
 
+
+            throw new Exception("Note to self: The test has a couple of statements in line 43 to add a few unsubscribed subscribers. Adding these lines should not affect the tests but adding unusbscribed subscribers causes the tests to fail. Look into why this is happening");
             $subscribers = $wpdb->get_results($getSubscribersQuery);
 
             return $subscribers;

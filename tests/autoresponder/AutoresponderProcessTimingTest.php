@@ -64,14 +64,12 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
         $wpdb->query($truncateAutorespondersQuery);
 
-        $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
-        $wpdb->query($truncateAutorespondersQuery);
+        $this->truncateMessagesDefinitions($wpdb);
 
         $truncateNewslettersQuery = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
         $wpdb->query($truncateNewslettersQuery);
 
-        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
-        $wpdb->query($truncateQueueQuery);
+        $this->truncateQueue($wpdb);
 
         $truncateSubscriptionsQuery = sprintf("TRUNCATE %swpr_followup_subscriptions;", $wpdb->prefix);
         $wpdb->query($truncateSubscriptionsQuery);
@@ -79,8 +77,20 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_subscribers;", $wpdb->prefix);
         $wpdb->query($truncateSubscribersQuery);
 
-        $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
-        $wpdb->query($truncateSubscribersQuery);
+    }
+
+    public function truncateMessagesDefinitions()
+    {
+        global $wpdb;
+        $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
+        $wpdb->query($truncateAutorespondersQuery);
+    }
+
+    public function truncateQueue()
+    {
+        global $wpdb;
+        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
+        $wpdb->query($truncateQueueQuery);
     }
 
     public function testWhetherDayZeroDeliveryResultsInDayZeroEmailsOnlyToSubscribedSubscribers() {
@@ -139,9 +149,106 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
     }
 
     public function testWhetherRunningCronOnActivationFollowingDeactivationResultsInCronResumingFromLastProcessingPoint() {
-        //what happens when a particular subscriber has surpassed a particular day without receiving a message
-        //but they are processed in one of the following days - they should receive one of the earlier days and then
-        //continue to receive messages from then onwards while the offset between days being retained.
+
+        global $wpdb;
+
+        $currentTime = time();
+
+        $this->truncateQueue();
+        $this->truncateMessagesDefinitions();
+
+
+
+        $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter_id);
+        $this->assertEquals(1, $wpdb->query($createAutoresponderQuery));
+
+        $autoresponder_id = $wpdb->insert_id;
+
+
+        //insert a subscriber
+
+        $insertSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, 'raj', 'flarecore@gmail.com', '324242424', 1, 1, '32asdf42');", $wpdb->prefix, $this->newsletter_id);
+        $this->assertEquals(1, $wpdb->query($insertSubscriberQuery));
+
+        $subscriber_id = $wpdb->insert_id;
+
+        //insert a message to the autoresponder with the custom field value in the html, text bodies and subject
+
+        $message_ids = array();
+
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject 1', '@@Text 1@@', '@@Html 1@@', 0)", $wpdb->prefix, $autoresponder_id);
+
+        $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
+
+        $message_ids["0"] = $wpdb->insert_id;
+
+
+
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject 2', '@@Text @@', '@@Html @@', 1)", $wpdb->prefix, $autoresponder_id);
+
+        $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
+
+        $message_ids["1"] = $wpdb->insert_id;
+
+
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject 5', '@@Text 5@@', '@@Html 5@@', 5)", $wpdb->prefix, $autoresponder_id);
+
+        $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
+
+        $message_ids["5"] = $wpdb->insert_id;
+
+
+        //add a subscription for the above subscriber such that running the process will result in that message being enqueued.
+
+        $insertSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (eid, type, sid, doc, last_processed, last_date, sequence) VALUES (%d, 'autoresponder', %d, %d, %d, 0, -1);",$wpdb->prefix, $autoresponder_id, $subscriber_id, $currentTime, $currentTime);
+        $this->assertEquals(1, $wpdb->query($insertSubscriptionQuery));
+
+        $processor  = AutoresponderProcessor::getProcessor();
+        $timeObject = new DateTime();
+        $timeObject->setTimestamp($currentTime+400);
+        $processor->run_for_time($timeObject);
+
+        //assert if this is the day zero email.
+
+        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $emails = $wpdb->get_results($getQueueEmailQuery);
+        $this->assertEquals(1, count($emails));
+
+        $first_email = $emails[0];
+
+        $whetherMatches = preg_match(sprintf("#AR-%d-%d-%d-%d#",$autoresponder_id, $subscriber_id, $message_ids["0"], 0), $first_email->meta_key);
+        $this->assertEquals(1, $whetherMatches);
+
+        $this->truncateQueue();
+
+        //run the cron after 7 days - simulated downtime.
+
+        $timeObject = new DateTime();
+        $timeObject->setTimestamp($currentTime+(86400*7));
+        $processor->run_for_time($timeObject);
+
+        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $emails = $wpdb->get_results($getQueueEmailQuery);
+        $this->assertEquals(1, count($emails));
+
+        $second_email = $emails[0];
+
+        $this->assertEquals(sprintf("AR-%d-%d-%d-%d", $autoresponder_id, $subscriber_id, $message_ids["1"], 1), $second_email->meta_key);
+
+
+        $timeObject = new DateTime();
+        $timeObject->setTimestamp($currentTime+(86400*14));
+        $processor->run_for_time($timeObject);
+
+        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $emails = $wpdb->get_results($getQueueEmailQuery);
+        $this->assertEquals(1, count($emails));
+
+        $third_email = $emails[0];
+
+        $this->assertEquals(sprintf("AR-%d-%d-%d-%d", $autoresponder_id, $subscriber_id, $message_ids["1"], 5), $third_email->meta_key);
+
+
         $this->assertTrue(false);
     }
 

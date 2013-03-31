@@ -58,9 +58,15 @@ function sendmail($sid,$params,$footerMessage="")
 {
 	global $wpdb;
 	$parameters = _wpr_process_sendmail_parameters($sid,$params,$footerMessage);
+
+    $parameters['subject'] = Subscriber::replaceCustomFieldValues($parameters['subject'], $sid);
+    $parameters['htmlbody'] = Subscriber::replaceCustomFieldValues($parameters['htmlbody'], $sid);
+    $parameters['textbody'] = Subscriber::replaceCustomFieldValues($parameters['textbody'], $sid);
+
 	extract($parameters);
 	$tableName = $wpdb->prefix."wpr_queue";
 	$query = "INSERT INTO $tableName (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','{$parameters['textbody']}','$headers',1,'$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
+
 
 	$wpdb->query($query);
 

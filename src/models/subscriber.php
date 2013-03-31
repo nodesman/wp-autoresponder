@@ -36,7 +36,7 @@ class Subscriber
         $this->name = $subscriber->name;
         $this->email = $subscriber->email;
         $this->date_of_subscription = $subscriber->date;
-        $this->active = $susbcriber->active;
+        $this->active = $subscriber->active;
         $this->confirmed = $subscriber->confirmed;
         $this->fid = $subscriber->fid;
         $this->hash = $subscriber->hash;
@@ -95,7 +95,15 @@ class Subscriber
 
     public static function replaceCustomFieldValues($string, $sid)
     {
-        throw new Exception("To be implemented: replaceCustomFieldValues");
+
+        $subscriber = new Subscriber($sid);
+
+        $values = $subscriber->getCustomFieldValuesByLabels();
+
+        foreach ($values as $name=>$value) {
+            $string = str_replace("[!$name!]", $value, $string);
+        }
+
         return $string;
     }
 
@@ -109,8 +117,7 @@ class Subscriber
         $result = array();
         if (count($customFields) > 0) {
             foreach ($customFields as $field) {
-                $result[$field->label] = $field->value;
-
+                $result[$field->name] = $field->value;
             }
         }
         return $result;

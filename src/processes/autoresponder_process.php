@@ -79,7 +79,6 @@
             global $wpdb;
             $dayOffsetOfMessage = $message->getDayNumber();
 
-
             $getSubscribersQuery = sprintf("SELECT subscribers.* FROM %swpr_subscribers subscribers, %swpr_followup_subscriptions subscriptions
                                                                  where subscribers.id=subscriptions.sid AND
                                                                  FLOOR((%d-subscriptions.doc)/86400)=%d AND

@@ -224,10 +224,6 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $currentTime = time();
         $custom_field_placeholder="lname";
         $custom_field_value = "12345";
-        $subject_format = "Subject [!%s!]";
-
-
-
         //create autoresponder
 
         $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter1_id);
@@ -258,9 +254,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //insert a message to the autoresponder with the custom field value in the html, text bodies and subject
 
 
-        $html_message_format = "@@Html [!%s!]@@";
-        $text_message_format = "@@Text [!%s!]@@";
-        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, '$subject_format', '$text_message_format', '$html_message_format', 0)", $wpdb->prefix, $autoresponder_id, $custom_field_placeholder, $custom_field_placeholder, $custom_field_placeholder);
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject [!%s!]', '@@Text [!%s!]@@', '@@Html [!%s!]@@', 0)", $wpdb->prefix, $autoresponder_id, $custom_field_placeholder, $custom_field_placeholder, $custom_field_placeholder);
 
         $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
 
@@ -288,13 +282,13 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
 
         preg_match_all("#@@[^@]+@@#", $email->htmlbody, $matches );
         $match = $matches[0][0];
-        $this->assertEquals(sprintf("$html_message_format", $custom_field_value), $match);
+        $this->assertEquals(sprintf("@@Html %s@@", $custom_field_value), $match);
 
         preg_match_all("#@@[^@]+@@#", $email->textbody, $matches );
         $match = $matches[0][0];
-        $this->assertEquals(sprintf("$text_message_format", $custom_field_value), $match);
+        $this->assertEquals(sprintf("@@Text %s@@", $custom_field_value), $match);
 
-        $this->assertEquals(sprintf("$subject_format", $custom_field_value), $email->subject);
+        $this->assertEquals(sprintf("Subject %s", $custom_field_value), $email->subject);
         //assert whether that field was substituted in the delivered message
 
     }

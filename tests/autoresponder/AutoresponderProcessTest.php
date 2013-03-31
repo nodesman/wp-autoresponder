@@ -218,9 +218,84 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
-    public function testFetchingSubscribersAlwaysFetchesOnlySubscribedSubscribers() {
+    public function testWhetherCustomFieldValuesAreSubstituted() {
+
+        global $wpdb;
+        $currentTime = time();
+        $custom_field_placeholder="lname";
+        $custom_field_value = "12345";
+        $subject_format = "Subject [!%s!]";
 
 
+
+        //create autoresponder
+
+        $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter1_id);
+        $this->assertEquals(1, $wpdb->query($createAutoresponderQuery));
+
+        $autoresponder_id = $wpdb->insert_id;
+
+        //create a custom field
+
+        $createCustomFieldQuery = sprintf("INSERT INTO  %swpr_custom_fields (nid, type, name, label, enum) VALUES (%d, 'text', '{$custom_field_placeholder}', 'Last Name','');", $wpdb->prefix, $this->newsletter1_id);
+        $this->assertEquals(1, $wpdb->query($createCustomFieldQuery));
+
+        $custom_field_id = $wpdb->insert_id;
+
+        //insert a subscriber
+
+        $insertSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, 'raj', 'flarecore@gmail.com', '324242424', 1, 1, '32asdf42');", $wpdb->prefix, $this->newsletter1_id);
+        $this->assertEquals(1, $wpdb->query($insertSubscriberQuery));
+
+        $subscriber_id = $wpdb->insert_id;
+
+        //insert the value for the custom field for a specific subscriber
+
+
+        $insertCustomFieldValue = sprintf("INSERT INTO  %swpr_custom_fields_values (`nid`, `sid`, `cid`, `value`) VALUES (%d, %d, %d, '$custom_field_value');", $wpdb->prefix, $this->newsletter1_id, $subscriber_id, $custom_field_id);
+        $this->assertEquals(1, $wpdb->query($insertCustomFieldValue));
+
+        //insert a message to the autoresponder with the custom field value in the html, text bodies and subject
+
+
+        $html_message_format = "@@Html [!%s!]@@";
+        $text_message_format = "@@Text [!%s!]@@";
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, '$subject_format', '$text_message_format', '$html_message_format', 0)", $wpdb->prefix, $autoresponder_id, $custom_field_placeholder, $custom_field_placeholder, $custom_field_placeholder);
+
+        $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
+
+
+
+        //add a subscription for the above subscriber such that running the process will result in that message being enqueued.
+
+        $insertSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (eid, type, sid, doc, last_processed, last_date, sequence) VALUES (%d, 'autoresponder', %d, %d, %d, 0, -1);",$wpdb->prefix, $autoresponder_id, $subscriber_id, $currentTime, $currentTime);
+        $this->assertEquals(1, $wpdb->query($insertSubscriptionQuery));
+
+        //run the process
+
+        $processor  = AutoresponderProcessor::getProcessor();
+        $processor->run();
+
+        //fetch the delivered email for the target subscriber
+
+        $getEmailsQuery = sprintf("SELECT * FROM %swpr_queue;", $wpdb->prefix);
+        $emails = $wpdb->get_results($getEmailsQuery);
+
+        $this->assertEquals(1, count($emails));
+
+        $email = $emails[0];
+
+
+        preg_match_all("#@@[^@]+@@#", $email->htmlbody, $matches );
+        $match = $matches[0][0];
+        $this->assertEquals(sprintf("$html_message_format", $custom_field_value), $match);
+
+        preg_match_all("#@@[^@]+@@#", $email->textbody, $matches );
+        $match = $matches[0][0];
+        $this->assertEquals(sprintf("$text_message_format", $custom_field_value), $match);
+
+        $this->assertEquals(sprintf("$subject_format", $custom_field_value), $email->subject);
+        //assert whether that field was substituted in the delivered message
 
     }
     

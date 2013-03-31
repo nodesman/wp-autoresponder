@@ -60,7 +60,7 @@ function sendmail($sid,$params,$footerMessage="")
 	$parameters = _wpr_process_sendmail_parameters($sid,$params,$footerMessage);
 	extract($parameters);
 	$tableName = $wpdb->prefix."wpr_queue";
-	$query = "INSERT INTO $tableName (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','$textbody','$headers',1,'$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
+	$query = "INSERT INTO $tableName (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','{$parameters['textbody']}','$headers',1,'$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
 
 	$wpdb->query($query);
 
@@ -69,8 +69,7 @@ function sendmail($sid,$params,$footerMessage="")
 function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 {
 	$subscriber = _wpr_subscriber_get($sid);
-	$email = $subscriber->email;
-	$newsletter = _wpr_newsletter_get($subscriber->nid);
+    $newsletter = _wpr_newsletter_get($subscriber->nid);
     //if the fromname field is set in the newsletter, then use that value otherwise use the blog name.
 	$fromname = (!empty($params['fromname']))?$params['fromname']:(!empty($newsletter->fromname))?$newsletter->fromname:get_bloginfo("name");
 
@@ -79,12 +78,11 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 	$unsuburl = wpr_get_unsubscription_url($sid);
 	$subject = $params['subject'];
 
-	$to = $email;
-	$address = get_option("wpr_address");
+    $address = get_option("wpr_address");
 	$textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit",'wpr_autoresponder').":\r\n\r\n$unsuburl";
 	$reply_to = $newsletter->reply_to;
 	$htmlbody = trim($params['htmlbody']);
-    $textbody = trim($params['textbody']);
+
 
 	//append the address and the unsub link to the email
 	$address = "<br>
@@ -119,7 +117,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
         if (strstr($params['textbody'],"[!unsubscribe!]"))
                 $textbody = str_replace("[!unsubscribe!]",$unsuburl,$params['textbody']);
         else
-            $textbody .= $params['textbody'].$textUnSubMessage;
+            $textbody = $params['textbody'].$textUnSubMessage;
 	$textbody = addslashes($textbody);
 	$htmlbody = addslashes($htmlbody);
 	$subject = addslashes($subject);
@@ -135,7 +133,7 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 	$parameters = array(
 					'from'=> $from,
 					'fromname' => $fromname,
-					'to'=>$to,
+					'to'=> $subscriber->email,
 					'reply_to'=>$reply_to,
 					'subject' => $subject,
 					'htmlbody'=>$htmlbody,

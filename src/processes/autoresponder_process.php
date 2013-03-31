@@ -28,6 +28,8 @@
                 $start = ($iter*$this->iteration_batch_size());
                 $messages = AutoresponderMessage::getAllMessages($start, $this->iteration_batch_size());
 
+
+
                 foreach ($messages as $message) {
                     $this->deliver_message($message, $currentTime);
                 }
@@ -43,6 +45,7 @@
         private function deliver_message(AutoresponderMessage $message, DateTime $time) {
 
             $subscribers = $this->getRecipientSubscribers($message, $time->getTimestamp());
+
             for ($iter=0;$iter< count($subscribers); $iter++) {
                 $this->deliver($subscribers[$iter], $message);
             }
@@ -52,7 +55,9 @@
 
             global $wpdb;
             $htmlBody = $message->getHTMLBody();
+
             $htmlenabled = (!empty($htmlBody))?1:0;
+
             $params= array(
                 'meta_key'=> sprintf('AR-%d-%d-%d-%d', $message->getAutoresponder()->getId(), $subscriber->id, $message->getId(), $message->getDayNumber()),
                 'htmlbody' => $message->getHTMLBody(),
@@ -60,6 +65,7 @@
                 'subject' => $message->getSubject(),
                 'htmlenabled'=> $htmlenabled
             );
+
 
             sendmail($subscriber->id, $params);
 
@@ -72,6 +78,8 @@
 
             global $wpdb;
             $dayOffsetOfMessage = $message->getDayNumber();
+
+
             $getSubscribersQuery = sprintf("SELECT subscribers.* FROM %swpr_subscribers subscribers, %swpr_followup_subscriptions subscriptions
                                                                  where subscribers.id=subscriptions.sid AND
                                                                  FLOOR((%d-subscriptions.doc)/86400)=%d AND
@@ -80,8 +88,8 @@
                                                                  sequence<> %d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage, $message->getDayNumber());
 
 
-            throw new Exception("Note to self: The test has a couple of statements in line 43 to add a few unsubscribed subscribers. Adding these lines should not affect the tests but adding unusbscribed subscribers causes the tests to fail. Look into why this is happening");
             $subscribers = $wpdb->get_results($getSubscribersQuery);
+
 
             return $subscribers;
 

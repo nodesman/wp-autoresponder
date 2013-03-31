@@ -40,13 +40,21 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
             $insertSubscribersQuery = sprintf("INSERT INTO %swpr_subscribers (nid, `name`, `email`, `active`, `confirmed`, `hash`) VALUES (%d, 'name%d', 'email%d@domain%d.com', 1, 1, %s)", $wpdb->prefix, $this->newsletter_id, $iter, $iter, $iter, time(), md5($iter.microtime()));
             $wpdb->query($insertSubscribersQuery);
 
-            $insertSubscribersQuery = sprintf("INSERT INTO %swpr_subscribers (nid, `name`, `email`, `active`, `confirmed`, `hash`) VALUES (%d, 'name%d', 'email2%d@domain%d.com', 1, 0, %s)", $wpdb->prefix, $this->newsletter_id, $iter, $iter, $iter, time(), md5($iter.microtime()));
-            $wpdb->query($insertSubscribersQuery);
-
             $subscriber_id = $wpdb->insert_id;
 
             $addSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $wpdb->prefix, $subscriber_id, $this->autoresponder_id, $this->timeOfSubscription); //Jan 19, 2013
             $wpdb->query($addSubscriptionQuery);
+
+
+            $insertSubscribersQuery = sprintf("INSERT INTO %swpr_subscribers (nid, `name`, `email`, `active`, `confirmed`, `hash`) VALUES (%d, 'name%d', 'email2dd%d@domain%d.com', 1, 0, %s)", $wpdb->prefix, $this->newsletter_id, $iter, $iter, $iter, time(), md5($iter.microtime()));
+            $wpdb->query($insertSubscribersQuery);
+
+            $subscriber_id = $wpdb->insert_id;
+            $addSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (sid, type, eid, sequence, last_date, last_processed, doc) VALUES (%d, 'autoresponder', %d, -1, 0, 0, %d)", $wpdb->prefix, $subscriber_id, $this->autoresponder_id, $this->timeOfSubscription); //Jan 19, 2013
+            $wpdb->query($addSubscriptionQuery);
+
+
+
         }
     }
 
@@ -75,7 +83,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $wpdb->query($truncateSubscribersQuery);
     }
 
-    public function testWhetherDayZeroDeliveryResultsInDayZeroEmails() {
+    public function testWhetherDayZeroDeliveryResultsInDayZeroEmailsOnlyToSubscribedSubscribers() {
 
         global $wpr_autoresponder_processor, $wpdb;
         $timeOfRun = $this->timeOfSubscription+rand(1,300); //within the 5 minutes following
@@ -95,7 +103,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
     }
 
-    public function testWhetherDayOneDeliveryResultsInDayOneEmails() {
+    public function testWhetherDayOneDeliveryResultsInDayOneEmailsOnlyToSubscribedSubscribers() {
 
         global $wpr_autoresponder_processor, $wpdb;
         $currentDayNumber = "1";
@@ -127,6 +135,14 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->assertEquals(0, $numberEnqueuedOnSecondRunOnSameDay);
 
+
+    }
+
+    public function testWhetherRunningCronOnActivationFollowingDeactivationResultsInCronResumingFromLastProcessingPoint() {
+        //what happens when a particular subscriber has surpassed a particular day without receiving a message
+        //but they are processed in one of the following days - they should receive one of the earlier days and then
+        //continue to receive messages from then onwards while the offset between days being retained.
+        $this->assertTrue(false);
     }
 
     public function tearDown() {

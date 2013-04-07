@@ -69,12 +69,10 @@
                 'htmlenabled'=> $htmlenabled
             );
 
-
             sendmail($subscriber->sid, $params);
 
+            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d", $wpdb->prefix, $message->getDayNumber(), $time->getTimestamp(), $subscriber->id);
 
-
-            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d AND eid=%d", $wpdb->prefix, $message->getDayNumber(), $time->getTimestamp(), $subscriber->id, $message->getAutoresponder()->getId());
             $wpdb->query($updateSubscriptionMarkingItAsProcessedForCurrentDay);
 
         }
@@ -97,7 +95,7 @@
             $previous_message_offset = $message->getPreviousMessageDayNumber();
 
 
-            $getSubscribersQuery = sprintf("SELECT *  FROM %swpr_followup_subscriptions subscriptions, %swpr_subscribers subscribers
+            $getSubscribersQuery = sprintf("SELECT subscriptions.*  FROM %swpr_followup_subscriptions subscriptions, %swpr_subscribers subscribers
                                                                  WHERE
                                                                  `subscriptions`.`sid`=`subscribers`.`id` AND
                                                                  (

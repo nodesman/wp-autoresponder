@@ -64,10 +64,16 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
         $wpdb->query($truncateAutorespondersQuery);
 
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponders AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
+
         $this->truncateMessagesDefinitions($wpdb);
 
         $truncateNewslettersQuery = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
         $wpdb->query($truncateNewslettersQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_newsletters AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
 
         $this->truncateQueue($wpdb);
 
@@ -82,6 +88,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         global $wpdb;
         $truncateSubscriptionsQuery = sprintf("TRUNCATE %swpr_followup_subscriptions;", $wpdb->prefix);
         $wpdb->query($truncateSubscriptionsQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_followup_subscriptions AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
     }
 
     public function truncateSubscribers()
@@ -89,6 +98,10 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         global $wpdb;
         $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_subscribers;", $wpdb->prefix);
         $wpdb->query($truncateSubscribersQuery);
+
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_subscribers AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
     }
 
     public function truncateMessagesDefinitions()
@@ -96,6 +109,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         global $wpdb;
         $truncateAutorespondersQuery = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
         $wpdb->query($truncateAutorespondersQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponder_messages AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
     }
 
     public function truncateQueue()
@@ -103,6 +119,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         global $wpdb;
         $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue", $wpdb->prefix);
         $wpdb->query($truncateQueueQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_queue AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
     }
 
     public function testWhetherDayZeroDeliveryResultsInDayZeroEmailsOnlyToSubscribedSubscribers() {
@@ -110,7 +129,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         global $wpr_autoresponder_processor, $wpdb;
         $timeOfRun = $this->timeOfSubscription+rand(1,300); //within the 5 minutes following
 
-        $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$timeOfRun)));
+        $dayZeroRunTimeObject = new DateTime();
+        $dayZeroRunTimeObject->setTimestamp($timeOfRun);
+        $wpr_autoresponder_processor->run_for_time($dayZeroRunTimeObject);
 
         $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d", $this->autoresponder_id, 0);
         $messageRes = $wpdb->get_results($getMessageForDayZeroId);
@@ -124,12 +145,11 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->assertEquals($this->numberOfSubscribersAdded, $numberOfMessages);
 
-
         $getSubscriptionsQuery = sprintf("SELECT * FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder' LIMIT 1;", $wpdb->prefix, $this->autoresponder_id);
         $subscriptionsResult = $wpdb->get_results($getSubscriptionsQuery);
 
 
-        $this->assertEquals($subscriptionsResult[0]->last_date, $timeOfRun);
+        $this->assertEquals($timeOfRun, $subscriptionsResult[0]->last_date);
 
 
     }

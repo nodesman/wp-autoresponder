@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="891fe277-c296-4901-85a6-0e167065fb87" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/autoresponder_message.php" afterPath="$PROJECT_DIR$/src/models/autoresponder_message.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/processes/autoresponder_process.php" afterPath="$PROJECT_DIR$/src/processes/autoresponder_process.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/automation/.idea/workspace.xml" afterPath="$PROJECT_DIR$/tests/automation/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/automation/automation.iml" afterPath="$PROJECT_DIR$/tests/automation/automation.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/automation/src/com/nodesman/Main.java" afterPath="$PROJECT_DIR$/tests/automation/src/com/nodesman/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php" afterPath="$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php" />
     </list>
     <ignored path="WP-Autoresponder.iws" />
@@ -31,7 +33,7 @@
       <file leaf-file-name="AutoresponderProcessTimingTest.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="324" column="0" selection-start="14143" selection-end="14143" vertical-scroll-proportion="0.8192771">
+            <state line="149" column="0" selection-start="6991" selection-end="6991" vertical-scroll-proportion="0.6626506">
               <folding />
             </state>
           </provider>
@@ -49,7 +51,7 @@
       <file leaf-file-name="autoresponder_process.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processes/autoresponder_process.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="121" column="0" selection-start="4936" selection-end="4936" vertical-scroll-proportion="-25.0">
+            <state line="97" column="36" selection-start="3204" selection-end="3204" vertical-scroll-proportion="-11.083333">
               <folding />
             </state>
           </provider>
@@ -400,12 +402,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php</url>
-          <line>283</line>
+          <line>303</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php</url>
-          <line>286</line>
+          <line>306</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
@@ -497,14 +499,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/processes/autoresponder_process.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="0" selection-start="4936" selection-end="4936" vertical-scroll-proportion="-25.0">
+        <state line="97" column="36" selection-start="3204" selection-end="3204" vertical-scroll-proportion="-11.083333">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/autoresponder/AutoresponderProcessTimingTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="324" column="0" selection-start="14143" selection-end="14143" vertical-scroll-proportion="0.8192771">
+        <state line="149" column="0" selection-start="6991" selection-end="6991" vertical-scroll-proportion="0.6626506">
           <folding />
         </state>
       </provider>

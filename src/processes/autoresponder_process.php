@@ -93,19 +93,9 @@
 
 
 
-
-            if (isset($GLOBALS['test']) && $GLOBALS['test'] == 1) {
-                echo "\r\n\r\nCurrent iteration for day: ".$message->getDayNumber()."\r\n\r\n";
-                echo "Column used for reference is : ".$columnUsedForReference;
-
-                print_r($wpdb->get_results("SELECT * FROM wp_wpr_followup_subscriptions"));
-
-
-            }
-
-
             $dayOffsetOfMessage = $message->getDayNumber();
             $previous_message_offset = $message->getPreviousMessageDayNumber();
+
 
             $getSubscribersQuery = sprintf("SELECT *  FROM %swpr_followup_subscriptions subscriptions, %swpr_subscribers subscribers
                                                                  WHERE
@@ -127,14 +117,8 @@
 
 
 
+
             $subscribers = $wpdb->get_results($getSubscribersQuery);
-
-            if (isset($GLOBALS['test']) && $GLOBALS['test'] == 1) {
-                echo $getSubscribersQuery;
-                echo "\r\n\r\nNumber of subscribers returned is: ".count($subscribers)."\r\n\r\n";
-            }
-
-
 
             return $subscribers;
 

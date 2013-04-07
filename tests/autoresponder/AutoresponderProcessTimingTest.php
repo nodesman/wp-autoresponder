@@ -311,7 +311,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $timeObject = new DateTime();
         $timeObject->setTimestamp($currentTime+(86400*14));
+
         $processor->run_for_time($timeObject);
+
 
         $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
         $emails = $wpdb->get_results($getQueueEmailQuery);
@@ -319,10 +321,8 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $third_email = $emails[0];
 
-        $this->assertEquals(sprintf("AR-%d-%d-%d-%d", $autoresponder_id, $subscriber_id, $message_ids["1"], 5), $third_email->meta_key);
+        $this->assertEquals(sprintf("AR-%d-%d-%d-%d", $autoresponder_id, $subscriber_id, $message_ids["5"], 5), $third_email->meta_key);
 
-
-        $this->assertTrue(false);
     }
 
     public function tearDown() {

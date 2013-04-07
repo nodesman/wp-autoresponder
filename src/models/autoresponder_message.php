@@ -40,7 +40,7 @@ class AutoresponderMessage
     public function getPreviousMessage() {
 
         global $wpdb;
-        $getAutoresponderMessageQuery = sprintf("SELECT id FROM %swpr_autoresponder_messages WHERE aid=%d AND sequence < %d LIMIT 1; ", $wpdb->prefix, $this->getAutoresponder()->getId(), $this->getDayNumber());
+        $getAutoresponderMessageQuery = sprintf("SELECT id FROM %swpr_autoresponder_messages WHERE aid=%d AND sequence < %d ORDER BY sequence DESC LIMIT 1; ", $wpdb->prefix, $this->getAutoresponder()->getId(), $this->getDayNumber());
 
         $emailResult = $wpdb->get_results($getAutoresponderMessageQuery);
 

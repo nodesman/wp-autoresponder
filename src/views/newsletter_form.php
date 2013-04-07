@@ -39,9 +39,6 @@ echo "<li>$error_text"; ?></ol></div>
     <tr>
       <td><strong>From Name:</strong><br/>
         <small><?php _e("When subscribers of this newsletter receive any email (follow up , broadcasts, blog emails), they will see what you set here in the From column in their mail client."); ?>
-
-           
-
         </td>
       <td><input type="text" name="fromname" value="<?php echo $parameters->fromname ?>" size="40" maxlength="30"></td>
     </tr>
@@ -72,7 +69,7 @@ echo "<li>$error_text"; ?></ol></div>
           <input type="hidden" name="wpr_form" value="<?php echo $wpr_form ?>" >
         <input type="hidden" name="id" value="<?php echo $parameters->id ?>"  />
         <input class="button" type="submit" name="button" id="button" value="<?php echo $button_text ?>" />
-        <input class="button" type="button" onclick="window.location='<?php echo _wpr_admin_url("newsletter") ?>'" name="button" id="button" value="Cancel" /></td>
+        <input class="button" type="button" onclick="window.location='admin.php?page=_wpr/newsletter'" name="button" id="button" value="Cancel" /></td>
       <td>&nbsp;</td>
     </tr>
   </table>

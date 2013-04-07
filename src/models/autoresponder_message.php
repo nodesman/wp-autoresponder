@@ -21,6 +21,49 @@ class AutoresponderMessage
 
     }
 
+    public function getNextMessage() {
+
+        global $wpdb;
+        //get message
+
+        $getAutoresponderMessageQuery = sprintf("SELECT id FROM %swpr_autoresponder_messages WHERE aid=%d AND sequence > %d LIMIT 1; ", $wpdb->prefix, $this->getAutoresponder()->getId(), $this->getDayNumber());
+        $emailResult = $wpdb->get_results($getAutoresponderMessageQuery);
+
+        if (0 == count ($emailResult))
+            return false;
+
+        $id = $emailResult[0]->id;
+
+        return AutoresponderMessage::getMessage((int) $id);
+    }
+
+    public function getPreviousMessage() {
+
+        global $wpdb;
+        $getAutoresponderMessageQuery = sprintf("SELECT id FROM %swpr_autoresponder_messages WHERE aid=%d AND sequence < %d LIMIT 1; ", $wpdb->prefix, $this->getAutoresponder()->getId(), $this->getDayNumber());
+
+        $emailResult = $wpdb->get_results($getAutoresponderMessageQuery);
+
+        if (0 == count ($emailResult))
+            return false;
+
+        $id = $emailResult[0]->id;
+
+        return AutoresponderMessage::getMessage((int) $id);
+    }
+
+    public function getPreviousMessageDayNumber() {
+
+            if (0 == $this->getDayNumber() || false == $this->getPreviousMessage()) {
+                return -1;
+            }
+            else {
+                return $this->getPreviousMessage()->getDayNumber();
+            }
+    }
+
+
+
     public function getId() {
         return $this->id;
     }

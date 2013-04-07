@@ -47,19 +47,22 @@
             $subscribers = $this->getRecipientSubscribers($message, $time->getTimestamp());
 
             for ($iter=0;$iter< count($subscribers); $iter++) {
-                $this->deliver($subscribers[$iter], $message);
+                $this->deliver($subscribers[$iter], $message, $time);
             }
         }
 
-        private function deliver($subscriber, AutoresponderMessage $message) {
+
+        private function deliver($subscriber, AutoresponderMessage $message, DateTime $time) {
 
             global $wpdb;
             $htmlBody = $message->getHTMLBody();
 
             $htmlenabled = (!empty($htmlBody))?1:0;
 
+
+
             $params= array(
-                'meta_key'=> sprintf('AR-%d-%d-%d-%d', $message->getAutoresponder()->getId(), $subscriber->id, $message->getId(), $message->getDayNumber()),
+                'meta_key'=> sprintf('AR-%d-%d-%d-%d', $message->getAutoresponder()->getId(), $subscriber->sid, $message->getId(), $message->getDayNumber()),
                 'htmlbody' => $message->getHTMLBody(),
                 'textbody' => $message->getTextBody(),
                 'subject' => $message->getSubject(),
@@ -67,9 +70,11 @@
             );
 
 
-            sendmail($subscriber->id, $params);
+            sendmail($subscriber->sid, $params);
 
-            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d WHERE sid=%d AND eid=%d", $wpdb->prefix, $message->getDayNumber(), $subscriber->id, $message->getAutoresponder()->getId());
+
+
+            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d AND eid=%d", $wpdb->prefix, $message->getDayNumber(), $time->getTimestamp(), $subscriber->id, $message->getAutoresponder()->getId());
             $wpdb->query($updateSubscriptionMarkingItAsProcessedForCurrentDay);
 
         }
@@ -77,21 +82,67 @@
         private function getRecipientSubscribers(AutoresponderMessage $message, $currentTime) {
 
             global $wpdb;
-            $dayOffsetOfMessage = $message->getDayNumber();
 
-            $getSubscribersQuery = sprintf("SELECT subscribers.* FROM %swpr_subscribers subscribers, %swpr_followup_subscriptions subscriptions
-                                                                 where subscribers.id=subscriptions.sid AND
-                                                                 FLOOR((%d-subscriptions.doc)/86400)=%d AND
-                                                                 subscribers.active=1 AND
-                                                                 subscribers.confirmed=1 AND
-                                                                 sequence<> %d;", $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage, $message->getDayNumber());
+            $columnUsedForReference = 'last_date';
+            $additionalCondition = '';
+            if ($this->whetherFirstMessageOfAutoresponder($message)) {
+                $columnUsedForReference = 'doc';
+                $additionalCondition = " last_date = 0 AND";
+            }
+
+
+
+
+
+            if (isset($GLOBALS['test']) && $GLOBALS['test'] == 1) {
+                echo "\r\n\r\nCurrent iteration for day: ".$message->getDayNumber()."\r\n\r\n";
+                echo "Column used for reference is : ".$columnUsedForReference;
+
+                print_r($wpdb->get_results("SELECT * FROM wp_wpr_followup_subscriptions"));
+
+
+            }
+
+
+            $dayOffsetOfMessage = $message->getDayNumber();
+            $previous_message_offset = $message->getPreviousMessageDayNumber();
+
+            $getSubscribersQuery = sprintf("SELECT *  FROM %swpr_followup_subscriptions subscriptions, %swpr_subscribers subscribers
+                                                                 WHERE
+                                                                 `subscriptions`.`sid`=`subscribers`.`id` AND
+                                                                 (
+                                                                    FLOOR((%d-`subscriptions`.`{$columnUsedForReference}`)/86400)=%d OR
+                                                                    (
+                                                                      FLOOR((%d-`subscriptions`.`{$columnUsedForReference}`)/86400) > %d AND
+                                                                      `sequence` = %d
+                                                                    )
+
+
+                                                                 ) AND
+                                                                 {$additionalCondition}
+                                                                 `subscriptions`.`eid`=%d AND
+                                                                 `type`='autoresponder' AND
+                                                                 `subscribers`.active=1 AND `subscribers`.confirmed=1 AND
+                                                                 `subscriptions`.`sequence` <> %d;",  $wpdb->prefix, $wpdb->prefix, $currentTime, $dayOffsetOfMessage, $currentTime, $dayOffsetOfMessage, $previous_message_offset, $message->getAutoresponder()->getId(), $dayOffsetOfMessage );
+
 
 
             $subscribers = $wpdb->get_results($getSubscribersQuery);
 
+            if (isset($GLOBALS['test']) && $GLOBALS['test'] == 1) {
+                echo $getSubscribersQuery;
+                echo "\r\n\r\nNumber of subscribers returned is: ".count($subscribers)."\r\n\r\n";
+            }
+
+
 
             return $subscribers;
 
+        }
+
+        private function whetherFirstMessageOfAutoresponder($message)
+        {
+            return $message->getPreviousMessageDayNumber() == -1;
         }
 
         private function __construct() {

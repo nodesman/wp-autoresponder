@@ -26,7 +26,7 @@
 <table>
   <tr>
   <td width=200"><input type="submit" name="submit" value="Confirm Deletion" class="button-primary"></td>
-  <td><input type="button" class="button" value="Cancel" name="submit" onClick="window.location='<?php echo Routing::url('newsletter'); ?>;"></td>
+  <td><input type="button" class="button" value="Cancel" name="submit" onClick="window.location='admin.php?page=_wpr/newsletter';"></td>
 </tr>
 </table>
 </form>

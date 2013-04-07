@@ -74,8 +74,11 @@ function sendmail($sid,$params,$footerMessage="")
 
 function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 {
-	$subscriber = _wpr_subscriber_get($sid);
-    $newsletter = _wpr_newsletter_get($subscriber->nid);
+
+    global $wpdb;
+    $subscriber = new Subscriber($sid);
+    $newsletter = _wpr_newsletter_get($subscriber->getNewsletterId());
+
     //if the fromname field is set in the newsletter, then use that value otherwise use the blog name.
 	$fromname = (!empty($params['fromname']))?$params['fromname']:(!empty($newsletter->fromname))?$newsletter->fromname:get_bloginfo("name");
 

@@ -71,12 +71,24 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->truncateQueue($wpdb);
 
+        $this->truncateSubscriptionsToFollowups();
+
+        $this->truncateSubscribers();
+
+    }
+
+    public function truncateSubscriptionsToFollowups()
+    {
+        global $wpdb;
         $truncateSubscriptionsQuery = sprintf("TRUNCATE %swpr_followup_subscriptions;", $wpdb->prefix);
         $wpdb->query($truncateSubscriptionsQuery);
+    }
 
+    public function truncateSubscribers()
+    {
+        global $wpdb;
         $truncateSubscribersQuery = sprintf("TRUNCATE %swpr_subscribers;", $wpdb->prefix);
         $wpdb->query($truncateSubscribersQuery);
-
     }
 
     public function truncateMessagesDefinitions()
@@ -97,6 +109,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         global $wpr_autoresponder_processor, $wpdb;
         $timeOfRun = $this->timeOfSubscription+rand(1,300); //within the 5 minutes following
+
         $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$timeOfRun)));
 
         $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d", $this->autoresponder_id, 0);
@@ -111,17 +124,46 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->assertEquals($this->numberOfSubscribersAdded, $numberOfMessages);
 
+
+        $getSubscriptionsQuery = sprintf("SELECT * FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder' LIMIT 1;", $wpdb->prefix, $this->autoresponder_id);
+        $subscriptionsResult = $wpdb->get_results($getSubscriptionsQuery);
+
+
+        $this->assertEquals($subscriptionsResult[0]->last_date, $timeOfRun);
+
+
     }
 
     public function testWhetherDayOneDeliveryResultsInDayOneEmailsOnlyToSubscribedSubscribers() {
 
         global $wpr_autoresponder_processor, $wpdb;
-        $currentDayNumber = "1";
-        $timeOfRun = $this->timeOfSubscription+(86400*$currentDayNumber); //within the 5 minutes following
-        $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$timeOfRun)));
+        $this->truncateQueue();
 
-        $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d", $this->autoresponder_id, $currentDayNumber);
+        $timeWhenDayZeroEmailWasDelivered = $this->timeOfSubscription + rand(1, 300);
+        $setLastProcessedDate = sprintf("UPDATE %swpr_followup_subscriptions SET last_date=%d, sequence=0 WHERE eid=%d AND type='autoresponder'", $wpdb->prefix, $timeWhenDayZeroEmailWasDelivered, $this->autoresponder_id);
+        $wpdb->query($setLastProcessedDate);
+
+
+        $getSubscriptionsQuery = sprintf("SELECT * FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder' LIMIT 1;", $wpdb->prefix, $this->autoresponder_id);
+        $subscriptionsResult = $wpdb->get_results($getSubscriptionsQuery);
+
+
+        $this->assertEquals($subscriptionsResult[0]->last_date, $timeWhenDayZeroEmailWasDelivered);
+
+
+        $currentDayNumber = 1;
+
+        $timeOfRun = $timeWhenDayZeroEmailWasDelivered+(86400*$currentDayNumber); //within the 5 minutes following
+
+
+        $timeOfRunForDayOne = new DateTime(sprintf("@%s", $timeOfRun));
+        $wpr_autoresponder_processor->run_for_time($timeOfRunForDayOne);
+
+        $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d;", $this->autoresponder_id, $currentDayNumber);
         $messageRes = $wpdb->get_results($getMessageForDayZeroId);
+
+        $this->assertEquals(count($messageRes), 1);
+
         $message = $messageRes[0];
 
         $meta_key = sprintf("AR-%s-%%%%-%s-{$currentDayNumber}", $this->autoresponder_id, $message->id);
@@ -156,23 +198,34 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->truncateQueue();
         $this->truncateMessagesDefinitions();
+        $this->truncateSubscribers();
+        $this->truncateSubscriptionsToFollowups();
 
 
+        //print "Resume from last run... \r\n\r\n\r\n...";
+
+
+        //create an autoresponder
 
         $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter_id);
         $this->assertEquals(1, $wpdb->query($createAutoresponderQuery));
 
         $autoresponder_id = $wpdb->insert_id;
 
-
         //insert a subscriber
 
-        $insertSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, 'raj', 'flarecore@gmail.com', '324242424', 1, 1, '32asdf42');", $wpdb->prefix, $this->newsletter_id);
+        $insertSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, 'raj', 'flarecore@gmail.com', '324242424', 1, 1, '32ajkckfkfksdf42');", $wpdb->prefix, $this->newsletter_id);
         $this->assertEquals(1, $wpdb->query($insertSubscriberQuery));
 
         $subscriber_id = $wpdb->insert_id;
 
-        //insert a message to the autoresponder with the custom field value in the html, text bodies and subject
+        $numberOfSubscribers = sprintf("SELECT * FROM %swpr_subscribers", $wpdb->prefix);
+        $subscribers = $wpdb->get_results($numberOfSubscribers);
+
+        $this->assertEquals(1, count($subscribers));
+
+
+        //insert a message to that autoresponder for day 0 - immediately after subscription
 
         $message_ids = array();
 
@@ -183,12 +236,15 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $message_ids["0"] = $wpdb->insert_id;
 
 
+        //insert a message to that autoresponder for day 1 - one day after subscription
 
         $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject 2', '@@Text @@', '@@Html @@', 1)", $wpdb->prefix, $autoresponder_id);
 
         $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
 
         $message_ids["1"] = $wpdb->insert_id;
+
+        //inesrt a message to that autoresponder for day 5 - 5 days after subscription
 
 
         $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject 5', '@@Text 5@@', '@@Html 5@@', 5)", $wpdb->prefix, $autoresponder_id);
@@ -206,12 +262,15 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $processor  = AutoresponderProcessor::getProcessor();
         $timeObject = new DateTime();
         $timeObject->setTimestamp($currentTime+400);
+
+
         $processor->run_for_time($timeObject);
 
         //assert if this is the day zero email.
 
         $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
         $emails = $wpdb->get_results($getQueueEmailQuery);
+
         $this->assertEquals(1, count($emails));
 
         $first_email = $emails[0];
@@ -221,20 +280,34 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->truncateQueue();
 
-        //run the cron after 7 days - simulated downtime.
+
+        //run the cron after 7 days - simulated downtime. this should result in the delivery of email for day 1 when run on this day.
 
         $timeObject = new DateTime();
         $timeObject->setTimestamp($currentTime+(86400*7));
+
         $processor->run_for_time($timeObject);
 
         $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
         $emails = $wpdb->get_results($getQueueEmailQuery);
+
         $this->assertEquals(1, count($emails));
 
         $second_email = $emails[0];
 
         $this->assertEquals(sprintf("AR-%d-%d-%d-%d", $autoresponder_id, $subscriber_id, $message_ids["1"], 1), $second_email->meta_key);
 
+        $this->truncateQueue();
+
+        $getSequenceValueQuery = sprintf("SELECT sequence FROM %swpr_followup_subscriptions WHERE sid=%d AND eid=%d;", $wpdb->prefix, $subscriber_id, $autoresponder_id);
+        $sequenceValueResults = $wpdb->get_results($getSequenceValueQuery);
+
+        $value = $sequenceValueResults[0];
+
+        $sequenceValue = $value->sequence;
+
+        $this->assertEquals(1, $sequenceValue);
+        //run the cron after 7 more days - that is the next email is on day 5 but we're again looking at a interim down time for 2 days past the intended date for next email
 
         $timeObject = new DateTime();
         $timeObject->setTimestamp($currentTime+(86400*14));

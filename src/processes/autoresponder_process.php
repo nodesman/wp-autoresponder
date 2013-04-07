@@ -28,8 +28,6 @@
                 $start = ($iter*$this->iteration_batch_size());
                 $messages = AutoresponderMessage::getAllMessages($start, $this->iteration_batch_size());
 
-
-
                 foreach ($messages as $message) {
                     $this->deliver_message($message, $currentTime);
                 }

@@ -208,6 +208,9 @@ class RoutesTest  extends WP_UnitTestCase {
     public function tearDown() {
         parent::tearDown();
         global $wpr_routes;
+        global $wpdb;
+        $truncateNewsletters = sprintf("TRUNCATE %swpr_newsletters",$wpdb->prefix);
+        $wpdb->query($truncateNewsletters);        
         $wpr_routes = $this->beforeTestRoutesArray;
     }
 

@@ -9,7 +9,6 @@ Author: Raj Sekharan
 Author URI: http://www.nodesman.com/
 */
 
-
 //protect from multiple copies of the plugin. this can happen sometimes.
 
 if (!defined("WPR_DEFS")) {

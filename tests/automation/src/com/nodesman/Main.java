@@ -1,4 +1,4 @@
-package com.example.tests;
+package com.nodesman;
 
 import org.junit.After;
 import org.junit.Before;

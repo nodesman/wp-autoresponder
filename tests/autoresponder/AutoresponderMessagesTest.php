@@ -4,21 +4,39 @@ require_once __DIR__ . "/../../src/models/autoresponder_message.php";
 
 class AutoresponderMessagesTest extends WP_UnitTestCase {
 
+    private $newsletter_id;
+
     public function setUp() {
         parent::setUp();
         global $wpdb;
 
+
         $truncateNewsletterTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_newsletters");
         $wpdb->query($truncateNewsletterTable);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_newsletters AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
 
         $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (name, fromname, fromemail) VALUES ('%s', '%s', '%s')", "Test Newsletter", "test", "test@gmail.com");
         $wpdb->query($createNewsletterQuery);
 
+        $this->newsletter_id  = $wpdb->insert_id;
+
+
+
         $truncateAutorespondresTable = sprintf("TRUNCATE {$wpdb->prefix}wpr_autoresponders;");
         $wpdb->query($truncateAutorespondresTable);
 
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponders AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
+
+
         $truncateAutoresponderMessagesTableQuery = "TRUNCATE {$wpdb->prefix}wpr_autoresponder_messages";
         $wpdb->query($truncateAutoresponderMessagesTableQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponder_messages AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
+
     }
 
 
@@ -172,7 +190,7 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
     public function testWhetherAutoresponderFactoryFetchesTheAppropriateAutoresponderMessage() {
 
         global $wpdb;
-        $autoresponder =  AutoresponderTestHelper::addAutoresponderAndFetchRow(1, "test");
+        $autoresponder =  AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletter_id, "test");
         $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, sequence) VALUES (%d, '%s', %d)", $autoresponder->id, 'Test Subject', 1);
         $wpdb->query($addAutoresponderMessageQuery);
         $autoresponder_message_id = $wpdb->insert_id;

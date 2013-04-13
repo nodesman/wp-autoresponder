@@ -171,7 +171,8 @@ class Routing {
 
     public static function is_template_html_request()
     {
-        return isset($_GET['wpr-template']);
+        $outcome =  ((isset($_GET['wpr-template'])) && preg_match("@[0-9a-zA-Z_]\.htm[l]?@", $_GET['wpr-template']));
+        return $outcome;
     }
 
     private static function is_admin_popup()
@@ -198,17 +199,22 @@ class Routing {
     public static function whether_file_request()
     {
         global $wpr_files;
-        return isset($_GET['wpr-file']) && isset($wpr_files[$_GET['wpr-file']]);
+        $outcome = (isset($_GET['wpr-file']) && isset($wpr_files[$_GET['wpr-file']]));
+        return $outcome;
     }
 
 
     public static function render_template_html()
     {
+
         if (isset($_GET['wpr-template']))
         {
-            if (!preg_match("@^[a-zA-Z0-9_]@". $template)) //ensure that the file starts with a alphanumeric character
+            $template = $_GET['wpr-template'];
+
+            if (0 == preg_match("@^[a-zA-Z0-9_]+\.html$@", $template))
                 return;
-            $filePath = __DIR__."/htmltemplates/$template";
+
+            $filePath = __DIR__."/../htmltemplates/$template";
             if (file_exists($filePath))
                 readfile($filePath);
             exit;

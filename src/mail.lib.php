@@ -326,14 +326,10 @@ if (isset($_GET['nid']))
           <br />
           <div id="htmlbodyfields"> <small>Check/uncheck this checkbox to enable or disable the HTML body of the email. When disabled only the text body will be sent.</small><br/>
             <br/>
-            <input type="checkbox" id="attachimages" <?php if ($parameters->attachimages == 1) { echo 'checked="checked"'; } ?> name="attachimages" value="1">
-            <label for="attachimages">Embed images in the HTML body to the email</label>
-            <br/>
-            <small>If you enable embedding images, subscribers on opening your email will not receive a security warning about loading external images. They will be able to see the images directly. But all the images in the HTML body will be sent to all subscribers so this may consume much bandwidth. The subscriber will not receive the images as email attachments but the images will be a part of the email.</small> <br/>
+            <input type="checkbox" id="attachimages" checked="checked" name="attachimages" value="1" style="display: none">
             <br/>
             <?php CreateNewTemplateSwitcherButton("editor","htmlbody"); ?>
-            <div style="clear:both;display:block;padding: 10px;" align="right"><a class="button-primary" href="http://www.krusible.com/newsletter-design/">Get Custom E-Mail Newsletter Templates</a>
-            </div>
+                        </div>
             <label for="htmlbody">Enter the HTML Body Of The Email:</label>
             <br>
             <small>When HTML is enabled, most of your subscribers will see only the content in this body when they open the email.  If you don't enter a HTML body the email will be sent as text email.

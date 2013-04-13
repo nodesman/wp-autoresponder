@@ -129,9 +129,11 @@ if (!defined("WPR_DEFS")) {
                 _wpr_render_confirm_subscription();
             if (_wpr_whether_html_broadcast_view_frame_request())
                 _wpr_render_broadcast_view_frame();
+            if (Routing::is_template_html_request()) {
+                Routing::render_template_html();
+            }
             if (Routing::whether_file_request())
                 Routing::serve_file();
-
 
 
             if ($this->whetherBroadcastCompositionScreen()) {

@@ -307,6 +307,9 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
             ,$wpdb->prefix, $autoresponder_id,  md5(rand(1,1000) . microtime()."auto"), md5(microtime().rand(1,1000).'test'), 0);
         $wpdb->query($addAutoresponderMessageQuery);
 
+        $truncateSubscribers = sprintf("TRUNCATE %swpr_subscribers", $wpdb->prefix);
+        $wpdb->query($truncateSubscribers);
+
 
         for ($iter=0;$iter< 100000; $iter++) {
 

@@ -132,6 +132,9 @@ if (!defined("WPR_DEFS")) {
             if (Routing::is_template_html_request()) {
                 Routing::render_template_html();
             }
+
+            if (Routing::is_admin_popup())
+                Routing::render_admin_screen_popup();
             if (Routing::whether_file_request())
                 Routing::serve_file();
 
@@ -156,7 +159,8 @@ if (!defined("WPR_DEFS")) {
 
         public function whetherBroadcastCompositionScreen()
         {
-            return isset($_GET['page']) && 'wpresponder/newmail.php' == $_GET['page'];
+
+            return isset($_GET['page']) && ('wpresponder/newmail.php' == $_GET['page'] || ('wpresponder/allmailouts.php' == $_GET['page'] && 'edit' == $_GET['action']));
         }
 
         function admin_init()
@@ -202,6 +206,7 @@ if (!defined("WPR_DEFS")) {
 	function _wpr_enqueue_admin_scripts_and_styles()
     {
         $url = (isset($_GET['page']))?$_GET['page']:'';
+        $querystring  = $_SERVER['QUERY_STRING'];
 
         if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
             wp_enqueue_script('post');
@@ -211,7 +216,12 @@ if (!defined("WPR_DEFS")) {
 
 
         }
-        if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || preg_match("@allmailouts\.php\&action=edit@", $url)) {
+
+
+        $whetherBroadcastEditPage = preg_match("@wpresponder/allmailouts.php&action=edit@", $querystring);
+
+
+        if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || $whetherBroadcastEditPage == true) {
             wp_enqueue_script("wpresponder-ckeditor");
             wp_enqueue_script("jquery");
         }

@@ -147,8 +147,9 @@ class Routing {
     }
 
 
-    private static function render_admin_screen_popup()
+    public static function render_admin_screen_popup()
     {
+
         switch ($_GET['wpr-admin-action']) {
             case 'preview_email':
                 include "preview_email.php";
@@ -163,7 +164,7 @@ class Routing {
                 exit;
                 break;
             case 'delete_mailout':
-                include "delmailout.php";
+                include __DIR__."/../delmailout.php";
                 exit;
                 break;
         }
@@ -175,9 +176,11 @@ class Routing {
         return $outcome;
     }
 
-    private static function is_admin_popup()
+    public static function is_admin_popup()
     {
-        return isset($_GET['wpr-admin-action']);
+
+        $whetherAdminPopup = isset($_GET['wpr-admin-action']);
+        return $whetherAdminPopup;
     }
 
     public static function is_js_file($wpr_files, $name)
@@ -217,6 +220,7 @@ class Routing {
             $filePath = __DIR__."/../htmltemplates/$template";
             if (file_exists($filePath))
                 readfile($filePath);
+
             exit;
         }
     }

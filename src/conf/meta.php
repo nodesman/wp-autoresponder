@@ -248,9 +248,6 @@ $database_structure["wpr_followup_subscriptions"] = array('columns' => array(
 );
 
 $GLOBALS['data_structure'] = $database_structure;
-
-
-
 $GLOBALS['wpr_defaults'] = array();
 
 //TODO: Get rid of two arrays for list of crons, modify all code that uses this code to work with the single structure.
@@ -298,8 +295,6 @@ $GLOBALS['wpr_cron_schedules'] = array(
         'schedule' => 'daily',
         'arguments' => array()
     ),
-
-
 );
 
 $GLOBALS['_wpr_crons'] = array(

@@ -56,7 +56,9 @@ function _wpr_attach_cron_actions_to_functions()
 	//the cron that delivers plugin updates
 	add_action('wpr_updates_cron','wpr_process_updates');
 	add_action('_wpr_queue_management_cron','_wpr_queue_management_cron');
-	add_action("_wpr_autoresponder_process","_wpr_autoresponder_process");
+
+	add_action("_wpr_autoresponder_process", array("WPRBackgroundProcessor","process_autoresponders"));
+
 	add_action("_wpr_postseries_process","_wpr_postseries_process");
 	add_action("_wpr_process_blog_subscriptions","_wpr_process_blog_subscriptions");
 	add_action("_wpr_process_broadcasts","_wpr_process_broadcasts");

@@ -58,7 +58,7 @@ function _wpr_process_queue()
  	set_time_limit(3600);
 	$last_cron_status = get_option("_wpr_queue_delivery_status");
 
-        /*
+    /*
 	When the cron is running the _wpr_queue_delivery_status
 	is set to the timestamp at which the cron processing was started.
 	
@@ -68,6 +68,7 @@ function _wpr_process_queue()
 	This cron will run only if the _wpr_queue_delivery_status option
 	is set to "stopped" or is empty.
 	*/
+
 	$timeOfStart = time();
 	$timeMaximumExecutionTimeAgo = $timeOfStart - WPR_MAX_QUEUE_DELIVERY_EXECUTION_TIME;
 	if (!empty($last_cron_status) && $last_cron_status != "stopped")
@@ -77,7 +78,8 @@ function _wpr_process_queue()
 		{
 			return;
 		}
-	}	
+	}
+
 	update_option("_wpr_queue_delivery_status",$timeOfStart);
 	
 	$numberOfEmailsToDeliver = getNumberOfEmailsToDeliver();
@@ -136,7 +138,7 @@ function _wpr_process_queue()
 
 		}
 	}
-	//WE JUST FINISHED
+
 	update_option("_wpr_queue_delivery_status","stopped");
 }
 
@@ -150,72 +152,72 @@ function whetherTimedOut($startTime,$maxTime)
 }
 
 /*
- *
  * This is the function that performs the autoresponder subscription processing
  */
 
+class WPRBackgroundProcessor {
 
-function _wpr_autoresponder_process($id=0)
-{
-    global $wpdb;
-    global $wpr_autoresponder_processor;
+    public static function process_autoresponders() {
 
-    $startTime = time();
+        $processor = AutoresponderProcessor::getProcessor();
+        set_time_limit(WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME);
 
-    $last_cron_status = get_option("_wpr_autoresponder_process_status");
+        $timeOfStart = time();
+        $currentTime = new DateTime();
+        $currentTime->setTimestamp($timeOfStart);
 
-    /*
-    When the cron is running the _wpr_autoresponder_process_status
-    is set to the timestamp at which the cron processing was started.
-
-    Before shutting down the _wpr_autoresponder_process_status is
-    set to 'stopped'.
-
-    This cron will run only if the _wpr_autoresponder_process_status option
-    is set to "stopped" or is empty.
-    */
-
-    $timeOfStart = time();
-    $maximumExecutionTime = WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
-    $timeMaximumExecutionTimeAgo = $timeOfStart - WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
-
-    if (!empty($last_cron_status) && $last_cron_status != "stopped")
-    {
-        $last_cron_status = intval($last_cron_status);
-        if ($last_cron_status !=0 && ($last_cron_status > $timeMaximumExecutionTimeAgo))
-        {
+        $timeWhenAutoresponderProcessLastDidAHeartBeat = get_option("_wpr_autoresponder_process_status");
+        if (self::whetherAnotherInstanceIsAlreadyRunning($timeOfStart, $timeWhenAutoresponderProcessLastDidAHeartBeat)) {
             return;
         }
+
+        //set the time of ping for the autoresponder process status variable
+        update_option("_wpr_autoresponder_process_status",$timeOfStart);
+
+        //set the start time of the autoresponder process
+        do_action("_wpr_autoresponder_process_start", $currentTime);
+
+        //run the autoresponder processor
+
+        $processor->run_for_time($currentTime);
+
+        //call the hooks that need notification for the
+        do_action('_wpr_autoresponder_process_end', $currentTime);
+        update_option("_wpr_autoresponder_process_status","stopped");
+
+
     }
 
-    set_time_limit($maximumExecutionTime);
+    public static function whetherAnotherInstanceIsAlreadyRunning($timeOfStart, $timeWhenAutoresponderProcessLastDidAHeartBeat)
+    {
+        $timeMaximumExecutionTimeAgo = $timeOfStart - WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
+        if (!empty($timeWhenAutoresponderProcessLastDidAHeartBeat) && $timeWhenAutoresponderProcessLastDidAHeartBeat != "stopped") {
+            $timeWhenAutoresponderProcessLastDidAHeartBeat = intval($timeWhenAutoresponderProcessLastDidAHeartBeat);
+            if ($timeWhenAutoresponderProcessLastDidAHeartBeat != 0 && (self::whetherLastAutoresponderProcessHeartBeatValidityExpired($timeWhenAutoresponderProcessLastDidAHeartBeat, $timeMaximumExecutionTimeAgo))) {
+                return true;
+            }
+        }
 
-    if (whetherTimedOut($startTime, $maximumExecutionTime)) {
-        do_action('_wpr_autoresponder_process_end');
-        return;
+        return false;
     }
 
-    delete_option("_wpr_autoresponder_process_status");
-    add_option("_wpr_autoresponder_process_status",$timeOfStart);
+    private static function whetherLastAutoresponderProcessHeartBeatValidityExpired($timeWhenAutoresponderProcessLastDidAHeartBeat, $timeMaximumExecutionTimeAgo)
+    {
+        return !($timeWhenAutoresponderProcessLastDidAHeartBeat < $timeMaximumExecutionTimeAgo);
+    }
 
-    do_action("_wpr_autoresponder_process_start");
 
-    $time = new DateTime();
-    $wpr_autoresponder_processor->run_for_time($time);
-
-	do_action('_wpr_autoresponder_process_end');
-	update_option("_wpr_autoresponder_process_status","stopped");
 }
 
 
 function _wpr_postseries_process()
 {
 	global $wpdb;
-        //return;
 	$last_cron_status = get_option("_wpr_postseries_process_status");
-        $currentTime = time();
-        //return;
+    $currentTime = time();
+
 	set_time_limit(3600);
+
 	/*
 	When the cron is running the _wpr_postseries_process_status
 	is set to the timestamp at which the cron processing was started.

@@ -81,22 +81,21 @@ function _wpr_ensure_single_cron_instances()
 	{
 		foreach ($cron as $action=>$schedule)
 		{
-                    $keys = array_keys($schedule);
-                    $hash = $keys[0];
-                    $schedule = $schedule[$hash];
-                    if (is_wpr_cron($action))
-                    {
-                        if (empty($schedule['schedule']))
-                            continue;
-                        $argument_hash = base64_encode(serialize($schedule['args']));
-                        $key_name = $action."------".$argument_hash;
-                        $scheduled_cron_list[$key_name][] = $next_scheduled_time;
-                    }
+            $keys = array_keys($schedule);
+            $hash = $keys[0];
+            $schedule = $schedule[$hash];
+            if (is_wpr_cron($action))
+            {
+                if (empty($schedule['schedule']))
+                    continue;
+                $argument_hash = base64_encode(serialize($schedule['args']));
+                $key_name = $action."------".$argument_hash;
+                $scheduled_cron_list[$key_name][] = $next_scheduled_time;
+            }
 		}
-		
 	}
 
-        // make a list of crons that are in the cron schedule array $GLOBALS['wpr_cron_schedules'] but are not scheduled
+    // make a list of crons that are in the cron schedule array $GLOBALS['wpr_cron_schedules'] but are not scheduled
 	$cron_sched = $GLOBALS['wpr_cron_schedules'];
 	$must_exist_crons = array();
 	foreach ($cron_sched as $cron)
@@ -135,8 +134,7 @@ function _wpr_ensure_single_cron_instances()
 
 	}
 
-        
-        //now remove duplicate scheduled crons specified in the cron schedule array.
+    //now remove duplicate scheduled crons specified in the cron schedule array.
 	foreach ($scheduled_cron_list as $key=> $schedule_times)
 	{
 		if (count($schedule_times) > 1)

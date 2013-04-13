@@ -126,12 +126,14 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
     public function testWhetherDayZeroDeliveryResultsInDayZeroEmailsOnlyToSubscribedSubscribers() {
 
-        global $wpr_autoresponder_processor, $wpdb;
+        global $wpdb;
+
+        $processor = AutoresponderProcessor::getProcessor();
         $timeOfRun = $this->timeOfSubscription+rand(1,300); //within the 5 minutes following
 
         $dayZeroRunTimeObject = new DateTime();
         $dayZeroRunTimeObject->setTimestamp($timeOfRun);
-        $wpr_autoresponder_processor->run_for_time($dayZeroRunTimeObject);
+        $processor->run_for_time($dayZeroRunTimeObject);
 
         $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d", $this->autoresponder_id, 0);
         $messageRes = $wpdb->get_results($getMessageForDayZeroId);
@@ -156,7 +158,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
     public function testWhetherDayOneDeliveryResultsInDayOneEmailsOnlyToSubscribedSubscribers() {
 
-        global $wpr_autoresponder_processor, $wpdb;
+        global $wpdb;
         $this->truncateQueue();
 
         $timeWhenDayZeroEmailWasDelivered = $this->timeOfSubscription + rand(1, 300);
@@ -177,7 +179,9 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
 
         $timeOfRunForDayOne = new DateTime(sprintf("@%s", $timeOfRun));
-        $wpr_autoresponder_processor->run_for_time($timeOfRunForDayOne);
+
+        $processor = AutoresponderProcessor::getProcessor();
+        $processor->run_for_time($timeOfRunForDayOne);
 
         $getMessageForDayZeroId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`=%d;", $this->autoresponder_id, $currentDayNumber);
         $messageRes = $wpdb->get_results($getMessageForDayZeroId);
@@ -199,7 +203,8 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $wpdb->query($truncateQueueQuery);
 
         $nextRunOnSameDay = $timeOfRun + 200;
-        $wpr_autoresponder_processor->run_for_time(new DateTime(sprintf("@%s",$nextRunOnSameDay)));
+        $processor = AutoresponderProcessor::getProcessor();
+        $processor->run_for_time(new DateTime(sprintf("@%s",$nextRunOnSameDay)));
 
         $getMessagesQuery = sprintf("SELECT COUNT(*) num FROM %swpr_queue WHERE meta_key LIKE '%s';", $wpdb->prefix, $meta_key);
         $numberOfMessagesDeliveredRes = $wpdb->get_results($getMessagesQuery);

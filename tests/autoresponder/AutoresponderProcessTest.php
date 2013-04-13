@@ -332,9 +332,9 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $number = $num[0]->num;
         $this->assertEquals(100000, $number);
 
-        global $wpr_autoresponder_processor;
+        $processor = AutoresponderProcessor::getProcessor();
 
-        $wpr_autoresponder_processor->run_for_time(new DateTime());
+        $processor->run_for_time(new DateTime());
         $getEmailsCount = $wpdb->get_results(sprintf("SELECT COUNT(*) num FROM %swpr_queue", $wpdb->prefix));
         $count = $getEmailsCount[0]->num;
         $this->assertEquals(100000, $count);
@@ -344,10 +344,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     public function tearDown() {
         parent::tearDown();
     }
-    
-    
-    
-    
+
     public function createMessagesForAutoresponder($numberOfMessagesInAutoresponderOne, $autoresponder1_id)
     {
         global $wpdb;

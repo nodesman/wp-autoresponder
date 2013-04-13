@@ -14,7 +14,6 @@
         }
 
         private function getNumberOfAutoresponderMessages() {
-            global $wpdb;
             return AutoresponderMessage::getAllMessagesCount();
         }
 
@@ -23,15 +22,29 @@
             $number_of_messages = $this->getNumberOfAutoresponderMessages();
             $number_of_iterations = ceil($number_of_messages/ $this->autoresponder_messages_loop_iteration_size());
 
+            $this->recordAutoresponderProcessHeartbeat();
+
             for ($iter=0;$iter< $number_of_iterations; $iter++) {
+
+                $this->recordAutoresponderProcessHeartbeat();
 
                 $start = ($iter*$this->autoresponder_messages_loop_iteration_size());
                 $messages = AutoresponderMessage::getAllMessages($start, $this->autoresponder_messages_loop_iteration_size());
+
+                $this->recordAutoresponderProcessHeartbeat();
 
                 foreach ($messages as $message) {
                     $this->deliver_message($message, $currentTime);
                 }
             }
+
+            $this->recordAutoresponderProcessHeartbeat();
+
+        }
+
+        private function recordAutoresponderProcessHeartbeat()
+        {
+            update_option("_wpr_autoresponder_process_status", time());
         }
 
         private function autoresponder_messages_loop_iteration_size()
@@ -43,27 +56,26 @@
         private function deliver_message(AutoresponderMessage $message, DateTime $time) {
 
             $numberOfSubscribers = $this->getNumberOfRecipientSubscribers($message, $time);
-
             $numberOfIterations = ceil($numberOfSubscribers/ $this->subscribers_processor_iteration_size());
-
 
             for ($iter=1; $iter <= $numberOfIterations; $iter++ ) {
 
-                $start = ($iter-1)*$this->subscribers_processor_iteration_size();
                 $subscribers = $this->getNextRecipientBatch($message, $time->getTimestamp(), $this->subscribers_processor_iteration_size());
 
+                $this->recordAutoresponderProcessHeartbeat();
                 for ($subiter=0;$subiter< count($subscribers); $subiter++) {
                     $this->deliver($subscribers[$subiter], $message, $time);
                 }
-            }
 
+                $this->recordAutoresponderProcessHeartbeat();
+
+            }
         }
 
         private function subscribers_processor_iteration_size()
         {
             return 1000;
         }
-
 
         private function deliver($subscriber, AutoresponderMessage $message, DateTime $time) {
 
@@ -156,6 +168,7 @@
 
 
             $subscribers = $wpdb->get_results($getSubscribersQuery);
+            $this->recordAutoresponderProcessHeartbeat();
 
             return $subscribers;
 
@@ -199,5 +212,3 @@
 
 
     }
-
-$wpr_autoresponder_processor = AutoresponderProcessor::getProcessor();

@@ -132,6 +132,14 @@ if (!defined("WPR_DEFS")) {
             if (Routing::whether_file_request())
                 Routing::serve_file();
 
+
+
+            if ($this->whetherBroadcastCompositionScreen()) {
+                wpr_enqueue_post_page_scripts();
+            }
+
+
+
             if (_wpr_whether_confirmed_subscription_request())
                 _wpr_render_confirmed_subscription_page();
             if (Routing::is_subscription_management_page_request())
@@ -142,6 +150,11 @@ if (!defined("WPR_DEFS")) {
             _wpr_attach_to_non_wpresponder_email_delivery_filter();
 
             do_action("_wpr_init");
+        }
+
+        public function whetherBroadcastCompositionScreen()
+        {
+            return isset($_GET['page']) && 'wpresponder/newmail.php' == $_GET['page'];
         }
 
         function admin_init()
@@ -156,6 +169,7 @@ if (!defined("WPR_DEFS")) {
                 Routing::run_controller();
 
 
+
             add_action('edit_post', "wpr_edit_post_save");
             add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
             add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
@@ -167,7 +181,7 @@ if (!defined("WPR_DEFS")) {
 
     function no_address_error()
 	{
-            ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
+        ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
 	}
 
 	function wpr_enqueue_post_page_scripts()
@@ -186,7 +200,6 @@ if (!defined("WPR_DEFS")) {
 	function _wpr_enqueue_admin_scripts_and_styles()
     {
         $url = (isset($_GET['page']))?$_GET['page']:'';
-        $wp_home_url = get_bloginfo('wpurl');
 
         if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
             wp_enqueue_script('post');
@@ -269,18 +282,18 @@ if (!defined("WPR_DEFS")) {
 
     function _wpr_register_wpresponder_scripts()
     {
-        $plugin_directory_name = basename(__DIR__);
+
         $url = get_bloginfo("wpurl");
         wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
         wp_register_script("angularjs", "$url/?wpr-file=angular.js");
         wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
-        wp_register_script("wpresponder-ckeditor", "/" . PLUGINDIR . "/" . $plugin_directory_name . "/ckeditor/ckeditor.js");
+        wp_register_script("wpresponder-ckeditor", plugin_dir_url(__FILE__) ."ckeditor/ckeditor.js");
         wp_register_script("wpresponder-scripts", get_bloginfo('wpurl').'/?wpr-file=script.js');
     }
 
     function _wpr_register_wpresponder_styles() {
 
-        wp_register_style('wpr-jquery-ui', get_bloginfo('wpurl').'/'.PLUGINDIR.'/'.basename(__DIR__).'/jqueryui.css');
+        wp_register_style('wpr-jquery-ui', plugin_dir_url(__FILE__).'/jqueryui.css');
     }
 
     function _wpr_whether_wpresponder_admin_page()

@@ -20,7 +20,7 @@ function createEditor(editorId)
      //create the editor
 	document.getElementById("editor-"+editorId);
 	listOfEditors[editorId] = CKEDITOR.replace( 'htmlbody-'+editorId, {
-											   skin: 'office2003',
+											   skin: 'moono',
         toolbar :
         [
             

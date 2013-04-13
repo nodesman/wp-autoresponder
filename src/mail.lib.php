@@ -13,11 +13,6 @@ function wpr_mail_form($parameters=array(),$mode="new",$error)
 	font-weight: bold;
 }
 </style>
-<script type="text/javascript">
-
-<?php require "customize_recipients.php"; ?>
-
-</script>
 <script>
 
 
@@ -613,7 +608,7 @@ function toggleHTML()
             var element = document.getElementById("htmlbody");            
 
             editor = CKEDITOR.replace("htmlbody",{
-									  skin: 'office2003',
+									  skin: 'moono',
 
            toolbar :
         [
@@ -784,7 +779,6 @@ toggleHTML();
         <td colspan="3"><br />
           <input type="hidden" name="mid" value="<?php echo $parameters->id ?>"  />
           <input type="hidden" name="recipients" id="recipients" value="<?php echo $parameters->recipients ?>" />
-          <a href="javascript:showWindow();" class="button">Customize Recipients <img src="<?php bloginfo("url") ?>/<?php echo PLUGINDIR ?>/<?php echo WPR_PLUGIN_DIR ?>/newwindow.gif" /></a><br />
           <br /></td>
       </tr>
       <?php

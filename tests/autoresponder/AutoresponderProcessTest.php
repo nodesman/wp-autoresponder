@@ -292,6 +292,53 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //assert whether that field was substituted in the delivered message
 
     }
+
+
+    public function testEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
+
+        global $wpdb;
+        $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter1_id);
+        $this->assertEquals(1, $wpdb->query($createAutoresponderQuery));
+
+        $autoresponder_id = $wpdb->insert_id;
+
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO %swpr_autoresponder_messages (aid, subject, textbody, sequence)
+                                                     VALUES (%d, '%s', '%s', %d)"
+            ,$wpdb->prefix, $autoresponder_id,  md5(rand(1,1000) . microtime()."auto"), md5(microtime().rand(1,1000).'test'), 0);
+        $wpdb->query($addAutoresponderMessageQuery);
+
+
+        for ($iter=0;$iter< 100000; $iter++) {
+
+            $insertSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`, `name`, `email`, `date`, `active`, `confirmed`, `hash`) VALUES (%d, 'raj', 'flarecore{$iter}@gmail.com', '324242424', 1, 1, '32asdf42');", $wpdb->prefix, $this->newsletter1_id);
+            $wpdb->query($insertSubscriberQuery);
+
+            $subscriber_id = $wpdb->insert_id;
+
+            $insertSubscriptionQuery = sprintf("INSERT INTO %swpr_followup_subscriptions (eid, type, sid, doc, last_processed, last_date, sequence) VALUES (%d, 'autoresponder', %d, %d, %d, 0, -1);",$wpdb->prefix, $autoresponder_id, $subscriber_id, time(), 0);
+            $wpdb->query($insertSubscriptionQuery);
+
+        }
+
+        $ensure100ThousandSubscribersQuery = sprintf("SELECT COUNT(*) num FROM %swpr_subscribers", $wpdb->prefix);
+        $num = $wpdb->get_results($ensure100ThousandSubscribersQuery);
+        $number = $num[0]->num;
+
+        $this->assertEquals(100000, $number);
+
+
+        $ensure100ThousandSubscribersQuery = sprintf("SELECT COUNT(*) num FROM %swpr_followup_subscriptions", $wpdb->prefix);
+        $num = $wpdb->get_results($ensure100ThousandSubscribersQuery);
+        $number = $num[0]->num;
+        $this->assertEquals(100000, $number);
+
+        global $wpr_autoresponder_processor;
+
+        $wpr_autoresponder_processor->run_for_time(new DateTime());
+        $getEmailsCount = $wpdb->get_results(sprintf("SELECT COUNT(*) num FROM %swpr_queue", $wpdb->prefix));
+        $count = $getEmailsCount[0]->num;
+        $this->assertEquals(100000, $count);
+    }
     
 
     public function tearDown() {

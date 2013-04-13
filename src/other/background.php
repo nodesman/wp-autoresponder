@@ -153,173 +153,56 @@ function whetherTimedOut($startTime,$maxTime)
  *
  * This is the function that performs the autoresponder subscription processing
  */
- 
- //TODO: Wish this looped autoresponder message wise and not autoresponder subscription wise.
+
 
 function _wpr_autoresponder_process($id=0)
 {
-	global $wpdb;
-	
-	$id = intval($id);
-	if ($id ==0) 
+    global $wpdb;
+    global $wpr_autoresponder_processor;
+
+    $startTime = time();
+
+    $last_cron_status = get_option("_wpr_autoresponder_process_status");
+
+    /*
+    When the cron is running the _wpr_autoresponder_process_status
+    is set to the timestamp at which the cron processing was started.
+
+    Before shutting down the _wpr_autoresponder_process_status is
+    set to 'stopped'.
+
+    This cron will run only if the _wpr_autoresponder_process_status option
+    is set to "stopped" or is empty.
+    */
+
+    $timeOfStart = time();
+    $maximumExecutionTime = WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
+    $timeMaximumExecutionTimeAgo = $timeOfStart - WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
+
+    if (!empty($last_cron_status) && $last_cron_status != "stopped")
+    {
+        $last_cron_status = intval($last_cron_status);
+        if ($last_cron_status !=0 && ($last_cron_status > $timeMaximumExecutionTimeAgo))
         {
-		$send_immediately=false;
-                $subscriberClause = "";
+            return;
         }
-	else
-	{
-		$send_immediately = true;
-		$subscriberClause = "AND b.id=$id";
-	}
-	$startTime = time();
-	
-	/*
-	Condition:
-	if (whetherTimedOut($startTime, $maximumExecutionTime)) {
-		do_action('');
-		return;
-	}
-	
-	*/
-	$last_cron_status = get_option("_wpr_autoresponder_process_status");
-	
-	/*
-	When the cron is running the _wpr_autoresponder_process_status
-	is set to the timestamp at which the cron processing was started.
-	
-	Before shutting down the _wpr_autoresponder_process_status is
-	set to 'stopped'.
-	
-	This cron will run only if the _wpr_autoresponder_process_status option
-	is set to "stopped" or is empty.
-	*/
-	
-	$timeOfStart = time();
-	$maximumExecutionTime = WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
-	$timeMaximumExecutionTimeAgo = $timeOfStart - WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME;
-	if (!empty($last_cron_status) && $last_cron_status != "stopped")
-	{
-		$last_cron_status = intval($last_cron_status);
-		if ($last_cron_status !=0 && ($last_cron_status > $timeMaximumExecutionTimeAgo))
-		{
-			//return;
-		}
-	}	
-	set_time_limit($maximumExecutionTime);
+    }
 
-	if (whetherTimedOut($startTime, $maximumExecutionTime)) {
-		do_action('_wpr_autoresponder_process_end');
-		return;
-	}
-	
-	delete_option("_wpr_autoresponder_process_status");
-	add_option("_wpr_autoresponder_process_status",$timeOfStart);
-	
-	$currentTime = time();
-	$timeTodayAt12AM = mktime(0,0,0,date("n",$currentTime),date("j",$currentTime),date("Y",$currentTime));
-        $prefix = $wpdb->prefix;
-	do_action("_wpr_autoresponder_process_start");
+    set_time_limit($maximumExecutionTime);
 
-	$getNumberOfActiveFollowupSubscriptionsQuery = "SELECT COUNT(*) number FROM `{$prefix}wpr_followup_subscriptions` a,
-											`{$prefix}wpr_subscribers` b
-											WHERE a.type='autoresponder' AND  
-											FLOOR(($currentTime-a.last_processed)/86400) > 0 AND 
-											(FLOOR(($currentTime - a.doc)/86400) > a.sequence OR
-											FLOOR(($currentTime - a.doc)/86400) = -1) AND
-											a.sid=b.id $subscriberClause AND
-											b.active=1 AND b.confirmed=1;";
-	
-	$numberOfActivesResult = $wpdb->get_results($getNumberOfActiveFollowupSubscriptionsQuery);
-	$number = $numberOfActivesResult[0]->number;
-	$numberOfIterations = ceil($number/1000);
-	for ($iterator=0;$iterator<$numberOfIterations;$iterator++)
-	{
-		$start = $iterator*WPR_AUTORESPONDER_BATCH_SIZE;
-		$getActiveFollowupSubscriptionsQuery = "SELECT a.*, FLOOR(($timeTodayAt12AM - a.doc)/86400) `daysSinceSubscribing`  FROM `".$prefix."wpr_followup_subscriptions` a,
-												`".$prefix."wpr_subscribers` b
-												WHERE a.type='autoresponder' AND
-												FLOOR(($currentTime-a.last_processed)/86400) > 0 AND 
-												(FLOOR(($currentTime - a.doc)/86400) > a.sequence OR
-												FLOOR(($currentTime - a.doc)/86400) = -1) AND
-												a.sid=b.id $subscriberClause AND
-												b.active=1 AND b.confirmed=1 LIMIT $start,".WPR_AUTORESPONDER_BATCH_SIZE.";";
-												
+    if (whetherTimedOut($startTime, $maximumExecutionTime)) {
+        do_action('_wpr_autoresponder_process_end');
+        return;
+    }
 
-		$autoresponderSubscriptions = $wpdb->get_results($getActiveFollowupSubscriptionsQuery);
-		$autoresponderSubscriptions = apply_filters("_wpr_autoresponder_subscriptions_iteration",$autoresponderSubscriptions);
-		
-		foreach ($autoresponderSubscriptions as $asubscription)
-		{
+    delete_option("_wpr_autoresponder_process_status");
+    add_option("_wpr_autoresponder_process_status",$timeOfStart);
 
-			$aid = $asubscription->eid;
-			$daysSinceSubscribing = $asubscription->daysSinceSubscribing;
-			$daysSinceSubscribing = ($daysSinceSubscribing == -1)?0:$daysSinceSubscribing;
-			
-			
-			//UPDATE LAST PROCESSING DATE
-			$updateLastProcessedTimeQuery = sprintf("UPDATE {$wpdb->prefix}wpr_followup_subscriptions SET last_processed=UNIX_TIMESTAMP() WHERE id=%d",$asubscription->id);
-			$wpdb->query($updateLastProcessedTimeQuery);
-			
-			
-			$query = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE `aid`=%d AND `sequence`>=%d ORDER BY `sequence` LIMIT 1;",$aid,$daysSinceSubscribing);
-			$listOfMessages = $wpdb->get_results($query);
-			if (0 == count($listOfMessages))
-			{
-				_wpr_expire_followup($asubscription->id);	
-				continue;
-			}
-			
-			$message = $listOfMessages[0];
-		
-			if ($message->sequence != $daysSinceSubscribing)
-				continue;
-				
-			$message_id = $message->id;
-			$subscriber_id = $asubscription->sid;
-			$autoresponder_id = $asubscription->eid;
-			
-			$meta_key = sprintf("AR-%s-%s-%s-%s",$autoresponder_id, $subscriber_id, $message_id, $daysSinceSubscribing);
-			
-			$emailParameters = array("subject" => $message->subject, "textbody" => $message->textbody , "htmlbody" => $message->htmlbody, "htmlenabled"=> $message->htmlenabled,"attachimages"=> $message->attachimages, "email_type" => "user_followup_autoresponder_email", 'meta_key'=>$meta_key);
-			wpr_place_tags($asubscription->sid,$emailParameters);
-			$emailParameters = apply_filters("_wpr_autoresponder_email_delivery",$emailParameters);
-			
-			try {
-			
-				if ($send_immediately == false)
-					sendmail($asubscription->sid,$emailParameters);
-				else
-				{
-					$emailParameters['delivery_type'] = 1;
-					_wpr_send_and_save($asubscription->sid,$emailParameters);
-				}
-			}
-			catch (Exception $exp)
-			{
-				//just in case.
-				//TODO: Do something here.
-				continue;
-			}
-			
-			$updateSubscriptionStatusQuery = sprintf("UPDATE `{$prefix}wpr_followup_subscriptions` SET `last_date`='%s', `sequence`=%d WHERE `sid`=%d",time(), $message->sequence, $asubscription->sid);
-			$wpdb->query($updateSubscriptionStatusQuery);
-			
-			//if another cron has started, then this cron should be terminated.
-			$timeThisInstant = time();
-			$timeSinceStart = $timeThisInstant-$timeOfStart;
-			if (whetherTimedOut($startTime, $maximumExecutionTime)) 
-			{
-				do_action('_wpr_autoresponder_process_end');
-				return;
-			}
-		}
-		
-		if (whetherTimedOut($startTime, $maximumExecutionTime)) 
-		{
-			do_action('_wpr_autoresponder_process_end');
-			return;
-		}
-	}
+    do_action("_wpr_autoresponder_process_start");
+
+    $time = new DateTime();
+    $wpr_autoresponder_processor->run_for_time($time);
+
 	do_action('_wpr_autoresponder_process_end');
 	update_option("_wpr_autoresponder_process_status","stopped");
 }

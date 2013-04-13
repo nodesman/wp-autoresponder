@@ -13,6 +13,29 @@
             $this->process_messages($time);
         }
 
+        public function day_zero_for_subscriber($sid) {
+            global $wpdb;
+            $getSubscriptionQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_followup_subscriptions WHERE sid=%d AND type='autoresponder' AND sequence=-1;", $sid);
+            $subscriptions = $wpdb->get_results($getSubscriptionQuery);
+
+            foreach ($subscriptions as $subscription) {
+
+                $fetchDayZeroEmailOfAutoresponder = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=0", $subscription->eid);
+                $messageToBeSentOnDayZero = $wpdb->get_results($fetchDayZeroEmailOfAutoresponder);
+
+                if (0 == count($messageToBeSentOnDayZero)) {
+                    return;
+                }
+
+                $messageId = (int) $messageToBeSentOnDayZero[0]->id;
+                $message = AutoresponderMessage::getMessage($messageId);
+                $currentTime = new DateTime();
+                self::getProcessor()->deliver($subscription, $message, $currentTime );
+
+            }
+
+        }
+
         private function getNumberOfAutoresponderMessages() {
             return AutoresponderMessage::getAllMessagesCount();
         }
@@ -39,7 +62,6 @@
             }
 
             $this->recordAutoresponderProcessHeartbeat();
-
         }
 
         private function recordAutoresponderProcessHeartbeat()

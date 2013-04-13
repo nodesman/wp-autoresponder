@@ -157,6 +157,23 @@ function whetherTimedOut($startTime,$maxTime)
 
 class WPRBackgroundProcessor {
 
+    public static function autoresponder_process_subscriber($subscriber_id) {
+
+        $getAutoresponderSubscriptionQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_followup_subscriptions subscription, {$wpdb->prefix}wpr_subscribers subscribers WHERE
+                                                                subscription.sid=%d AND
+                                                                subscribers.id=subscription.sid AND
+                                                                subscribers.active=1 AND subscribers.confirmed=1;", $subscriber_id);
+
+        $subscriptionResults = $wpdb->get_results($getAutoresponderSubscriptionQuery);
+
+        if (0 == count ($subscriptionResults)) {
+            return;
+        }
+
+
+
+    }
+
     public static function process_autoresponders() {
 
         $processor = AutoresponderProcessor::getProcessor();

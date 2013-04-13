@@ -150,9 +150,39 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $getSubscriptionsQuery = sprintf("SELECT * FROM %swpr_followup_subscriptions WHERE eid=%d AND type='autoresponder' LIMIT 1;", $wpdb->prefix, $this->autoresponder_id);
         $subscriptionsResult = $wpdb->get_results($getSubscriptionsQuery);
 
-
         $this->assertEquals($timeOfRun, $subscriptionsResult[0]->last_date);
 
+    }
+
+
+
+    public function testWhetherInvokingAutoresponderDeliveryForIndividualSubscriberResultsInThatSubscriberReceivingAMessage() {
+
+        global $wpdb;
+
+        $getRandomSubscriberId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_subscribers ORDER BY RAND() LIMIT 1");
+        $randomSubscriberResult = $wpdb->get_results($getRandomSubscriberId);
+
+        $sid = $randomSubscriberResult[0]->id;
+
+        do_action("_wpr_autoresponder_process_subscriber_day_zero", $sid);
+
+
+        $getQueueSize = sprintf("SELECT * FROM {$wpdb->prefix}wpr_queue;");
+        $queueSizeCountRes = $wpdb->get_results($getQueueSize);
+        $count = count($queueSizeCountRes);
+        $this->assertEquals(1, $count);
+
+        $getAutoresponderMessageId = sprintf("SELECT * FROM {$wpdb->prefix}wpr_autoresponder_messages WHERE aid=%d AND sequence=0;", $this->autoresponder_id);
+        $responderIdRes = $wpdb->get_results($getAutoresponderMessageId);
+
+        $this->assertEquals(1, count($responderIdRes));
+
+        $message_id = $responderIdRes[0]->id;
+
+        $expectedMetaKey = sprintf("AR-%d-%d-%d-%d", $this->autoresponder_id, $sid, $message_id,  0);
+
+        $this->assertEquals($expectedMetaKey, $queueSizeCountRes[0]->meta_key);
 
     }
 
@@ -248,7 +278,6 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $subscribers = $wpdb->get_results($numberOfSubscribers);
 
         $this->assertEquals(1, count($subscribers));
-
 
         //insert a message to that autoresponder for day 0 - immediately after subscription
 

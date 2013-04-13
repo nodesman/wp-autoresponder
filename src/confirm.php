@@ -13,7 +13,7 @@ if (get_magic_quotes_gpc()==1)
 {
     $hash = addslashes($hash);
 }
-global $wpdb;
+
 $subscribers_table = $wpdb->prefix."wpr_subscribers";
 $query = $wpdb->prepare("SELECT * FROM $subscribers_table WHERE id=%d AND hash='%s' AND active=1 AND confirmed=0",$id,$hash);
 $subs = $wpdb->get_results($query);
@@ -37,12 +37,14 @@ $currentTime = time();
 $followup_subscriptions_table = $wpdb->prefix."wpr_followup_subscriptions";
 $query = $wpdb->prepare("UPDATE $followup_subscriptions_table SET doc='%s', last_date='%s' WHERE sid=%d;",$currentTime,$currentTime,$id);
 $wpdb->query($query);
+
 do_action("_wpr_subscriber_confirmed",$id);
 sendConfirmedEmail($id);
-
-?><script>
+?>
+<script>
 window.location='<?php echo $redirectionUrl ?>';
-</script><?php
+</script>
+<?php
 $size = ob_get_length();
-do_action("_wpr_autoresponder_process",$id);
 
+do_action("_wpr_autoresponder_process_subscriber_day_zero",$id);

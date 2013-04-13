@@ -78,6 +78,7 @@ if (!defined("WPR_DEFS")) {
 
 
     include_once __DIR__ . '/conf/routes.php';
+    include_once __DIR__ . '/conf/events.php';
     include_once __DIR__ . '/conf/files.php';
     include_once __DIR__ . '/conf/config.php';
 

@@ -47,7 +47,13 @@ function wpr_subscriptionforms()
 		$id = (int) $_GET['fid'];
 		do_action("_wpr_subscriptionform_edit_form_controller",$id);
 		$form = _wpr_subscriptionform_get($id);
-		
+
+
+        $form->confirm_subject = stripslashes($form->confirm_subject);
+        $form->confirm_body = stripslashes($form->confirm_body);
+        $form->confirmed_subject = stripslashes($form->confirmed_subject);
+        $form->confirmed_body = stripslashes($form->confirmed_body);
+
 		if (isset($_POST['fid']))
 		{
 			$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
@@ -1027,11 +1033,8 @@ function loadFollowUpAutoresponderList()
     <?php 
 
 	foreach ($errors as $error)
-
 	{
-
 		echo '<li>'.$error.'</li>';
-
 	}
 
 	?>
@@ -1050,11 +1053,8 @@ $query = "SELECT id from ".$prefix."wpr_newsletters";
 $newsletters  = $wpdb->get_results($query);
 
 foreach ($newsletters as $newsletter)
-
 {
-
 	$nid = $newsletter->id;
-
 	?>
   <div id="fields-<?php echo $nid?>">
     <?php 

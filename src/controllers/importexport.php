@@ -10,16 +10,19 @@ TODO:
 3. When creating the blog/followup subscription for the email subscriber just inserted, the procedure currently doesnt check if such a subscription already exists. This is necessary in the case that the subscriber with that email address already existed. 
 
 */
-
+$importExportSessionName = "WPR-Import";
 
 function _wpr_importexport_handler()
 {
-	session_start();	
-	$subact = @$_GET['subact'];
+    global $importExportSessionName;
+    session_name($importExportSessionName);
+	session_start();
+
+	$subact = $_GET['subact'];
 	switch ($subact)
 	{
 		case 'step1':
-		_wpr_import_second_step();
+		   _wpr_import_second_step();
 		break;
 		case 'step2':
 		_wpr_import_third_step();
@@ -27,17 +30,18 @@ function _wpr_importexport_handler()
 		case 'step3':
 			_wpr_import_fourth_step();
 		break;
+
 		case 'step4':
-                    _wpr_import_fifth_step();
-                    break;
+           _wpr_import_fifth_step();
+        break;
               
 		case 'finished':
 		_wpr_import_finished();
 		break;
+
 		default:
 		_wpr_import_export_home();		
 	}
-    //get a list of newsletter   
 }
 
 add_action("_wpr_wpr_subscriber_export_post","_wpr_export");
@@ -163,16 +167,18 @@ function _wpr_import_finished()
 	}
 function _wpr_import_second_step()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
+    session_start();
 
 	if (isset($_SESSION['wpr_import_newsletter']))
 	{
-                $nid = $_SESSION['wpr_import_newsletter'];
-		$autoresponders = _wpr_autoresponders_get($nid);
+        $nid = $_SESSION['wpr_import_newsletter'];
+		$autoresponders = Autoresponder::getAllAutoresponders();
 		_wpr_set("autoresponderList",$autoresponders);
-                $postSeries = _wpr_postseries_get_all();
-                _wpr_set("postseriesList",$postSeries);
+        $postSeries = _wpr_postseries_get_all();
+        _wpr_set("postseriesList",$postSeries);
 		_wpr_set("_wpr_view","import.secondstep");
-
 
 	}
 	else
@@ -209,19 +215,28 @@ add_action("_wpr_wpr_import_first_post","_wpr_import_first_post");
 add_action("_wpr_wpr_import_followup_post","_wpr_import_followup_post");
 function _wpr_import_first_post()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
     session_start();
+
 	$newsletter= trim($_POST['newsletter']);
-	$_SESSION['wpr_import_newsletter']=$newsletter;
-	wp_redirect("admin.php?page=_wpr/importexport&subact=step1");
-        exit;
+	$_SESSION['wpr_import_newsletter'] = $newsletter;
+	?>
+<script>window.location='admin.php?page=_wpr/importexport&subact=step1';</script>
+    <?php
+    exit;
 }
 
 function _wpr_import_followup_post()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
     session_start();
     $_SESSION['wpr_import_followup'] = $_POST['followup'];
     do_action("_wpr_import_post_first_step_handler");
-    wp_redirect("admin.php?page=_wpr/importexport&subact=step2");
+    ?>
+    <script>window.location='admin.php?page=_wpr/importexport&subact=step2';</script>
+        <?php
     exit;
 }
 add_action("_wpr_wpr_import_blogsub_post","_wpr_import_blogsub_post");
@@ -229,6 +244,8 @@ add_action("_wpr_wpr_import_upload_post","_wpr_import_upload");
 
 function _wpr_import_blogsub_post()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
     session_start();
     $_SESSION['_wpr_import_blogsub'] = $_POST['blogsubscription'];
     wp_redirect("admin.php?page=_wpr/importexport&subact=step3");
@@ -245,6 +262,8 @@ function _wpr_import_fourth_step()
 
 function _wpr_import_upload()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
 	ini_set('auto_detect_line_endings', true);
     session_start();
     if ($_FILES['csv']['error']==UPLOAD_ERR_OK)
@@ -263,8 +282,11 @@ function _wpr_import_upload()
 
 function _wpr_import_fifth_step()
 {
+    global $importExportSessionName;
+    session_name($importExportSessionName);
     session_start();
     $csv = $_SESSION['_wpr_csv_file'];
+
 
     $count=0;
 	
@@ -288,7 +310,6 @@ function _wpr_import_fifth_step()
     _wpr_set("columns",$columnsRequired);
     _wpr_set("_wpr_view","import.fifthstep");
 }
-
 
 function splitToArray($data)
 {
@@ -316,8 +337,10 @@ function splitToArray($data)
 function _wpr_wpr_import_finish_post()
 {
 	//start importing.
-        session_start();
-	global $wpdb;
+    global $importExportSessionName;
+    global $wpdb;
+    session_name($importExportSessionName);
+    session_start();
 	$prefix = $wpdb->prefix;
 	$arrayIndexes = array();
 	

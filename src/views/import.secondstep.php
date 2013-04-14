@@ -25,7 +25,7 @@
             <?php
             foreach ($autoresponderList as $autoresponder)
             {
-              ?><option <?php if ($_SESSION['wpr_import_followup'] == "autoresponder_".$autoresponder->id) echo 'selected="selected"'; ?> value="autoresponder_<?php echo $autoresponder->id ?>"><?php echo $autoresponder->name ?></option>
+              ?><option <?php if ($_SESSION['wpr_import_followup'] == "autoresponder_".$autoresponder->getId()) echo 'selected="selected"'; ?> value="autoresponder_<?php echo $autoresponder->getId() ?>"><?php echo $autoresponder->getName() ?></option>
               <?php
             }
             ?>

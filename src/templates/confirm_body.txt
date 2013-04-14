@@ -3,7 +3,7 @@ will be sent to you
 as soon as you VERIFY your email address. This will help us 
 protect you from spam.
 
-[!confirm_link!]
+[!confirm!]
 
 If you do not want to confirm, simply ignore this message. 
 

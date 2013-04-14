@@ -91,6 +91,7 @@ function _wpr_newsletter_edit_form_post_handler()
     $errors = array();
    
     _wpr_newsletter_form_validate($info,$errors,false);
+
     if (count($errors) ===0)
     {
         _wpr_newsletter_update($info);
@@ -217,7 +218,7 @@ function _wpr_newsletter_update($info)
 
 	$info = (object) $info;
 
-	$query = "UPDATE  ".$wpdb->prefix."wpr_newsletters SET name='$info->name', reply_to='$info->reply_to', description='$info->description', confirm_subject='$info->confirm_subject', confirm_body='$info->confirm_body',confirmed_subject='$info->confirmed_subject',confirmed_body='$info->confirmed_body', `fromname`='$info->fromname', `fromemail`='$info->fromemail' where id='$info->id';";
+	$query = "UPDATE  ".$wpdb->prefix."wpr_newsletters SET name='$info->name', reply_to='$info->reply_to', description='$info->description', `fromname`='$info->fromname', `fromemail`='$info->fromemail' where id='$info->id';";
 
 	$result = $wpdb->query($query);
 }

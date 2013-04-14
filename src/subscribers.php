@@ -105,14 +105,18 @@ function _wpr_subscriber_profile($subscriber)
 			$cid = $cfield->id;
 			
 			$query = "DELETE FROM ".$wpdb->prefix."wpr_custom_fields_values where sid = $theSubscriberId and cid=$cid;";
-                        
-			$wpdb->query($query);			
-			if (empty($value))
-			    continue;
-			$query = "INSERT INTO ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value) VALUES ('$nid','$theSubscriberId','$cid','$value')";
-                        
 			$wpdb->query($query);
-			
+
+
+			if (empty($value)) {
+                continue;
+            }
+
+			$query = "INSERT INTO ".$wpdb->prefix."wpr_custom_fields_values (nid,sid,cid,value) VALUES ('$nid','$theSubscriberId','$cid','$value')";
+
+			$wpdb->query($query);
+
+            $wpdb->print_error();
 			
 		}
 					?>

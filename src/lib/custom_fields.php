@@ -47,8 +47,10 @@ function getCustomField($cid,$name="",$value="")
 		
 		$selectField = "<select name=\"$name\">\n<option value=\"\">&lt;Not Specified&gt;</option>";
 		$options = explode(",",$theField->enum);
+        $value = trim($value);
 		foreach ($options as $option)
 		{
+            $option = trim($option);
 			$selectField .="<option ".(($option==$value)?'selected="selected"':"").">$option</option>\n";
 		}
 		$selectField .="</select>";

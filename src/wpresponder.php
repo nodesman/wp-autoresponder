@@ -76,7 +76,6 @@ if (!defined("WPR_DEFS")) {
     include_once __DIR__ . '/processes/autoresponder_process.php';
 
 
-
     include_once __DIR__ . '/conf/routes.php';
     include_once __DIR__ . '/conf/events.php';
     include_once __DIR__ . '/conf/files.php';
@@ -173,8 +172,6 @@ if (!defined("WPR_DEFS")) {
 
             if (_wpr_whether_wpresponder_admin_page())
                 Routing::run_controller();
-
-
 
             add_action('edit_post', "wpr_edit_post_save");
             add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
@@ -310,7 +307,12 @@ if (!defined("WPR_DEFS")) {
 
     function _wpr_whether_wpresponder_admin_page()
     {
-        return is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page']);
+        return (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page'])) || (whetherActionsPage()) ;
+    }
+
+    function whetherActionsPage()
+    {
+        return 'wpresponder/actions.php' == $_GET['page'];
     }
 
     function _wpr_render_broadcast_view_frame()

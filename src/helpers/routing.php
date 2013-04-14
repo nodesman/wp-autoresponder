@@ -63,6 +63,7 @@ class Routing {
 
     public static function run_controller() {
         global $wpr_routes;
+
         _wpr_handle_post();
         $path = $_GET['page'];
 
@@ -228,7 +229,7 @@ class Routing {
     public  static function whetherLegacyURL($current_path)
     {
         $result = preg_match("@^wpresponder/@", $current_path);
-        return false != $result;
+        return 0 != $result;
     }
 
     private static function whetherSubPageExists($current_path, $action)
@@ -268,13 +269,11 @@ class Routing {
         do_action('_wpr_router_post_callback');
     }
 
-
-
     public static function isWPRAdminPage() {
         if (!isset($_GET['page'])) {
             return false;
         }
-        $res = preg_match("@^wpresponder/.*@",$_GET['page']);
+
         $result = isset($_GET['page']) && ( 0 != preg_match("@^wpresponder/.*@",$_GET['page']) || preg_match("@^_wpr/.*@",$_GET['page']));
         return $result;
     }

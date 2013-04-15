@@ -4,7 +4,7 @@
 Plugin Name: WP Autoresponder
 Plugin URI: http://www.wpresponder.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
-Version: 5.3.1
+Version: 5.3.2
 Author: Raj Sekharan
 Author URI: http://www.nodesman.com/
 */

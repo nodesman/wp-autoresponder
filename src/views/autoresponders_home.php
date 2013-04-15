@@ -103,6 +103,6 @@
                 </script>
             </div>
         </div>
-        <?php include_once WPR_DIR."/templates/paging.php"; ?>
+        <?php include_once WPR_DIR."/views/templates/paging.php"; ?>
     </div>
 </div>

@@ -142,7 +142,7 @@ class Routing {
             header("Content-Type: text/css");
         else if (self::is_png_file($wpr_files, $name))
             header("Content-Type: image/png");
-        $file_path = __DIR__ . "/../{$wpr_files[$name]}";
+        $file_path = WPR_DIR . "/{$wpr_files[$name]}";
         readfile($file_path);
         exit;
     }
@@ -165,7 +165,7 @@ class Routing {
                 exit;
                 break;
             case 'delete_mailout':
-                include __DIR__."/../delmailout.php";
+                include WPR_DIR."/delmailout.php";
                 exit;
                 break;
         }
@@ -218,7 +218,7 @@ class Routing {
             if (0 == preg_match("@^[a-zA-Z0-9_]+\.html$@", $template))
                 return;
 
-            $filePath = __DIR__."/../htmltemplates/$template";
+            $filePath = WPR_DIR."/htmltemplates/$template";
             if (file_exists($filePath))
                 readfile($filePath);
 

@@ -39,7 +39,7 @@ foreach ($messages as $message) {
         });
     </script>
 
-    <?php include_once __DIR__."/templates/paging.php"; ?>
+    <?php include_once WPR_DIR."/templates/paging.php"; ?>
 
 
 </div>

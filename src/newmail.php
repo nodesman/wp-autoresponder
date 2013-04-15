@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__."/mail.lib.php";
+include_once WPR_DIR."/mail.lib.php";
 
 
 

@@ -14,15 +14,14 @@ Author URI: http://www.nodesman.com/
 if (!defined("WPR_DEFS")) {
     define("WPR_DEFS", 1);
 
-    $dir_name = basename(__DIR__);
 
-    $plugindir = __DIR__;
+    $plugindir = plugin_dir_path( __FILE__ );;
 
-    define("WPR_DIR", __DIR__);
+    define("WPR_DIR", plugin_dir_path( __FILE__ ));
 
-    $controllerDir = __DIR__ . "/controllers";
-    $modelsDir = __DIR__."/models";
-    $helpersDir = __DIR__."/helpers";
+    $controllerDir = WPR_DIR . "/controllers";
+    $modelsDir = WPR_DIR."/models";
+    $helpersDir = WPR_DIR."/helpers";
 
     define("WPR_VERSION", "5.3");
     define("WPR_PLUGIN_DIR", "$plugindir");
@@ -44,44 +43,44 @@ if (!defined("WPR_DEFS")) {
     include_once "$modelsDir/autoresponder_message.php";
     include_once "$modelsDir/autoresponder.php";
 
-    include_once __DIR__ . "/home.php";
-    include_once __DIR__ . "/blog_series.php";
-    include_once __DIR__ . "/forms.php";
-    include_once __DIR__ . '/newmail.php';
-    include_once __DIR__ . '/subscribers.php';
-    include_once __DIR__ . '/wpr_deactivate.php';
-    include_once __DIR__ . '/all_mailouts.php';
-    include_once __DIR__ . '/actions.php';
-    include_once __DIR__ . '/blogseries.lib.php';
-    include_once __DIR__ . '/lib.php';
-    include_once __DIR__ . '/conf/meta.php';
-    include_once __DIR__ . '/lib/swift_required.php';
-    include_once __DIR__ . '/lib/admin_notifications.php';
-    include_once __DIR__ . '/lib/global.php';
-    include_once __DIR__ . '/lib/custom_fields.php';
-    include_once __DIR__ . '/lib/database_integrity_checker.php';
-    include_once __DIR__ . '/lib/framework.php';
-    include_once __DIR__ . '/lib/database_integrity_checker.php';
-    include_once __DIR__ . '/lib/mail_functions.php';
-    include_once __DIR__ . '/other/cron.php';
-    include_once __DIR__ . '/other/firstrun.php';
-    include_once __DIR__ . '/other/queue_management.php';
-    include_once __DIR__ . '/other/notifications_and_tutorials.php';
-    include_once __DIR__ . '/other/background.php';
-    include_once __DIR__ . '/other/install.php';
-    include_once __DIR__ . '/other/blog_crons.php';
-    include_once __DIR__ . '/other/maintain.php';
-    include_once __DIR__ . '/widget.php';
-    include_once __DIR__ . '/processes/autoresponder_process.php';
+    include_once WPR_DIR . "/home.php";
+    include_once WPR_DIR . "/blog_series.php";
+    include_once WPR_DIR . "/forms.php";
+    include_once WPR_DIR . '/newmail.php';
+    include_once WPR_DIR . '/subscribers.php';
+    include_once WPR_DIR . '/wpr_deactivate.php';
+    include_once WPR_DIR . '/all_mailouts.php';
+    include_once WPR_DIR . '/actions.php';
+    include_once WPR_DIR . '/blogseries.lib.php';
+    include_once WPR_DIR . '/lib.php';
+    include_once WPR_DIR . '/conf/meta.php';
+    include_once WPR_DIR . '/lib/swift_required.php';
+    include_once WPR_DIR . '/lib/admin_notifications.php';
+    include_once WPR_DIR . '/lib/global.php';
+    include_once WPR_DIR . '/lib/custom_fields.php';
+    include_once WPR_DIR . '/lib/database_integrity_checker.php';
+    include_once WPR_DIR . '/lib/framework.php';
+    include_once WPR_DIR . '/lib/database_integrity_checker.php';
+    include_once WPR_DIR . '/lib/mail_functions.php';
+    include_once WPR_DIR . '/other/cron.php';
+    include_once WPR_DIR . '/other/firstrun.php';
+    include_once WPR_DIR . '/other/queue_management.php';
+    include_once WPR_DIR . '/other/notifications_and_tutorials.php';
+    include_once WPR_DIR . '/other/background.php';
+    include_once WPR_DIR . '/other/install.php';
+    include_once WPR_DIR . '/other/blog_crons.php';
+    include_once WPR_DIR . '/other/maintain.php';
+    include_once WPR_DIR . '/widget.php';
+    include_once WPR_DIR . '/processes/autoresponder_process.php';
 
 
-    include_once __DIR__ . '/conf/routes.php';
-    include_once __DIR__ . '/conf/events.php';
-    include_once __DIR__ . '/conf/files.php';
-    include_once __DIR__ . '/conf/config.php';
+    include_once WPR_DIR . '/conf/routes.php';
+    include_once WPR_DIR . '/conf/events.php';
+    include_once WPR_DIR . '/conf/files.php';
+    include_once WPR_DIR . '/conf/config.php';
 
-    include_once __DIR__."/helpers/routing.php";
-    include_once __DIR__."/helpers/paging.php";
+    include_once WPR_DIR."/helpers/routing.php";
+    include_once WPR_DIR."/helpers/paging.php";
 
     $GLOBALS['db_checker'] = new DatabaseChecker();
     $GLOBALS['wpr_globals'] = array();

@@ -48,7 +48,6 @@ if (!defined("WPR_DEFS")) {
     include_once __DIR__ . "/blog_series.php";
     include_once __DIR__ . "/forms.php";
     include_once __DIR__ . '/newmail.php';
-    include_once __DIR__ . '/customizeblogemail.php';
     include_once __DIR__ . '/subscribers.php';
     include_once __DIR__ . '/wpr_deactivate.php';
     include_once __DIR__ . '/all_mailouts.php';
@@ -107,7 +106,6 @@ if (!defined("WPR_DEFS")) {
             add_action('init', array(&$this, 'init'),1);
             add_action('plugins_loaded','_wpr_nag');
             add_action('admin_menu', 'wpr_admin_menu');
-            add_action('admin_menu', 'wpresponder_meta_box_add');
             add_action('widgets_init','wpr_widgets_init');
             register_activation_hook(__FILE__,"wpresponder_install");
             register_deactivation_hook(__FILE__,"wpresponder_deactivate");

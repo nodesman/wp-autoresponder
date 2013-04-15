@@ -471,7 +471,7 @@ function _wpr_process_blog_category_subscriptions()
             $numberOfIterations = ceil($number/$perIteration);
             for ($iter=0;$iter<$numberOfIterations;$iter++)
             {
-                $getSubscriptionsQuery = sprintf("SELECT b.* number FROM %swpr_blog_subscription b,
+                $getSubscriptionsQuery = sprintf("SELECT COUNT(*) number FROM %swpr_blog_subscription b,
                                                 %swpr_subscribers s
                                                 WHERE b.type='cat' AND 
                                                 b.catid=%d AND

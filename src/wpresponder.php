@@ -48,6 +48,7 @@ if (!defined("WPR_DEFS")) {
     include_once WPR_DIR . "/forms.php";
     include_once WPR_DIR . '/newmail.php';
     include_once WPR_DIR . '/subscribers.php';
+    include_once WPR_DIR . '/htmltemplates.lib.php';
     include_once WPR_DIR . '/wpr_deactivate.php';
     include_once WPR_DIR . '/all_mailouts.php';
     include_once WPR_DIR . '/actions.php';

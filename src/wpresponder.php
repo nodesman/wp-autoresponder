@@ -170,10 +170,6 @@ if (!defined("WPR_DEFS")) {
             if (_wpr_whether_wpresponder_admin_page())
                 Routing::run_controller();
 
-            add_action('edit_post', "wpr_edit_post_save");
-            add_action('admin_action_edit','wpr_enqueue_post_page_scripts');
-            add_action('load-post-new.php','wpr_enqueue_post_page_scripts');
-            add_action('publish_post', "wpr_add_post_save");
         }
     }
 

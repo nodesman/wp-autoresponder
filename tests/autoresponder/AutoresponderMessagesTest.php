@@ -171,7 +171,6 @@ class AutoresponderMessagesTest extends WP_UnitTestCase {
         AutoresponderMessage::getMessage(3);
     }
 
-
     /**
      * @expectedException NonExistentAutoresponderException
      */

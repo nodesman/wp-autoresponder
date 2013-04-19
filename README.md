@@ -7,7 +7,6 @@ This is a WordPress plugin used to set up and run email marketing campaigns. Wit
 
 * Create a newsletter list - A set of subscribers to whom you can regularly email a broadcast from time to time. 
 * Create a follow-up autoresponder series - A series of messages to be sent on a specific number of days since subscription to each subscriber
-* 
 
 Subscribers can receive blog post deliveries, newsletter broadcasts and follow-up autoresponder messages all side by side. 
 

@@ -54,8 +54,7 @@ if ($success)
 	}
 	
 	do_action("_wpr_subscriptionform_prevalidate");
-	
-	
+
 	$skiplist = array("name","email","followup","blogsubscription","cat","return_url","responder");
 	
 	$query = $wpdb->prepare("SELECT count(*) number_of FROM {$wpdb->prefix}wpr_newsletters where id=%d",$newsletter);	
@@ -173,18 +172,13 @@ if ($success)
 
 	}
 
-	$newsletter = _wpr_newsletter_get($newsletter);			
-
-	
-
+	$newsletter = _wpr_newsletter_get($newsletter);
 	$nid = $newsletter->id;
 	
 	$hash = _wpr_subscriber_hash_generate();
 
 	$query = $wpdb->prepare("SELECT * FROM `{$wpdb->prefix}wpr_subscribers` WHERE `email`=%s AND `nid`=%d;",$email,$nid);
 	$subscribeList = $wpdb->get_results($query);
-	
-	
 	$zone = date_default_timezone_get();
 	date_default_timezone_set("UTC");
 	if (count($subscribeList) ==0)  //the visitor is a new subscriber

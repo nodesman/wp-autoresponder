@@ -80,84 +80,95 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
     $newsletter = _wpr_newsletter_get($subscriber->getNewsletterId());
 
     //if the fromname field is set in the newsletter, then use that value otherwise use the blog name.
-	$fromname = (!empty($params['fromname']))?$params['fromname']:(!empty($newsletter->fromname))?$newsletter->fromname:get_bloginfo("name");
+    $fromname = (!empty($params['fromname']))?$params['fromname']:(!empty($newsletter->fromname))?$newsletter->fromname:get_bloginfo("name");
 
-	if ($newsletter->reply_to)
-		$replyto = $newsletter->reply_to;
-	$unsuburl = wpr_get_unsubscription_url($sid);
-	$subject = $params['subject'];
+    if ($newsletter->reply_to)
+        $replyto = $newsletter->reply_to;
+    $unsuburl = wpr_get_unsubscription_url($sid);
+    $subject = $params['subject'];
 
     $address = get_option("wpr_address");
-	$textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit",'wpr_autoresponder').":\r\n\r\n$unsuburl";
-	$reply_to = $newsletter->reply_to;
-	$htmlbody = trim($params['htmlbody']);
+    $textUnSubMessage = "\n\n$address\n\n".__("To unsubscribe or change subscription options visit",'wpr_autoresponder').":\r\n\r\n$unsuburl";
+    $reply_to = $newsletter->reply_to;
+    $htmlbody = trim($params['htmlbody']);
+    $textbody = $params['textbody'];
+    $subject = $params['subject'];
 
 
-	//append the address and the unsub link to the email
-	$address = "<br>
+    //append the address and the unsub link to the email
+    $address = "<br>
 <br>
 ".nl2br(get_option("wpr_address"))."<br>
 <br>
 ";
-	$htmlUnSubscribeMessage = "<br><br>".$address."<br><br>".__("To unsubscribe or change subscriber options visit:",'wpr_autoresponder')."<br />
+    $htmlUnSubscribeMessage = "<br><br>".$address."<br><br>".__("To unsubscribe or change subscriber options visit:",'wpr_autoresponder')."<br />
 \r\n <a href=\"$unsuburl\">$unsuburl</a>";
-	$htmlenabled = ($params['htmlenabled'])?1:0;
-	if (!empty($htmlbody))
-	{
-		if ($footerMessage && (!empty($htmlbody)) )
-		{
-			$htmlbody .= nl2br($footerMessage)."<br>
+    $htmlenabled = ($params['htmlenabled'])?1:0;
+    if (!empty($htmlbody))
+    {
+        if ($footerMessage && (!empty($htmlbody)) )
+        {
+            $htmlbody .= nl2br($footerMessage)."<br>
 <br>
 ";
-		}
+        }
 
-                if (strstr($htmlbody,"[!unsubscribe!]"))
-                {
-                    $htmlbody = str_replace("[!unsubscribe!]", $unsuburl, $htmlbody);
-                }
-                else
-                {
-                    $htmlbody .= $htmlUnSubscribeMessage;
-                }
-	}
-
-	if ($footerMessage)
-		$params['textbody'] .= $footerMessage."\n\n";
-        if (strstr($params['textbody'],"[!unsubscribe!]"))
-                $textbody = str_replace("[!unsubscribe!]",$unsuburl,$params['textbody']);
+        if (strstr($htmlbody,"[!unsubscribe!]"))
+        {
+            $htmlbody = str_replace("[!unsubscribe!]", $unsuburl, $htmlbody);
+        }
         else
-            $textbody = $params['textbody'].$textUnSubMessage;
-	$textbody = addslashes($textbody);
-	$htmlbody = addslashes($htmlbody);
-	$subject = addslashes($subject);
-	$time = time();
+        {
+            $htmlbody .= $htmlUnSubscribeMessage;
+        }
+    }
 
-	$delivery_type = (!empty($params['delivery_type']))?$params['delivery_type']:0;
-	$email_type = (!empty($params['email_type']))?$params['email_type']:'misc';
+    if ($footerMessage)
+        $params['textbody'] .= $footerMessage."\n\n";
+    if (strstr($params['textbody'],"[!unsubscribe!]"))
+        $textbody = str_replace("[!unsubscribe!]",$unsuburl,$textbody);
+    else
+        $textbody = $params['textbody'].$textUnSubMessage;
+
+    $textbody = addslashes($textbody);
+    $htmlbody = addslashes($htmlbody);
+    $subject = addslashes($subject);
+    $time = time();
+
+
+    $subject = str_replace("[!name!]", $subscriber->getName(), $subject);
+    $textbody = str_replace("[!name!]", $subscriber->getName(), $textbody );
+    $htmlbody = str_replace("[!name!]", $subscriber->getName(), $htmlbody );
+
+
+    $delivery_type = (!empty($params['delivery_type']))?$params['delivery_type']:0;
+    $email_type = (!empty($params['email_type']))?$params['email_type']:'misc';
     $attachImages = (isset($params['attachimages']))?1:0;
-	$meta_key = (!empty($params['meta_key']))?$params['meta_key']:"Misc-$sid-$time";
-	$hash = make_hash(array_merge(array('sid'=>$sid),$params));
-	$from = (!empty($params['fromemail']))?$params['fromemail']:(!empty($newsletter->fromemail))?$newsletter->fromemail:get_bloginfo('admin_email');
+    $meta_key = (!empty($params['meta_key']))?$params['meta_key']:"Misc-$sid-$time";
+    $hash = make_hash(array_merge(array('sid'=>$sid),$params));
+    $from = (!empty($params['fromemail']))?$params['fromemail']:(!empty($newsletter->fromemail))?$newsletter->fromemail:get_bloginfo('admin_email');
 
-	$parameters = array(
-					'from'=> $from,
-					'fromname' => $fromname,
-					'to'=> $subscriber->email,
-					'reply_to'=>$reply_to,
-					'subject' => $subject,
-					'htmlbody'=>$htmlbody,
-					'textbody' => $textbody,
-					'headers'=> '',
-					'attachimages'=>$attachImages,
-					'htmlenabled'=>$htmlenabled,
-					'delivery_type' => $delivery_type,
-					'email_type'=>$email_type,
-					'meta_key' =>$meta_key,
-					'hash'=> $hash
-		);
+    $parameters = array(
+        'from'=> $from,
+        'fromname' => $fromname,
+        'to'=> $subscriber->email,
+        'reply_to'=>$reply_to,
+        'subject' => $subject,
+        'htmlbody'=>$htmlbody,
+        'textbody' => $textbody,
+        'headers'=> '',
+        'attachimages'=>$attachImages,
+        'htmlenabled'=>$htmlenabled,
+        'delivery_type' => $delivery_type,
+        'email_type'=>$email_type,
+        'meta_key' =>$meta_key,
+        'hash'=> $hash
+    );
 
-	return $parameters;
+    return $parameters;
 }
+
+
 
 function make_hash($params)
 {
@@ -168,8 +179,6 @@ function make_hash($params)
 function _wpr_send_and_save($sid, $params, $footerMessage="")
 {
 	global $wpdb;
-
-
 
 	$parameters = _wpr_process_sendmail_parameters($sid,$params,$footerMessge);
 

@@ -254,7 +254,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //insert a message to the autoresponder with the custom field value in the html, text bodies and subject
 
 
-        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject [!%s!]', '@@Text [!%s!]@@', '@@Html [!%s!]@@', 0)", $wpdb->prefix, $autoresponder_id, $custom_field_placeholder, $custom_field_placeholder, $custom_field_placeholder);
+        $insertAutoresponderMessageQuery= sprintf("INSERT INTO %swpr_autoresponder_messages (aid, `subject`, textbody, htmlbody, sequence) VALUES (%d, 'Subject [!%s!] [!name!]', '@@Text [!%s!] [!name!]@@', '@@Html [!%s!] [!name!]@@', 0)", $wpdb->prefix, $autoresponder_id, $custom_field_placeholder, $custom_field_placeholder, $custom_field_placeholder);
 
         $this->assertEquals(1, $wpdb->query($insertAutoresponderMessageQuery));
 
@@ -282,13 +282,13 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
 
         preg_match_all("#@@[^@]+@@#", $email->htmlbody, $matches );
         $match = $matches[0][0];
-        $this->assertEquals(sprintf("@@Html %s@@", $custom_field_value), $match);
+        $this->assertEquals(sprintf("@@Html %s raj@@", $custom_field_value), $match);
 
         preg_match_all("#@@[^@]+@@#", $email->textbody, $matches );
         $match = $matches[0][0];
-        $this->assertEquals(sprintf("@@Text %s@@", $custom_field_value), $match);
+        $this->assertEquals(sprintf("@@Text %s raj@@", $custom_field_value), $match);
 
-        $this->assertEquals(sprintf("Subject %s", $custom_field_value), $email->subject);
+        $this->assertEquals(sprintf("Subject %s raj", $custom_field_value), $email->subject);
         //assert whether that field was substituted in the delivered message
 
     }

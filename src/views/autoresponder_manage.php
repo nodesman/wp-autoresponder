@@ -38,8 +38,5 @@ foreach ($messages as $message) {
             jQuery('.wpr-chrome').css("height",document.availHeight);
         });
     </script>
-
     <?php include_once WPR_DIR."/views/templates/paging.php"; ?>
-
-
 </div>

@@ -42,10 +42,6 @@ class BlogDeliverySystem extends WP_UnitTestCase {
     }
 
 
-
-
-
-
     public function tearDown() {
 
     }

@@ -25,3 +25,10 @@ phpunit
 
 If you see a green bar, you're all good to go. 
 
+Ongoing Rewrite
+===============
+
+The plugin is currently undergoing a phased rewrite/refactoring. Don't be surprised if you find well written code somewhere and blasphemous ungodly warp of fecal matter in some other sections. I've made potentially every single mistake that a developer could possibily make, invented a few extra ones and made them all in this code base and I am working on getting the application to some level of stability which I am guessing is going to take a few months or even a year or two.  
+Making assumptions about the programming constructs that will be available in the plugin - functions, classes are not at all safe. The only constant between now and the future versions are the hooks and filters that I have implemented in the plugin. You can rely on them. If you want your own, implement them and write tests for them.
+
+Bon voyage!

@@ -296,7 +296,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
-    public function tetEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
+    public function testEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
 
         global $wpdb;
         $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter1_id);

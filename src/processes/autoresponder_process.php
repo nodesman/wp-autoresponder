@@ -5,6 +5,7 @@
         private static $processor;
 
         public function run() {
+
             $time = new DateTime();
             $this->run_for_time($time);
         }
@@ -82,7 +83,7 @@
 
             for ($iter=1; $iter <= $numberOfIterations; $iter++ ) {
 
-                $subscribers = $this->getNextRecipientBatch($message, $time->getTimestamp(), $this->subscribers_processor_iteration_size());
+                $subscribers = $this->getNextRecipientBatch($message, strtotime($time->format("Y-m-d H:i:s")), $this->subscribers_processor_iteration_size());
 
                 $this->recordAutoresponderProcessHeartbeat();
                 for ($subiter=0;$subiter< count($subscribers); $subiter++) {
@@ -116,7 +117,7 @@
 
             sendmail($subscriber->sid, $params);
 
-            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d", $wpdb->prefix, $message->getDayNumber(), $time->getTimestamp(), $subscriber->id);
+            $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d", $wpdb->prefix, $message->getDayNumber(), strtotime($time->format("Y-m-d H:i:s")), $subscriber->id);
 
             $wpdb->query($updateSubscriptionMarkingItAsProcessedForCurrentDay);
 
@@ -131,7 +132,7 @@
             $dayOffsetOfMessage = $message->getDayNumber();
             $previous_message_offset = $message->getPreviousMessageDayNumber();
 
-            $currentTime = $time->getTimestamp();
+            $currentTime = strtotime($time->format("Y-m-d H:i:s"));
             $getSubscribersQuery = sprintf("SELECT COUNT(*) num  FROM %swpr_followup_subscriptions subscriptions, %swpr_subscribers subscribers
                                                                  WHERE
                                                                  `subscriptions`.`sid`=`subscribers`.`id` AND

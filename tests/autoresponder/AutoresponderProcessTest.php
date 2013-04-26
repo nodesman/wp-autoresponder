@@ -2,6 +2,8 @@
 
 require_once __DIR__."/../../src/processes/autoresponder_process.php";
 require_once __DIR__."/../../src/models/autoresponder.php";
+require_once __DIR__ . "/../WPRTestHelper.php";
+
 class AutoresponderProcessTest extends WP_UnitTestCase {
 
     private $newsletter1_id;
@@ -12,10 +14,10 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //create newsletters
         global $wpdb;
 
-        AutoresponderProcessTestHelper::deleteAllNewsletters();
-        AutoresponderProcessTestHelper::deleteAllAutoresponders();
-        AutoresponderProcessTestHelper::deleteAllAutoresponderMessages();
-        AutoresponderProcessTestHelper::deleteAllMessagesFromQueue();
+        WPRTestHelper::deleteAllNewsletters();
+        WPRTestHelper::deleteAllAutoresponders();
+        WPRTestHelper::deleteAllAutoresponderMessages();
+        WPRTestHelper::deleteAllMessagesFromQueue();
 
         $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `description`, `fromname`, `fromemail`) VALUES (%s, %s, %s , %s, %s);", md5(microtime()."name1"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
         $wpdb->query($createNewsletterOneQuery);
@@ -294,7 +296,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
-    public function testEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
+    public function tetEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
 
         global $wpdb;
         $createAutoresponderQuery = sprintf("INSERT INTO %swpr_autoresponders (nid, name) VALUES (%d, 'xperia');", $wpdb->prefix, $this->newsletter1_id);
@@ -417,48 +419,4 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
 
 
 
-}
-
-class AutoresponderProcessTestHelper {
-    
-    public static function deleteAllNewsletters()
-    {
-        global $wpdb;
-        $truncateNewsletterTable = sprintf("TRUNCATE %swpr_newsletters;", $wpdb->prefix);
-        $wpdb->query($truncateNewsletterTable);
-
-        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_newsletters AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
-        $wpdb->query($updateAutoIncrementStartIndex);
-    }
-
-    public static function deleteAllMessagesFromQueue()
-    {
-        global $wpdb;
-        $truncateQueueTable = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
-        $wpdb->query($truncateQueueTable);
-
-        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_queue AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
-        $wpdb->query($updateAutoIncrementStartIndex);
-    }
-
-    public static function deleteAllAutoresponderMessages()
-    {
-        global $wpdb;
-        $truncateAutoresponderMessagesTable = sprintf("TRUNCATE %swpr_autoresponder_messages;", $wpdb->prefix);
-        $wpdb->query($truncateAutoresponderMessagesTable);
-
-        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponder_messages AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
-        $wpdb->query($updateAutoIncrementStartIndex);
-    }
-
-    public static function deleteAllAutoresponders()
-    {
-        global $wpdb;
-        $truncateAutoresponderTable = sprintf("TRUNCATE %swpr_autoresponders;", $wpdb->prefix);
-        $wpdb->query($truncateAutoresponderTable);
-
-        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_autoresponders AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000,9000));
-        $wpdb->query($updateAutoIncrementStartIndex);
-    }
-    
 }

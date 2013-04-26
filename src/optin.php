@@ -406,9 +406,14 @@ if ($success)
 	
 	$params[0] = $confirm_subject;
 	$params[1] = $confirm_body;
-	wpr_create_temporary_tables($nid);	
-	wpr_make_subscriber_temptable($nid);
-	wpr_place_tags($id,$params,$additional_parameters);
+
+
+    foreach ($params as $index=>$value) {
+        $params[$index] = Subscriber::replaceCustomFieldValues($value, $id);
+    }
+
+
+
 	$from_email = $newsletter->fromemail;
 	
 	if (!$from_email)	

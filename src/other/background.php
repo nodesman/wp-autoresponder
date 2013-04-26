@@ -327,15 +327,7 @@ function _wpr_expire_followup($id)
 	$wpdb->query($query);	
 }
 
-function wpr_get_mailouts()
-{
- 	global $wpdb;
-	$prefix = $wpdb->prefix;
-	$timeStamp = time();
-	$query = "SELECT * FROM `".$wpdb->prefix."wpr_newsletter_mailouts` WHERE `status` = 0 AND `time` <= $timeStamp;";
-	$mailouts = $wpdb->get_results($query);
-	return $mailouts;
-}
+
 
 function _wpr_process_broadcasts()
 {
@@ -347,8 +339,6 @@ function _wpr_process_broadcasts()
 	
 	
 	/*
-	
-
 	When the cron is running the _wpr_newsletter_process_status
 	is set to the timestamp at which the cron processing was started.
 	
@@ -369,71 +359,13 @@ function _wpr_process_broadcasts()
 			return;
 		}
 	}
-	
+
+    BroadcastProcessor::run();
 
 	delete_option("_wpr_newsletter_process_status");
 	add_option("_wpr_newsletter_process_status",$timeOfStart);
-	
-	
-	$email_mailouts= wpr_get_mailouts();
-	
-	foreach ($email_mailouts as $broadcast)
-	{
-		$nid = $broadcast->nid;
-		$subject = $broadcast->subject;
-		$body = $broadcast->body;
-		wpr_create_temporary_tables($nid);	  //this creates the tables based on which a bigger table will be created
-		wpr_make_subscriber_temptable($nid);  //this table will be used for getting the user list.
-		$customFieldsConditions = trim(wpr_filter_query($nid,$broadcast->recipients));
-		$customFields = ($customFieldsConditions)?" AND ".$customFieldsConditions:"";
-		$query = "SELECT * FROM ".$prefix."wpr_subscribers_".$nid." where active=1 and confirmed=1 $customFields;";
-		$subscribersList = $wpdb->get_results($query);
-		$subject = $broadcast->subject;
-		$text_body = $broadcast->textbody;
-		$html_body = $broadcast->htmlbody;
-		$whetherToAttachImages = $broadcast->attachimages;
-		$query = "SELECT fromname, fromemail from ".$wpdb->prefix."wpr_newsletters where id=".$nid;
-		$results = $wpdb->get_results($query);
-		$fromname = $results[0]->fromname;
-		$fromemail = $results[0]->fromemail;
-		
-		
-		if (count($subscribersList))
-		{
-			$broadcastId=$broadcast->id;
-			$newsletterId= $broadcast->nid;
-			
-			
-			
 
-			foreach ($subscribersList as $subscriber)
-			{
-				$sid = $subscriber->id;
-				$email = $subscriber->email;
-				$meta_key = sprintf("BR-%s-%s-%s",$sid,$broadcastId,$newsletterId);
-				$emailParameters = array( "subject" => $subject,
-							  "from"=> $fromname,
-							  "fromemail"=>$fromemail,
-							  "textbody" => $text_body,
-							  "htmlbody" => $html_body,
-							  "htmlenabled"=> (empty($html_body))?0:1,
-							  "attachimages"=> $whetherToAttachImages,
-							  "meta_key"=> $meta_key
-							  );
-				wpr_place_tags($sid,$emailParameters);
-				$emailParameters["to"] = $subscriber->email;	
-				sendmail($sid,$emailParameters);
-			}
-		}
-		
-		$timeThisInstant = time();
-                $timeSinceStart = $timeThisInstant-$timeOfStart;
-                if ($timeSinceStart > WPR_MAX_NEWSLETTER_PROCESS_EXECUTION_TIME)
-                    return;
 
-		mailout_expire($broadcast->id);
-	}
-	
 	delete_option("_wpr_newsletter_process_status");
 	add_option("_wpr_newsletter_process_status","stopped");	
 }
@@ -534,6 +466,7 @@ function wpr_filter_query($nid, $thestring)
 	}
 	return $final;
 }
+
 function get_postseries_posts($catid,$nid="")
 {
 	global $mailer;

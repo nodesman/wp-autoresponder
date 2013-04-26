@@ -72,7 +72,10 @@ if (!defined("WPR_DEFS")) {
     include_once WPR_DIR . '/other/blog_crons.php';
     include_once WPR_DIR . '/other/maintain.php';
     include_once WPR_DIR . '/widget.php';
+
+    //processes
     include_once WPR_DIR . '/processes/autoresponder_process.php';
+    include_once WPR_DIR . '/processes/broadcast_processor.php';
 
 
     include_once WPR_DIR . '/conf/routes.php';

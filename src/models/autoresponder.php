@@ -285,7 +285,6 @@ class Autoresponder
 
         $getSubscribersForDeliveryForMessageQuery = sprintf("SELECT SS.*, FLOOR((%d-ASU.doc)/86400) offset, ASU.doc, (%d-ASU.doc) diff FROM `{$wpdb->prefix}wpr_followup_subscriptions` `ASU`, {$wpdb->prefix}wpr_subscribers SS WHERE SS.id=ASU.sid", $time->getTimestamp(), $time->getTimestamp(), $offsetDay);
         $results = $wpdb->get_results($getSubscribersForDeliveryForMessageQuery);
-        print_r($results);
 
         $getSubscribersForDeliveryForMessageQuery = sprintf("SELECT SS.* FROM `{$wpdb->prefix}wpr_followup_subscriptions` `ASU`, {$wpdb->prefix}wpr_subscribers SS WHERE SS.id=ASU.sid AND FLOOR((%d-ASU.doc)/86400) = %d", $time->getTimestamp(), $offsetDay);
         echo $getSubscribersForDeliveryForMessageQuery;

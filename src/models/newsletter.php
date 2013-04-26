@@ -16,16 +16,54 @@ class Newsletter
 	private  $confirm_body;
 	private  $confirmed_subject;
 	private  $confirmed_body;
-	private  $fromname;
-	private  $fromemail;
+	private  $from_name;
+
+    public function getFromName()
+    {
+        return $this->from_name;
+    }
+
+    public function getFromEmail()
+    {
+        return $this->from_email;
+    }
+	private  $from_email;
 	private  $deleted = false;
 
+
+    private function __construct($nid) {
+
+        global $wpdb;
+        $nid = intval($nid);
+
+        if (0 == $nid)
+            throw new InvalidNewsletterIDException();
+
+        $tableName = $wpdb->prefix."wpr_newsletters";
+        $getNewsletterInformationQuery = sprintf("SELECT * FROM %s WHERE id=%d",$tableName,$nid);
+        $newsletters = $wpdb->get_results($getNewsletterInformationQuery);
+
+        if (0 == count($newsletters))
+            throw new NewsletterNotFoundException();
+
+        $newsletter = $newsletters[0];
+        $this->id = $newsletter->id;
+        $this->name = $newsletter->name;
+        $this->reply_to = $newsletter->reply_to;
+        $this->description = $newsletter->description;
+        $this->from_name = $newsletter->fromname;
+        $this->from_email = $newsletter->fromemail;
+
+
+
+    }
 
     public static function getNewsletter($id) {
 
         global $wpdb;
 
         $getNewsletterQuery = sprintf("SELECT * FROM %swpr_newsletters WHERE id=%d", $wpdb->prefix, $id);
+
         $newsletterRes = $wpdb->get_results($getNewsletterQuery);
 
         if (count($newsletterRes) == 0 )
@@ -59,31 +97,7 @@ class Newsletter
 
 
     }
-	
-	private function Newsletter($nid)
-	{
-		global $wpdb;
-		$nid = intval($nid);
-		
-		if (0 == $nid)
-			throw new InvalidNewsletterIDException();
-		
-		$tableName = $wpdb->prefix."wpr_newsletters";
-		$getNewsletterInformationQuery = sprintf("SELECT * FROM %s WHERE id=%d",$tableName,$nid);
-		$newsletters = $wpdb->get_results($getNewsletterInformationQuery);
-		
-		if (0 == count($newsletters))
-			throw new NewsletterNotFoundException();
-		
-		$newsletter = $newsletters[0];
-		$this->id = $newsletter->id;
-		$this->name = $newsletter->name;
-		$this->reply_to = $newsletter->reply_to;
-		$this->description = $newsletter->description;
 
-		$this->fromname = $newsletter->fromname;
-		$this->fromemail = $newsletter->fromemail;
-	}
 	
 	function getName()
 	{

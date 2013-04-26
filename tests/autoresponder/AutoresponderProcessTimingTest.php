@@ -152,6 +152,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $this->assertEquals($timeOfRun, $subscriptionsResult[0]->last_date);
 
+
     }
 
 

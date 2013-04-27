@@ -180,8 +180,7 @@ class WPRBackgroundProcessor {
         set_time_limit(WPR_MAX_AUTORESPONDER_PROCESS_EXECUTION_TIME);
 
         $timeOfStart = time();
-        $currentTime = new DateTime();
-        $currentTime->setTimestamp($timeOfStart);
+        $currentTime = new DateTime(sprintf("@", $timeOfStart));
 
         $timeWhenAutoresponderProcessLastDidAHeartBeat = get_option("_wpr_autoresponder_process_status");
         if (self::whetherAnotherInstanceIsAlreadyRunning($timeOfStart, $timeWhenAutoresponderProcessLastDidAHeartBeat)) {

@@ -42,7 +42,7 @@ function confirm_unsubscription($nid,$sid,$hash)
 <blockquote>
 <?php
 //get blog subscriptions
-$query = "select * from ".$wpdb->prefix."wpr_blog_subscription where type='cat AND sid=$sid";
+$query = sprintf("SELECT * FROM {$wpdb->prefix}wpr_blog_subscription WHERE `type`='cat' AND `sid`=%d", $sid);
 $bsubs = $wpdb->get_results($query);
 foreach ($bsubs as $sub)
 {

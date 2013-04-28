@@ -143,8 +143,6 @@ if (!defined("WPR_DEFS")) {
                 wpr_enqueue_post_page_scripts();
             }
 
-
-
             if (_wpr_whether_confirmed_subscription_request())
                 _wpr_render_confirmed_subscription_page();
             if (Routing::is_subscription_management_page_request())
@@ -203,12 +201,11 @@ if (!defined("WPR_DEFS")) {
         $querystring  = $_SERVER['QUERY_STRING'];
 
         if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
-            wp_enqueue_script('post');
             wp_enqueue_script('jquery');
-            wp_enqueue_script('jqueryui-full');
+            wp_enqueue_script('jquery-ui-core');
+            wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script("wpresponder-scripts");
-
-
+            wp_enqueue_script('post');
         }
 
 
@@ -216,7 +213,7 @@ if (!defined("WPR_DEFS")) {
 
 
         if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || $whetherBroadcastEditPage == true) {
-            wp_enqueue_script("wpresponder-ckeditor");
+              wp_enqueue_script("wpresponder-ckeditor");
             wp_enqueue_script("jquery");
         }
 

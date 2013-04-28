@@ -438,7 +438,7 @@ function _wpr_process_blog_category_subscriptions()
         {
             //now process the people who subscribe to the blog
             $timeStampForNow  = date("Y-m-d H:i:s");
-            $getLatestPostQuery = sprintf("SELECT a.* FROM %sposts a, %sterm_relationships b WHERE a.ID=b.`object_id` AND b.`term_taxonomy_id`=%d AND a.`post_type`='post' AND  a.`post_status`='publish' AND a.`post_date_gmt` < '%s' AND a.post_password='' ORDER BY a.`post_date_gmt` DESC LIMIT 1;",$wpdb->prefix,$wpdb->prefix, $category->term_id,$timeStampForNow);
+            $getLatestPostQuery = sprintf("SELECT a.* FROM {$wpdb->prefix}posts a, {$wpdb->prefix}term_relationships b WHERE a.ID=b.`object_id` AND b.`term_taxonomy_id`=%d AND a.`post_type`='post' AND  a.`post_status`='publish' AND a.`post_date_gmt` < '%s' AND a.post_password='' ORDER BY a.`post_date_gmt` DESC LIMIT 1;", $category->term_id,$timeStampForNow);
             $latestBlogPostResult = $wpdb->get_results($getLatestPostQuery);
 
             if (0 == count($latestBlogPostResult)) //there aren't any blog posts at all.
@@ -446,7 +446,6 @@ function _wpr_process_blog_category_subscriptions()
             //find the latest published, non-password protected, past dated blog post
 
             $latestBlogPostTimestamp = strtotime($latestBlogPostResult[0]->post_date_gmt);
-
 
             $getNumberOfSubscriptions = sprintf("SELECT COUNT(*) number FROM %swpr_blog_subscription b,
                                                 %swpr_subscribers s

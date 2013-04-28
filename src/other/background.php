@@ -527,16 +527,9 @@ function isValidOptionsArray($options)
 function deliver_category_subscription($catid,$post)
 {
 	global $wpdb;
-	$prefix = $wpdb->prefix;
-	$query = "SELECT a.* FROM  ".$prefix."wpr_subscribers a,".$prefix."wpr_blog_subscription b where b.type='cat' and b.catid='$catid' and a.id=b.sid and a.active=1 and a.confirmed=1";
-	$subscribers = $wpdb->get_results($query);
-	$theCategory = get_category($catid);
-	$categoryName = $categoryname->name;
-	$blogName = get_bloginfo("name");
-	$blogURL = home_url();
-	$footerMessage = "You are receiving this e-mail because you have subscribed to the $categoryName category of $blogName
+	$getAllBlogSubscribersQuery = sprintf("SELECT a.* FROM  {$wpdb->prefix}wpr_subscribers a,{$wpdb->prefix}wpr_blog_subscription b where b.type='cat' and b.catid=%d and a.id=b.sid and a.active=1 and a.confirmed=1", $catid);
+	$subscribers = $wpdb->get_results($getAllBlogSubscribersQuery);
 
-$blogUrl";
 	foreach ($subscribers as $subscriber)
 	{
                deliverBlogPost($subscriber->id,$post->ID);

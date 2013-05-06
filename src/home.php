@@ -129,7 +129,7 @@ Enter your name and email address below to subscribe to the  WP Responder newsle
 </table>
 <h2>Report A Bug</h2>
 
-WP Autoresponder is actively developed. You can see the development progress at the <a href="https://github.com/rajasekharan/WP-Autoresponder">GitHub repo</a>. While I take great deal of efforts to ensure that the plugin is bug free, a few tend to slip through. Please open a bug report at the official repo to see a fix for it in the next release. Opening a bug takes only a minute or two. <p> <a href="https://github.com/rajasekharan/WP-Autoresponder/issues/new" class="wpr-action-button">Click here to report a bug</a></p>
+WP Autoresponder is actively developed. You can see the development progress at the <a href="https://github.com/nodesman/WP-Autoresponder">GitHub repo</a>. While I take great deal of efforts to ensure that the plugin is bug free, a few tend to slip through. Please open a bug report at the official repo to see a fix for it in the next release. Opening a bug takes only a minute or two. <p> <a href="https://github.com/nodesman/WP-Autoresponder/issues/new" class="wpr-action-button">Click here to report a bug</a></p>
 
 </div>
 

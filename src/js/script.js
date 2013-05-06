@@ -106,6 +106,7 @@ function changeTemplate(editor,nameOfTextArea)
                 CKEDITOR.replace('rich_body_field', {
                     'width': '713px',
                     'height': '330px',
+                    'baseHref': WPRConfig.ckeditor_baseHref,
                     'toolbarGroups': [
                         { name: 'source', items: ['Source']},
                         { name: 'document' },

@@ -37,7 +37,7 @@ function _wpr_new_broadcast_post_handler()
 	if ("later"==$send)
 	{
 		$date = wpr_sanitize($_POST['send_date']);
-		$date_parts = explode("/");
+		$date_parts = explode("/", $date);
 		try 
 		{
 			 
@@ -65,7 +65,7 @@ function _wpr_new_broadcast_post_handler()
 			list($timezone_offset_hour, $timezone_offset_minute) = split(":",$timezone);
 			$whetherToAddTimezoneOffset = strstr($timezone,"+");			
 			$timezoneOffsetInSeconds = abs($timezone_offset_hour)*3600+abs($timezone_offset_minute)*60;
-			$timezoneOffsetInSeconds = (!$whetherToAddTimezoneOffset)?$whetherToAddTimezoneOffset:-$whetherToAddTimezoneOffset;
+			$timezoneOffsetInSeconds = (!$whetherToAddTimezoneOffset)?-$timezoneOffsetInSeconds:$timezoneOffsetInSeconds;
 
 			$epoch_of_scheduled_time = mktime($send_hour,$send_minutes, 0,$month,$date,$year);
 		

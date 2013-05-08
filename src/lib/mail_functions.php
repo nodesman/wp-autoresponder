@@ -74,7 +74,6 @@ function sendmail($sid,$params,$footerMessage="")
 
 function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 {
-
     global $wpdb;
     $subscriber = new Subscriber($sid);
     $newsletter = _wpr_newsletter_get($subscriber->getNewsletterId());

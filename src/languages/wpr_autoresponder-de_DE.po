@@ -59,11 +59,11 @@ msgstr "Angemeldet"
 
 #: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:25
 msgid "Subscribed and Unconfirmed"
-msgstr "Angemeldet und bestätigt"
+msgstr "Registrierte und unbestätigte"
 
 #: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:27
 msgid "Unsubscribed"
-msgstr "ABgemeldet"
+msgstr "Abgemeldet"
 
 #: C:\Daten\html\wordpress\wp-content\plugins\wp-responder-email-autoresponder-and-newsletter-plugin/subscriber.lib.php:29
 msgid "Transfered"

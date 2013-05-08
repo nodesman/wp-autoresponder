@@ -46,8 +46,6 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
 
         $timeOfRunTomorrow = new DateTime(sprintf("@%d",$timestampTomorrow->getTimestamp()+5000));
 
-        $i = Newsletter::getNewsletter($this->nid);
-
         BroadcastProcessor::run_for_time($timeOfRunTomorrow);
 
         $checkNumberOfEmailsInQueueQuery = sprintf("SELECT *from {$wpdb->prefix}wpr_queue;");

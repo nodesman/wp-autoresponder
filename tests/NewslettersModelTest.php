@@ -68,7 +68,6 @@ class NewsletterTest extends WP_UnitTestCase {
 		
 		$whetherNewsletterExists = Newsletter::whetherNewsletterIDExists(9801);
 		$this->assertFalse($whetherNewsletterExists);
-
 	}
 
     public function testWhetherNewsletterFetchesItsCustomFieldsNames() {

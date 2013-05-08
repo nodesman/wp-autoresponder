@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__."/../../src/processes/background_process.php";
 require_once __DIR__."/../../src/processes/autoresponder_process.php";
 require_once __DIR__."/../../src/models/autoresponder.php";
 require_once __DIR__ . "/../WPRTestHelper.php";

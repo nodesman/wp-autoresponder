@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class BroadcastProcessor {
+class BroadcastProcessor extends WPRBackgroundProcess{
 
 
     public static function run() {
@@ -36,7 +36,6 @@ class BroadcastProcessor {
             $subject = $broadcast->subject;
             $html_body = $broadcast->htmlbody;
 
-
             $newsletter = Newsletter::getNewsletter($nid);
 
 
@@ -45,9 +44,9 @@ class BroadcastProcessor {
                 foreach ($subscribersList as $subscriber)
                 {
                     $sid = $subscriber->id;
-                    $meta_key = sprintf("BR-%s-%s-%s",$sid, $broadcast->id, $broadcast->nid);
+                    $meta_key = self::getMetaKey($sid, $broadcast);
                     $emailParameters = array( "subject" => $subject,
-                        "from"=> $newsletter->getFromName(),
+                        "fromname"=> $newsletter->getFromName(),
                         "fromemail"=> $newsletter->getFromEmail(),
                         "textbody" => $broadcast->textbody,
                         "htmlbody" => $broadcast->htmlbody,
@@ -66,6 +65,16 @@ class BroadcastProcessor {
 
             mailout_expire($broadcast->id);
         }
+    }
+
+    /**
+     * @param $sid
+     * @param $broadcast
+     * @return string
+     */
+    public static function getMetaKey($sid, $broadcast)
+    {
+        return sprintf("BR-%s-%s-%s", $sid, $broadcast->id, $broadcast->nid);
     }
 
 

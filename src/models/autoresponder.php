@@ -265,7 +265,7 @@ class Autoresponder
         $start = (0 ==  intval($start))?0: intval($start);
         $limitClause = Autoresponder::getLimitClauseForRecordSetFetch($start, $length);
 
-        $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d %s', $wpdb->prefix, $this->id, $limitClause);
+        $getMessagesQuery = sprintf('SELECT * FROM %swpr_autoresponder_messages WHERE aid=%d ORDER BY `sequence` %s', $wpdb->prefix, $this->id, $limitClause);
         $messages = $wpdb->get_results($getMessagesQuery);
 
         $messageObjects = array();

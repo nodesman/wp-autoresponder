@@ -1,3 +1,9 @@
+Development Discontinued
+========================
+
+All further work on this plugin has been discontinued as of June 12th, 2013. 
+
+
 WP-Autoresponder
 ================
 

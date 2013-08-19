@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="WP-Autoresponder" default="prepare">
+    <property file="./build.properties" />
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <mkdir dir="build"/>
+        <echo msg="Downloading wordpress..." />
+        <if>
+           <equals arg1="${wp_version}" arg2="latest"/>
+	   <then>
+             <property name="file_name" value="latest"/>
+           </then>
+           <else>
+             <property name="file_name" value="wordpress-${wp_version}"/>
+           </else>
+        </if>
+        <httpget url="http://wordpress.org/${file_name}.zip" dir="build"/>
+        <unzip file="build/${file_name}.zip" todir="." />
+    </target>
+</project>

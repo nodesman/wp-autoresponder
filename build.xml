@@ -1,23 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="WP-Autoresponder" default="prepare">
+<project name="WP-Autoresponder" default="full_build">
     <property file="./build.properties" />
-    <!-- ============================================  -->
-    <!-- Target: prepare                               -->
-    <!-- ============================================  -->
-    <target name="prepare">
-        <mkdir dir="build"/>
-        <echo msg="Downloading wordpress..." />
+    
+    <target name="check_core_version">
+        <echo msg="Checking whether we have a version of wordpress..." />
+        <available file="wordpress/wp-settings.php" property="wp_files" value="yes"/>
+        <property name="require_version" value="${wp_version}"/> 
+        <mkdir dir="cache" />   
         <if>
-           <equals arg1="${wp_version}" arg2="latest"/>
-	   <then>
-             <property name="file_name" value="latest"/>
+	  <equals arg1="${require_version}" arg2="latest"/>
+	  <then>
+	     <echo message="Running against the latest version of WordPress..."/>
+	     <echo message="What is the latest version of WordPress? Let's ask the official svn repo..."/>
+	     <exec command="php utils/find_latest.php" outputProperty="require_version"/>
+	     <echo message="Latest version is ${require_version}"/>
+	  </then>
+	</if>     
+	<if>
+           <equals arg1="${wp_files}" arg2="1"/>
+           <then>
+		<!-- get the version of wordpress that is installed -->
+		<echo msg="Found wordpress at WordPress/"/>
+		<exec command="php utils/whichversion.php" outputProperty="found_wordpress_version"/>
+		<echo msg="Found WordPress version v${found_wordpress_version}" />
+		<if>
+		   <equals arg1="${require_version}" arg2="${found_wordpress_version}" />
+		   <then>
+		       <echo message="Found the required version of WordPress core" />
+	           </then>
+	           <else>
+	                <delete dir="wordpress/" failonerror="true" />
+	                <phingcall target="download_core">
+	               </phingcall>
+	           </else>
+		</if>
            </then>
            <else>
-             <property name="file_name" value="wordpress-${wp_version}"/>
-           </else>
-        </if>
+              <echo msg="Didn't find any copy of WordPress"/>
+              <phingcall target="download_core">
+	      </phingcall>
+	   </else>     
+	</if>
+	
+    </target>
+    <target name="full_build" depends="check_core_version">
+        
+    </target>
+   <target name="download_core">
+      <mkdir dir="build"/>
+        <echo msg="Downloading wordpress..." />
+        <property name="file_name" value="wordpress-${require_version}" />
         <httpget url="http://wordpress.org/${file_name}.zip" dir="build"/>
         <unzip file="build/${file_name}.zip" todir="." />
     </target>
+    
+      
+    
 </project>

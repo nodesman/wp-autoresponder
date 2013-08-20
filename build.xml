@@ -2,12 +2,13 @@
 
 <project name="WP-Autoresponder" default="full_build">
     <property file="./build.properties" />
-    
+    <property file="./install.properties" />
     <target name="check_core_version">
         <echo msg="Checking whether we have a version of wordpress..." />
-        <available file="wordpress/wp-settings.php" property="wp_files" value="yes"/>
+        <available file="${wp.dir}/wp-settings.php" property="wp_files" value="yes"/>
         <property name="require_version" value="${wp_version}"/> 
         <mkdir dir="cache" />   
+        <mkdir dir="${wp.dir}" />
         <if>
 	  <equals arg1="${require_version}" arg2="latest"/>
 	  <then>
@@ -16,13 +17,13 @@
 	     <exec command="php utils/find_latest.php" outputProperty="require_version"/>
 	     <echo message="Latest version is ${require_version}"/>
 	  </then>
-	</if>     
+	</if>
 	<if>
            <equals arg1="${wp_files}" arg2="1"/>
            <then>
 		<!-- get the version of wordpress that is installed -->
-		<echo msg="Found wordpress at WordPress/"/>
-		<exec command="php utils/whichversion.php" outputProperty="found_wordpress_version"/>
+		<echo msg="Found wordpress at ${wp.dir}"/>
+		<exec command="wp core version" dir="${wp.dir}" outputProperty="found_wordpress_version"/>
 		<echo msg="Found WordPress version v${found_wordpress_version}" />
 		<if>
 		   <equals arg1="${require_version}" arg2="${found_wordpress_version}" />
@@ -30,31 +31,37 @@
 		       <echo message="Found the required version of WordPress core" />
 	           </then>
 	           <else>
-	                <delete dir="wordpress/" failonerror="true" />
-	                <phingcall target="download_core">
-	               </phingcall>
+	                <delete dir="${wp.dir}" failonerror="true" />
+	                
 	           </else>
 		</if>
            </then>
            <else>
               <echo msg="Didn't find any copy of WordPress"/>
-              <phingcall target="download_core">
-	      </phingcall>
 	   </else>     
 	</if>
-	
     </target>
-    <target name="full_build" depends="check_core_version">
-        
+    <target name="full_build">
+	<phingcall target="install_wordpress">
+	</phingcall>
     </target>
-   <target name="download_core">
-      <mkdir dir="build"/>
+   <target name="download_core" depends="check_core_version">
+       
         <echo msg="Downloading wordpress..." />
-        <property name="file_name" value="wordpress-${require_version}" />
-        <httpget url="http://wordpress.org/${file_name}.zip" dir="build"/>
-        <unzip file="build/${file_name}.zip" todir="." />
+        <echo msg="Downloading wordpress to ${wp.dir}" />
+	<exec dir="${wp.dir}" command="wp core download --version=${required_version}" output="true" error="true"/>  
     </target>
-    
-      
-    
+    <target name="install_wordpress" depends="download_core">
+         <exec command="wp core is-installed" dir="${wp.dir}" returnProperty="whether_installed"/>
+         <echo message="${whether_installed} is the value of whether installed" />
+         <if>
+             <equals arg1="${whether_installed}" arg2="1" />
+             <then>
+             	<echo message="Installing WordPress... " />
+             	<exec output="true" error="true" command="wp core config --dbname=${wp.dbname} --dbuser=${wp.dbuser} --dbpass=${wp.dbpass} --dbhost=${wp.dbhost} --dbprefix=dev_" dir="${wp.dir}"/>
+             	<exec output="true" error="true" command="wp core install --url=${wp.wp_url} --title=${wp.name} --admin_name=${wp.admin_name} --admin_password=${wp.admin_password} --admin_email=${wp.admin_email}" dir="${wp.dir}"/>
+             </then>
+         </if>
+    </target>    
 </project>
+

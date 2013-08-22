@@ -1,16 +1,12 @@
 <?php
 /* Path to the WordPress codebase you'd like to test. Add a backslash in the end. */
-define( 'ABSPATH', __DIR__.'/../../wordpress/');
-if (isset($_ENV['TRAVIS'])) 
-  define( 'DB_NAME', 'myapp_test' );
-else
-  define('DB_NAME', 'freeness');
-define( 'DB_USER', 'root' );
-if (isset($_ENV['TRAVIS']))
-  define( 'DB_PASSWORD', '' );
-else
-  define('DB_PASSWORD','stinger');
-define( 'DB_HOST', 'localhost' );
+$configuration = parse_ini_file(__DIR__."/../../install.properties");
+
+define( 'ABSPATH', $configuration['wp.dir']);
+define('DB_NAME', $configuration['wp.dbname']);
+define( 'DB_USER', $configuration['wp.dbuser'] );
+define('DB_PASSWORD',$configuration['wp.dbpass']);
+define( 'DB_HOST',  $configuration['wp.dbhost']);
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
@@ -18,7 +14,7 @@ define( 'WPLANG', '' );
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
 
-define( 'WP_TESTS_DOMAIN', 'localhost' );
+define( 'WP_TESTS_DOMAIN', $configuration['wp.wp_url'] );
 define( 'WP_TESTS_EMAIL', 'admin@example.org' );
 define( 'WP_TESTS_TITLE', 'Test Blog' );
 define( 'WP_TESTS_NETWORK_TITLE', 'Test Network' );
@@ -42,6 +38,6 @@ if ( WP_ALLOW_MULTISITE && !defined('WP_INSTALLING') ) {
 	//define( 'SUNRISE', TRUE );
 }
 
-$table_prefix  = 'wp_';
+$table_prefix  = 'dev_';
 
 define( 'WP_PHP_BINARY', 'php' );

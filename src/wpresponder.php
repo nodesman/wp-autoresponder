@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: WP Autoresponder
+Plugin Name: Javelin Email Marketing
 Plugin URI: http://www.wpresponder.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
-Version: 5.3.4.1
+Version: 5.4
 Author: Raj Sekharan
 Author URI: http://www.nodesman.com/
 */
@@ -125,7 +125,6 @@ if (!defined("WPR_DEFS")) {
                     ckeditor_baseHref: '<?php echo plugins_url("ckeditor/",__FILE__) ?>'
                 };
             </script>
-
             <?php
 
         }
@@ -193,7 +192,7 @@ if (!defined("WPR_DEFS")) {
 
     function no_address_error()
 	{
-        ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>. It is a mandatory requirement for conformance with CAN-SPAM act guidelines (in USA).</strong></p></div><?php
+        ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>.</strong></p></div><?php
 	}
 
 	function wpr_enqueue_post_page_scripts()

@@ -3,67 +3,29 @@
 <project name="WP-Autoresponder" default="full_build">
     <property file="./build.properties" />
     <property file="./install.properties" />
-  
-    <target name="ensure_core_version">
-        <echo msg="Checking whether we have a version of wordpress..." />
-        <available file="${wp.dir}" property="wp_files" value="yes"/>
-        <property name="require_version" value="${wp_version}"/> 
-        <property name="found_version" value="-1"/> 
-        <property name="whether_installed" value="0"/> 
-        <echo msg="Required WP version ${require_version} "/>
-        <mkdir dir="cache" />   
-        <mkdir dir="${wp.dir}" />
-        <exec command="wp core is-installed" dir="${wp.dir}" returnProperty="wp_files"/>
-	<if>
-           <equals arg1="${wp_files}" arg2="0"/>
-           <then>	
-		<echo msg="Found wordpress ${found_version} at ${wp.dir}"/>
-		<if>
-		   <equals arg1="${require_version}" arg2="${found_version}" />
-		   <then>
-		       <echo msg="Found the required version of WordPress core" />
-	           </then>
-	           <else>
-                     <phingcall target="install_wordpress">
-                     </phingcall>     
-	           </else>
-		</if>           </then>
-           <else>
-              <echo msg="Didn't find any copy of WordPress"/>
-              <phingcall target="install_wordpress">
-	      </phingcall>
-	   </else>     
-	</if>
-    </target>
-    <target name="install_wordpress">
-         <delete dir="${wp.dir}" failonerror="true" /> 
-         <mkdir dir="${wp.dir}" />
-	 <exec command="wp core is-installed" dir="${wp.dir}" returnProperty="whether_installed"/>
-         <if>
-             <equals arg1="${whether_installed}" arg2="1" />
-             <then>
-             	<echo message="Installing WordPress... " />
-             	<echo message="Creating configuration file... " />
-             	<exec dir="${wp.dir}" command="pwd" passthru="true" />
-             	<echo message="Downloading v${wp_version} at ${wp.dir}... " />
-             	<exec dir="${wp.dir}" checkreturn="true" command="wp core download --version=${wp_version}" />
-             	<echo message="Performing installation... " />
-             	<exec dir="${wp.dir}" checkreturn="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser} --dbpass=${wp.dbpass} --dbhost=${wp.dbhost} --dbprefix=dev_" />
-             	<exec checkreturn="true" command="wp core install --url=${wp.wp_url}  --title=${wp.name} --admin_name=${wp.admin_name} --admin_password=${wp.admin_password} --admin_email=${wp.admin_email}" dir="${wp.dir}" />
-             </then>
-         </if>
 
-    </target> 
-    <target name="full_build">
-	<phingcall target="ensure_core_version">
-	</phingcall>
-	<symlink target="${phing.dir}/src" link="${wp.dir}/wp-content/plugins/wp-responder" />
-	<exec checkreturn="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
-	<phingcall target="phpunit">
-	</phingcall>
-    </target>  
-    <target name="phpunit"> 
-	<phpunit printsummary="true" haltonerror="true" haltonfailure="true" haltonincomplete="true" configuration="${phing.dir}/phpunit.xml" />
+    <target name="install_wordpress">
+         <delete dir="${wp.dir}" failonerror="true" />
+         <mkdir dir="${wp.dir}" />
+        <echo message="Installing WordPress... " />
+        <echo message="Creating configuration file... " />
+        <exec dir="${wp.dir}" command="pwd" passthru="true" />
+        <echo message="Downloading v${wp_version} at ${wp.dir}... " />
+        <exec dir="${wp.dir}" checkreturn="true" command="wp core download --version=${wp_version}" />
+        <echo message="Performing installation... " />
+        <exec dir="${wp.dir}" checkreturn="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser} --dbpass=${wp.dbpass} --dbhost=${wp.dbhost} --dbprefix=dev_" />
+        <exec checkreturn="true" command="wp core install --url=${wp.wp_url}  --title=${wp.name} --admin_name=${wp.admin_name} --admin_password=${wp.admin_password} --admin_email=${wp.admin_email}" dir="${wp.dir}" />
     </target>
+    <target name="full_build">
+    <echo message="Running full build.. " />
+	<symlink target="${phing.dir}/src" link="${wp.dir}/wp-content/plugins/wp-responder" />
+    <phingcall target="install_wordpress"></phingcall>
+    <echo message="Enabling Javelin... " />
+
+    <exec passthru="true" command="which php" outputProperty="path_to_php" />
+	<exec checkreturn="true" passthru="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
+    <phpunit printsummary="true" haltonerror="true" haltonfailure="true" haltonincomplete="true" configuration="${phing.dir}/phpunit.xml" />
+    </target>  
+
 </project>
 

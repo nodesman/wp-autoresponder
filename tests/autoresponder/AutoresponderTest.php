@@ -261,7 +261,7 @@ class AutoresponderTest extends WP_UnitTestCase {
 
 
 
-        $addAutoresponderMessageQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlbody`, `textbody`, `sequence`, `htmlenabled`) VALUES (%d, '%s','%s','%s', %d, %d);",
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlbody`, `textbody`, `sequence`, `htmlenabled`) VALUES (%d, '%s','%s','%s', %d,        %d);",
                                                                                     $wpdb->prefix, $options['aid'], $options['subject'], $options['htmlbody'], $options['textbody'], $options['sequence'], $options['htmlenabled']);
 
         $wpdb->query($addAutoresponderMessageQuery);

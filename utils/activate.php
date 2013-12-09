@@ -24,9 +24,6 @@ function run_activate_plugin( $plugin ) {
     return null;
 }
 
-echo "Activating plugin {$plugin_file}...";
 run_activate_plugin($plugin_file);
-
 include $plugin_file;
-
 wpresponder_install();

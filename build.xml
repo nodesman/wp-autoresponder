@@ -5,26 +5,25 @@
     <property file="./install.properties" />
 
     <target name="install_wordpress">
-         <delete dir="${wp.dir}" failonerror="true" />
-         <mkdir dir="${wp.dir}" />
-        <echo message="Installing WordPress... " />
-        <echo message="Creating configuration file... " />
-        <exec dir="${wp.dir}" command="pwd" passthru="true" />
-        <echo message="Downloading v${wp_version} at ${wp.dir}... " />
-        <exec dir="${wp.dir}" checkreturn="true" command="wp core download --version=${wp_version}" />
         <echo message="Performing installation... " />
-        <exec dir="${wp.dir}" checkreturn="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser} --dbpass=${wp.dbpass} --dbhost=${wp.dbhost} --dbprefix=dev_" />
-        <exec checkreturn="true" command="wp core install --url=${wp.wp_url}  --title=${wp.name} --admin_name=${wp.admin_name} --admin_password=${wp.admin_password} --admin_email=${wp.admin_email}" dir="${wp.dir}" />
+        <delete file="${wp.dir}/wp-config.php" />
+        <exec dir="${wp.dir}" checkreturn="true" passthru="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser}  --dbhost=${wp.dbhost} --dbprefix=dev_" />
+        <echo message="Dropping DB.. " />
+        <exec dir="${wp.dir}"  command="wp db drop --yes" />
+        <echo message="Creating DB.. " />
+        <exec dir="${wp.dir}" checkreturn="true" command="wp db create" />
+        <echo message="Installing... " />
+        <exec checkreturn="true" command="wp core install --url=${wp.wp_url}  --title=${wp.name} --admin_name=${wp.admin_name} --admin_password=${wp.admin_password} --admin_email=${wp.admin_email}" dir="${wp.dir}" />			 
     </target>
-    <target name="full_build">
-    <echo message="Running full build.. " />
-	<symlink target="${phing.dir}/src" link="${wp.dir}/wp-content/plugins/wp-responder" />
-    <phingcall target="install_wordpress"></phingcall>
-    <echo message="Enabling Javelin... " />
 
-    <exec passthru="true" command="which php" outputProperty="path_to_php" />
-	<exec checkreturn="true" passthru="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
-    <phpunit printsummary="true" haltonerror="true" haltonfailure="true" haltonincomplete="true" configuration="${phing.dir}/phpunit.xml" />
+    <target name="full_build">
+	    <echo message="Running full build.. " />
+		<symlink target="${phing.dir}/src" link="${wp.dir}/wp-content/plugins/wp-responder" />
+		<phingcall target="install_wordpress" />
+	    <echo message="Enabling Javelin... " />
+	    <echo message="Running php ${phing.dir}/utils/activate.php" />
+	    <exec checkreturn="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
+	    <phpunit printsummary="true" haltonerror="true" haltonfailure="true" haltonincomplete="true" configuration="${phing.dir}/phpunit.xml" />
     </target>  
 
 </project>

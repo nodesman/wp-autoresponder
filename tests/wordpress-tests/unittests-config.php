@@ -2,7 +2,7 @@
 /* Path to the WordPress codebase you'd like to test. Add a backslash in the end. */
 $configuration = parse_ini_file(__DIR__."/../../install.properties");
 
-define( 'ABSPATH', $configuration['wp.dir']);
+define( 'ABSPATH', $configuration['wp.dir']."/");
 define('DB_NAME', $configuration['wp.dbname']);
 define( 'DB_USER', $configuration['wp.dbuser'] );
 define('DB_PASSWORD',$configuration['wp.dbpass']);

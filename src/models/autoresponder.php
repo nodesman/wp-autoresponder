@@ -28,8 +28,8 @@ class Autoresponder
         //ensure that all required arguments are present
         $this->validateAutoresponderMessage($args);
 
-        $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` , `attachimages`) VALUES
-                        (%d, %s, %s, %s, %d, 1);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
+        $addAutoresponderMessageQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (`aid`, `subject`, `htmlbody`, `textbody`, `sequence` ) VALUES
+                        (%d, %s, %s, %s, %d);", $this->getId(), $args['subject'], $args['htmlbody'], $args['textbody'], $args['offset']);
 
         $wpdb->query($addAutoresponderMessageQuery);
         $autoresponder_message_id = $wpdb->insert_id;

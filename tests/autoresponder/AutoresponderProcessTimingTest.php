@@ -323,7 +323,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         //assert if this is the day zero email.
 
-        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $getQueueEmailQuery = sprintf("SELECT * FROM %swpr_queue;",$wpdb->prefix);
         $emails = $wpdb->get_results($getQueueEmailQuery);
 
         $this->assertEquals(1, count($emails));
@@ -343,7 +343,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
 
         $processor->run_for_time($timeObject);
 
-        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $getQueueEmailQuery = sprintf("SELECT * FROM %swpr_queue;",$wpdb->prefix);
         $emails = $wpdb->get_results($getQueueEmailQuery);
 
         $this->assertEquals(1, count($emails));
@@ -370,7 +370,7 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $processor->run_for_time($timeObject);
 
 
-        $getQueueEmailQuery = sprintf("SELECT * FROM wp_wpr_queue;");
+        $getQueueEmailQuery = sprintf("SELECT * FROM %swpr_queue;",$wpdb->prefix);
         $emails = $wpdb->get_results($getQueueEmailQuery);
         $this->assertEquals(1, count($emails));
 

@@ -1,8 +1,16 @@
 <?php
-include "wp-load.php";
+error_reporting(E_ALL);
+include "wp-config.php";
+include "wp-admin/includes/plugin.php";
+$dir = getcwd();
+
+$plugin_file = $dir."/wp-content/plugins/wp-responder/wpresponder.php";
+
+
 function run_activate_plugin( $plugin ) {
     $current = get_option( 'active_plugins' );
     $plugin = plugin_basename( trim( $plugin ) );
+    
 
     if ( !in_array( $plugin, $current ) ) {
         $current[] = $plugin;
@@ -15,4 +23,10 @@ function run_activate_plugin( $plugin ) {
 
     return null;
 }
-run_activate_plugin( 'wp-responder/wpresponder.php' );
+
+echo "Activating plugin {$plugin_file}...";
+run_activate_plugin($plugin_file);
+
+include $plugin_file;
+
+wpresponder_install();

@@ -20,12 +20,12 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         WPRTestHelper::deleteAllAutoresponderMessages();
         WPRTestHelper::deleteAllMessagesFromQueue();
 
-        $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `description`, `fromname`, `fromemail`) VALUES (%s, %s, %s , %s, %s);", md5(microtime()."name1"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
+        $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `fromname`, `fromemail`) VALUES (%s, %s , %s, %s);", md5(microtime()."name1"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
         $wpdb->query($createNewsletterOneQuery);
 
         $this->newsletter1_id= $wpdb->insert_id;
 
-        $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `description`, `fromname`, `fromemail`) VALUES (%s, %s, %s , %s, %s);", md5(microtime()."name2"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
+        $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `fromname`, `fromemail`) VALUES (%s, %s , %s, %s);", md5(microtime()."name2"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
         $wpdb->query($createNewsletterOneQuery);
 
         $this->newsletter2_id= $wpdb->insert_id;
@@ -297,6 +297,7 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
     }
 
 
+    /*
     public function testEnsureThatAutoresponderIsAbleToDeliver100kSubscribersAtATime() {
 
         global $wpdb;
@@ -345,6 +346,8 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         $count = $getEmailsCount[0]->num;
         $this->assertEquals(100000, $count);
     }
+
+    */
     
 
     public function tearDown() {

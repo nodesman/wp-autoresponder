@@ -50,7 +50,6 @@ class Newsletter
         $this->id = $newsletter->id;
         $this->name = $newsletter->name;
         $this->reply_to = $newsletter->reply_to;
-        $this->description = $newsletter->description;
         $this->from_name = $newsletter->fromname;
         $this->from_email = $newsletter->fromemail;
 

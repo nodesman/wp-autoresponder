@@ -255,14 +255,14 @@ class AutoresponderTest extends WP_UnitTestCase {
     private function addAutoresponderMessage(array $options) {
         global $wpdb;
 
-        if (!isset($options['aid']) || !isset($options['subject']) || !isset($options['htmlbody']) || !isset($options['textbody']) || !isset($options['sequence']) || !isset($options['attachimages'])) {
+        if (!isset($options['aid']) || !isset($options['subject']) || !isset($options['htmlbody']) || !isset($options['textbody']) || !isset($options['sequence'])) {
             throw new InvalidArgumentException();
         }
 
 
 
-        $addAutoresponderMessageQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlbody`, `textbody`, `sequence`, `htmlenabled`, `attachimages`) VALUES (%d, '%s','%s','%s', %d, %d, %d);",
-                                                                                    $wpdb->prefix, $options['aid'], $options['subject'], $options['htmlbody'], $options['textbody'], $options['sequence'], $options['htmlenabled'], $options['attachimages']);
+        $addAutoresponderMessageQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlbody`, `textbody`, `sequence`, `htmlenabled`) VALUES (%d, '%s','%s','%s', %d, %d);",
+                                                                                    $wpdb->prefix, $options['aid'], $options['subject'], $options['htmlbody'], $options['textbody'], $options['sequence'], $options['htmlenabled']);
 
         $wpdb->query($addAutoresponderMessageQuery);
         $insert_id = $wpdb->insert_id;
@@ -302,7 +302,6 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 0,
-                "attachimages" => 1
             ),
             array(
                 "aid"          => $autoresponder->id,
@@ -311,7 +310,6 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 1,
-                "attachimages" => 1
             ),
             array(
                 "aid"          => $autoresponder->id,
@@ -320,7 +318,6 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 2,
-                "attachimages" => 1
             ),
             array(
                 "aid"          => $autoresponder->id,
@@ -329,7 +326,6 @@ class AutoresponderTest extends WP_UnitTestCase {
                 "textbody"     => "",
                 "htmlenabled" => 1,
                 "sequence"     => 3,
-                "attachimages" => 1
             )
         );
         $originalSubjects = array();
@@ -364,7 +360,6 @@ class AutoresponderTest extends WP_UnitTestCase {
             "textbody"     => "",
             "htmlenabled" => 1,
             "sequence"     => 2,
-            "attachimages" => 2
         );
 
         $autoresponderRow = AutoresponderTestHelper::addAutoresponderAndFetchRow($this->newsletterId, "Sample Autoresponder");
@@ -428,7 +423,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         $wpdb->query($addAutoresponderQuery);
 
         for ($iter=0 ; $iter < 5; $iter++) {
-            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence, attachimages) VALUES (2, '%s', 1, '%s', '%s', %d, 1)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter);
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence) VALUES (2, '%s', 1, '%s', '%s', %d)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter);
             $wpdb->query($addAutoresponderMessageQuery);
         }
 
@@ -438,7 +433,7 @@ class AutoresponderTest extends WP_UnitTestCase {
         Autoresponder::getAutoresponder(3);
 
         for ($iter=0 ; $iter < 5; $iter++) {
-            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence, attachimages) VALUES (3, '%s', 1, '%s', '%s', %d, 1)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter);
+            $addAutoresponderMessageQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_autoresponder_messages (aid, subject, htmlenabled, textbody, htmlbody, sequence) VALUES (3, '%s', 1, '%s', '%s', %d)", md5("Test".microtime().$iter), md5("Apple".microtime().$iter), md5("Test".microtime().$iter), $iter  );
             $wpdb->query($addAutoresponderMessageQuery);
         }
 

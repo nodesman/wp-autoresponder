@@ -23,7 +23,20 @@ function _wpr_subscriptionform_update($info)
 {
 	global $wpdb;
 	$info = (object) $info;
-	$updateSubscriptionFormQuery = $wpdb->prepare("UPDATE  {$wpdb->prefix}wpr_subscription_form SET name=%s, nid={$info->nid},return_url=%s, followup_type='{$info->followup_type}',followup_id={$info->followup_id},blogsubscription_type='{$info->blogsubscription_type}',blogsubscription_id='{$info->blogsubscription_id}',custom_fields='{$info->custom_fields}', confirm_subject=%s, confirm_body=%s,confirmed_subject=%s,confirmed_body=%s, submit_button=%s where id='$info->id';",$info->name,$info->return_url,$info->confirm_subject,$info->confirm_body,$info->confirmed_subject,$info->confirmed_body,$info->submit_button);	
+	$updateSubscriptionFormQuery = $wpdb->prepare("UPDATE  {$wpdb->prefix}wpr_subscription_form SET name=%s,
+	                                                                                                nid={$info->nid},
+	                                                                                                return_url=%s,
+	                                                                                                followup_type='{$info->followup_type}',
+	                                                                                                followup_id=%d,
+	                                                                                                blogsubscription_type='{$info->blogsubscription_type}',
+	                                                                                                blogsubscription_id='{$info->blogsubscription_id}',
+	                                                                                                custom_fields='{$info->custom_fields}',
+	                                                                                                confirm_subject=%s,
+	                                                                                                confirm_body=%s,
+	                                                                                                confirmed_subject=%s,
+	                                                                                                confirmed_body=%s,
+	                                                                                                submit_button=%s
+	                                                                                                where id='$info->id';",$info->name,$info->return_url,intval($info->followup_id), $info->confirm_subject,$info->confirm_body,$info->confirmed_subject,$info->confirmed_body,$info->submit_button);
 	$result = $wpdb->query($updateSubscriptionFormQuery);
 }
 

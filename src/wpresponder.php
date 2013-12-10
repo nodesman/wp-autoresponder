@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Javelin Email Marketing
+Plugin Name: Javelin
 Plugin URI: http://www.wpresponder.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
 Version: 5.4

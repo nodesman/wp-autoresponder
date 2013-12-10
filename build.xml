@@ -24,7 +24,6 @@
 	    <echo message="Running php ${phing.dir}/utils/activate.php" />
 	    <exec checkreturn="true" passthru="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
      	<exec checkreturn="true" command="phpunit" dir="${phing.dir}" passthru="true" />
-	    <phpunit printsummary="true" haltonerror="true" haltonfailure="true" haltonincomplete="true" configuration="${phing.dir}/phpunit.xml" />
     </target>  
 
 </project>

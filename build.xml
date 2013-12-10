@@ -7,7 +7,7 @@
     <target name="install_wordpress">
         <echo message="Performing installation... " />
         <delete file="${wp.dir}/wp-config.php" failonerror="false" />
-        <exec dir="${wp.dir}" checkreturn="true" passthru="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser}  --dbhost=${wp.dbhost} --dbprefix=dev_" />
+        <exec dir="${wp.dir}" checkreturn="true" passthru="true" command="wp core config  --dbname=${wp.dbname} --dbuser=${wp.dbuser} --dbpass=${wp.dbpass}  --dbhost=${wp.dbhost} --dbprefix=dev_" />
         <echo message="Dropping DB.. " />
         <exec dir="${wp.dir}"  command="wp db drop --yes" />
         <echo message="Creating DB.. " />

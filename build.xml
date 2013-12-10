@@ -23,6 +23,7 @@
 	    <echo message="Enabling Javelin... " />
 	    <echo message="Running php ${phing.dir}/utils/activate.php" />
 	    <exec checkreturn="true" passthru="true" command="php ${phing.dir}/utils/activate.php" dir="${wp.dir}" />
+	    <echo message="Running PHPUnit..." />
      	<exec checkreturn="true" command="phpunit" dir="${phing.dir}" passthru="true" />
     </target>  
 

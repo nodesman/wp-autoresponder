@@ -1,11 +1,8 @@
 <?php
 include_once __DIR__."/../src/models/newsletter.php";
 
-
-
 class NewsletterTest extends WP_UnitTestCase {
-	
-	
+
 	public function setUp() {
         parent::setUp();
 		global $wpdb;
@@ -65,9 +62,25 @@ class NewsletterTest extends WP_UnitTestCase {
     }
 
 	public function testWhetherNewsletterExists() {
+        global $wpdb;
 		
 		$whetherNewsletterExists = Newsletter::whetherNewsletterIDExists(9801);
 		$this->assertFalse($whetherNewsletterExists);
+
+
+        $newsletter = array(
+            "name" => md5(microtime()),
+            "reply_to" => 'flarecore@'.md5(microtime()).'.com',
+            "fromname" => 'Test',
+            "fromemail" => 'flare@'.md5(microtime()).'.com'
+        );
+
+        $addNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`, `reply_to`, `fromname`, `fromemail`) VALUES ('%s','%s', '%s', '%s')", $wpdb->prefix, $newsletter['name'], $newsletter['reply_to'], $newsletter['fromname'], $newsletter['fromemail']);
+        $wpdb->query($addNewsletterQuery);
+        $newsletter_id = $wpdb->insert_id;
+
+        $this->assertTrue(Newsletter::whetherNewsletterIDExists($newsletter_id));
+
 	}
 
     public function testWhetherNewsletterFetchesItsCustomFieldsNames() {
@@ -128,7 +141,6 @@ class NewsletterTest extends WP_UnitTestCase {
         $diff = array_diff($intersect, $expected);
         $this->assertEquals(0, count($diff));
     }
-
 
     /**
      * @expectedException NonExistentNewsletterException

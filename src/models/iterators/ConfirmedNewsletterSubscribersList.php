@@ -1,6 +1,6 @@
 <?php
 
-class ConfirmedNewsletterSubscribers implements Iterator, Countable {
+class ConfirmedNewsletterSubscribersList implements Iterator, Countable {
 
     private $nid;
     private $index;
@@ -20,7 +20,7 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
     public function current()
     {
         global $wpdb;
-        $getSubscriberQuery = sprintf("SELECT id FROM %swpr_subscribers WHERE nid=%d ORDER BY id LIMIT %d, 1;", $wpdb->prefix, $this->nid, $this->index);
+        $getSubscriberQuery = sprintf("SELECT id FROM `%swpr_subscribers` WHERE `nid`=%d AND `confirmed`=1 AND `active`=1 ORDER BY id LIMIT %d, 1;", $wpdb->prefix, $this->nid, $this->index);
         $subscriber_id = $wpdb->get_var($getSubscriberQuery);
         return new Subscriber($subscriber_id);
     }

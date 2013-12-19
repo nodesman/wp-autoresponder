@@ -24,23 +24,20 @@ class BroadcastProcessor extends WPRBackgroundProcess{
 
     public static function run_for_time(DateTime $time) {
 
-        global $wpdb;
         $broadcasts= self::getBroadcasts($time);
-
 
         foreach ($broadcasts as $broadcast)
         {
             $nid = intval($broadcast->nid);
-
             $subject = $broadcast->subject;
             $html_body = $broadcast->htmlbody;
             $newsletter = Newsletter::getNewsletter($nid);
 
-            $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribers($nid);
+            $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribersList($nid);
 
             if (0 < count($confirmedAndActiveNewsletterSubscribers))
             {
-                foreach ($confirmedAndActiveNewsletterSubscribers as $index => $subscriber)
+                foreach ($confirmedAndActiveNewsletterSubscribers as $subscriber)
                 {
                     $meta_key = self::getMetaKey($subscriber->getId(), $broadcast);
                     $emailParameters = array( "subject" => $subject,
@@ -70,7 +67,7 @@ class BroadcastProcessor extends WPRBackgroundProcess{
      * @param $broadcast
      * @return string
      */
-    public static function getMetaKey($sid, $broadcast)
+    private static function getMetaKey($sid, $broadcast)
     {
         return sprintf("BR-%s-%s-%s", $sid, $broadcast->id, $broadcast->nid);
     }

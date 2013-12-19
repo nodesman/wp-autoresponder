@@ -1,7 +1,7 @@
 <?php
-include __DIR__ . "/../src/models/iterators/ConfirmedNewsletterSubscribers.php";
+include __DIR__ . "/../src/models/iterators/ConfirmedNewsletterSubscribersList.php";
 
-class NewsletterSubscribersIteratorTest extends WP_UnitTestCase {
+class ConfirmedNewsletterSubscribersIteratorTest extends WP_UnitTestCase {
 
     private $newsletter_id;
     private $subscribers;
@@ -47,6 +47,28 @@ class NewsletterSubscribersIteratorTest extends WP_UnitTestCase {
         $wpdb->query($addNewsletterQuery);
         $this->newsletter_id = $wpdb->insert_id;
 
+        for ($iter=0; $iter<5; $iter++) {
+            $current = array(
+                "nid" => $this->newsletter_id,
+                "name" => md5("sub".microtime().$iter),
+                "email" => md5('email'.microtime().$iter),
+                "hash" => md5("hash".microtime().$iter)
+            );
+            $addSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (nid, name, email, hash, active, confirmed) VALUES (%d, '%s','%s', '%s', 1, 0);", $wpdb->prefix, $this->newsletter_id,$current['name'] , $current['email'] , $current['hash'] );
+            $wpdb->query($addSubscriberQuery);
+        }
+
+        for ($iter=0; $iter<5; $iter++) {
+            $current = array(
+                "nid" => $this->newsletter_id,
+                "name" => md5("sub".microtime().$iter),
+                "email" => md5('email'.microtime().$iter),
+                "hash" => md5("hash".microtime().$iter)
+            );
+            $addSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (nid, name, email, hash, active, confirmed) VALUES (%d, '%s','%s', '%s', 0, 1);", $wpdb->prefix, $this->newsletter_id,$current['name'] , $current['email'] , $current['hash'] );
+            $wpdb->query($addSubscriberQuery);
+        }
+
         $this->subscribers = array();
 
         for ($iter=0; $iter<5; $iter++) {
@@ -66,7 +88,7 @@ class NewsletterSubscribersIteratorTest extends WP_UnitTestCase {
 
     public function testWhetherFetchingFirstItemFetchesTheFirstItem() {
 
-        $ns_iterator = new ConfirmedNewsletterSubscribers($this->newsletter_id);
+        $ns_iterator = new ConfirmedNewsletterSubscribersList($this->newsletter_id);
 
         $this->assertEquals(5, count($ns_iterator));
 

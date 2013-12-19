@@ -25,17 +25,16 @@ class BroadcastProcessor extends WPRBackgroundProcess{
     public static function run_for_time(DateTime $time) {
 
         global $wpdb;
-        $email_mailouts= self::getBroadcasts($time);
+        $broadcasts= self::getBroadcasts($time);
 
 
-        foreach ($email_mailouts as $broadcast)
+        foreach ($broadcasts as $broadcast)
         {
             $nid = intval($broadcast->nid);
-            $getSubscribersForBroadcastQuery = sprintf("SELECT subscribers.* FROM `{$wpdb->prefix}wpr_subscribers` `subscribers`, `{$wpdb->prefix}wpr_newsletters` `newsletters` WHERE `newsletters`.`id`=`subscribers`.`nid` AND  `subscribers`.`active`=1 AND `subscribers`.`confirmed`=1");
+            $getSubscribersForBroadcastQuery = sprintf("SELECT subscribers.* FROM `{$wpdb->prefix}wpr_subscribers` `subscribers`, `{$wpdb->prefix}wpr_newsletters` `newsletters` WHERE `newsletters`.`id`=`subscribers`.`nid` AND nid=%d AND  `subscribers`.`active`=1 AND `subscribers`.`confirmed`=1", $nid);
             $subscribersList = $wpdb->get_results($getSubscribersForBroadcastQuery);
             $subject = $broadcast->subject;
             $html_body = $broadcast->htmlbody;
-
             $newsletter = Newsletter::getNewsletter($nid);
 
 

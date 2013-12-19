@@ -20,7 +20,7 @@ Set up your copy of wordpress-unit (already placed in this repository under test
 After you make your changes, run the following command in the repository root:
 
 
-phpunit
+phing
 
 
 If you see a green bar, you're all good to go. 

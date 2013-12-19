@@ -7,11 +7,8 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
     private $length;
 
     public function __construct($nid) {
-        global $wpdb;
         $this->nid = intval($nid);
-        $this->getRecordsetSize();
-        $this->index = -1;
-        $this->next();
+        $this->initialize();
     }
 
     /**
@@ -23,7 +20,7 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
     public function current()
     {
         global $wpdb;
-        $getSubscriberQuery = sprintf("SELECT id FROM %swpr_subscribers WHERE nid=%d LIMIT %d, 1;", $wpdb->prefix, $this->nid, $this->index);
+        $getSubscriberQuery = sprintf("SELECT id FROM %swpr_subscribers WHERE nid=%d ORDER BY id LIMIT %d, 1;", $wpdb->prefix, $this->nid, $this->index);
         $subscriber_id = $wpdb->get_var($getSubscriberQuery);
         return new Subscriber($subscriber_id);
     }
@@ -60,7 +57,7 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
 
     public function valid()
     {
-        return ($this->index < $this->length && $this->index >=0);
+        return ($this->index < $this->length && $this->index >= 0);
     }
 
     /**
@@ -71,7 +68,8 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
      */
     public function rewind()
     {
-        $this->index=-1;
+        $this->initialize();
+        $this->next();
     }
 
     /**
@@ -92,7 +90,13 @@ class ConfirmedNewsletterSubscribers implements Iterator, Countable {
     private function getRecordsetSize()
     {
         global $wpdb;
-        $getNumberOfSubscribersQuery = sprintf("SELECT COUNT(*) number_of_subscribers FROM `%swpr_subscribers` WHERE `nid`=%d AND `active`=1 AND `confirmed`=1 ORDER BY `id` ASC;", $wpdb->prefix, $this->nid);
+        $getNumberOfSubscribersQuery = sprintf("SELECT COUNT(*) number_of_subscribers FROM `%swpr_subscribers` WHERE `nid`=%d AND `active`=1 AND `confirmed`=1;", $wpdb->prefix, $this->nid);
         $this->length = $wpdb->get_var($getNumberOfSubscribersQuery);
+    }
+
+    private function initialize()
+    {
+        $this->getRecordsetSize();
+        $this->index = -1;
     }
 }

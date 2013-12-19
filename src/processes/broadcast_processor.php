@@ -31,19 +31,18 @@ class BroadcastProcessor extends WPRBackgroundProcess{
         foreach ($broadcasts as $broadcast)
         {
             $nid = intval($broadcast->nid);
-            $getSubscribersForBroadcastQuery = sprintf("SELECT subscribers.* FROM `{$wpdb->prefix}wpr_subscribers` `subscribers`, `{$wpdb->prefix}wpr_newsletters` `newsletters` WHERE `newsletters`.`id`=`subscribers`.`nid` AND nid=%d AND  `subscribers`.`active`=1 AND `subscribers`.`confirmed`=1", $nid);
-            $subscribersList = $wpdb->get_results($getSubscribersForBroadcastQuery);
+
             $subject = $broadcast->subject;
             $html_body = $broadcast->htmlbody;
             $newsletter = Newsletter::getNewsletter($nid);
 
+            $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribers($nid);
 
-            if (0 < count($subscribersList))
+            if (0 < count($confirmedAndActiveNewsletterSubscribers))
             {
-                foreach ($subscribersList as $subscriber)
+                foreach ($confirmedAndActiveNewsletterSubscribers as $index => $subscriber)
                 {
-                    $sid = $subscriber->id;
-                    $meta_key = self::getMetaKey($sid, $broadcast);
+                    $meta_key = self::getMetaKey($subscriber->getId(), $broadcast);
                     $emailParameters = array( "subject" => $subject,
                         "fromname"=> $newsletter->getFromName(),
                         "fromemail"=> $newsletter->getFromEmail(),
@@ -55,10 +54,10 @@ class BroadcastProcessor extends WPRBackgroundProcess{
                     );
 
                     foreach ($emailParameters as $index=>$value) {
-                        $emailParameters[$index] = Subscriber::replaceCustomFieldValues($value, $sid);
+                        $emailParameters[$index] = Subscriber::replaceCustomFieldValues($value, $subscriber->getId());
                     }
 
-                    sendmail($sid,$emailParameters);
+                    sendmail($subscriber->getId(),$emailParameters);
                 }
             }
 

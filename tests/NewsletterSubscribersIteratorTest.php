@@ -12,6 +12,31 @@ class NewsletterSubscribersIteratorTest extends WP_UnitTestCase {
         global $wpdb;
 
         $newsletter = array(
+            "name" => "1".md5(microtime()),
+            "reply_to" => 'flarecore@'.md5(microtime()).'.com',
+            "fromname" => 'Test',
+            "fromemail" => 'flare@'.md5(microtime()).'.com'
+        );
+
+        $addNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`, `reply_to`, `fromname`, `fromemail`) VALUES ('%s','%s', '%s', '%s')", $wpdb->prefix, $newsletter['name'], $newsletter['reply_to'], $newsletter['fromname'], $newsletter['fromemail']);
+        $wpdb->query($addNewsletterQuery);
+        $another_newsletter_id = $wpdb->insert_id;
+
+        $this->subscribers = array();
+
+        for ($iter=0; $iter<5; $iter++) {
+            $current = array(
+                "nid" => $this->newsletter_id,
+                "name" => md5("sub".microtime().$iter),
+                "email" => md5('email'.microtime().$iter),
+                "hash" => md5("hash".microtime().$iter)
+            );
+            $this->subscribers[] = $current;
+            $addSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (nid, name, email, hash, active, confirmed) VALUES (%d, '%s','%s', '%s', 1, 1);", $wpdb->prefix, $another_newsletter_id, $current['name'] , $current['email'] , $current['hash'] );
+            $wpdb->query($addSubscriberQuery);
+        }
+
+        $newsletter = array(
             "name" => md5(microtime()),
             "reply_to" => 'flarecore@'.md5(microtime()).'.com',
             "fromname" => 'Test',

@@ -104,15 +104,16 @@ class AutoresponderControllerTest extends WP_UnitTestCase
         $_POST['nid'] = 1;
         $responderName = 'Test Autoresponder 5432';
         $_POST['autoresponder_name'] = $responderName;
+
         try {
             AutorespondersController::add_post_handler();
+        }   catch (Exception $e) {
+            //until the day I figure out what to do with that wp_redirect call failing every test...
         }
-        catch (Exception $e) {
 
-        }
+
 
         $autoresponders = Autoresponder::getAllAutoresponders();
-
         $found = false;
 
         foreach ($autoresponders as $responder) {
@@ -120,14 +121,9 @@ class AutoresponderControllerTest extends WP_UnitTestCase
             if ($name == $responderName)
                 $found=true;
         }
+
         $this->assertEquals(true, $found);
-
-
-
     }
-
-
-
 
     private static function getAutoresponderNamesFromAutoresponderObjects($autorespondersListToRender)
     {

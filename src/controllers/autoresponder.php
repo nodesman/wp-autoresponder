@@ -125,7 +125,7 @@ class AutorespondersController
 	    _wpr_setview("autoresponder_add");
     }
 
-    public function add_post_handler() {
+    public static function add_post_handler() {
 
         $post_data = self::getAddAutoresponderFormPostedData();
 

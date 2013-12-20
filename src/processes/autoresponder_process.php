@@ -15,7 +15,7 @@
             $this->process_messages($time);
         }
 
-        public function day_zero_for_subscriber($sid) {
+        public static function day_zero_for_subscriber($sid) {
             global $wpdb;
             $getSubscriptionQuery = sprintf("SELECT * FROM {$wpdb->prefix}wpr_followup_subscriptions WHERE sid=%d AND type='autoresponder' AND sequence=-1;", $sid);
             $subscriptions = $wpdb->get_results($getSubscriptionQuery);

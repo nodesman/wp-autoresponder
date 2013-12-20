@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/../src/models/iterators/ConfirmedNewsletterSubscribersList.php";
+include __DIR__ . "/../src/models/iterators/confirmed_newsletter_subscribers_list.php";
 
 class ConfirmedNewsletterSubscribersIteratorTest extends WP_UnitTestCase {
 

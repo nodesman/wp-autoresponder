@@ -11,7 +11,6 @@ class AutoresponderMessage
 
     private function __construct($autoresponder_result_row) {
 
-        global $wpdb;
         $this->subject = $autoresponder_result_row->subject;
         $this->id = (int) $autoresponder_result_row->id;
         $this->htmlbody = $autoresponder_result_row->htmlbody;

@@ -12,6 +12,8 @@ class InvalidSubscriberIDException extends Exception
 class Subscriber
 {
 
+    private $confirmed;
+
     function getHash()
     {
         return $this->hash;

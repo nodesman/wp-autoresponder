@@ -151,9 +151,6 @@ function whetherTimedOut($startTime,$maxTime)
 	return false;
 }
 
-/*
- * This is the function that performs the autoresponder subscription processing
- */
 
 class WPRBackgroundProcessor {
 
@@ -331,9 +328,7 @@ function _wpr_expire_followup($id)
 function _wpr_process_broadcasts()
 {
 	global $wpdb;
-	$prefix = $wpdb->prefix;	
 	$last_cron_status = get_option("_wpr_newsletter_process_status");
-	
 	set_time_limit(3600);
 	
 	
@@ -481,19 +476,19 @@ function get_postseries_posts($catid,$nid="")
 				);
 	$posts = get_posts($args);
 
-        if (!empty($nid))
+    if (!empty($nid))
+    {
+        foreach ($posts as $num=>$post)
         {
-                    foreach ($posts as $num=>$post)
-                        {
-                        $pid = $post->ID;
-                        $query = "SELECT meta_value from ".$wpdb->prefix."postmeta where post_id=$pid and meta_key='wpr-options';";
-                        $results = $wpdb->get_results($query);
-                        $option = $results[0]->meta_value;
-                        $decodedoptions = base64_decode($option);
-                        $options = unserialize($decodedoptions);
-                        $theRealPosts[] = $post;
-                    }
+            $pid = $post->ID;
+            $query = "SELECT meta_value from ".$wpdb->prefix."postmeta where post_id=$pid and meta_key='wpr-options';";
+            $results = $wpdb->get_results($query);
+            $option = $results[0]->meta_value;
+            $decodedoptions = base64_decode($option);
+            $options = unserialize($decodedoptions);
+            $theRealPosts[] = $post;
         }
+    }
 			
 		
 	return $theRealPosts;
@@ -508,12 +503,7 @@ function get_rows($query)
 
 function isValidOptionsArray($options)
 {
-    if (is_array($options))
-        {
-        return true;
-    }
-    else
-         return false;
+    return (is_array($options));
 }
 
 

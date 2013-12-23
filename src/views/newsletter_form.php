@@ -56,15 +56,6 @@ echo "<li>$error_text"; ?></ol></div>
         <input size="45" type="text" name="reply_to" id="reply_to" value="<?php echo  $parameters->reply_to ?>" /></td>
     </tr>
     <tr>
-      <td><strong>Public Description: (optional)</strong>
-        <p>This is a description that will be used in the unsubscription page to describe the newsletter when listing all the subscriptions of that subscriber.</p></td>
-      <td><label for="description"></label>
-        <textarea name="description" id="description" cols="45" rows="5"><?php echo $parameters->description ?></textarea></td>
-    </tr>
-
-        
-
-    <tr>
       <td><label for="button"></label>
           <input type="hidden" name="wpr_form" value="<?php echo $wpr_form ?>" >
         <input type="hidden" name="id" value="<?php echo $parameters->id ?>"  />

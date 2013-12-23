@@ -11,7 +11,7 @@ class Newsletter
 	private  $id;
 	private  $name;
 	private  $reply_to;
-	private  $description;
+
 	private  $confirm_subject;
 	private  $confirm_body;
 	private  $confirmed_subject;

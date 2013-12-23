@@ -76,7 +76,6 @@ foreach ($pssubs as $sub)
 ?>  
 </blockquote>
     </label><br>
-	<?php echo $newsletter->description ?><br />
 	<?php
 	}
 	?>

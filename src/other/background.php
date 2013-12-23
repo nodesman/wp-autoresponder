@@ -500,13 +500,6 @@ function get_postseries_posts($catid,$nid="")
 
 }
 
-function mailout_expire($id)
-
-{
-	global $wpdb;
-	$query = "UPDATE ".$wpdb->prefix."wpr_newsletter_mailouts set status=1 where id=$id";
-	$wpdb->query($query);
-}
 function get_rows($query)
 {
 	global $wpdb;

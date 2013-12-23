@@ -98,38 +98,40 @@ function wpr_dashboard()
 <h2>Subscribe to the WP Responder Email Newsletter</h2>
 
 Enter your name and email address below to subscribe to the  WP Responder newsletter. <br />
-<table>
-  <tr>
-   <td style="padding-left:40px; border: 1px solid #ccc; background-color:#FFF; padding:20px;">
-   <form action="http://www.wpresponder.com/?wpr-optin=1" method="post">
+              <form action="http://nodesman.com/?wpr-optin=1" method="post">
   <span class="wpr-subform-hidden-fields">
-  <input type="hidden" name="blogsubscription" value="all" />
-    <input type="hidden" name="newsletter" value="1" />
-      <input type="hidden" name="fid" value="1" />
+  <input type="hidden" name="blogsubscription" value="none" />
+    <input type="hidden" name="newsletter" value="6" />
+      <input type="hidden" name="fid" value="2" />
       </span>
-  <table>
-    <tr>
-      <td><span class="wprsfl wprsfl-name">Name:</span></td>
-      <td><span class="wprsftf wpr-subform-textfield-name"><input type="text" name="name" /></td>
-    </tr>
-    <tr>
-      <td><span class="wprsfl wprsfl-email">E-Mail Address:</span></td>
-      <td><span class="wprsftf wpsftf-email"><input type="text" name="email" /></span>
-    </tr>
-        <tr>
-      <td colspan="2" align="center"><input type="submit" value="Subscribe" class="button-primary" /></td>
-    </tr>
-    <tr>
-        <td colspan="2" align="center"></td>
-    </tr>
-  </table>
-</form>
+                  <table>
+                      <tr>
+                          <td><span class="wprsfl wprsfl-name">Name:</span></td>
+                          <td><span class="wprsftf wpr-subform-textfield-name">
+        <input type="text" name="name" /></td>
+                      </tr>
+                      <tr>
+                          <td><span class="wprsfl wprsfl-email">E-Mail:</span></td>
+                          <td><span class="wprsftf wpsftf-email">
+        <input type="text" name="email" />
+        </span>
+                      </tr>
+                      <tr>
+                          <td colspan="2" align="center"><input type="submit" value="Subscribe" /></td>
+                      </tr>
+                      <tr>
+                          <td colspan="2" align="center"></td>
+                      </tr>
+                  </table>
+              </form>
+
 </td>
   </tr>
 </table>
-<h2>Report A Bug</h2>
 
-WP Autoresponder is actively developed. You can see the development progress at the <a href="https://github.com/nodesman/WP-Autoresponder">GitHub repo</a>. While I take great deal of efforts to ensure that the plugin is bug free, a few tend to slip through. Please open a bug report at the official repo to see a fix for it in the next release. Opening a bug takes only a minute or two. <p> <a href="https://github.com/nodesman/WP-Autoresponder/issues/new" class="wpr-action-button">Click here to report a bug</a></p>
+        <h2>Report A Bug</h2>
+
+WP Autoresponder is actively developed. You can see the development progress at the <a href="https://github.com/nodesman/javelin">GitHub repo</a>. While I take great deal of efforts to ensure that the plugin is bug free, a few tend to slip through. Please open a bug report at the official repo to see a fix for it in the next release. Opening a bug takes only a minute or two. <p> <a href="https://github.com/nodesman/javelin/issues/new" class="wpr-action-button">Click here to report a bug</a></p>
 
 </div>
 

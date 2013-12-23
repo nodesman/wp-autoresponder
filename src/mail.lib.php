@@ -750,7 +750,6 @@ function wpr_mail_form($parameters=array(),$mode="new",$error)
 <tr>
     <td colspan="3"><br />
         <input type="hidden" name="mid" value="<?php echo $parameters->id ?>"  />
-        <input type="hidden" name="recipients" id="recipients" value="<?php echo $parameters->recipients ?>" />
         <br /></td>
 </tr>
     <?php

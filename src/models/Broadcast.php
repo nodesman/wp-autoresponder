@@ -2,7 +2,6 @@
 class Broadcast {
 
     private $id;
-    private $whether_sent;
     private $subject;
     private $htmlbody;
     private $sent;
@@ -49,7 +48,7 @@ class Broadcast {
     {
         return $this->sent;
     }
-   
+
     private function expireBroadcast()
     {
         global $wpdb;

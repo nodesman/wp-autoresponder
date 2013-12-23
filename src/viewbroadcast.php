@@ -10,7 +10,7 @@ $output["HTML Body"] = $mailout->htmlbody;
 $output["Sent At"] = date("H:ia \o\\n dS F Y",$mailout->time);
 $newsletter = _wpr_newsletter_get($mailout->nid);
 $output["Newsletter"] = $newsletter->name;
-$output["Recipients"] = (!$mailout->recipients)?"All Subscribers":$mailout->recipients;
+
 ?>
 <h2>Viewing Broadcast</h2>
 <table width="800" border="1" style="border: 1px solid #ccc;" cellpadding="10">
@@ -37,10 +37,6 @@ $output["Recipients"] = (!$mailout->recipients)?"All Subscribers":$mailout->reci
       <iframe width="100%" height="400" scrolling="yes" frameborder="0" border="0" src="<?php echo get_bloginfo("url"); ?>/?wpr-vb=<?php echo $id ?>" id="htmlbodyframe">
       </iframe>
      </td>
-  </tr>
-  <tr >
-    <td >Recipients:</td>
-    <td ><?php echo $output["Recipients"]?></td>
   </tr>
   <tr>
     <td>Sent At:</td>

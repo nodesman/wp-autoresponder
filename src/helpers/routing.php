@@ -156,10 +156,6 @@ class Routing {
                 include "preview_email.php";
                 exit;
                 break;
-            case 'view_recipients':
-                include("view_recipients.php");
-                exit;
-                break;
             case 'filter':
                 include("filter.php");
                 exit;

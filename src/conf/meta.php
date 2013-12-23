@@ -102,7 +102,6 @@ $database_structure["wpr_newsletter_mailouts"] = array('columns' => array(
     'htmlbody' => "TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
     'time' => "VARCHAR(25) NOT NULL",
     'status' => "TINYINT NOT NULL",
-    'recipients' => "TEXT DEFAULT NULL",
 ),
     'auto_increment' => 'id',
     'primary_key' => "id",

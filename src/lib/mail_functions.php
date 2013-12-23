@@ -35,25 +35,6 @@ function _wpr_non_wpr_email_sent($params)
 	return $params;
 }
 
-/*
- *
- * $sid   - Id of the subscriber who should get the email
- * $params - The parameter array for the email that is to be sent
- *
- * $params  = array(  "subject" => String - The subject of the email.
- *                    "htmlbody"=> String - The HTML body of the email.
- *                    "textbody"=> String - The text body of the email.
- *                    "attachimages" => Boolean - Whether the images in the HTML body should be attached with the email.
- *            		  "fromname"  => String - The name of the email sender
-					  "htmlenabled" => boolean ( 1 or 0 ) - Whether the html body of this message is enabled.
-					  "fromemail" => String - The email address of the sender
- *
- *
- * $footerMessage - The optional footer message that is to be appended
- *                  at the bottom of the email after the email body and
- *                  before the Sender's address.
- *
- */
 function sendmail($sid,$params,$footerMessage="")
 {
 	global $wpdb;
@@ -64,12 +45,9 @@ function sendmail($sid,$params,$footerMessage="")
     $parameters['textbody'] = Subscriber::replaceCustomFieldValues($parameters['textbody'], $sid);
 
 	extract($parameters);
-	$tableName = $wpdb->prefix."wpr_queue";
-	$query = "INSERT INTO {$tableName} (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`attachimages`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','{$parameters['textbody']}','$headers',0,'$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
 
-
-	$wpdb->query($query);
-
+	$insertEmailQuery = "INSERT INTO {$wpdb->prefix}wpr_queue (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','{$parameters['textbody']}','$headers','$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
+	$wpdb->query($insertEmailQuery);
 }
 
 function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
@@ -142,7 +120,6 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 
     $delivery_type = (!empty($params['delivery_type']))?$params['delivery_type']:0;
     $email_type = (!empty($params['email_type']))?$params['email_type']:'misc';
-    $attachImages = (isset($params['attachimages']))?1:0;
     $meta_key = (!empty($params['meta_key']))?$params['meta_key']:"Misc-$sid-$time";
     $hash = make_hash(array_merge(array('sid'=>$sid),$params));
     $from = (!empty($params['fromemail']))?$params['fromemail']:(!empty($newsletter->fromemail))?$newsletter->fromemail:get_bloginfo('admin_email');
@@ -156,7 +133,6 @@ function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
         'htmlbody'=>$htmlbody,
         'textbody' => $textbody,
         'headers'=> '',
-        'attachimages'=>$attachImages,
         'htmlenabled'=>$htmlenabled,
         'delivery_type' => $delivery_type,
         'email_type'=>$email_type,
@@ -184,9 +160,9 @@ function _wpr_send_and_save($sid, $params, $footerMessage="")
 	dispatchEmail($parameters);
 
 	$queue_table_name = $wpdb->prefix."wpr_queue";
-	$emailQuery = $wpdb->prepare("INSERT INTO $queue_table_name (`from`, `fromname`, `to`, `subject`, `htmlbody`, `textbody`, `headers`, `sent`, `delivery_type`, `email_type`, `htmlenabled`, `attachimages`,`meta_key`)
+	$emailQuery = $wpdb->prepare("INSERT INTO $queue_table_name (`from`, `fromname`, `to`, `subject`, `htmlbody`, `textbody`, `headers`, `sent`, `delivery_type`, `email_type`, `htmlenabled`,`meta_key`)
 																VALUES
-																('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
+																('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
 									$parameters['from'],
 									$parameters['fromname'],
 									$parameters['to'],
@@ -198,7 +174,6 @@ function _wpr_send_and_save($sid, $params, $footerMessage="")
 									'1',
 									$parameters['email_type'],
 									$parameters['htmlenabled'],
-									0,
 									$parameters['meta_key']
 								);
 
@@ -285,9 +260,6 @@ function wpr_processqueue()
  *                             htmlenabled = Whether the html body of the email is enabled
  *                                           1 = Yes, the html body is enabled
  *                                           0 = No, the html body is disabled.
- *                             attachimages = Whether the images are to be attached to the email
- *                                           1 = Yes, attach the images
- *                                           0 = No,  don't attach the images
  *
  */
 function dispatchEmail($mail)
@@ -310,7 +282,8 @@ function dispatchEmail($mail)
 		{
 
 			$mail['htmlbody'] = stripslashes($mail['htmlbody']);
-			if ($mail['attachimages'] == 1)
+
+			if (WPR_Config::attach_images_with_emails())
 			{
 				attachImagesToMessageAndSetBody($message,$mail['htmlbody']);
 			}

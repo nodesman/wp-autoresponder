@@ -56,7 +56,6 @@ $params
 'textbody' = The text body of the email
 'htmlbody' = The html body of the email
 'htmlenable' = Whether html email is enabled.
-'attachimages' = Whether the images are attached with the body of the message
 */
 function sendTheEmail($parameters)
 {
@@ -66,7 +65,7 @@ function sendTheEmail($parameters)
     $fieldsToSubstitute = $parameters;
 
     //the following fields should not be in the fields to substitute array
-    $fieldsToRemove = array("to","from","fromname","htmlenabled","attachimages","textbody","htmlbody");
+    $fieldsToRemove = array("to","from","fromname","htmlenabled","textbody","htmlbody");
 	
 	//we want the 'to' - the email address of the receipient to actually be named 'email'
 	$fieldsToSubstitute['email'] = $fieldsToSubstitute['to'];
@@ -119,7 +118,6 @@ $params =
 
 'textbody' = The text body of the email
 'htmlbdoy' = The html body of the email
-'attachimages' = Whether the images are to be attached to the email.
 'nid' =  newsletter id
 
 */
@@ -130,7 +128,6 @@ function showPreviewForm($params)
 {
    global $wpdb;
    $textbody = base64_encode($params['textbody']);
-   $attachImages = $params['attachimages'];
    $htmlbody = base64_encode($params['htmlbody']);
    $htmlenable = $params['htmlenable'];
    
@@ -175,14 +172,13 @@ function load()
     var htmlbody = opener.wpr_GetHtmlBody();
     var textbody = opener.wpr_GetTextBody();
     var whetherHtmlEnabled = opener.wpr_GetWhetherHtmlEnabled();
-    var whetherToAttachImages = opener.wpr_CheckWhetherImagesShouldBeAttached();
+
     var subject = opener.wpr_GetSubject();
     addHiddenElement(createHiddenField("subject",subject));
     addHiddenElement(createHiddenField("htmlbody",htmlbody));
     addHiddenElement(createHiddenField("textbody",textbody));
     addHiddenElement(createHiddenField("htmlenabled",whetherHtmlEnabled));
-    addHiddenElement(createHiddenField("attachimages",whetherToAttachImages));
-    
+
 }
 
 
@@ -310,7 +306,7 @@ function validateAndReturnFormData(&$error)
         if (strlen($temp)==0)
             $htmlenabled=0;
     }
-    $attachimages = $_POST['attachimages'];
+
     
 	$htmlbody = stripslashes($htmlbody);
 	$textbody = stripslashes($textbody);
@@ -322,7 +318,6 @@ function validateAndReturnFormData(&$error)
                        "htmlenabled"=>$htmlenabled,
 					   "htmlbody"=>$htmlbody,
 					   "textbody"=>$textbody,
-                       "attachimages"=>$attachimages
                         );
 
     //the custom fields

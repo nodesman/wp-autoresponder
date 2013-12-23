@@ -54,8 +54,7 @@ function _wpr_edit_mailout()
 		$htmlbody = trim($_POST['htmlbody']);
 		$whentosend = $_POST['whentosend'];	
 		$date = $_POST['date'];
-		
-		$attachimages = (isset($_POST['attachimages']) && $_POST['attachimages'] ==1)?1:0;																
+
 		$htmlenabled  = (isset($_POST['htmlenabled']) && $_POST['htmlenabled'] == "on");
 
 		$recipients = $_POST['recipients'];
@@ -94,17 +93,25 @@ function _wpr_edit_mailout()
 		
 		if (!$error)
 		{
-			$query = "UPDATE ".$wpdb->prefix."wpr_newsletter_mailouts set subject='$subject', textbody='$textbody', htmlbody='$htmlbody',time='$timeToSend',attachimages='$attachimages',recipients='$recipients', nid='$nid' where id=$id;";
+			$query = "UPDATE ".$wpdb->prefix."wpr_newsletter_mailouts set subject='$subject', textbody='$textbody', htmlbody='$htmlbody',time='$timeToSend', recipients='$recipients', nid='$nid' where id=$id;";
 			$wpdb->query($query);
 			_wpr_mail_sending();
 			return;
 		}
 		
-		$param = (object)  array("nid"=>$nid,"textbody"=>$textbody,"subject"=>$subject,"htmlbody"=>$htmlbody,"htmlenabled"=>!empty($htmlbody),"whentosend"=>$whentosend,"time"=>$timeToSend,"title"=>"New Mail","buttontext"=>"Save Broadcast");
+		$param = (object)  array(
+            "nid"=>$nid,
+            "textbody"=>$textbody,
+            "subject"=>$subject,
+            "htmlbody"=>$htmlbody,
+            "htmlenabled"=>!empty($htmlbody),
+            "whentosend"=>$whentosend,
+            "time"=>$timeToSend,
+            "title"=>"New Mail",
+            "buttontext"=>"Save Broadcast"
+        );
 
 	}
-	
-	
 	
 	wpr_mail_form($param,"new",$error);	
 }

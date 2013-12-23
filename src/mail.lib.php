@@ -152,13 +152,7 @@ function wpr_mail_form($parameters=array(),$mode="new",$error)
 
 
 
-    function wpr_CheckWhetherImagesShouldBeAttached()
 
-    {
-
-        return (document.mailForm.attachimages.checked)?1:0;
-
-    }
 
 
 
@@ -309,8 +303,6 @@ function wpr_mail_form($parameters=array(),$mode="new",$error)
                     <label for="htmlenable">Enable HTML Body</label>
                     <br />
                     <div id="htmlbodyfields"> <small>Check/uncheck this checkbox to enable or disable the HTML body of the email. When disabled only the text body will be sent.</small><br/>
-                        <br/>
-                        <input type="checkbox" id="attachimages" checked="checked" name="attachimages" value="1" style="display: none">
                         <br/>
                         <?php CreateNewTemplateSwitcherButton("editor","htmlbody"); ?>
                         <label for="htmlbody">Enter the HTML Body Of The Email:</label>

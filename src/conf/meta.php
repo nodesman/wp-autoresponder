@@ -84,7 +84,6 @@ $database_structure["wpr_queue"] = array(
         'hash' => 'VARCHAR(32)  NOT NULL',
         'meta_key' => 'VARCHAR(30)  NOT NULL',
         'htmlenabled' => "TINYINT NOT NULL DEFAULT 1",
-        'attachimages' => "TINYINT DEFAULT 0"
     ),
     'auto_increment' => 'id',
     'primary_key' => "id",
@@ -104,7 +103,6 @@ $database_structure["wpr_newsletter_mailouts"] = array('columns' => array(
     'time' => "VARCHAR(25) NOT NULL",
     'status' => "TINYINT NOT NULL",
     'recipients' => "TEXT DEFAULT NULL",
-    'attachimages' => "TINYINT DEFAULT 0",
 ),
     'auto_increment' => 'id',
     'primary_key' => "id",

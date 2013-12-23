@@ -24,8 +24,7 @@ function wpr_newmail()
 		$recipients = $_POST['recipients'];
 
 		$hour = $_POST['hour'];
-        $shouldAttachImages = (isset($_POST['attachimages']))?1:0;
-		
+
 		$timezoneOffset = $_POST['timezoneoffset'];
 	
 		$min = $_POST['minute'];
@@ -73,14 +72,25 @@ function wpr_newmail()
 
 		if (!$error)
 		{
-			$query = "insert into ".$wpdb->prefix."wpr_newsletter_mailouts (nid,subject,textbody,htmlbody,time,status,recipients,attachimages) values ('$nid','$subject','$textbody','$htmlbody','$timeToSend',0,'$recipients','$shouldAttachImages');";
+			$query = "insert into ".$wpdb->prefix."wpr_newsletter_mailouts (nid,subject,textbody,htmlbody,time,status,recipients) values ('$nid','$subject','$textbody','$htmlbody','$timeToSend',0,'$recipients');";
 			$wpdb->query($query);
 			_wpr_mail_sending();
 			return;
 		}
 	}
 
-	$param = (object)  array("nid"=>$nid,"textbody"=>$textbody,"subject"=>$subject,"htmlbody"=>$htmlbody,"htmlenabled"=>1,"whentosend"=>$whentosend,"date" => $date,"hour"=>$hour,"minute"=>$min,"title"=>"New Mail");
+	$param = (object)  array(
+        "nid"=>$nid,
+        "textbody"=>$textbody,
+        "subject"=>$subject,
+        "htmlbody"=>$htmlbody,
+        "htmlenabled"=>1,
+        "whentosend"=>$whentosend,
+        "date" => $date,
+        "hour"=>$hour,
+        "minute"=>$min,
+        "title"=>"New Mail"
+    );
 	//There are no newsletters. Ask to create one before sending mailouts
 
 	if (Newsletter::whetherNoNewslettersExist()) {

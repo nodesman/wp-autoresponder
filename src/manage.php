@@ -26,7 +26,7 @@ function confirm_unsubscription($nid,$sid,$hash)
 	{
 		$newsletter = _wpr_newsletter_get($nid);
 		$subscriber = _wpr_subscriber_get($sid);
-		$query = "select b.* from ".$wpdb->prefix."wpr_subscribers a, ".$wpdb->prefix."wpr_newsletters b where b.id=a.nid and a.email='".$subscriber->email."' and a.active=1 and a.confirmed=1;";
+		$query = "SELECT b.* FROM `".$wpdb->prefix."wpr_subscribers` `a`, `".$wpdb->prefix."wpr_newsletters` `b` WHERE `b`.`id`=`a`.`nid` and `a`.`email`='".$subscriber->email."' and `a`.`active`=1 and `a`.`confirmed`=1;";
 		$newsletters = $wpdb->get_results($query);
 		?>
 	<div style="font-family:Verdana, Geneva, sans-serif; font-size:12px; padding:20px; margin-left: auto; margin-right: auto; width:300px; background-color:#f0f0f0; border: 1px solid #c0c0c0;"><form action="<?php print $_SERVER['REQUEST_URI'] ?>" method="post">
@@ -52,7 +52,7 @@ You will stop receiving posts from the <?php echo $cat->name ?> category.<br />
 <?php
 }
 
-$query = "select * from ".$wpdb->prefix."wpr_blog_subscription where type='all' sid='$sid'";
+$query = "select * from ".$wpdb->prefix."wpr_blog_subscription where type='all' AND sid='$sid'";
 $bsubs = $wpdb->get_results($query);
 if (count($bsubs) >0)
 {

@@ -46,7 +46,6 @@ class BroadcastProcessor extends WPRBackgroundProcess{
                         "textbody" => $broadcast->textbody,
                         "htmlbody" => $broadcast->htmlbody,
                         "htmlenabled"=> (empty($html_body))?0:1,
-                        "attachimages"=> 1,
                         "meta_key"=> $meta_key
                     );
 

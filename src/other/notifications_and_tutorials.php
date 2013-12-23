@@ -85,7 +85,6 @@
 									 'subject'=> $theTitle,
 									 'htmlbody'=> $theContent,
 									 'htmlenabled'=>1,
-									 'attachimages'=>1
 									 );
 					
 					try{
@@ -202,7 +201,6 @@
 									 'subject'=>$title,
 									 'htmlbody'=>$theBody,
 									 'htmlenabled'=>1,
-									 'attachimages'=>1
 								);
 					//ob_start();
 					try {

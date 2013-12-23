@@ -662,7 +662,6 @@ function deliverBlogPost($sid,$post_id,$footerMessage="",$checkCondition=false,$
                             "htmlbody"=>$htmlbody,
                             "textbody"=>$textbody,
                             "htmlenabled"=>1,
-                            "attachimages"=>true,
 							'meta_key'=> $meta_key,
 							);
        }
@@ -677,7 +676,6 @@ function deliverBlogPost($sid,$post_id,$footerMessage="",$checkCondition=false,$
              $params = array("subject"=>$options[$nid]['subject'],
                             "htmlbody"=>$htmlBody,
                             "textbody"=>$options[$nid]['textbody'].strip_tags("$footerMessage"),
-                            "attachimages"=>($options[$nid]['attachimages'])?1:0,
                             "htmlenabled"=> $htmlEnabled,
 							'meta_key'=> $meta_key
                  );

@@ -2,8 +2,7 @@
 
 function _wpr_settings_handler()
 {
-
-	_wpr_set("canspam_address",get_option("wpr_address")); 
+	_wpr_set("canspam_address",get_option("wpr_address"));
 	$notification_custom_email_is_admin_email = (get_option('wpr_notification_custom_email')=="admin_email");
 	_wpr_set("notification_custom_email_is_admin_email",$notification_custom_email_is_admin_email);
 	

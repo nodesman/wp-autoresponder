@@ -10,5 +10,14 @@
 
 class WPR_Config
 {
-    public static $AutoresponderMessagesBatchSize = 10;
+    private static $AutoresponderMessagesBatchSize = 10;
+    private static $WhetherAttachImagesWithEmails = true;
+
+    public static function autoresponderBatchSize() {
+        return WPR_Config::$AutoresponderMessagesBatchSize;
+    }
+
+    public static function attach_images_with_emails() {
+        return WPR_Config::$WhetherAttachImagesWithEmails;
+    }
 }

@@ -9,12 +9,18 @@ class Broadcast {
 
     public function __construct($broadcast_id) {
         global $wpdb;
+        $broadcast_id  = intval($broadcast_id);
         $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d", $broadcast_id);
         $broadcast = $wpdb->get_row($getBroadcastQuery);
+
+        if (NULL == $broadcast)
+            throw new NonExistentBroadcastException($broadcast_id);
+
         $this->subject = $broadcast->subject;
         $this->htmlbody = $broadcast->htmlbody;
         $this->textbody = $broadcast->textbody;
         $this->newsletter_id = $broadcast->nid;
+        $this->id = $broadcast_id;
     }
 
     public function deliver()
@@ -60,5 +66,19 @@ class Broadcast {
     private function isHtmlEnabled()
     {
         return (empty($this->htmlbody));
+    }
+}
+
+class NonExistentBroadcastException extends Exception {
+
+    private $broadcast_id;
+
+    public function __construct($broadcast_id) {
+        $this->broadcast_id = $broadcast_id;
+        parent::__construct();
+    }
+
+    public function __toString() {
+        return sprintf("Attempted to create a non existent broadcast with ID '%d'", $this->broadcast_id);
     }
 }

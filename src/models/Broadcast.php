@@ -6,6 +6,17 @@ class Broadcast {
     private $subject;
     private $htmlbody;
     private $sent;
+    private $newsletter_id;
+
+    public function __construct($broadcast_id) {
+        global $wpdb;
+        $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d", $broadcast_id);
+        $broadcast = $wpdb->get_row($getBroadcastQuery);
+        $this->subject = $broadcast->subject;
+        $this->htmlbody = $broadcast->htmlbody;
+        $this->textbody = $broadcast->textbody;
+        $this->newsletter_id = $broadcast->nid;
+    }
 
     public function deliver()
     {
@@ -21,7 +32,7 @@ class Broadcast {
             );
             EmailQueue::enqueue($subscriber, $email);
         }
-        $this->expire_broadcast();
+        $this->expireBroadcast();
     }
 
     private function getMetaKey($sid)
@@ -31,25 +42,15 @@ class Broadcast {
 
     public function getNewsletterId()
     {
-        return $this->newsletter->getId();
+        return $this->newsletter_id;
     }
 
-    public function isSent($whether_sent)
+    public function isSent()
     {
         return $this->sent;
     }
-
-    public function __construct($broadcast_id) {
-        global $wpdb;
-        $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d", $broadcast_id);
-        $broadcast = $wpdb->get_row($getBroadcastQuery);
-        $this->subject = $broadcast->subject;
-        $this->htmlbody = $broadcast->htmlbody;
-        $this->textbody = $broadcast->textbody;
-        $this->newsletter =  new Broadcast($broadcast->nid);
-    }
-
-    private function expire_broadcast()
+   
+    private function expireBroadcast()
     {
         global $wpdb;
         $markAsSentQuery = sprintf("UPDATE %swpr_newsletter_mailouts SET sent=1 WHERE id=%d", $this->id);

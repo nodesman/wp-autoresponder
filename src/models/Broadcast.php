@@ -7,20 +7,20 @@ class Broadcast {
     private $sent;
     private $newsletter_id;
 
-    public function __construct($broadcast_id) {
+    public function __construct($broadcastId) {
         global $wpdb;
-        $broadcast_id  = intval($broadcast_id);
-        $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d", $broadcast_id);
+        $broadcastId  = intval($broadcastId);
+        $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d;", $wpdb->prefix, $broadcastId);
         $broadcast = $wpdb->get_row($getBroadcastQuery);
 
         if (NULL == $broadcast)
-            throw new NonExistentBroadcastException($broadcast_id);
+            throw new NonExistentBroadcastException($broadcastId);
 
         $this->subject = $broadcast->subject;
         $this->htmlbody = $broadcast->htmlbody;
         $this->textbody = $broadcast->textbody;
         $this->newsletter_id = $broadcast->nid;
-        $this->id = $broadcast_id;
+        $this->id = $broadcastId;
     }
 
     public function deliver()
@@ -40,9 +40,9 @@ class Broadcast {
         $this->expireBroadcast();
     }
 
-    private function getMetaKey($sid)
+    private function getMetaKey($subscriber_id)
     {
-        return sprintf("BR-%s-%s-%s", $sid, $this->id, $this->getNewsletterId());
+        return sprintf("BR-%s-%s-%s", $subscriber_id, $this->id, $this->getNewsletterId());
     }
 
     public function getNewsletterId()

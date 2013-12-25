@@ -1,79 +1,70 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: rajasekharan
- * Date: 26/04/13
- * Time: 6:36 PM
- * To change this template use File | Settings | File Templates.
- */
+
+require_once __DIR__."/../../src/models/iterators/pending_broadcasts.php";
 
 class BroadcastProcessorTest extends WP_UnitTestCase {
 
-    private $nid;
+    private $newsletterId;
 
     public function setUp() {
         WPRTestHelper::deleteAllMessagesFromQueue();
         WPRTestHelper::deleteAllNewsletters();
         WPRTestHelper::deleteAllSubscribers();
-        $this->nid = $this->createNewsletter();
+        $this->newsletterId = $this->createNewsletter();
     }
 
     public function testWhetherSchedulingBroadcastsOnSpecifiedDateResultsInDeliveryOnSaidDate() {
 
-
         global $wpdb;
-
         $time = new DateTime();
-
-        $createSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (nid, name, email, active, confirmed, hash) VALUES (%d, 'Raj', 'flare@gmail.com', 1, 1, MD5(UNIX_TIMESTAMP()))", $this->nid);
-        $wpdb->query($createSubscriberQuery);
-
-        $sid = $wpdb->insert_id;
+        $subscriberId = $this->createSubscriber();
 
         $timestampTomorrow = new DateTime(sprintf("@%d",$time->getTimestamp() + 86400));
-        $createNewsletterBroadcastQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletter_mailouts (nid, subject, textbody, htmlbody, time, status) VALUES (%d, 'Subject', 'Textbody', 'Htmlbody', '%s', 0);", $this->nid, $timestampTomorrow->getTimestamp());
+        $createNewsletterBroadcastQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletter_mailouts (nid, subject, textbody, htmlbody, time, status) VALUES (%d, 'Subject', 'Textbody', 'Htmlbody', '%s', 0);", $this->newsletterId, $timestampTomorrow->getTimestamp());
         $wpdb->query($createNewsletterBroadcastQuery);
+        $broadcastId = $wpdb->insert_id;
 
-        $bid = $wpdb->insert_id;
-
-        BroadcastProcessor::run_for_time($time);
+        BroadcastProcessor::run($time);
 
         $checkNumberOfEmailsInQueueQuery = sprintf("SELECT COUNT(*) num from {$wpdb->prefix}wpr_queue;");
-        $numSubs = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
-        $num = $numSubs[0]->num;
+        $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
+        $numberOfEmailsInQueue = $numberOfSubscribersResultSet[0]->num;
 
-        $this->assertEquals(0, $num);
+        $this->assertEquals(0, $numberOfEmailsInQueue);
 
         $timeOfRunTomorrow = new DateTime(sprintf("@%d",$timestampTomorrow->getTimestamp()+5000));
 
-        BroadcastProcessor::run_for_time($timeOfRunTomorrow);
+        BroadcastProcessor::run($timeOfRunTomorrow);
 
         $checkNumberOfEmailsInQueueQuery = sprintf("SELECT *from {$wpdb->prefix}wpr_queue;");
-        $numSubs = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
-        $num = count($numSubs);
+        $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
+        $numberOfEmailsInQueue = count($numberOfSubscribersResultSet);
 
-        $this->assertEquals(1, $num);
+        $this->assertEquals(1, $numberOfEmailsInQueue);
 
-
-        $email = $numSubs[0];
-        $meta_key = sprintf("BR-%s-%s-%s",$sid, $bid, $this->nid);
-
-        $this->assertEquals($meta_key, $email->meta_key);
-
+        $theEmailEnqueued = $numberOfSubscribersResultSet[0];
+        $emailMetaKey = sprintf("BR-%s-%s-%s",$subscriberId, $broadcastId, $this->newsletterId);
+        $this->assertEquals($emailMetaKey, $theEmailEnqueued->meta_key);
     }
 
-    /**
-     * @param $wpdb
-     * @return mixed
-     */
     private function createNewsletter()
     {
         global $wpdb;
         $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `fromname`, `fromemail`) VALUES ('Test', 'Raj', 'flarecore@gmail.com')");
         $wpdb->query($createNewsletterQuery);
 
-        $nid = $wpdb->insert_id;
-        return $nid;
+        $newsletterId = $wpdb->insert_id;
+        return $newsletterId;
+    }
+
+    private function createSubscriber()
+    {
+        global $wpdb;
+        $createSubscriberQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_subscribers (nid, name, email, active, confirmed, hash) VALUES (%d, 'Raj', 'flare@gmail.com', 1, 1, MD5(UNIX_TIMESTAMP()))", $this->newsletterId);
+        $wpdb->query($createSubscriberQuery);
+
+        $subscriberId = $wpdb->insert_id;
+        return $subscriberId;
     }
 
 }

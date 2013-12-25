@@ -1,8 +1,0 @@
-
-
-1. Need to remove existing statements that are being used for routing non-administrator requests based on get variables to a file or a function or a page and then replace it with a mechanism (which can be created by extending the features of routing mechanism created for the administration section. 
-2. Set up the development environment for running sonar, js-test-runner and jscoverage locally as part of the build. 
-3. Task the autoresponder milestone.
-4. Modify all references to the javascript files that were moved to the js directory to get the new path.
-5. Modify the init method such that no unnecessary code or reasources are loaded loaded when the user is not viewing a WP Autoresponder admin page.
-6. Combine all of javascript into one minified file. 

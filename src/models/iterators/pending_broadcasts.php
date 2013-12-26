@@ -1,80 +1,62 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rajs
- * Date: 23/12/13
- * Time: 9:04 PM
- */
+include_once __DIR__."/../broadcast.php";
 
 class PendingBroadcasts implements Iterator, Countable {
 
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the current element
-     * @link http://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
-     */
+    private $index;
+    private $dispatchDeadline;
+    private $length;
+
+    public function __construct(DateTime $time) {
+        $this->dispatchDeadline = $time;
+        $this->initialize();
+    }
+
     public function current()
     {
-        // TODO: Implement current() method.
+        global $wpdb;
+        $getCurrentObjectQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE `time`<=%d ORDER BY `time` ASC LIMIT %d,1", $wpdb->prefix, $this->dispatchDeadline->getTimestamp(), $this->index);
+        $current = $wpdb->get_row($getCurrentObjectQuery);
+        $broadcast = new Broadcast($current->id);
+        return $broadcast;
     }
 
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Move forward to next element
-     * @link http://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
-     */
     public function next()
     {
-        // TODO: Implement next() method.
+        $this->index += 1;
     }
 
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the key of the current element
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return mixed scalar on success, or null on failure.
-     */
     public function key()
     {
-        // TODO: Implement key() method.
+        return $this->index;
     }
 
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Checks if current position is valid
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
-     */
     public function valid()
     {
-        // TODO: Implement valid() method.
+        return ( ( $this->index < $this->length ) && ( $this->index >= 0 ) );
     }
 
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Rewind the Iterator to the first element
-     * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
-     */
     public function rewind()
     {
-        // TODO: Implement rewind() method.
+        $this->initialize();
+        $this->next();
     }
 
-    /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Count elements of an object
-     * @link http://php.net/manual/en/countable.count.php
-     * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
-     */
     public function count()
     {
-        // TODO: Implement count() method.
+        return $this->length;
+    }
+
+    private function getSize()
+    {
+        global $wpdb;
+        $getLengthQuery = sprintf("SELECT COUNT(*) number_of_broadcasts FROM %swpr_newsletter_mailouts WHERE status=0 AND time<=%d", $wpdb->prefix, $this->dispatchDeadline->getTimestamp());
+        $this->length = $wpdb->get_var($getLengthQuery);
+    }
+
+    private function initialize()
+    {
+        $this->index = -1;
+        $this->getSize();
     }
 }

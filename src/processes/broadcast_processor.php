@@ -1,6 +1,6 @@
 <?php
 
-class BroadcastProcessor extends WPRBackgroundProcess{
+class BroadcastProcessor extends WPRBackgroundProcess {
 
     public static function run(DateTime $time = null) {
 

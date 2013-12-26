@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__."/../../src/models/iterators/pending_broadcasts.php";
 
 class BroadcastProcessorTest extends WP_UnitTestCase {
 
@@ -20,23 +19,21 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
         $subscriberId = $this->createSubscriber();
 
         $timestampTomorrow = new DateTime(sprintf("@%d",$time->getTimestamp() + 86400));
-        $createNewsletterBroadcastQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletter_mailouts (nid, subject, textbody, htmlbody, time, status) VALUES (%d, 'Subject', 'Textbody', 'Htmlbody', '%s', 0);", $this->newsletterId, $timestampTomorrow->getTimestamp());
-        $wpdb->query($createNewsletterBroadcastQuery);
+        $this->createBroadcast($timestampTomorrow);
         $broadcastId = $wpdb->insert_id;
 
         BroadcastProcessor::run($time);
 
-        $checkNumberOfEmailsInQueueQuery = sprintf("SELECT COUNT(*) num from {$wpdb->prefix}wpr_queue;");
-        $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
-        $numberOfEmailsInQueue = $numberOfSubscribersResultSet[0]->num;
+        $numberOfEmailsInQueue = $this->getNumberOfEmailsEnqueued();
 
         $this->assertEquals(0, $numberOfEmailsInQueue);
 
-        $timeOfRunTomorrow = new DateTime(sprintf("@%d",$timestampTomorrow->getTimestamp()+5000));
+        $randomOffset = rand(1000,10000);
+        $timeObjectForTomorrowsRun = new DateTime(sprintf("@%d",$timestampTomorrow->getTimestamp()+ $randomOffset));
 
-        BroadcastProcessor::run($timeOfRunTomorrow);
+        BroadcastProcessor::run($timeObjectForTomorrowsRun);
 
-        $checkNumberOfEmailsInQueueQuery = sprintf("SELECT *from {$wpdb->prefix}wpr_queue;");
+        $checkNumberOfEmailsInQueueQuery = sprintf("SELECT * FROM %swpr_queue;", $wpdb->prefix);
         $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
         $numberOfEmailsInQueue = count($numberOfSubscribersResultSet);
 
@@ -65,6 +62,22 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
 
         $subscriberId = $wpdb->insert_id;
         return $subscriberId;
+    }
+
+    private function createBroadcast($timestampTomorrow)
+    {
+        global $wpdb;
+        $createNewsletterBroadcastQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletter_mailouts (nid, subject, textbody, htmlbody, time, status) VALUES (%d, 'Subject', 'Textbody', 'Htmlbody', '%s', 0);", $this->newsletterId, $timestampTomorrow->getTimestamp());
+        $wpdb->query($createNewsletterBroadcastQuery);
+    }
+
+    private function getNumberOfEmailsEnqueued()
+    {
+        global $wpdb;
+        $checkNumberOfEmailsInQueueQuery = sprintf("SELECT COUNT(*) num from {$wpdb->prefix}wpr_queue;");
+        $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
+        $numberOfEmailsInQueue = $numberOfSubscribersResultSet[0]->num;
+        return $numberOfEmailsInQueue;
     }
 
 }

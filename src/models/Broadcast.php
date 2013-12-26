@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__."/email_queue.php";
 class Broadcast {
 
     private $id;
@@ -25,7 +26,7 @@ class Broadcast {
 
     public function deliver()
     {
-        $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribersList($nid);
+        $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribersList($this->newsletter_id);
         foreach ($confirmedAndActiveNewsletterSubscribers as $subscriber)
         {
             $email = array(
@@ -58,7 +59,7 @@ class Broadcast {
     private function expireBroadcast()
     {
         global $wpdb;
-        $markAsSentQuery = sprintf("UPDATE %swpr_newsletter_mailouts SET sent=1 WHERE id=%d", $this->id);
+        $markAsSentQuery = sprintf("UPDATE %swpr_newsletter_mailouts SET status=1 WHERE id=%d", $wpdb->prefix, $this->id);
         $wpdb->query($markAsSentQuery);
         $this->sent = true;
     }
@@ -69,8 +70,8 @@ class Broadcast {
     }
 }
 
-class NonExistentBroadcastException extends Exception {
-
+class NonExistentBroadcastException extends Exception
+{
     private $broadcast_id;
 
     public function __construct($broadcast_id) {

@@ -4,6 +4,14 @@ class Broadcast {
 
     private $id;
     private $subject;
+
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
     private $htmlbody;
     private $sent;
     private $newsletter_id;
@@ -38,7 +46,7 @@ class Broadcast {
             );
             EmailQueue::enqueue($subscriber, $email);
         }
-        $this->expireBroadcast();
+        $this->expire();
     }
 
     private function getMetaKey($subscriber_id)
@@ -56,7 +64,7 @@ class Broadcast {
         return $this->sent;
     }
 
-    private function expireBroadcast()
+    public function expire()
     {
         global $wpdb;
         $markAsSentQuery = sprintf("UPDATE %swpr_newsletter_mailouts SET status=1 WHERE id=%d", $wpdb->prefix, $this->id);
@@ -68,6 +76,8 @@ class Broadcast {
     {
         return (empty($this->htmlbody));
     }
+
+
 }
 
 class NonExistentBroadcastException extends Exception

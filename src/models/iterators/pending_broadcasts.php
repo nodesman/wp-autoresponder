@@ -6,6 +6,7 @@ class PendingBroadcasts implements Iterator, Countable {
     private $index;
     private $dispatchDeadline;
     private $length;
+    private $broadcasts;
 
     public function __construct(DateTime $time) {
         $this->dispatchDeadline = $time;
@@ -14,11 +15,7 @@ class PendingBroadcasts implements Iterator, Countable {
 
     public function current()
     {
-        global $wpdb;
-        $getCurrentObjectQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE `time`<=%d ORDER BY `time` ASC LIMIT %d,1", $wpdb->prefix, $this->dispatchDeadline->getTimestamp(), $this->index);
-        $current = $wpdb->get_row($getCurrentObjectQuery);
-        $broadcast = new Broadcast($current->id);
-        return $broadcast;
+        return $this->broadcasts[$this->index];
     }
 
     public function next()
@@ -50,13 +47,21 @@ class PendingBroadcasts implements Iterator, Countable {
     private function getSize()
     {
         global $wpdb;
-        $getLengthQuery = sprintf("SELECT COUNT(*) number_of_broadcasts FROM %swpr_newsletter_mailouts WHERE status=0 AND time<=%d", $wpdb->prefix, $this->dispatchDeadline->getTimestamp());
+        $getLengthQuery = sprintf("SELECT COUNT(*) number_of_broadcasts FROM %swpr_newsletter_mailouts WHERE status=0 AND `time` <= %d;", $wpdb->prefix, $this->dispatchDeadline->getTimestamp());
         $this->length = $wpdb->get_var($getLengthQuery);
     }
 
     private function initialize()
     {
+        global $wpdb;
         $this->index = -1;
         $this->getSize();
+        $getCurrentObjectQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE `time`<=%d AND `status`=0 ORDER BY `time` ASC;", $wpdb->prefix, $this->dispatchDeadline->getTimestamp(), $this->index);
+        $results = $wpdb->get_results($getCurrentObjectQuery);
+
+        $this->broadcasts = array();
+        foreach ($results as $index => $broadcast) {
+            $this->broadcasts[$index] = new Broadcast($broadcast->id);
+        }
     }
 }

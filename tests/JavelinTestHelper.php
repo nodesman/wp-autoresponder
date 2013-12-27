@@ -50,19 +50,29 @@ class JavelinTestHelper
         $wpdb->query($updateAutoIncrementStartIndex);
     }
 
-    public static function deleteAllSubscribers() {
+    public static function deleteAllSubscribers()
+    {
         global $wpdb;
-
         $truncateSubscribersQuery = sprintf("TRUNCATE {$wpdb->prefix}wpr_subscribers;");
         $wpdb->query($truncateSubscribersQuery);
 
         $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_subscribers AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000, 9000));
         $wpdb->query($updateAutoIncrementStartIndex);
+    }
 
+    public static function deleteAllEmailsFromQueue()
+    {
+        global $wpdb;
+        $truncateQueueQuery = sprintf("TRUNCATE %swpr_queue;", $wpdb->prefix);
+        $wpdb->query($truncateQueueQuery);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_queue AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000, 9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
     }
 
     public static function createNewsletter($newsletterInfo = array())
     {
+        global $wpdb;
         if (0 == count($newsletterInfo))
         {
             $newsletterInfo = array(
@@ -76,7 +86,73 @@ class JavelinTestHelper
         $wpdb->query($createNewsletterQuery);
         $newsletterId = $wpdb->insert_id;
 
-        return new Newsletter($newsletterId);
+        return Newsletter::getNewsletter($newsletterId);
     }
 
+    public static function createBroadcast(Newsletter $newsletter, $broadcastInfo = null)
+    {
+        global $wpdb;
+        if (null == $broadcastInfo) {
+            $broadcastInfo = array(
+                'nid' => $newsletter->getId(),
+                'subject' => md5(microtime()."subject"),
+                'textbody' => md5(microtime()."textbody"),
+                'htmlbody' => md5(microtime().'htmlbody'),
+                'time' => time(),
+                'status' => 0
+            );
+        }
+
+        $createNewsletterBroadcastQuery = sprintf("INSERT INTO `%swpr_newsletter_mailouts` (`nid`, `subject`, `textbody`, `htmlbody`, `time`, `status`) VALUES
+                                                 (%d, '%s', '%s', '%s', '%s', %d);",
+            $wpdb->prefix,
+            $broadcastInfo['nid'],
+            $broadcastInfo['subject'],
+            $broadcastInfo['textbody'],
+            $broadcastInfo['htmlbody'],
+            $broadcastInfo['time'],
+            $broadcastInfo['status']
+        );
+        $wpdb->query($createNewsletterBroadcastQuery);
+
+        $broadcastId = $wpdb->insert_id;
+        return new Broadcast($broadcastId);
+    }
+
+    public static function createSubscriber(Newsletter $newsletter, ArrayObject $subscriber = null)
+    {
+        global $wpdb;
+        if (null == $subscriber)
+        {
+            $subscriber = array(
+                'name' => self::randomString("name"),
+                'email' => self::randomString("user") . '@' .self::randomString("domain") . '.com',
+                'nid' => $newsletter->getId(),
+                'date' => time(),
+                'active' => 1,
+                'confirmed' => 1,
+                'hash' => self::randomString(self::randomString())
+            );
+        }
+
+        $createSubscriberQuery = sprintf("INSERT INTO %swpr_subscribers (`nid`,`name`, `email`, `date`, `active`, `confirmed`, `hash` ) VALUES (%d, '%s', '%s','%s','%s','%s','%s');",
+            $wpdb->prefix,
+            $subscriber['nid'],
+            $subscriber['name'],
+            $subscriber['email'],
+            $subscriber['date'],
+            $subscriber['active'],
+            $subscriber['confirmed'],
+            $subscriber['hash']
+        );
+        $wpdb->query($createSubscriberQuery);
+        $subscriberId = $wpdb->insert_id;
+        return new Subscriber($subscriberId);
+    }
+
+    private static function randomString($string = null)
+    {
+        $string = (null == $string)?"":$string;
+        return md5(microtime().$string);
+    }
 }

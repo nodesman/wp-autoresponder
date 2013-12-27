@@ -43,7 +43,7 @@ class Broadcast
                 "meta_key"=> $this->getMetaKey($subscriber->getId())
             );
 
-            EmailQueue::enqueue($subscriber, $email);
+            EmailQueue::getInstance()->enqueue($subscriber, $email);
         }
         $this->expire();
     }

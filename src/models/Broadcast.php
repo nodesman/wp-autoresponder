@@ -1,22 +1,20 @@
 <?php
 include_once __DIR__."/email_queue.php";
-class Broadcast {
-
+class Broadcast
+{
     private $id;
     private $subject;
-
-    /**
-     * @return mixed
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
     private $htmlbody;
     private $sent;
     private $newsletter_id;
 
-    public function __construct($broadcastId) {
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    public function __construct($broadcastId)
+    {
         global $wpdb;
         $broadcastId  = intval($broadcastId);
         $getBroadcastQuery = sprintf("SELECT * FROM %swpr_newsletter_mailouts WHERE id=%d;", $wpdb->prefix, $broadcastId);
@@ -44,6 +42,7 @@ class Broadcast {
                 "htmlenabled"=> $this->isHtmlEnabled(),
                 "meta_key"=> $this->getMetaKey($subscriber->getId())
             );
+
             EmailQueue::enqueue($subscriber, $email);
         }
         $this->expire();
@@ -76,20 +75,20 @@ class Broadcast {
     {
         return (empty($this->htmlbody));
     }
-
-
 }
 
 class NonExistentBroadcastException extends Exception
 {
     private $broadcast_id;
 
-    public function __construct($broadcast_id) {
+    public function __construct($broadcast_id)
+    {
         $this->broadcast_id = $broadcast_id;
         parent::__construct();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return sprintf("Attempted to create a non existent broadcast with ID '%d'", $this->broadcast_id);
     }
 }

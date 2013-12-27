@@ -19,7 +19,6 @@ class NewsletterTest extends WP_UnitTestCase {
 	}
 
     public function testWhetherNoNewslettersExistChecker() {
-        global $wpdb;
         $result = Newsletter::whetherNoNewslettersExist();
         $this->assertEquals(true, $result);
     }

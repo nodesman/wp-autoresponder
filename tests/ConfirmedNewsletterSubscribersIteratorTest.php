@@ -92,7 +92,6 @@ class ConfirmedNewsletterSubscribersIteratorTest extends WP_UnitTestCase {
 
     public function testWhetherIterationsFetchObjectsInCorrectOrder()
     {
-
         $ns_iterator = new ConfirmedNewsletterSubscribersList($this->newsletterId);
         $this->assertEquals(5, count($ns_iterator));
 

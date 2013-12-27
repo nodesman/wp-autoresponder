@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rajs
- * Date: 23/12/13
- * Time: 9:46 PM
- */
 
-class EmailQueue {
-
-    public static function enqueue(Subscriber $subscriber, $email) {
-
-        foreach ($email as $index=>$value) {
+class EmailQueue
+{
+    public static function enqueue(Subscriber $subscriber, $email)
+    {
+        foreach ($email as $index => $value)
+        {
             $email[$index] = Subscriber::replaceCustomFieldValues($value, $subscriber->getId());
         }
 
@@ -21,5 +16,4 @@ class EmailQueue {
 
         sendmail($subscriber->getId(),$email);
     }
-
-} 
+}

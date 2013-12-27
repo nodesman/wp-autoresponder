@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: rajasekharan
- * Date: 26/04/13
- * Time: 7:04 PM
- * To change this template use File | Settings | File Templates.
- */
-class WPRTestHelper
+class JavelinTestHelper
 {
-
     public static function deleteAllNewsletters()
     {
         global $wpdb;
@@ -16,6 +8,15 @@ class WPRTestHelper
         $wpdb->query($truncateNewsletterTable);
 
         $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_newsletters AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000, 9000));
+        $wpdb->query($updateAutoIncrementStartIndex);
+    }
+    public static function deleteAllNewsletterBroadcasts()
+    {
+        global $wpdb;
+        $truncateNewsletterTable = sprintf("TRUNCATE %swpr_newsletter_mailouts;", $wpdb->prefix);
+        $wpdb->query($truncateNewsletterTable);
+
+        $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_newsletter_mailouts AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000, 9000));
         $wpdb->query($updateAutoIncrementStartIndex);
     }
 
@@ -58,6 +59,24 @@ class WPRTestHelper
         $updateAutoIncrementStartIndex = sprintf("ALTER TABLE %swpr_subscribers AUTO_INCREMENT=%d;", $wpdb->prefix, rand(1000, 9000));
         $wpdb->query($updateAutoIncrementStartIndex);
 
+    }
+
+    public static function createNewsletter($newsletterInfo = array())
+    {
+        if (0 == count($newsletterInfo))
+        {
+            $newsletterInfo = array(
+                'name' => md5(microtime()."newsletter_name"),
+                'fromname' => md5(microtime()."fromname"),
+                'fromemail' => md5(microtime().'somename').'@'.md5(microtime()."somedomain").".com"
+            );
+        }
+
+        $createNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`, `fromname`, `fromemail`) VALUES ('%s', '%s', '%s')", $wpdb->prefix, $newsletterInfo['name'], $newsletterInfo['fromname'], $newsletterInfo['fromemail']);
+        $wpdb->query($createNewsletterQuery);
+        $newsletterId = $wpdb->insert_id;
+
+        return new Newsletter($newsletterId);
     }
 
 }

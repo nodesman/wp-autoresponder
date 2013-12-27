@@ -3,7 +3,7 @@
 require_once __DIR__."/../../src/processes/background_process.php";
 require_once __DIR__."/../../src/processes/autoresponder_process.php";
 require_once __DIR__."/../../src/models/autoresponder.php";
-require_once __DIR__ . "/../WPRTestHelper.php";
+require_once __DIR__ . "/../JavelinTestHelper.php";
 
 class AutoresponderProcessTest extends WP_UnitTestCase {
 
@@ -15,10 +15,10 @@ class AutoresponderProcessTest extends WP_UnitTestCase {
         //create newsletters
         global $wpdb;
 
-        WPRTestHelper::deleteAllNewsletters();
-        WPRTestHelper::deleteAllAutoresponders();
-        WPRTestHelper::deleteAllAutoresponderMessages();
-        WPRTestHelper::deleteAllMessagesFromQueue();
+        JavelinTestHelper::deleteAllNewsletters();
+        JavelinTestHelper::deleteAllAutoresponders();
+        JavelinTestHelper::deleteAllAutoresponderMessages();
+        JavelinTestHelper::deleteAllMessagesFromQueue();
 
         $createNewsletterOneQuery = $wpdb->prepare("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `reply_to`, `fromname`, `fromemail`) VALUES (%s, %s , %s, %s);", md5(microtime()."name1"), 'raj@wpresponder.com', '', 'raj', 'raj@wpresponder.com');
         $wpdb->query($createNewsletterOneQuery);

@@ -6,9 +6,9 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
     private $newsletterId;
 
     public function setUp() {
-        WPRTestHelper::deleteAllMessagesFromQueue();
-        WPRTestHelper::deleteAllNewsletters();
-        WPRTestHelper::deleteAllSubscribers();
+        JavelinTestHelper::deleteAllMessagesFromQueue();
+        JavelinTestHelper::deleteAllNewsletters();
+        JavelinTestHelper::deleteAllSubscribers();
         $this->newsletterId = $this->createNewsletter();
     }
 
@@ -23,9 +23,7 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
         $broadcastId = $wpdb->insert_id;
 
         BroadcastProcessor::run($time);
-
         $numberOfEmailsInQueue = $this->getNumberOfEmailsEnqueued();
-
         $this->assertEquals(0, $numberOfEmailsInQueue);
 
         $randomOffset = rand(1000,10000);
@@ -49,7 +47,6 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
         global $wpdb;
         $createNewsletterQuery = sprintf("INSERT INTO {$wpdb->prefix}wpr_newsletters (`name`, `fromname`, `fromemail`) VALUES ('Test', 'Raj', 'flarecore@gmail.com')");
         $wpdb->query($createNewsletterQuery);
-
         $newsletterId = $wpdb->insert_id;
         return $newsletterId;
     }

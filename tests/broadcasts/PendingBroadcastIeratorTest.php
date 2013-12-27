@@ -11,6 +11,11 @@ class PendingBroadcastIteratorTest extends WP_UnitTestCase
     private $expiredPastBroadcastList;
     private $expiredCurrentBroadcastList;
 
+    public function setUp()
+    {
+        JavelinTestHelper::deleteAllNewsletterBroadcasts();
+    }
+
     public function testWhetherIteratorReturnsAListOfPendingBroadcasts() {
 
         global $wpdb;

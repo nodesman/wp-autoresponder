@@ -33,6 +33,8 @@ class BroadcastProcessorTest extends WP_UnitTestCase {
 
         $checkNumberOfEmailsInQueueQuery = sprintf("SELECT * FROM %swpr_queue;", $wpdb->prefix);
         $numberOfSubscribersResultSet = $wpdb->get_results($checkNumberOfEmailsInQueueQuery);
+
+
         $numberOfEmailsInQueue = count($numberOfSubscribersResultSet);
 
         $this->assertEquals(1, $numberOfEmailsInQueue);

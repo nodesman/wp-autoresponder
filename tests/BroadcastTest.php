@@ -50,6 +50,10 @@ class BroadcastTest extends WP_UnitTestCase
         $this->assertEquals($this->newsletter->getId(), $this->broadcast->getNewsletterId());
 
         $this->assertEquals($this->broadcastInfo['status'], $this->broadcast->isSent());
+
+        $this->assertEquals($this->broadcastInfo['htmlbody'], $this->broadcast->getHtmlBody());
+
+        $this->assertEquals($this->broadcastInfo['textbody'], $this->broadcast->getTextBody());
     }
 
     public function testWhetherExpiringABroadcastExpiresTheBroadcast()
@@ -87,8 +91,33 @@ class BroadcastTest extends WP_UnitTestCase
 
     public function testWhetherTheBroadcastEmailIsOfTheExpectedFormat()
     {
-        
-        
+        JavelinTestHelper::deleteAllSubscribers();
+
+        $subscriber = JavelinTestHelper::createSubscriber($this->newsletter);
+
+        $expected = array(
+            'subject' => $this->broadcast->getSubject(),
+            'textbody' => $this->broadcast->getTextBody(),
+            'htmlbody' => $this->broadcast->getHtmlBody(),
+            'htmlenabled' => false,
+            'meta_key' => sprintf('BR-%s-%s-%s',$subscriber->getId(), $this->broadcast->getId(), $this->newsletter->getId())
+        );
+
+        $queue = $this->getMock('EmailQueue', array('enqueue'), array(), '', false);
+
+        $ref = new ReflectionProperty('EmailQueue', 'instance');
+        $ref->setAccessible(true);
+        $ref->setValue(null, $queue);
+
+        $queue->expects($this->any())
+              ->method('enqueue')
+              ->with($subscriber, $this->identicalTo($expected));
+
+        $this->broadcast->deliver();
+
+        $ref = new ReflectionProperty('EmailQueue', 'instance');
+        $ref->setAccessible(true);
+        $ref->setValue(null, null);
     }
 
     public function tearDown()

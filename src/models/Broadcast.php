@@ -3,14 +3,31 @@ include_once __DIR__."/email_queue.php";
 class Broadcast
 {
     private $id;
+
     private $subject;
     private $htmlbody;
+    private $textbody;
     private $sent;
     private $newsletter_id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    public function getHtmlBody()
+    {
+        return $this->htmlbody;
+    }
+
+    public function getTextBody()
+    {
+        return $this->textbody;
     }
 
     public function __construct($broadcastId)

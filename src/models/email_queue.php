@@ -30,7 +30,11 @@ class EmailQueue
         $email['fromname'] = $newsletter->getFromName();
         $email['fromemail'] = $newsletter->getFromEmail();
 
-        sendmail($subscriber->getId(),$email);
+        if (!isset($email['htmlenabled'])) {
+            $email['htmlenabled'] = !empty($email['htmlbody']);
+        }
+
+        sendmail($subscriber->getId(), $email);
     }
 
     public function getNumberOfPendingEmails()

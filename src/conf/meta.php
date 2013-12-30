@@ -54,7 +54,7 @@ $database_structure["wpr_subscription_form"] = array(
         'confirm_body' => "TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
         'confirmed_subject' => "TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
         'confirmed_body' => "TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
-        'confirm_url' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL",
+        'confirm_url' => "VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL",
         'submit_button' => "VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'Subscribe'"
     ),
 

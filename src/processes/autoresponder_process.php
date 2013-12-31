@@ -103,23 +103,19 @@
 
         private function deliver($subscriber, AutoresponderMessage $message, DateTime $time) {
 
-            global $wpdb;
-            $htmlBody = $message->getHTMLBody();
-
-            $htmlenabled = (!empty($htmlBody))?1:0;
+            global $wpdb, $javelinQueue;
 
             $params= array(
                 'meta_key'=> sprintf('AR-%d-%d-%d-%d', $message->getAutoresponder()->getId(), $subscriber->sid, $message->getId(), $message->getDayNumber()),
                 'htmlbody' => $message->getHTMLBody(),
                 'textbody' => $message->getTextBody(),
-                'subject' => $message->getSubject(),
-                'htmlenabled'=> $htmlenabled
+                'subject' => $message->getSubject()
             );
 
-            sendmail($subscriber->sid, $params);
+            $subscriber_object = new Subscriber($subscriber->sid);
+            $javelinQueue->enqueue($subscriber_object, $params);
 
             $updateSubscriptionMarkingItAsProcessedForCurrentDay = sprintf("UPDATE %swpr_followup_subscriptions SET sequence=%d, last_date=%d WHERE id=%d", $wpdb->prefix, $message->getDayNumber(), strtotime($time->format("Y-m-d H:i:s")), $subscriber->id);
-
             $wpdb->query($updateSubscriptionMarkingItAsProcessedForCurrentDay);
 
         }

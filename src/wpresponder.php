@@ -54,7 +54,11 @@ if (!defined("WPR_DEFS")) {
     include_once WPR_DIR . '/actions.php';
     include_once WPR_DIR . '/blogseries.lib.php';
     include_once WPR_DIR . '/lib.php';
+
     include_once WPR_DIR . '/conf/meta.php';
+    include_once WPR_DIR . '/conf/config.php';
+    include_once WPR_DIR . '/conf/global_constants.php';
+
     include_once WPR_DIR . '/lib/swift_required.php';
     include_once WPR_DIR . '/lib/admin_notifications.php';
     include_once WPR_DIR . '/lib/global.php';

@@ -19,16 +19,15 @@ class Subscriber
         return $this->hash;
     }
 
-
     function Subscriber($id)
     {
         global $wpdb;
         $sid = intval($id);
         if ($sid == 0)
             throw new InvalidSubscriberIDException("Invalid Subscriber ID: $sid");
-        $tableName = $wpdb->prefix . "wpr_subscribers";
-        $getSubscriberInfoQuery = sprintf("SELECT * FROM %s WHERE id=%d", $tableName, $sid);
+        $getSubscriberInfoQuery = sprintf("SELECT * FROM %swpr_subscribers WHERE id=%d", $wpdb->prefix, $sid);
         $queryResults = $wpdb->get_results($getSubscriberInfoQuery);
+
         if (0 == count($queryResults))
             throw new SubscriberNotFoundException();
 
@@ -95,11 +94,11 @@ class Subscriber
         return ($this->nid);
     }
 
-    public static function replaceCustomFieldValues($string, $sid)
+    public static function replaceCustomFieldValues($string, Subscriber $subscriber)
     {
+        $name = $subscriber->getName();
 
-        $subscriber = new Subscriber($sid);
-
+        $string = str_replace("[!name!]", $name, $string);
         $values = $subscriber->getCustomFieldValuesByLabels();
 
         foreach ($values as $name=>$value) {
@@ -141,6 +140,11 @@ class Subscriber
 
         throw new BadMethodCallException("Subscribers of newsletter get yet to be implemented   ");
 
+    }
+
+    public function getUnsubscriptionUrl() {
+        $unsuburl = wpr_get_unsubscription_url($this->getId());
+        return $unsuburl;
     }
 
 }

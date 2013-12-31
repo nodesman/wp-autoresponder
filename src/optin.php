@@ -407,12 +407,12 @@ if ($success)
 	$params[0] = $confirm_subject;
 	$params[1] = $confirm_body;
 
+    $subscriber = new Subscriber($id);
 
-    foreach ($params as $index=>$value) {
-        $params[$index] = Subscriber::replaceCustomFieldValues($value, $id);
+    foreach ($params as $index=>$value)
+    {
+        $params[$index] = Subscriber::replaceCustomFieldValues($value, $subscriber);
     }
-
-
 
 	$from_email = $newsletter->fromemail;
 	

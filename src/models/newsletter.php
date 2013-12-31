@@ -12,6 +12,7 @@ class Newsletter
 	private  $name;
 	private  $reply_to;
 
+
 	private  $confirm_subject;
 	private  $confirm_body;
 	private  $confirmed_subject;
@@ -60,11 +61,8 @@ class Newsletter
     public static function getNewsletter($id) {
 
         global $wpdb;
-
         $getNewsletterQuery = sprintf("SELECT * FROM %swpr_newsletters WHERE id=%d", $wpdb->prefix, $id);
-
         $newsletterRes = $wpdb->get_results($getNewsletterQuery);
-
         if (count($newsletterRes) == 0 )
             throw new NonExistentNewsletterException();
 
@@ -91,10 +89,7 @@ class Newsletter
         foreach ($custom_fields as $field) {
             $result[$field->name] = $field->label;
         }
-
         return $result;
-
-
     }
 
 	
@@ -102,10 +97,16 @@ class Newsletter
 	{
 		return $this->name;
 	}
+
 	function getId()
 	{
 		return $this->id;
 	}
+
+    public function getReplyTo()
+    {
+        return $this->reply_to;
+    }
 
 	function delete()
 	{

@@ -8,6 +8,10 @@ class EmailQueueTest extends WP_UnitTestCase
 
     function setUp()
     {
+        JavelinTestHelper::deleteAllEmailsFromQueue();
+        JavelinTestHelper::deleteAllMessagesFromQueue();
+        JavelinTestHelper::deleteAllSubscribers();
+        JavelinTestHelper::deleteAllNewsletterBroadcasts();
         //create a newsletter
         JavelinConfig::senderAddress($this->senderAddressSetting);
         $this->newsletter = JavelinTestHelper::createNewsletter();
@@ -52,8 +56,13 @@ class EmailQueueTest extends WP_UnitTestCase
 
         $email = $javelinQueue->enqueue($this->subscriber, $params);
 
+        $this->assertEquals($params['subject'], $email->getSubject());
         $this->assertEquals($expectedHtmlBody, $email->getHtmlBody());
         $this->assertEquals($expectedTextBody, $email->getTextBody());
+        $this->assertEquals(0, $email->isSent());
+        $this->assertEquals(1, $email->isHtmlEnabled());
+        $this->assertEquals($this->newsletter->getReplyTo(), $email->getReplyTo());
+        $this->assertEquals($this->subscriber->getId(), $email->getSubscriber()->getId());
     }
 
     public function testWhetherTheQueueInfersValuesOtherParametersWhenLeftOut()
@@ -139,6 +148,12 @@ class EmailQueueTest extends WP_UnitTestCase
             'textbody' => 'Test',
             'meta_key' => ''
         ));
+    }
+
+    public function testWhetherEnqueueingAssumesAnAppropriateSentValueAsProvided()
+    {
+        
+
     }
 
     function tearDown()

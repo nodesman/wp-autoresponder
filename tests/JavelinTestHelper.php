@@ -78,11 +78,12 @@ class JavelinTestHelper
             $newsletterInfo = array(
                 'name' => md5(microtime()."newsletter_name"),
                 'fromname' => md5(microtime()."fromname"),
-                'fromemail' => md5(microtime().'somename').'@'.md5(microtime()."somedomain").".com"
+                'fromemail' => md5(microtime().'somename').'@'.md5(microtime()."somedomain").".com",
+                'reply_to' => substr(self::randomString("reply"), 0, 5) . '@' . substr(self::randomString("domain"), 0, 5).".com"
             );
         }
 
-        $createNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`, `fromname`, `fromemail`) VALUES ('%s', '%s', '%s')", $wpdb->prefix, $newsletterInfo['name'], $newsletterInfo['fromname'], $newsletterInfo['fromemail']);
+        $createNewsletterQuery = sprintf("INSERT INTO %swpr_newsletters (`name`, `fromname`, `fromemail`, `reply_to`) VALUES ('%s', '%s', '%s', '%s')", $wpdb->prefix, $newsletterInfo['name'], $newsletterInfo['fromname'], $newsletterInfo['fromemail'], $newsletterInfo['reply_to']);
         $wpdb->query($createNewsletterQuery);
         $newsletterId = $wpdb->insert_id;
 

@@ -9,6 +9,7 @@ class JEmail {
     private $isHtml;
     private $isSent;
     private $meta_key;
+    private $reply_to;
 
     public function __construct($id) {
         global $wpdb;
@@ -20,9 +21,21 @@ class JEmail {
         $this->subject = $email->subject;
         $this->htmlbody = $email->htmlbody;
         $this->textbody = $email->textbody;
-        $this->subscriber = ($email->sid == 0) ? new Subscriber($email->sid) : NULL;
+        $this->subscriber = ($email->sid != 0) ? new Subscriber($email->sid) : NULL;
         $this->meta_key = $email->meta_key;
+        $this->reply_to = $email->reply_to;
+        $this->isSent = (int) $email->sent;
+        $this->isHtml = (int) $email->htmlenabled;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getReplyTo()
+    {
+        return $this->reply_to;
+    }
+
     /**
      * @return mixed
      */
@@ -34,7 +47,7 @@ class JEmail {
     /**
      * @return mixed
      */
-    public function getIsHtml()
+    public function isHtmlEnabled()
     {
         return $this->isHtml;
     }
@@ -42,7 +55,7 @@ class JEmail {
     /**
      * @return mixed
      */
-    public function getIsSent()
+    public function isSent()
     {
         return $this->isSent;
     }

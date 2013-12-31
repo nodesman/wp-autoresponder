@@ -1,7 +1,7 @@
 <?php
 
 
-    class AutoresponderProcessor extends WPRBackgroundProcess
+    class AutoresponderProcessor extends JavelinBackgroundProcess
     {
         private static $processor;
 

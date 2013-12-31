@@ -1,5 +1,5 @@
 <?php
 
-abstract class WPRBackgroundProcess {
+abstract class JavelinBackgroundProcess {
 
 }

@@ -62,7 +62,7 @@ class EmailQueueTest extends WP_UnitTestCase
         );
 
         $expected = $params;
-        
+
         $expected['textbody'] =$this->getExpectedTextBody($params);
         $expected['htmlbody'] =$this->getExpectedHtmlBody($params);
 

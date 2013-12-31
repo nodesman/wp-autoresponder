@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: raj
- * Date: 11/13/12
- * Time: 8:11 PM
- * To change this template use File | Settings | File Templates.
- */
 
 ?>
 <!--NO_NEWSLETTERS-->

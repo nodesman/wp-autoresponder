@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: raj
- * Date: 10/4/12
- * Time: 12:13 AM
- */
 
 include_once __DIR__ . '/../src/helpers/routing.php';
 

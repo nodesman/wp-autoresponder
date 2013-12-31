@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: raj
- * Date: 10/28/12
- * Time: 3:40 PM
- */
-
 
 class ViewFrameworkTest  extends WP_UnitTestCase {
     public function setUp() {

@@ -32,7 +32,10 @@ class AutoresponderProcessTimingTest extends WP_UnitTestCase {
         $this->autoresponder_id = $wpdb->insert_id;
 
 
-        $insertMessagesQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlenabled`, `sequence`) VALUES (%d, 'Day 0 Message', 1, 0), (%d, 'Day 1 Message', 1, 1), (%d, 'Day 5 Message', 1, 5) ; ", $wpdb->prefix, $this->autoresponder_id, $this->autoresponder_id, $this->autoresponder_id);
+        $insertMessagesQuery = sprintf("INSERT INTO `%swpr_autoresponder_messages` (`aid`, `subject`, `htmlenabled`,`htmlbody`, `textbody`, `sequence`) VALUES
+                                                                                    (%d, 'Day 0 Message', 1, 'Test','Test', 0),
+                                                                                    (%d, 'Day 1 Message', 1, 'Test','Test', 1),
+                                                                                    (%d, 'Day 5 Message', 1, 'Test','Test', 5); ", $wpdb->prefix, $this->autoresponder_id, $this->autoresponder_id, $this->autoresponder_id);
         $wpdb->query($insertMessagesQuery);
 
         for ($iter =0 ; $iter< $this->numberOfSubscribersAdded; $iter++) {

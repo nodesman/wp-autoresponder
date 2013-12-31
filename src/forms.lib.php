@@ -14,7 +14,7 @@ function _wpr_subscriptionform_get($id)
 function _wpr_subscriptionforms_get()
 {
 	global $wpdb;
-	$query = "SELECT * FROM ".$wpdb->prefix."wpr_subscription_form";
+	$query = sprintf("SELECT * FROM %swpr_subscription_form", $wpdb->prefix);
 	$result = $wpdb->get_results($query);
 	return $result;
 

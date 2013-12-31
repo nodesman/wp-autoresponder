@@ -1,23 +1,25 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: raj
- * Date: 12/27/12
- * Time: 11:22 PM
- * To change this template use File | Settings | File Templates.
- */
 
-
-class WPR_Config
+class JavelinConfig
 {
     private static $AutoresponderMessagesBatchSize = 10;
     private static $WhetherAttachImagesWithEmails = true;
+    private static $SenderAddressOptionKey = 'wpr_address';
+
+    public static function senderAddress($address = null)
+    {
+        if (null == $address) {
+            return get_option(self::$SenderAddressOptionKey);
+        } else {
+            update_option(self::$SenderAddressOptionKey, $address);
+        }
+    }
 
     public static function autoresponderBatchSize() {
-        return WPR_Config::$AutoresponderMessagesBatchSize;
+        return JavelinConfig::$AutoresponderMessagesBatchSize;
     }
 
     public static function attach_images_with_emails() {
-        return WPR_Config::$WhetherAttachImagesWithEmails;
+        return JavelinConfig::$WhetherAttachImagesWithEmails;
     }
 }

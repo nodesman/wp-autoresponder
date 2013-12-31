@@ -49,6 +49,7 @@ class Broadcast
 
     public function deliver()
     {
+        global $javelinQueue;
         $confirmedAndActiveNewsletterSubscribers = new ConfirmedNewsletterSubscribersList($this->newsletter_id);
         foreach ($confirmedAndActiveNewsletterSubscribers as $subscriber)
         {
@@ -60,7 +61,7 @@ class Broadcast
                 "meta_key"=> $this->getMetaKey($subscriber->getId())
             );
 
-            EmailQueue::getInstance()->enqueue($subscriber, $email);
+            $javelinQueue->enqueue($subscriber, $email);
         }
         $this->expire();
     }

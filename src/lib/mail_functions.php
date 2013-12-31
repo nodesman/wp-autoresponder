@@ -35,21 +35,6 @@ function _wpr_non_wpr_email_sent($params)
 	return $params;
 }
 
-function sendmail($sid,$params,$footerMessage="")
-{
-	global $wpdb;
-	$parameters = _wpr_process_sendmail_parameters($sid,$params,$footerMessage);
-
-    $parameters['subject'] = Subscriber::replaceCustomFieldValues($parameters['subject'], $sid);
-    $parameters['htmlbody'] = Subscriber::replaceCustomFieldValues($parameters['htmlbody'], $sid);
-    $parameters['textbody'] = Subscriber::replaceCustomFieldValues($parameters['textbody'], $sid);
-
-	extract($parameters);
-
-	$insertEmailQuery = "INSERT INTO {$wpdb->prefix}wpr_queue (`from`,`fromname`, `to`, `reply_to`, `subject`, `htmlbody`, `textbody`, `headers`,`htmlenabled`,`email_type`,`delivery_type`,`meta_key`,`hash`,`sid`) values ('$from','$fromname','$to','$reply_to','$subject','$htmlbody','{$parameters['textbody']}','$headers','$htmlenabled','$email_type','$delivery_type','$meta_key','$hash','$sid');";
-	$wpdb->query($insertEmailQuery);
-}
-
 function _wpr_process_sendmail_parameters($sid, $params,$footerMessage="")
 {
     global $wpdb;
@@ -283,7 +268,7 @@ function dispatchEmail($mail)
 
 			$mail['htmlbody'] = stripslashes($mail['htmlbody']);
 
-			if (WPR_Config::attach_images_with_emails())
+			if (JavelinConfig::attach_images_with_emails())
 			{
 				attachImagesToMessageAndSetBody($message,$mail['htmlbody']);
 			}
@@ -371,15 +356,10 @@ function getImagesInMessage($message)
 
 
 				$theURL = "http://".$url[0].$theURL;
-
 			}
-
 			else if (strpos($theURL,"http://") > 0) //probably a relative path to the blog root.
-
 			{
-
 				$theURL = get_option("siteurl")."/".$theURL;
-
 			}
 
 			$list[] = $theURL;
@@ -500,7 +480,7 @@ function getMailTransport()
 
 function wpr_get_unsubscription_url($sid)
 {
-	$baseURL = get_bloginfo("url");
+	$baseURL = get_bloginfo("wpurl");
 	$subscriber = _wpr_subscriber_get($sid);
 	$newsletter = _wpr_newsletter_get($subscriber->nid);
 	$nid = $newsletter->id;

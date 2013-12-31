@@ -25,7 +25,6 @@ class EmailQueueTest extends WP_UnitTestCase
             "meta_key" => "TEST-TEST-TEST"
         );
 
-
         $expectedHtmlBody = sprintf('%s<br />%s<br /><a href="%s">Click here to unsubscribe.</a>', $email['htmlbody'], $this->senderAddressSetting, $this->subscriber->getUnsubscriptionUrl());
         $expectedTextBody = sprintf("%s\r\n%s\r\nClick here to unsubscribe:\r\n%s", $email['textbody'], JavelinConfig::senderAddress(), $this->subscriber->getUnsubscriptionUrl());
 
@@ -34,6 +33,27 @@ class EmailQueueTest extends WP_UnitTestCase
         $this->assertEquals($expectedHtmlBody, $emailObj->getHtmlBody());
         $this->assertEquals($expectedTextBody, $emailObj->getTextBody());
         $this->assertEquals($email['meta_key'], $emailObj->getMetaKey());
+    }
+
+    public function testWhetherUnsubscriptionTagGetsReplaced()
+    {
+        global $javelinQueue;
+        $htmlBody = "This is a test html body ";
+        $textBody = "This is a test text body ";
+        $params = array(
+            "subject" => "This is a test email",
+            "htmlbody" => "{$htmlBody}[!unsubscribe!]",
+            "textbody" => "{$textBody}[!unsubscribe!]",
+            "meta_key" => "TEST-TEST-TEST"
+        );
+
+        $expectedHtmlBody = sprintf('%s%s<br />%s<br />',$htmlBody, $this->subscriber->getUnsubscriptionUrl(), $this->senderAddressSetting);
+        $expectedTextBody = sprintf("%s%s\r\n%s",$textBody, $this->subscriber->getUnsubscriptionUrl(), $this->senderAddressSetting);
+
+        $email = $javelinQueue->enqueue($this->subscriber, $params);
+
+        $this->assertEquals($expectedHtmlBody, $email->getHtmlBody());
+        $this->assertEquals($expectedTextBody, $email->getTextBody());
     }
 
     public function testWhetherTheQueueInfersValuesOtherParametersWhenLeftOut()

@@ -65,11 +65,6 @@ class EmailQueueTest extends WP_UnitTestCase
         $this->assertEquals($this->subscriber->getId(), $email->getSubscriber()->getId());
     }
 
-    public function testWhetherTheQueueInfersValuesOtherParametersWhenLeftOut()
-    {
-        //check if the htmlenabled parameter is automatically
-    }
-
     /**
      * @expectedException InvalidArgumentException
      */
@@ -152,8 +147,17 @@ class EmailQueueTest extends WP_UnitTestCase
 
     public function testWhetherEnqueueingAssumesAnAppropriateSentValueAsProvided()
     {
-        
+        global $javelinQueue;
+        $params = array(
+            "subject" => "This is a test email",
+            "htmlbody" => "Test",
+            "textbody" => "Test",
+            "meta_key" => "TEST-TEST-TEST",
+            'sent' => 1
+        );
 
+        $email = $javelinQueue->enqueue($this->subscriber, $params);
+        $this->assertEquals(1, $email->isSent());
     }
 
     function tearDown()

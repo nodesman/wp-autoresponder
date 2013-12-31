@@ -30,6 +30,9 @@ class EmailQueue
             throw new InvalidArgumentException("Email missing the meta key. What kind of email is this? Who is this for?");
         }
 
+        if (isset($email['sent']) && !in_array($email['sent'], array( 0, 1)))
+           throw new InvalidArgumentException("Invalid status given for sent status");
+
         $email['to'] = $subscriber->getEmail();
         $email['headers'] = ''; //may be some day
 
@@ -47,7 +50,7 @@ class EmailQueue
         $email['htmlenabled'] = ($this->isHtmlBodyEmpty($email)) ? 1 : 0 ;
         $email['delivery_type'] = 0;
         $email['hash'] = $this->getHash($subscriber, $email);
-        $email['sent'] = 0;
+        $email['sent'] = ( isset($email['sent']))? $email['sent'] : 0;
         $email['sid'] = $subscriber->getId();
 
         $this->replaceCustomFields($subscriber, $email);

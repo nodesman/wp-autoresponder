@@ -22,6 +22,7 @@ class EmailQueueTest extends WP_UnitTestCase
     public function testWhetherEnqueueAddsEmailToQueue()
     {
         global $javelinQueue;
+
         $email = array(
             "subject" => "This is a test email",
             "htmlbody" => "This is a test html body",

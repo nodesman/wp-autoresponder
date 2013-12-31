@@ -2,6 +2,7 @@
 class JEmail {
 
     private $subject;
+    private $id;
 
     private $htmlbody;
     private $textbody;
@@ -10,15 +11,15 @@ class JEmail {
     private $isSent;
     private $meta_key;
     private $reply_to;
-
     public function __construct($id) {
         global $wpdb;
-        $id = intval ($id);
-        if (0 == $id)
+        $inted_id = intval ($id);
+        if (0 == $inted_id)
             throw new InvalidArgumentException("Invalid ID provided for email.");
-        $getEmailQuery = sprintf("SELECT * FROM `%swpr_queue` WHERE `id`=%d;", $wpdb->prefix, $id);
+        $getEmailQuery = sprintf("SELECT * FROM `%swpr_queue` WHERE `id`=%d;", $wpdb->prefix, $inted_id);
         $email = $wpdb->get_row($getEmailQuery);
         $this->subject = $email->subject;
+        $this->id = $email->id;
         $this->htmlbody = $email->htmlbody;
         $this->textbody = $email->textbody;
         $this->subscriber = ($email->sid != 0) ? new Subscriber($email->sid) : NULL;
@@ -26,6 +27,14 @@ class JEmail {
         $this->reply_to = $email->reply_to;
         $this->isSent = (int) $email->sent;
         $this->isHtml = (int) $email->htmlenabled;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

@@ -139,12 +139,6 @@ function checkIfNewsletterNameExists($name)
 function _wpr_newsletter_add()
 {
     _wpr_setview("newsletter_form");
-    if (!_wpr_isset("parameters"))
-    {
-        $id = $_GET['nid'];
-        $newsletter = _wpr_newsletter_get($id);
-        _wpr_set("parameters",$newsletter);
-    }
     _wpr_set("heading",__("Create Newsletter",'wpr_autoresponder'));
     _wpr_set("edit",false);
     _wpr_set("button_text",__("Create Newsletter",'wpr_autoresponder'));

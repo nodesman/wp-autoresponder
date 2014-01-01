@@ -1,19 +1,33 @@
+<?php
+if (!isset($parameters) || count($parameters) == 0) 
+{
+	$parameters = (object) array (
+		'name' => '',
+		'fromname' => '',
+		'fromemail'=> '',
+		'reply_to' => '',
+		'id' => ''
+	);
+}
 
+?>
 <style>
-    td {
+td {
         padding: 10px;
 }
 </style>
 <?php
-if (count($errors) > 0)
+if (isset($errors) && count($errors) > 0)
 {
 ?>
-<div class="error fade">
-    <ol><?php
-
-$error_text = implode("<li>",$errors);
-
-echo "<li>$error_text"; ?></ol></div>
+	<div class="error fade">
+	    <ol>
+			<?php
+				$error_text = implode("<li>",$errors);
+				echo "<li>". $error_text;
+			?>
+		</ol>
+	</div>
 <?php
 }
 ?>

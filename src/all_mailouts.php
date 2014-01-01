@@ -1,7 +1,8 @@
 <?php
 function wpr_all_mailouts()
 {
-	switch ($_GET['action'])
+	$action = (isset($_GET['action']))?$_GET['action']:'';
+	switch ($action)
 	{
 		case 'edit':
 		

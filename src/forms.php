@@ -1,12 +1,12 @@
 <?php
-
 include "forms.lib.php";
 
 function wpr_subscriptionforms()
 {
 	if (_wpr_no_newsletters("To create subscription forms"))
 		return;
-	switch ($_GET['action'])
+	$action = (isset($_GET['action']))?$_GET['action']:'';
+	switch ($action)
 	{
 		case 'create':
             _wpr_subscriptionforms_create();
@@ -44,116 +44,114 @@ function wpr_subscriptionforms()
 		break;
 
 		case 'edit':
-		$id = (int) $_GET['fid'];
-		do_action("_wpr_subscriptionform_edit_form_controller",$id);
-		$form = _wpr_subscriptionform_get($id);
-
-
-        $form->confirm_subject = stripslashes($form->confirm_subject);
-        $form->confirm_body = stripslashes($form->confirm_body);
-        $form->confirmed_subject = stripslashes($form->confirmed_subject);
-        $form->confirmed_body = stripslashes($form->confirmed_body);
-
-		if (isset($_POST['fid']))
-		{
-			$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
-			$errors = array();
-			foreach ($checkList as $field=>$errorMessage)
+			$id = (int) $_GET['fid'];
+			do_action("_wpr_subscriptionform_edit_form_controller",$id);
+			$form = _wpr_subscriptionform_get($id);
+	
+	
+	        $form->confirm_subject = stripslashes($form->confirm_subject);
+	        $form->confirm_body = stripslashes($form->confirm_body);
+	        $form->confirmed_subject = stripslashes($form->confirmed_subject);
+	        $form->confirmed_body = stripslashes($form->confirmed_body);
+	
+			if (isset($_POST['fid']))
 			{
-				$theValue = $_POST[$field];
-				$theValue = trim($theValue);
-				if (empty($theValue))
+				$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
+				$errors = array();
+				foreach ($checkList as $field=>$errorMessage)
 				{
-					$errors[] = $checkList[$field];
-				}
-			}			
-			$errors = apply_filters("_wpr_subscriptionform_edit_handler_validate",$errors);
-			if (count($errors) == 0)
-			{		
-				$info['id'] = $_GET['fid'];
-				$info['name'] = $_POST['name'];
-				$info['return_url'] = $_POST['return_url'];
-				if (!preg_match("@postseries_[0-9]+@",$_POST['followup']) && !preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
-				{
-				    $info['followup_id'] = 0;
-				    $info['followup_type'] = "none";
-				}
-				else
-				{
-					if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+					$theValue = $_POST[$field];
+					$theValue = trim($theValue);
+					if (empty($theValue))
 					{
-						$followup = "autoresponder";
-						$followupid = str_replace("autoresponder_","",$_POST['followup']);
+						$errors[] = $checkList[$field];
 					}
-					else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
+				}			
+				$errors = apply_filters("_wpr_subscriptionform_edit_handler_validate",$errors);
+				if (count($errors) == 0)
+				{		
+					$info['id'] = $_GET['fid'];
+					$info['name'] = $_POST['name'];
+					$info['return_url'] = $_POST['return_url'];
+					if (!preg_match("@postseries_[0-9]+@",$_POST['followup']) && !preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 					{
-						$followup = "postseries";
-						$followupid = str_replace("postseries_","",$_POST['followup']);
+					    $info['followup_id'] = 0;
+					    $info['followup_type'] = "none";
 					}
 					else
 					{
-						$followup = "none";
-						$followupid = 0;
-					}
-				}
-				$info['followup_type'] = $followup;
-
-				$info['followup_id'] = $followupid;
-				//if it is a unknown follow-up type its probably an extended one. 
-				
-				switch ($_POST['blogsubscription'])
-				{
-					case 'none':
-					case 'all':
-						$blogSubscription = $_POST['blogsubscription'];
-						break;
-					default:				
-						if (preg_match("@category_[0-9]+@",$_POST['blogsubscription']))
+						if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 						{
-							$blogSubscription = "cat";
-							$blogCategory = str_replace("category_","",$_POST['blogsubscription']);
+							$followup = "autoresponder";
+							$followupid = str_replace("autoresponder_","",$_POST['followup']);
 						}
+						else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
+						{
+							$followup = "postseries";
+							$followupid = str_replace("postseries_","",$_POST['followup']);
+						}
+						else
+						{
+							$followup = "none";
+							$followupid = 0;
+						}
+					}
+					$info['followup_type'] = $followup;
+	
+					$info['followup_id'] = $followupid;
+					//if it is a unknown follow-up type its probably an extended one. 
 					
+					switch ($_POST['blogsubscription'])
+					{
+						case 'none':
+						case 'all':
+							$blogSubscription = $_POST['blogsubscription'];
+							break;
+						default:				
+							if (preg_match("@category_[0-9]+@",$_POST['blogsubscription']))
+							{
+								$blogSubscription = "cat";
+								$blogCategory = str_replace("category_","",$_POST['blogsubscription']);
+							}
+						
+					}
+	
+					$info['blogsubscription_type'] = $blogSubscription;
+	
+					$info['blogsubscription_id'] = $blogCategory;
+					
+					$info['submit_button'] = $_POST['submit_value'];
+	
+					$info['custom_fields'] = (isset($_POST['custom_fields']) && is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
+	
+					$info['confirm_subject'] = $_POST['confirm_subject'];
+	
+					$info['confirm_body'] = $_POST['confirm_body'];
+	
+					$info['nid'] = $_POST['newsletter'];
+	
+					$info['confirmed_subject'] = $_POST['confirmed_subject'];
+	
+					$info['confirmed_body'] = $_POST['confirmed_body'];
+					_wpr_subscriptionform_update($info);
+					do_action("_wpr_subscriptionform_edit_handler_save",$info['id']);
+					$form = _wpr_subscriptionform_get($info['id']);
+					_wpr_subscriptionform_getcode($form,"Form Saved");
+					return;
+	
 				}
-
-				$info['blogsubscription_type'] = $blogSubscription;
-
-				$info['blogsubscription_id'] = $blogCategory;
-				
-				$info['submit_button'] = $_POST['submit_value'];
-
-				$info['custom_fields'] = (isset($_POST['custom_fields']) && is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
-
-				$info['confirm_subject'] = $_POST['confirm_subject'];
-
-				$info['confirm_body'] = $_POST['confirm_body'];
-
-				$info['nid'] = $_POST['newsletter'];
-
-				$info['confirmed_subject'] = $_POST['confirmed_subject'];
-
-				$info['confirmed_body'] = $_POST['confirmed_body'];
-				_wpr_subscriptionform_update($info);
-				do_action("_wpr_subscriptionform_edit_handler_save",$info['id']);
-				$form = _wpr_subscriptionform_get($info['id']);
-				_wpr_subscriptionform_getcode($form,"Form Saved");
-				return;
-
-			}
-
-			else 
-
-			$form = (object) $_POST;
-
-		}		
-
-		_wpr_subscriptionform_form($form,$errors);		
-
+	
+				else 
+	
+				$form = (object) $_POST;
+	
+			}		
+	
+			_wpr_subscriptionform_form($form,$errors);		
+	
 		break;
-
 		default:
-
-		_wpr_subscriptionforms_list();
+			_wpr_subscriptionforms_list();
 
 	}
 
@@ -498,6 +496,9 @@ function _wpr_subscriptionforms_create()
 {
 
 	global $wpdb;
+	
+	$params = array();
+	$errors = array();
 
 	$fieldsToSelect = array(); //just initializing the custom fields to be selected when the form loads..	
 
@@ -531,12 +532,12 @@ function _wpr_subscriptionforms_create()
 		$info['return_url'] = $_POST['return_url'];
 		
 		
-		if (preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+		if (isset($_POST['followup']) && preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 		{
 			$followup = "autoresponder";
 			$followupid = str_replace("autoresponder_","",$_POST['followup']);
 		}
-		else if (preg_match("@postseries_[0-9]+@",$_POST['followup']))
+		else if (isset($_POST['followup']) && preg_match("@postseries_[0-9]+@",$_POST['followup']))
 		{
 			$followup = "postseries";
 			$followupid = str_replace("postseries_","",$_POST['followup']);
@@ -571,10 +572,8 @@ function _wpr_subscriptionforms_create()
 		
 
 		$info['blogsubscription_type'] = $blogSubscription;
-
-		$info['blogsubscription_id'] = $blogCategory;
-
-		$info['custom_fields'] = (is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
+		$info['blogsubscription_id'] = (isset($blogCategory))?$blogCategory:0;
+		$info['custom_fields'] = (isset($_POST['custom_fields']) && is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
 
 		$info['confirm_subject'] = $_POST['confirm_subject'];
 
@@ -603,10 +602,7 @@ function _wpr_subscriptionforms_create()
 		$params = (object) $info;	
 	}
 
-	
-
 	_wpr_subscriptionform_form($params,$errors);
-
 }
 
 
@@ -956,8 +952,8 @@ function showFields(elements)
 
 }
 
-var autoresponderToBeSelected = '<?php echo ($parameters->followup_type == "postseries")?"postseries_":"autoresponder_";
-echo $parameters->followup_id; ?>';
+var autoresponderToBeSelected = '<?php echo (@$parameters->followup_type == "postseries")?"postseries_":"autoresponder_";
+echo @$parameters->followup_id; ?>';
 
 
 function setValueOfAutoresponderField()
@@ -975,7 +971,7 @@ var toSelect = new Array(); //custom field ids to select.
 <?php
 
 
-if (count($fieldsToSelect) > 0)
+if (isset($fieldsToSelect) && count($fieldsToSelect) > 0)
 
 {
 
@@ -1048,10 +1044,8 @@ function loadFollowUpAutoresponderList()
 <div style="display:none">
   <?php 
 
-$query = "SELECT id from ".$prefix."wpr_newsletters";
-
+$query = sprintf("SELECT id from %swpr_newsletters", $wpdb->prefix);
 $newsletters  = $wpdb->get_results($query);
-
 foreach ($newsletters as $newsletter)
 {
 	$nid = $newsletter->id;
@@ -1059,7 +1053,7 @@ foreach ($newsletters as $newsletter)
   <div id="fields-<?php echo $nid?>">
     <?php 
 
-   $query = "SELECT * FROM ".$prefix."wpr_custom_fields where nid=$nid";
+   $query = sprintf("SELECT * FROM %swpr_custom_fields where nid = $nid", $wpdb->prefix);
 
    $customFields = $wpdb->get_results($query);
 
@@ -1143,24 +1137,20 @@ foreach ($newsletters as $newsletter)
 ?>
 </div>
 <form action="<?php print $_SERVER['REQUEST_URI'] ?>" method="post">
-  <input type="hidden" value="<?php echo $parameters->id  ?>"  name="fid"/>
   <table width="700">
     <tr>
       <td><strong>Name:</strong>
         <p><small>This form's settings will be saved. This name will be used to identify the settings.</small></p></td>
-      <td><input type="text" id="formnamefield" name="name" size="60" value="<?php echo $parameters->name ?>" /></td>
+      <td><input type="text" id="formnamefield" name="name" size="60" value="<?php echo (isset($parameters->name))?$parameters->name:''; ?>" /></td>
     </tr>
     <tr>
       <td><strong>Newsletter:</strong>
         <p><small>Select the newsletter to which subscribers will be subscribed when filling this form.</small></p></td>
       <td><select name="newsletter" id="newsletterlist" onchange="load(this.options[this.selectedIndex].value);updateAutorespondersOption(this.options[this.selectedIndex].value);">
           <?php
-
 		  $query = "SELECT * FROM ".$wpdb->prefix."wpr_newsletters";
-
 		  $newsletters = $wpdb->get_results($query);
-		  
-		  if (count($newsletters)>0)
+		  if (count($newsletters) > 0)
 		  {
 			  ?>
           <option></option>
@@ -1172,7 +1162,7 @@ foreach ($newsletters as $newsletter)
 				  ?>
           <option value="<?php echo $newsletter->id; ?>" <?php 
 	
-				  if ($parameters->nid == $newsletter->id) 
+				  if (isset($parameters->nid) && $parameters->nid == $newsletter->id) 
 	
 				  {
 	
@@ -1190,15 +1180,17 @@ foreach ($newsletters as $newsletter)
     <tr>
       <td width="300"><strong>Return URL:</strong>
         <p><small> The subscriber is sent to this url after entering their name and email address in the subscription form. </small></p></td>
-      <td><input type="text" id="returnurlfield" name="return_url" size="60" value="<?php echo $parameters->return_url ?>" /></td>
+      <td><input type="text" id="returnurlfield" name="return_url" size="60" value="<?php echo (!empty($parameters->return_url))?$parameters->return_url:''; ?>" /></td>
     </tr>
     <tr>
       <td><strong>Blog Subscription</strong>:
         <p> <small> Specify what kind of blog subscription will those who use this form will have:</small></p></td>
       <td>
       <select name="blogsubscription">
-          <option value="none" <?php if ($parameters->blogsubscription_type=="none") { echo 'selected="selected"'; } ?>>None</option>
-          <option value="all" <?php if ($parameters->blogsubscription_type=="all") { echo 'selected="selected"'; } ?>>Subscribe to all new posts on
+          <option value="none" <?php if (!empty($parameters->blogsubscription_type) && $parameters->blogsubscription_type=="none") { 
+          echo 'selected="selected"';
+           } ?>>None</option>
+          <option value="all" <?php if (!empty($parameters->blogsubscription_type) && $parameters->blogsubscription_type=="all") { echo 'selected="selected"'; } ?>>Subscribe to all new posts on
           <?php bloginfo("name") ?>
           </option>
           <optgroup label="Particular Blog Category:">
@@ -1216,7 +1208,7 @@ foreach ($newsletters as $newsletter)
                  foreach ($categories as $category)
                  {
                      ?>
-          <option value="category_<?php echo $category->term_id; ?>" <?php if ($parameters->blogsubscription_type=="cat" && $parameters->blogsubscription_id == $category->term_id) echo 'selected="selected"'; ?>><?php echo $category->name ?></option>
+          <option value="category_<?php echo $category->term_id; ?>" <?php if (!empty($parameters->blogsubscription_type) && $parameters->blogsubscription_type=="cat" && $parameters->blogsubscription_id == $category->term_id) echo 'selected="selected"'; ?>><?php echo $category->name ?></option>
           <?php
                  }
                 ?>
@@ -1238,21 +1230,25 @@ foreach ($newsletters as $newsletter)
       $types['Post Series'] = array();
       foreach ($listOfPostSeries as $post_series)
       {
-	$item = array("name"=> $post_series->name,
-	              "id"=>"postseries_".$post_series->id);
-	$types['Post Series'][] = $item;
-        if ($parameters->followup_type = "postseries" && $parameters->followup_id == $post_series->id)
-	{
-		$indexOfThisItem = count($types['Post Series'])-1;
-		$types['Post Series'][$indexOfThisItem]['selected'] = true;
-		$types['Selected'] = &$types['Post Series'][$indexOfThisItem];
-	}
+		$item = array(
+			"name"=> $post_series->name,
+		    "id"=>"postseries_".$post_series->id
+		);
+		
+	    $types['Post Series'][] = $item;
+	    //TODO: remove this code entirely once we can get to the point where we are phasing out post series. 
+        if (@$parameters->followup_type = "postseries" && @$parameters->followup_id == $post_series->id)
+		{
+			$indexOfThisItem = count($types['Post Series'])-1;
+			$types['Post Series'][$indexOfThisItem]['selected'] = true;
+			$types['Selected'] = &$types['Post Series'][$indexOfThisItem];
+		}
       }
       
        $types = apply_filters("_wpr_subscription_form_followup_options",$types);
        $whetherInvalidFollowupSeries = false;
 
-      if ($parameters->followup_id != 0 && $types['Selected'] == null)
+      if (!empty($parameters->followup_id) && $parameters->followup_id != 0 && $types['Selected'] == null)
       {
           $whetherInvalidFollowupSeries = true;
       }
@@ -1299,13 +1295,13 @@ foreach ($newsletters as $newsletter)
       <p>
       <small>The label that will be used for the subscription form submit button</small></p>
       </td>
-      <td><input type="text" size="60" name="submit_value" value="<?php echo ($parameters->submit_button)?$parameters->submit_button:"Subscribe"; ?>" ></td>
+      <td><input type="text" size="60" name="submit_value" value="<?php echo (!empty($parameters->submit_button))?$parameters->submit_button:"Subscribe"; ?>" ></td>
     </tr>
 	<?php 
-	if (!$parameters->id)	
-	  do_action("_wpr_subscriptionform_form_field","");
+	if (empty($parameters->id))	
+	  do_action("_wpr_subscriptionform_form_field",0);
 	else
-	   do_action("_wpr_subscriptionform_form_field",$parameters->id); ?>
+	   do_action("_wpr_subscriptionform_form_field", $parameters->id); ?>
     <tr>
       <td colspan="2"><div class="wrap">
           <h3>More Form Fields</h3>
@@ -1323,38 +1319,25 @@ foreach ($newsletters as $newsletter)
 
 
 
-   if (!$parameters->confirm_subject) 
-
+   if (empty($parameters->confirm_subject))
    {
-
 		$confirm_subject = get_option('wpr_confirm_subject');
-
 		echo $confirm_subject;
-
    }
-
    else
-
    {
-
 	      echo $parameters->confirm_subject;
-
    }
-
    ?>" /></td>
           </tr>
           <tr>
             <td colspan="2"> Message Body:<br />
-              <textarea id="confirmb" name="confirm_body" rows="10" cols="60" wrap="hard"><?php 
+              <textarea id="confirmb" name="confirm_body" rows="10" cols="100"><?php 
 
-if (!$parameters->confirm_body) 
-
+if (empty($parameters->confirm_body))
 {
-
 	$confirm_email = get_option('wpr_confirm_body');
-
 	echo $confirm_email;
-
 }
 
 else
@@ -1373,11 +1356,11 @@ else
         <table>
           <tr>
             <td>Subject:</td>
-            <td><input id="confirmeds" type="text" name="confirmed_subject" value="<?php echo ($parameters->confirmed_subject)?$parameters->confirmed_subject:get_option("wpr_confirmed_subject"); ?>" size="60" /></td>
+            <td><input id="confirmeds" type="text" name="confirmed_subject" value="<?php echo (!empty($parameters->confirmed_subject))?$parameters->confirmed_subject:get_option("wpr_confirmed_subject"); ?>" size="60" /></td>
           </tr>
           <tr>
             <td colspan="2"> Message Body:<br />
-              <textarea id="confirmedb" name="confirmed_body" rows="10" cols="60"><?php echo ($parameters->confirmed_body)?$parameters->confirmed_body:get_option("wpr_confirmed_body"); ?></textarea></td>
+              <textarea id="confirmedb" name="confirmed_body" rows="10" cols="100"><?php echo (!empty($parameters->confirmed_body))?$parameters->confirmed_body:get_option("wpr_confirmed_body"); ?></textarea></td>
           </tr>
         </table></td>
     </tr>

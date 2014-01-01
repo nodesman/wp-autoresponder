@@ -175,7 +175,7 @@ if (!defined("WPR_DEFS")) {
         public function whetherBroadcastCompositionScreen()
         {
 
-            return isset($_GET['page']) && ('wpresponder/newmail.php' == $_GET['page'] || ('wpresponder/allmailouts.php' == $_GET['page'] && 'edit' == $_GET['action']));
+            return ('wpresponder/newmail.php' == $_GET['page'] || ('wpresponder/allmailouts.php' == $_GET['page'] && isset($_GET['action']) && 'edit' == $_GET['action'] ));
         }
 
         function admin_init()
@@ -323,6 +323,8 @@ if (!defined("WPR_DEFS")) {
 
     function whetherActionsPage()
     {
+        if (!isset($_GET['page']))
+            return false;
         return 'wpresponder/actions.php' == $_GET['page'];
     }
 

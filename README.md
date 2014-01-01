@@ -32,3 +32,7 @@ The plugin is currently undergoing a phased rewrite/refactoring. Don't be surpri
 Making assumptions about the programming constructs that will be available in the plugin - functions, classes are not at all safe. The only constant between now and the future versions are the hooks and filters that I have implemented in the plugin. You can rely on them. If you want your own, implement them and write tests for them.
 
 Bon voyage!
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nodesman/wp-javelin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

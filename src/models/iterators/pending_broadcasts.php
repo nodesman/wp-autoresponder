@@ -1,8 +1,8 @@
 <?php
-include_once __DIR__."/../broadcast.php";
+include_once dirname(__FILE__)."/../broadcast.php";
 
-class PendingBroadcasts implements Iterator, Countable {
-
+class PendingBroadcasts implements Iterator, Countable
+{
     private $index;
     private $dispatchDeadline;
     private $length;

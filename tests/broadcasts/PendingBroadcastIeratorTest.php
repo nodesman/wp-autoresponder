@@ -1,5 +1,4 @@
 <?php
-require __DIR__."/../../src/models/iterators/pending_broadcasts.php";
 
 class PendingBroadcastIteratorTest extends WP_UnitTestCase
 {

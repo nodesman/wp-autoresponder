@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__."/email.php";
+include_once dirname(__FILE__)."/email.php";
 class EmailQueue
 {
     private static $instance;

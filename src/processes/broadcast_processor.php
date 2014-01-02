@@ -1,6 +1,6 @@
 <?php
-include_once __DIR__."/../models/iterators/pending_broadcasts.php";
-include_once __DIR__."/../models/iterators/confirmed_newsletter_subscribers_list.php";
+include_once dirname(__FILE__)."/../models/iterators/pending_broadcasts.php";
+include_once dirname(__FILE__)."/../models/iterators/confirmed_newsletter_subscribers_list.php";
 
 class BroadcastProcessor extends JavelinBackgroundProcess {
 

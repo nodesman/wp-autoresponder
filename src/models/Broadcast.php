@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__."/email_queue.php";
+include_once dirname(__FILE__)."/email_queue.php";
 class Broadcast
 {
     private $id;

@@ -476,7 +476,7 @@ foreach ($choices as $choice)
     </tr>
     <tr>
       <td colspan="2" align="center"><?php if ($enableForm) { ?>
-      <a href="http://www.wpresponder.com"><?php _e('Email Marketing by WP Autoresponder','wpr_autoresponder'); ?></a>
+      <a href="http://www.nodesman.com/javelin/"><?php _e('Email Marketing by Javelin','wpr_autoresponder'); ?></a>
       <?php } ?></td>
     </tr>
   </table>

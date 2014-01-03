@@ -1,4 +1,4 @@
-WP-Autoresponder
+Javelin Email Marketing
 ================
 
 Email marketing and newsletter plugin for WordPress

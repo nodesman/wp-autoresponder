@@ -45,18 +45,26 @@ function wpr_subscriptionforms()
 
 		case 'edit':
 			$id = (int) $_GET['fid'];
-			do_action("_wpr_subscriptionform_edit_form_controller",$id);
-			$form = _wpr_subscriptionform_get($id);
-	
-	
-	        $form->confirm_subject = stripslashes($form->confirm_subject);
+            $errors = array();
+
+            do_action("_wpr_subscriptionform_edit_form_controller",$id);
+            $form = _wpr_subscriptionform_get($id);
+
+            $form->confirm_subject = stripslashes($form->confirm_subject);
 	        $form->confirm_body = stripslashes($form->confirm_body);
 	        $form->confirmed_subject = stripslashes($form->confirmed_subject);
 	        $form->confirmed_body = stripslashes($form->confirmed_body);
-	
+
+
 			if (isset($_POST['fid']))
 			{
-				$checkList = array("name"=>"Name field is required","confirm_subject"=>"E-Mail Confirmation Subject Field is required","confirm_body"=>"E-Mail Confirmation Body field","confirmed_subject"=>"Confirmed Subscription subject field is required","confirmed_body"=>"Confirmed subscription body field is required");
+				$checkList = array(
+                    "name" => "Name field is required",
+                    "confirm_subject"=>"E-Mail Confirmation Subject Field is required",
+                    "confirm_body"=>"E-Mail Confirmation Body field",
+                    "confirmed_subject"=>"Confirmed Subscription subject field is required",
+                    "confirmed_body"=>"Confirmed subscription body field is required"
+                );
 				$errors = array();
 				foreach ($checkList as $field=>$errorMessage)
 				{
@@ -66,14 +74,16 @@ function wpr_subscriptionforms()
 					{
 						$errors[] = $checkList[$field];
 					}
-				}			
+				}
+
 				$errors = apply_filters("_wpr_subscriptionform_edit_handler_validate",$errors);
 				if (count($errors) == 0)
 				{		
 					$info['id'] = $_GET['fid'];
 					$info['name'] = $_POST['name'];
 					$info['return_url'] = $_POST['return_url'];
-					if (!preg_match("@postseries_[0-9]+@",$_POST['followup']) && !preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
+
+					if (!isset($_POST['followup']) || !preg_match("@postseries_[0-9]+@", $_POST['followup']) && !preg_match("@autoresponder_[0-9]+@",$_POST['followup']))
 					{
 					    $info['followup_id'] = 0;
 					    $info['followup_type'] = "none";
@@ -95,17 +105,17 @@ function wpr_subscriptionforms()
 							$followup = "none";
 							$followupid = 0;
 						}
-					}
-					$info['followup_type'] = $followup;
-	
-					$info['followup_id'] = $followupid;
-					//if it is a unknown follow-up type its probably an extended one. 
-					
+                        $info['followup_type'] = $followup;
+                        $info['followup_id'] = $followupid;
+                    }
+
+					//if it is a unknown follow-up type its probably an extended one.
 					switch ($_POST['blogsubscription'])
 					{
 						case 'none':
 						case 'all':
 							$blogSubscription = $_POST['blogsubscription'];
+                            $blogCategory = 0;
 							break;
 						default:				
 							if (preg_match("@category_[0-9]+@",$_POST['blogsubscription']))
@@ -113,40 +123,26 @@ function wpr_subscriptionforms()
 								$blogSubscription = "cat";
 								$blogCategory = str_replace("category_","",$_POST['blogsubscription']);
 							}
-						
 					}
-	
 					$info['blogsubscription_type'] = $blogSubscription;
-	
 					$info['blogsubscription_id'] = $blogCategory;
-					
 					$info['submit_button'] = $_POST['submit_value'];
-	
 					$info['custom_fields'] = (isset($_POST['custom_fields']) && is_array($_POST['custom_fields']))?implode(",",$_POST['custom_fields']):"";
-	
 					$info['confirm_subject'] = $_POST['confirm_subject'];
-	
 					$info['confirm_body'] = $_POST['confirm_body'];
-	
 					$info['nid'] = $_POST['newsletter'];
-	
 					$info['confirmed_subject'] = $_POST['confirmed_subject'];
-	
+
 					$info['confirmed_body'] = $_POST['confirmed_body'];
 					_wpr_subscriptionform_update($info);
 					do_action("_wpr_subscriptionform_edit_handler_save",$info['id']);
 					$form = _wpr_subscriptionform_get($info['id']);
 					_wpr_subscriptionform_getcode($form,"Form Saved");
 					return;
-	
 				}
-	
-				else 
-	
-				$form = (object) $_POST;
-	
-			}		
-	
+				else
+				    $form = (object) $_POST;
+			}
 			_wpr_subscriptionform_form($form,$errors);		
 	
 		break;
@@ -605,39 +601,18 @@ function _wpr_subscriptionforms_create()
 	_wpr_subscriptionform_form($params,$errors);
 }
 
-
-
-function _wpr_subscriptionform_form($parameters=array(),$errors=array())
-
+function _wpr_subscriptionform_form($parameters = array(),$errors = array())
 {
-
 	$parameters = (object)$parameters;
-        
-
-        if (!empty($parameters->custom_fields))
-
-            $fieldsToSelect = explode(",",$parameters->custom_fields);
-
+    if (!empty($parameters->custom_fields))
+        $fieldsToSelect = explode(",",$parameters->custom_fields);
 	global $wpdb;
-
-
-
-	?>
+    ?>
 <div class="wrap">
   <h2>Create Subscription Form</h2>
 </div>
+
 <script>
-
-
-
-/*
-
-
-The function is used to ensure that only valid inputs can be given to the autoresponder
-selection field.
-
-
-*/
 function Autoresponder(id,name)
 {
 	this.id=id;
@@ -1365,7 +1340,17 @@ else
         </table></td>
     </tr>
     <tr>
-      <td colspan="2"><input class="button" type="submit" onclick="return _wpr_validate_subform_form_fields()" value="Create Form And Get Code" />
+      <td colspan="2">
+<?php
+if (isset($parameters->id)) {
+?>
+  <input type="hidden" name="fid" value="<?php echo $parameters->id; ?>"/>
+<?php
+}
+?>
+
+
+          <input class="button" type="submit" onclick="return _wpr_validate_subform_form_fields()" value="Create Form And Get Code" />
         &nbsp;<a class="button" href="admin.php?page=wpresponder/subscriptionforms.php">Cancel</a></td>
     </tr>
   </table>

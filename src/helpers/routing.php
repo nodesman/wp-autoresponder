@@ -36,7 +36,7 @@ function _wpr_handle_post()
 function _wpr_render_view()
 {
         global $wpr_globals;
-        $plugindir = $GLOBALS['WPR_PLUGIN_DIR'];
+        $plugindir = WPR_DIR;
 
         $currentView = _wpr_get("_wpr_view");
 

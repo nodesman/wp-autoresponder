@@ -35,9 +35,9 @@ include_once "$modelsDir/newsletter.php";
 include_once "$modelsDir/autoresponder_message.php";
 include_once "$modelsDir/autoresponder.php";
 
-include_once WPR_DIR . "/home.php";
-include_once WPR_DIR . "/blog_series.php";
-include_once WPR_DIR . "/forms.php";
+include_once WPR_DIR . '/home.php';
+include_once WPR_DIR . '/blog_series.php';
+include_once WPR_DIR . '/forms.php';
 include_once WPR_DIR . '/newmail.php';
 include_once WPR_DIR . '/subscribers.php';
 include_once WPR_DIR . '/htmltemplates.lib.php';
@@ -80,8 +80,8 @@ include_once WPR_DIR . '/conf/events.php';
 include_once WPR_DIR . '/conf/files.php';
 include_once WPR_DIR . '/conf/config.php';
 
-include_once WPR_DIR."/helpers/routing.php";
-include_once WPR_DIR."/helpers/paging.php";
+include_once WPR_DIR . "/helpers/routing.php";
+include_once WPR_DIR . "/helpers/paging.php";
 
 $GLOBALS['wpr_globals'] = array();
 

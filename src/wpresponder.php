@@ -102,7 +102,9 @@ function _wpr_nag()
 
 class Javelin {
 
-    function __construct() {
+    private static $instance;
+
+    private function __construct() {
 
         add_action('admin_init',array($this, 'admin_init'));
         add_action('init', array($this, 'init'),1);
@@ -240,20 +242,18 @@ class Javelin {
         if (_wpr_whether_wpresponder_admin_page())
             Routing::run_controller();
     }
+
+    public static function getInstance()
+    {
+        if (empty(self::$instance))
+        {
+            self::$instance = new Javelin();
+        }
+        return self::$instance;
+    }
 }
 
-$javelin = new Javelin();
-
-register_activation_hook(WPR_DIR."/wpresponder.php", '_wpr_install');
-
-function _wpr_install()
-{
-    global $javelin;
-    echo "This is a test. Error Error";
-    exit;
-    $javelin->install();
-
-}
+register_activation_hook(__FILE__, array(Javelin::getInstance(), 'install'));
 
 function no_address_error()
 {
@@ -285,8 +285,6 @@ function _wpr_enqueue_admin_scripts_and_styles()
         wp_enqueue_script("wpresponder-scripts");
         wp_enqueue_script('post');
     }
-
-
     $whetherBroadcastEditPage = preg_match("@wpresponder/allmailouts.php&action=edit@", $querystring);
 
 

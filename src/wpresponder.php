@@ -20,8 +20,6 @@ $helpersDir = WPR_DIR."/helpers";
 define("WPR_VERSION", "5.3.12");
 define("WPR_PLUGIN_DIR", "$plugindir");
 
-
-$GLOBALS['WPR_PLUGIN_DIR'] = $plugindir;
 include_once "$controllerDir/newsletters.php";
 include_once "$controllerDir/custom_fields.php";
 include_once "$controllerDir/importexport.php";
@@ -94,7 +92,6 @@ function _wpr_nag()
     {
         add_action("admin_notices","no_address_error");
     }
-
     add_action("admin_notices","_wpr_admin_notices_show");
 }
 
@@ -221,25 +218,14 @@ class Javelin
         $confirmed_subject = file_get_contents(WPR_DIR . "/templates/confirmed_subject.txt");
         $confirmed_body = file_get_contents(WPR_DIR . "/templates/confirmed_body.txt");
 
-        if (!get_option("wpr_confirm_subject"))
-            add_option("wpr_confirm_subject", $confirm_subject);
-        else
-            update_option("wpr_confirm_subject", $confirm_subject);
+        update_option("wpr_confirm_subject", $confirm_subject);
+        update_option("wpr_confirm_body", $confirm_body);
+        update_option("wpr_confirmed_subject", $confirmed_subject);
+        update_option("wpr_confirmed_body", $confirmed_body);
+    }
 
-        if (!get_option("wpr_confirm_body"))
-            add_option("wpr_confirm_body", $confirm_body);
-        else
-            update_option("wpr_confirm_body", $confirm_body);
+    private function initOption($name, $value) {
 
-        if (!get_option("wpr_confirmed_subject"))
-            add_option("wpr_confirmed_subject", $confirmed_subject);
-        else
-            update_option("wpr_confirmed_subject", $confirmed_subject);
-
-        if (!get_option("wpr_confirmed_body"))
-            add_option("wpr_confirmed_body", $confirmed_body);
-        else
-            update_option("wpr_confirmed_body", $confirmed_body);
     }
 
     private function setNextCronScheduleTime()

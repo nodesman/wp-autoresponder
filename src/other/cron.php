@@ -12,16 +12,13 @@ function _wpr_schedule_crons_initial()
     $cron_schedules = $GLOBALS['wpr_cron_schedules'];
     foreach ($cron_schedules as $cron)
     {
-	if (false == wp_get_schedule($cron['action'],$cron['arguments']))
-	{
-            if (count($cron['arguments']) >0 )
-            {
-	        //check if the cron has already been scheduled
-                wp_schedule_event(time()+300,$cron['schedule'], $cron['action'], $cron['arguments']);
-	    }
-            else
-	    {
-                wp_schedule_event(time()+300, $cron['schedule'],$cron['action']);
+        if (false == wp_get_schedule($cron['action'],$cron['arguments']))
+        {
+            if (count($cron['arguments']) >0 )  {
+              wp_schedule_event(time()+300,$cron['schedule'], $cron['action'], $cron['arguments']);
+            }
+            else {
+              wp_schedule_event(time()+300, $cron['schedule'],$cron['action']);
             }
         }
     }
@@ -32,14 +29,10 @@ function _wpr_unschedule_crons()
 	$cron_schedules = $GLOBALS['wpr_cron_schedules'];
 	foreach ($cron_schedules as $cron)
 	{
-		if (count($cron['arguments']))
-		{
-			$next_scheduled = wp_next_scheduled($cron['action'],$cron['arguments']);
+		if (count($cron['arguments'])) {
 			wp_unschedule_event(time()+300, $cron['action'], $cron['schedule'],$cron['arguments']);
 		}
-		else
-		{
-			$next_scheduled = wp_next_scheduled($cron['action']);
+		else {
 			wp_unschedule_event(time()+300, $cron['action'], $cron['schedule']);
 		}
 	}

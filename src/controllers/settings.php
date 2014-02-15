@@ -10,10 +10,10 @@ function _wpr_settings_handler()
 	_wpr_set("admin_email",$admin_email);
 	
 	 $notificationEmail = get_option("wpr_notification_custom_email");
+     $notification_email_address = '';
 	 if ($notificationEmail != "admin_email") {
-		  $notification_email_address= get_option("wpr_notification_custom_email");
+		  $notification_email_address = get_option("wpr_notification_custom_email");
 	 }
-	 
 	 _wpr_set("notification_email_address",$notification_email_address);
 	 
 	 $tutorial_on = (get_option('wpr_tutorial_active') == "on");

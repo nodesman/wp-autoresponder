@@ -160,7 +160,7 @@ class Javelin
 
 
         if ($this->whetherBroadcastCompositionScreen()) {
-            wpr_enqueue_post_page_scripts();
+            $this->enqueueAdminScripts();
         }
 
         if (_wpr_whether_confirmed_subscription_request())
@@ -189,8 +189,7 @@ class Javelin
 
     public static function getInstance()
     {
-        if (empty(self::$instance))
-        {
+        if (empty(self::$instance)) {
             self::$instance = new Javelin();
         }
         return self::$instance;
@@ -224,15 +223,9 @@ class Javelin
         update_option("wpr_confirmed_body", $confirmed_body);
     }
 
-    private function initOption($name, $value) {
-
-    }
-
     private function setNextCronScheduleTime()
     {
-//the cron variable.
-        if (!get_option("wpr_next_cron"))
-            add_option("wpr_next_cron", time() + 300);
+        update_option("wpr_next_cron", time() + 300);
     }
 
     private function manageCapabilities()
@@ -250,7 +243,6 @@ class Javelin
     private function initializeOptions()
     {
         $options = $GLOBALS['initial_wpr_options'];
-
         foreach ($options as $option_name => $option_value) {
             $current_value = get_option($option_name);
             if (empty($current_value)) {
@@ -266,6 +258,16 @@ class Javelin
             add_option('wpr_notification_custom_email', 'admin_email');
         }
     }
+
+    private function enqueueAdminScripts()
+    {
+        wp_enqueue_style("wpresponder-tabber", get_bloginfo("wpurl") . "/?wpr-file=tabber.css");
+        wp_enqueue_style("wpr-jquery-ui");
+        wp_enqueue_script("wpresponder-tabber");
+        wp_enqueue_script("wpresponder-scripts");
+        wp_enqueue_script("wpresponder-ckeditor");
+        wp_enqueue_script("jquery");
+    }
 }
 
 register_activation_hook(__FILE__, array(Javelin::getInstance(), 'install'));
@@ -273,19 +275,6 @@ register_activation_hook(__FILE__, array(Javelin::getInstance(), 'install'));
 function no_address_error()
 {
     ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>.</strong></p></div><?php
-}
-
-function wpr_enqueue_post_page_scripts()
-{
-    if (isset($_GET['post_type']) && $_GET['post_type'] == "page")
-        return;
-
-    wp_enqueue_style("wpresponder-tabber", get_bloginfo("wpurl") . "/?wpr-file=tabber.css");
-    wp_enqueue_style("wpr-jquery-ui");
-    wp_enqueue_script("wpresponder-tabber");
-    wp_enqueue_script("wpresponder-scripts");
-    wp_enqueue_script("wpresponder-ckeditor");
-    wp_enqueue_script("jquery");
 }
 
 function _wpr_enqueue_admin_scripts_and_styles()

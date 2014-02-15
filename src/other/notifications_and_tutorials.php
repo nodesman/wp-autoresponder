@@ -108,15 +108,6 @@
 		}
 	}
 
-	function createNotificationEmail()
-	{
-
-		$not_email = get_option('wpr_notification_custom_email');
-		if (empty($not_email))
-			add_option('wpr_notification_custom_email','admin_email');
-		else
-			return false;
-	}
 
 	function wpr_enable_updates()
 	{

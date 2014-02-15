@@ -2,8 +2,8 @@
 function _wpr_firstrun()
 {
 	do_action("_wpr_firstrun");	
-	$db_checker = $GLOBALS['db_checker'];
-	$db_checker->perform_check();
+	$databaseInitializer = DatabaseChecker::getInstance();
+	$databaseInitializer->init();
 	add_option("_wpr_firstrun","done");
 	
 }

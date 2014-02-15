@@ -1,9 +1,20 @@
 <?php
 class DatabaseChecker
 {
+
+    private static $instance;
 	var $structure;
 	var $tables;
 	var $db;
+
+
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new DatabaseChecker();
+        }
+        return self::$instance;
+    }
 	
 	function __construct()
 	{
@@ -13,7 +24,7 @@ class DatabaseChecker
 		$this->structure = $database_structure;
 	}
 	
-	function perform_check()
+	function init()
 	{
             
             foreach ($this->structure as $table_name=>$structure)

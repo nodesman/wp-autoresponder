@@ -113,11 +113,11 @@
             $timeSinceLastEmailInDays = floor($timeSinceLastEmail/86400);
             //time between the two emails
 
-            $offsetOfMessage = $message->getDayNumber();
+            $offsetOfCurrentMessage = $message->getDayNumber();
             $previousMessage = $message->getPreviousMessage()->getDayNumber();
 
-            $difference = $offsetOfMessage-$previousMessage;
-            return ($timeSinceLastEmailInDays >= $difference);
+            $differenceBetweenMessagesInDays = $offsetOfCurrentMessage-$previousMessage;
+            return ($timeSinceLastEmailInDays >= $differenceBetweenMessagesInDays);
         }
 
         private function subscribers_processor_iteration_size()

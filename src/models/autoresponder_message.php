@@ -8,6 +8,7 @@ class AutoresponderMessage
     private $htmlbody;
     private $textbody;
     private $autoresponder_id;
+    private $offset;
 
     private function __construct($autoresponder_result_row) {
 
@@ -20,10 +21,13 @@ class AutoresponderMessage
 
     }
 
+    public function isFirstMessage() {
+        return ($this->offset == 0);
+    }
+
     public function getNextMessage() {
 
         global $wpdb;
-        //get message
 
         $getAutoresponderMessageQuery = sprintf("SELECT id FROM %swpr_autoresponder_messages WHERE aid=%d AND sequence > %d LIMIT 1; ", $wpdb->prefix, $this->getAutoresponder()->getId(), $this->getDayNumber());
         $emailResult = $wpdb->get_results($getAutoresponderMessageQuery);
@@ -118,7 +122,7 @@ class AutoresponderMessage
             $limitClause = '';
 
         $getAllValidAutoresponderMessagesQuery = sprintf("SELECT AM.* FROM %swpr_autoresponder_messages AM, %swpr_newsletters N, %swpr_autoresponders AU
-                        WHERE AM.aid=AU.id AND AU.nid=N.id %s;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix, $limitClause);
+                        WHERE AM.aid=AU.id AND AU.nid=N.id ORDER BY sequence ASC %s;", $wpdb->prefix,$wpdb->prefix,$wpdb->prefix, $limitClause);
         $messagesResults = $wpdb->get_results($getAllValidAutoresponderMessagesQuery);
 
 

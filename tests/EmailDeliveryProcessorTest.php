@@ -38,4 +38,13 @@ class EmailDeliveryProcessorTest extends WP_UnitTestCase
             $javelinQueue->enqueue($this->subscriber, $sentMail);
         }
     }
+
+    public function testDummy() {
+
+    }
+
+
+    public function tearDown() {
+
+    }
 } 

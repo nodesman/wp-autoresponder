@@ -84,16 +84,40 @@
 
             for ($iter=1; $iter <= $numberOfIterations; $iter++ ) {
 
-                $subscribers = $this->getNextRecipientBatch($message, strtotime($time->format("Y-m-d H:i:s")), $this->subscribers_processor_iteration_size());
 
+                $subscribers = $this->getNextRecipientBatch($message, strtotime($time->format("Y-m-d H:i:s")), $this->subscribers_processor_iteration_size());
                 $this->recordAutoresponderProcessHeartbeat();
-                for ($subiter=0;$subiter< count($subscribers); $subiter++) {
-                    $this->deliver($subscribers[$subiter], $message, $time);
+
+                for ($subscribersIndex=0;$subscribersIndex< count($subscribers); $subscribersIndex++)
+                {
+
+                    $currentSubscriber = $subscribers[$subscribersIndex];
+
+                    $currentSubscriber = $subscribers[$subscribersIndex];
+                    if (!$message->isFirstMessage() && (!$this->wasLastMessageDeliveredThePreviousMessageInTheSeries($message, $currentSubscriber) || !$this->isTimeElapsedSinceLastMessageIsAtleastIntervalBetweenCurrentAndPreviousMessage($message, $currentSubscriber, $time))) {
+                        continue;
+                    }
+
+                    $this->deliver($subscribers[$subscribersIndex], $message, $time);
                 }
 
                 $this->recordAutoresponderProcessHeartbeat();
-
             }
+        }
+
+        private function isTimeElapsedSinceLastMessageIsAtleastIntervalBetweenCurrentAndPreviousMessage(AutoresponderMessage $message, $subscriber, DateTime $time)
+        {
+            //time since last email was delivered
+            $timeSinceLastEmail = $time->getTimestamp() - $subscriber->last_date;
+
+            $timeSinceLastEmailInDays = floor($timeSinceLastEmail/86400);
+            //time between the two emails
+
+            $offsetOfMessage = $message->getDayNumber();
+            $previousMessage = $message->getPreviousMessage()->getDayNumber();
+
+            $difference = $offsetOfMessage-$previousMessage;
+            return ($timeSinceLastEmailInDays >= $difference);
         }
 
         private function subscribers_processor_iteration_size()
@@ -206,11 +230,7 @@
 
         private function getColumnUsedForReference($message)
         {
-            $columnUsedForReference = 'last_date';
-            if ($this->whetherFirstMessageOfAutoresponder($message)) {
-                $columnUsedForReference = 'doc';
-                return $columnUsedForReference;
-            }
+            $columnUsedForReference = 'doc';
             return $columnUsedForReference;
         }
 
@@ -229,6 +249,11 @@
             return AutoresponderProcessor::$processor;
         }
 
+        private function wasLastMessageDeliveredThePreviousMessageInTheSeries(AutoresponderMessage $message, $currentSubscriber)
+        {
+            $previousMessage = $message->getPreviousMessage();
+            return $previousMessage->getDayNumber() == $currentSubscriber->sequence;
+        }
 
 
     }

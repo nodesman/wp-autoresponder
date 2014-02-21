@@ -26,4 +26,5 @@ function run_activate_plugin( $plugin ) {
 
 run_activate_plugin($plugin_file);
 include $plugin_file;
-wpresponder_install();
+
+Javelin::getInstance()->install();

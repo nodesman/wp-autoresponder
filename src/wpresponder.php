@@ -144,26 +144,18 @@ class Javelin
             _wpr_render_verify_email_address_page();
         if (_wpr_whether_confirm_subscription_request())
             _wpr_render_confirm_subscription();
-        if (_wpr_whether_html_broadcast_view_frame_request())
-            _wpr_render_broadcast_view_frame();
-        if (Routing::is_template_html_request()) {
-            Routing::render_template_html();
-        }
 
-        if (Routing::is_admin_popup())
-            Routing::render_admin_screen_popup();
-        if (Routing::whether_file_request())
+        if (Routing::whether_file_request()) {
             Routing::serve_file();
-
-
-        if ($this->whetherBroadcastCompositionScreen()) {
-            $this->enqueueAdminScripts();
         }
 
-        if (_wpr_whether_confirmed_subscription_request())
+        if (_wpr_whether_confirmed_subscription_request()) {
             _wpr_render_confirmed_subscription_page();
-        if (Routing::is_subscription_management_page_request())
+        }
+
+        if (Routing::is_subscription_management_page_request()) {
             _wpr_render_subscription_management_page();
+        }
 
         _wpr_attach_cron_actions_to_functions();
         _wpr_ensure_single_instance_of_cron_is_registered(); //TODO: Get rid of this and make something more appropriate

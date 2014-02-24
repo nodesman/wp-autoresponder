@@ -92,21 +92,20 @@ function _wpr_nag()
     add_action("admin_notices","_wpr_admin_notices_show");
 }
 
-
 class Javelin
 {
     private static $instance;
-    private function __construct() {
-
-        add_action('admin_init',array($this, 'admin_init'));
-        add_action('init', array($this, 'init'),1);
-        add_action('plugins_loaded','_wpr_nag');
-        add_action('admin_menu', 'wpr_admin_menu');
-        add_action('admin_head', array(&$this, 'admin_head'));
-        add_action('widgets_init','wpr_widgets_init');
-        register_activation_hook(__FILE__,"wpresponder_install");
-        register_deactivation_hook(__FILE__,"wpresponder_deactivate");
-        add_filter('cron_schedules','wpr_cronschedules');
+    private function __construct()
+    {
+        add_action( 'admin_init' , array($this , 'admin_init' ));
+        add_action( 'init', array($this , 'init' ), 1 );
+        add_action( 'plugins_loaded' , '_wpr_nag' );
+        add_action( 'admin_menu' , 'wpr_admin_menu' );
+        add_action( 'admin_head' , array( &$this , 'admin_head' ) );
+        add_action( 'widgets_init' , 'wpr_widgets_init' );
+        register_activation_hook( __FILE__ , "wpresponder_install" );
+        register_deactivation_hook( __FILE__ , "wpresponder_deactivate" );
+        add_filter( 'cron_schedules' , 'wpr_cronschedules' );
     }
 
     public function install()
@@ -135,7 +134,7 @@ class Javelin
 
     function init()
     {
-        _wpr_load_plugin_textdomain();
+        $this->loadTextDomain();
         _wpr_add_required_blogseries_variables();
 
         if (_wpr_whether_optin_post_request())
@@ -169,11 +168,71 @@ class Javelin
         return (isset($_GET['page']) && (('wpresponder/newmail.php' == $_GET['page'] || ('wpresponder/allmailouts.php' == $_GET['page'] && isset($_GET['action']) && 'edit' == $_GET['action'] ))));
     }
 
-    function admin_init()
+    public function admin_init()
     {
-        _wpr_initialize_admin_pages();
-        if (_wpr_whether_wpresponder_admin_page())
+        $this->register_scripts_and_styles();
+        $this->enqueue_admin_scripts();
+
+        if (_wpr_whether_html_broadcast_view_frame_request())
+            _wpr_render_broadcast_view_frame();
+
+        if (Routing::is_admin_popup()) {
+            Routing::render_admin_screen_popup();
+        }
+
+        if (Routing::is_template_html_request()) {
+            Routing::render_template_html();
+        }
+
+        if ($this->whetherBroadcastCompositionScreen()) {
+            $this->enqueueAdminScripts();
+        }
+
+        if ($this->isAdminPage())
             Routing::run_controller();
+    }
+
+    private function loadTextDomain()
+    {
+        $domain = 'wpr_autoresponder';
+        $locale = apply_filters('plugin_locale', get_locale(), $domain);
+        load_textdomain($domain, WP_LANG_DIR.'/'.WPR_DIR.'/'.$domain.'-'.$locale.'.mo');
+        load_plugin_textdomain($domain, FALSE, WPR_DIR .'/languages/');
+    }
+
+    private function register_scripts_and_styles()
+    {
+        $url = get_bloginfo("wpurl");
+        wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
+        wp_register_script("angularjs", "$url/?wpr-file=angular.js");
+        wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
+        wp_register_script("wpresponder-ckeditor", plugin_dir_url(__FILE__) ."ckeditor/ckeditor.js");
+        wp_register_script("wpresponder-scripts", get_bloginfo('wpurl').'/?wpr-file=script.js');
+        wp_register_style('wpr-jquery-ui', plugin_dir_url(__FILE__).'/jqueryui.css');
+    }
+
+    private function enqueue_admin_scripts()
+    {
+        $url = (isset($_GET['page']))?$_GET['page']:'';
+        $querystring  = $_SERVER['QUERY_STRING'];
+
+        if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
+            wp_enqueue_script('jquery');
+            wp_enqueue_script('jquery-ui-core');
+            wp_enqueue_script('jquery-ui-tabs');
+            wp_enqueue_script("wpresponder-scripts");
+            wp_enqueue_script('post');
+        }
+
+        $whetherBroadcastEditPage = preg_match("@wpresponder/allmailouts.php&action=edit@", $querystring);
+
+        if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || $whetherBroadcastEditPage == true) {
+            wp_enqueue_script("wpresponder-ckeditor");
+            wp_enqueue_script("jquery");
+        }
+
+        wp_enqueue_style("wpr-jquery-ui");
+        add_action("admin_head", "_wpr_admin_enqueue_less");
     }
 
     public static function getInstance()
@@ -248,6 +307,10 @@ class Javelin
         }
     }
 
+    private function isAdminPage() {
+        return (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page'])) || (_wpr_actions_page()) ;
+    }
+
     private function enqueueAdminScripts()
     {
         wp_enqueue_style("wpresponder-tabber", get_bloginfo("wpurl") . "/?wpr-file=tabber.css");
@@ -266,31 +329,6 @@ function no_address_error()
     ?><div class="error fade"><p><strong>You must set your address in the  <a href="<?php echo admin_url( 'admin.php?page=_wpr/settings' ) ?>"> newsletter settings page</a>.</strong></p></div><?php
 }
 
-function _wpr_enqueue_admin_scripts_and_styles()
-{
-    $url = (isset($_GET['page']))?$_GET['page']:'';
-    $querystring  = $_SERVER['QUERY_STRING'];
-
-    if (isset($_GET['page']) && preg_match("@^_wpr/@", $_GET['page'])) {
-        wp_enqueue_script('jquery');
-        wp_enqueue_script('jquery-ui-core');
-        wp_enqueue_script('jquery-ui-tabs');
-        wp_enqueue_script("wpresponder-scripts");
-        wp_enqueue_script('post');
-    }
-    $whetherBroadcastEditPage = preg_match("@wpresponder/allmailouts.php&action=edit@", $querystring);
-
-
-    if (preg_match("@newmail\.php@", $url) || preg_match("@autoresponder\.php@", $url) || $whetherBroadcastEditPage == true) {
-          wp_enqueue_script("wpresponder-ckeditor");
-        wp_enqueue_script("jquery");
-    }
-
-    wp_enqueue_style("wpr-jquery-ui");
-
-    add_action("admin_head", "_wpr_admin_enqueue_less");
-}
-
 function _wpr_admin_enqueue_less()
 {
 ?>
@@ -301,11 +339,7 @@ function _wpr_admin_enqueue_less()
 
 function _wpr_load_plugin_textdomain()
 {
-    $domain = 'wpr_autoresponder';
-    $locale = apply_filters('plugin_locale', get_locale(), $domain);
-    $plugindir = dirname(plugin_basename(__FILE__));
-    load_textdomain($domain, WP_LANG_DIR.'/'.$plugindir.'/'.$domain.'-'.$locale.'.mo');
-    load_plugin_textdomain($domain, FALSE, $plugindir.'/languages/');
+
 }
 
 function _wpr_do_first_run_initializations()
@@ -317,14 +351,6 @@ function _wpr_do_first_run_initializations()
 function _wpr_whether_first_run()
 {
     return get_option("_wpr_firstrun") != "done";
-}
-
-
-function _wpr_initialize_admin_pages()
-{
-    _wpr_register_wpresponder_scripts();
-    _wpr_register_wpresponder_styles();
-    _wpr_enqueue_admin_scripts_and_styles();
 }
 
 function _wpr_attach_to_non_wpresponder_email_delivery_filter()
@@ -350,29 +376,7 @@ function _wpr_whether_confirmed_subscription_request()
     return isset($_GET['wpr-confirm']) && $_GET['wpr-confirm'] == 2;
 }
 
-
-function _wpr_register_wpresponder_scripts()
-{
-
-    $url = get_bloginfo("wpurl");
-    wp_register_script("jqueryui-full", "$url/?wpr-file=jqui.js");
-    wp_register_script("angularjs", "$url/?wpr-file=angular.js");
-    wp_register_script("wpresponder-tabber", "$url/?wpr-file=tabber.js");
-    wp_register_script("wpresponder-ckeditor", plugin_dir_url(__FILE__) ."ckeditor/ckeditor.js");
-    wp_register_script("wpresponder-scripts", get_bloginfo('wpurl').'/?wpr-file=script.js');
-}
-
-function _wpr_register_wpresponder_styles() {
-
-    wp_register_style('wpr-jquery-ui', plugin_dir_url(__FILE__).'/jqueryui.css');
-}
-
-function _wpr_whether_wpresponder_admin_page()
-{
-    return (is_admin() && Routing::isWPRAdminPage() && !Routing::whetherLegacyURL($_GET['page'])) || (whetherActionsPage()) ;
-}
-
-function whetherActionsPage()
+function _wpr_actions_page()
 {
     if (!isset($_GET['page']))
         return false;

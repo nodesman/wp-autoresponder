@@ -4,12 +4,10 @@
 Plugin Name: Javelin
 Plugin URI: http://www.nodesman.com
 Description: Gather subscribers in newsletters, follow up with automated e-mails, provide subscription to all posts in your blog or individual categories.
-Version: 5.3.12
+Version: 5.3.13
 Author: Raj Sekharan
 Author URI: http://www.nodesman.com/
 */
-
-$plugindir = plugin_dir_path( __FILE__ );;
 
 define("WPR_DIR", plugin_dir_path( __FILE__ ));
 
@@ -17,8 +15,7 @@ $controllerDir = WPR_DIR . "/controllers";
 $modelsDir = WPR_DIR."/models";
 $helpersDir = WPR_DIR."/helpers";
 
-define("WPR_VERSION", "5.3.12");
-define("WPR_PLUGIN_DIR", "$plugindir");
+define("WPR_VERSION", "5.3.13");
 
 include_once "$controllerDir/newsletters.php";
 include_once "$controllerDir/custom_fields.php";

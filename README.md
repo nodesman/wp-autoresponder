@@ -1,4 +1,4 @@
-Javelin Email Marketing
+Javelin Email Marketing (Discontinued)
 ================
 
 Email marketing and newsletter plugin for WordPress

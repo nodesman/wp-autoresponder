@@ -15,7 +15,7 @@ How to Build
 
 After making modifications to the plugin, you need to ensure that you have not yet broken any existing functionality. The way to do this is by:
 
-Set up your copy of wordpress-unit (already placed in this repository under tests/). By following the instructions here - [Unit Testing WordPress Plugins](http://stackoverflow.com/questions/9138215/unit-testing-wordpress-plugins)
+Set up your copy of wordpress-unit (already placed in this repository under tests/). By following the instructions here - [Unit Testing WordPress Plugins](http://web.archive.org/web/20130814152916/http://stackoverflow.com/questions/9138215/unit-testing-wordpress-plugins)
 
 After you make your changes, run the following command in the repository root:
 

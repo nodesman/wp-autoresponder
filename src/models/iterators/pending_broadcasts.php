@@ -1,5 +1,5 @@
 <?php
-include_once dirname(__FILE__)."/../broadcast.php";
+include_once dirname(__FILE__)."/../Broadcast.php";
 
 class PendingBroadcasts implements Iterator, Countable
 {
